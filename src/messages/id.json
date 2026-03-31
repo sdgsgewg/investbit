@@ -1,0 +1,20 @@
+{
+  "HomePage": {
+    "title": "Investbit - Rekap Reksa Dana",
+    "subtitle": "Catat dan otomatisasi performa reksa dana Anda dengan mudah.",
+    "getStarted": "Mulai Sekarang",
+    "learnMore": "Pelajari Lebih Lanjut"
+  },
+  "Nav": {
+    "home": "Beranda",
+    "learn": "Belajar",
+    "analyze": "Analisis",
+    "glossary": "Glosarium",
+    "reksadana": "Reksa Dana",
+    "about": "Tentang"
+  },
+  "Common": {
+    "toggleTheme": "Ganti tema",
+    "switchLanguage": "Ganti bahasa"
+  }
+}

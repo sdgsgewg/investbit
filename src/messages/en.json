@@ -1,0 +1,20 @@
+{
+  "HomePage": {
+    "title": "Investbit - Smart Fund Tracker",
+    "subtitle": "Automate and visualize your Indonesian mutual funds easily.",
+    "getStarted": "Get Started",
+    "learnMore": "Learn More"
+  },
+  "Nav": {
+    "home": "Home",
+    "learn": "Learn",
+    "analyze": "Analyze",
+    "glossary": "Glossary",
+    "reksadana": "Reksa Dana Tracker",
+    "about": "About"
+  },
+  "Common": {
+    "toggleTheme": "Toggle theme",
+    "switchLanguage": "Switch language"
+  }
+}
