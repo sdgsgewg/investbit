@@ -142,11 +142,11 @@ export default function MonthlyPage() {
     <div className="bg-white dark:bg-zinc-900 rounded-lg p-6 shadow-sm">
       <h2 className="text-xl font-semibold mb-6">Monthly Performance</h2>
       
-      <div className="overflow-x-auto">
-        <table className="min-w-full text-left bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800">
-          <thead className="bg-zinc-100 dark:bg-zinc-800 border-b border-zinc-200 dark:border-zinc-700">
+      <div className="overflow-auto max-h-[65vh] border border-zinc-200 dark:border-zinc-800 rounded-md">
+        <table className="min-w-full text-left bg-white dark:bg-zinc-900 border-collapse">
+          <thead className="sticky top-0 z-20 bg-zinc-100 dark:bg-zinc-800 border-b border-zinc-200 dark:border-zinc-700 shadow-sm">
             <tr>
-              <th className="py-3 px-4 font-semibold w-64">Reksa Dana</th>
+              <th className="py-3 px-4 font-semibold w-64 sticky left-0 z-30 bg-zinc-100 dark:bg-zinc-800 border-r border-zinc-200 dark:border-zinc-700">Reksa Dana</th>
               {months.map(m => (
                 <th key={m} className="py-3 px-4 font-semibold text-center whitespace-nowrap">
                   {format(new Date(m), 'MMMM yyyy')}
@@ -159,15 +159,17 @@ export default function MonthlyPage() {
               <React.Fragment key={category.categoryName}>
                 {/* Category Header */}
                 <tr className="bg-zinc-50 dark:bg-zinc-950 border-y border-zinc-200 dark:border-zinc-800">
-                  <td colSpan={months.length + 1} className="py-2 px-4 font-bold">
+                  <td colSpan={months.length + 1} className="py-2 px-4 font-bold sticky left-0 z-10 bg-zinc-50 dark:bg-zinc-950">
                     {category.categoryName}
                   </td>
                 </tr>
                 
                 {/* Items */}
                 {category.items.map((item) => (
-                  <tr key={item.itemId} className="border-b border-zinc-100 dark:border-zinc-800 hover:bg-zinc-50 dark:hover:bg-zinc-800/50">
-                    <td className="py-3 px-4 font-medium">{item.itemName}</td>
+                  <tr key={item.itemId} className="border-b border-zinc-100 dark:border-zinc-800 hover:bg-zinc-50 dark:hover:bg-zinc-800/50 group">
+                    <td className="py-3 px-4 font-medium sticky left-0 z-10 bg-white dark:bg-zinc-900 group-hover:bg-zinc-50 dark:group-hover:bg-zinc-800/50 border-r border-zinc-200 dark:border-zinc-700">
+                      {item.itemName}
+                    </td>
                     {months.map(m => {
                       const yieldVal = item.monthlyYields[m];
                       const bgColor = getCellColor(yieldVal, category.categoryName, m);
