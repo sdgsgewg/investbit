@@ -251,12 +251,15 @@ export default function WeeklyPage() {
               <React.Fragment key={category.categoryName}>
                 {/* Category Header */}
                 <tr className="bg-zinc-50 dark:bg-zinc-950 border-y border-zinc-200 dark:border-zinc-800">
-                  <td
-                    colSpan={weeks.length + 1}
-                    className="py-2 px-4 font-bold sticky left-0 z-10 bg-zinc-50 dark:bg-zinc-950"
-                  >
+                  {/* Sticky left cell */}
+                  <td className="py-2 px-4 font-bold sticky left-0 z-10 bg-zinc-50 dark:bg-zinc-950 border-r border-zinc-200 dark:border-zinc-700">
                     {category.categoryName}
                   </td>
+
+                  {/* Empty cells untuk sisa kolom */}
+                  {weeks.map((w) => (
+                    <td key={w} className="bg-zinc-50 dark:bg-zinc-950"></td>
+                  ))}
                 </tr>
 
                 {/* Items */}
