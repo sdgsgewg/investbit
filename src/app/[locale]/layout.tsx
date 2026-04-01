@@ -19,8 +19,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Investbit - Stock Analysis",
-  description: "Analyze Indonesian stocks with AI",
+  title: "Investbit - Investment Buddy",
+  description: "Investment Buddy",
 };
 
 export default async function RootLayout({
