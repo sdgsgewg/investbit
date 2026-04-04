@@ -6,5 +6,5 @@ export default async function ReksaDanaRedirect({
   params: Promise<{ locale: string }>;
 }) {
   const { locale } = await params;
-  redirect(`/${locale}/reksadana/input`);
+  redirect(`/${locale}/rdn-recap/input`);
 }

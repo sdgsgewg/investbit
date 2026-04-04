@@ -1,20 +1,74 @@
 {
   "HomePage": {
-    "title": "Investbit - Smart Fund Tracker",
-    "subtitle": "Automate and visualize your Indonesian mutual funds easily.",
+    "title": "Investbit - Investment Buddy",
+    "subtitle": "Your Investment Buddy",
     "getStarted": "Get Started",
     "learnMore": "Learn More"
+  },
+  "GlossaryPage": {
+    "title": "Stock Glossary",
+    "subtitle": "Understand the language of the stock market.",
+    "searchPlaceholder": "Search term...",
+    "implication": "Implication",
+    "noResults": "No terms found matching \"{searchTerm}\""
+  },
+  "RdnRecap": {
+    "title": "Mutual Fund Recap",
+    "daily": {
+      "nav": "Daily Input",
+      "title": "Input Daily Yield",
+      "subtitle": "Daily Performance",
+      "selectDate": "Select Date",
+      "saveData": "Save Daily Data",
+      "saving": "Saving...",
+      "errorSaveData": "Please enter at least one yield value before saving.",
+      "errorSaveDataFailed": "Failed to save data. Please check console.",
+      "successSaveData": "Successfully saved data for ",
+      "loading": "Loading mutual funds list...",
+      "yield1d": "1 Day (%)",
+      "yieldYtd": "YTD (%)"
+    },
+    "weekly": {
+      "nav": "Weekly Performance",
+      "title": "Weekly Performance",
+      "subtitle": "Weekly Performance",
+      "loading": "Loading weekly performance data...",
+      "week": "Week"
+    },
+    "monthly": {
+      "nav": "Monthly Performance",
+      "title": "Monthly Performance",
+      "subtitle": "Monthly Performance",
+      "loading": "Loading monthly performance data..."
+    }
   },
   "Nav": {
     "home": "Home",
     "learn": "Learn",
     "analyze": "Analyze",
     "glossary": "Glossary",
-    "reksadana": "Reksa Dana Tracker",
+    "rdn-recap": "Mutual Fund Recap",
     "about": "About"
   },
+  "Footer": {
+    "links": "Links",
+    "privacyPolicy": "Privacy Policy",
+    "termsOfService": "Terms of Service",
+    "allRightsReserved": "All rights reserved"
+  },
+  "ToggleTheme": {
+    "title": "Toggle Theme",
+    "light": "Light",
+    "dark": "Dark",
+    "system": "System"
+  },
   "Common": {
+    "reksadana": "Mutual Fund",
+    "legend": "Information",
+    "highestYield": "Highest Yield",
+    "lowestYield": "Lowest Yield",
     "toggleTheme": "Toggle theme",
-    "switchLanguage": "Switch language"
+    "switchLanguage": "Switch language",
+    "noPerformanceData": "No data available. Use the daily input tab to add records."
   }
 }

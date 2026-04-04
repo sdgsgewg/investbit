@@ -9,6 +9,7 @@ import { useState } from "react";
 import { Search, BookOpen } from "lucide-react";
 
 export default function GlossaryPage() {
+  const t = useTranslations("GlossaryPage");
   const [searchTerm, setSearchTerm] = useState("");
   const locale = useLocale();
   const terms =
@@ -26,17 +27,17 @@ export default function GlossaryPage() {
         <div>
           <h1 className="text-4xl font-bold flex items-center gap-3">
             <BookOpen className="h-10 w-10 text-primary" />
-            Stock Glossary
+            {t("title")}
           </h1>
           <p className="text-muted-foreground mt-2">
-            Understand the language of the stock market.
+            {t("subtitle")}
           </p>
         </div>
 
         <div className="relative w-full md:w-80">
           <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
           <Input
-            placeholder="Search term..."
+            placeholder={t("searchPlaceholder")}
             className="pl-8"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
@@ -61,7 +62,7 @@ export default function GlossaryPage() {
             <CardContent>
               <p className="text-sm font-medium mb-2">{item.definition}</p>
               <p className="text-xs text-muted-foreground bg-muted p-2 rounded-md">
-                <span className="font-semibold text-primary">Implication:</span>{" "}
+                <span className="font-semibold text-primary">{t("implication")}</span>{" "}
                 {item.implication}
               </p>
             </CardContent>
@@ -70,7 +71,7 @@ export default function GlossaryPage() {
 
         {filteredTerms.length === 0 && (
           <div className="col-span-full text-center py-12 text-muted-foreground">
-            No terms found matching &quot;{searchTerm}&quot;
+            {t("noResults", { searchTerm })}
           </div>
         )}
       </div>

@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { format, startOfMonth } from "date-fns";
+import { useTranslations } from "next-intl";
 
 type RecordData = {
   id: string;
@@ -31,6 +32,9 @@ type AggregatedData = {
 };
 
 export default function MonthlyPage() {
+  const tCommon = useTranslations("Common");
+  const tRecapMonthly = useTranslations("RdnRecap.monthly");
+
   const [data, setData] = useState<AggregatedData[]>([]);
   const [months, setMonths] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);
@@ -161,19 +165,19 @@ export default function MonthlyPage() {
   };
 
   if (loading) {
-    return <div className="p-4">Loading monthly performance data...</div>;
+    return <div className="p-4">{tRecapMonthly("loading")}</div>;
   }
 
   return (
     <div className="bg-white dark:bg-zinc-900 rounded-lg p-6 shadow-sm">
-      <h2 className="text-xl font-semibold mb-6">Monthly Performance</h2>
+      <h2 className="text-xl font-semibold mb-6">{tRecapMonthly("title")}</h2>
 
       <div className="overflow-auto max-h-[65vh] border border-zinc-200 dark:border-zinc-800 rounded-md">
         <table className="min-w-full text-left bg-white dark:bg-zinc-900 border-collapse">
           <thead className="sticky top-0 z-20 bg-zinc-100 dark:bg-zinc-800 border-b border-zinc-200 dark:border-zinc-700 shadow-sm">
             <tr>
               <th className="py-3 px-4 font-semibold w-64 sticky left-0 z-30 bg-zinc-100 dark:bg-zinc-800 border-r border-zinc-200 dark:border-zinc-700">
-                Reksa Dana
+                {tCommon("reksadana")}
               </th>
               {months.map((m) => (
                 <th
@@ -207,7 +211,7 @@ export default function MonthlyPage() {
                     key={item.itemId}
                     className="border-b border-zinc-100 dark:border-zinc-800 hover:bg-zinc-50 dark:hover:bg-zinc-800/50 group"
                   >
-                    <td className="py-3 px-4 font-medium sticky left-0 z-10 bg-white dark:bg-zinc-900 group-hover:bg-zinc-50 dark:group-hover:bg-zinc-800/50 border-r border-zinc-200 dark:border-zinc-700">
+                    <td className="py-3 px-4 font-medium sticky left-0 z-10 bg-white dark:bg-zinc-900 group-hover:bg-zinc-50 dark:group-hover:bg-zinc-800 border-r border-zinc-200 dark:border-zinc-700">
                       {item.itemName}
                     </td>
                     {months.map((m) => {
@@ -238,7 +242,7 @@ export default function MonthlyPage() {
                   colSpan={months.length + 1}
                   className="p-4 text-center text-zinc-500"
                 >
-                  No data available. Use the daily input tab to add records.
+                  {tCommon("noPerformanceData")}
                 </td>
               </tr>
             )}
@@ -247,15 +251,15 @@ export default function MonthlyPage() {
       </div>
 
       <div className="mt-8">
-        <h4 className="font-semibold mb-2">Keterangan:</h4>
+        <h4 className="font-semibold mb-2">{tCommon("legend")}</h4>
         <div className="flex gap-4">
           <div className="flex items-center gap-2">
             <div className="w-8 h-4 bg-green-500/30 rounded border border-green-500"></div>
-            <span className="text-sm">Paling Cuan</span>
+            <span className="text-sm">{tCommon("highestYield")}</span>
           </div>
           <div className="flex items-center gap-2">
             <div className="w-8 h-4 bg-red-500/30 rounded border border-red-500"></div>
-            <span className="text-sm">Paling Tidak Cuan</span>
+            <span className="text-sm">{tCommon("lowestYield")}</span>
           </div>
         </div>
       </div>

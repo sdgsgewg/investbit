@@ -1,20 +1,75 @@
 {
   "HomePage": {
-    "title": "Investbit - Rekap Reksa Dana",
-    "subtitle": "Catat dan otomatisasi performa reksa dana Anda dengan mudah.",
+    "title": "Investbit - Teman Investasi",
+    "subtitle": "Teman Investasi Anda",
     "getStarted": "Mulai Sekarang",
     "learnMore": "Pelajari Lebih Lanjut"
+  },
+  "GlossaryPage": {
+    "title": "Glosarium Saham",
+    "subtitle": "Pahami bahasa pasar saham.",
+    "searchPlaceholder": "Cari istilah...",
+    "implication": "Implikasi",
+    "noResults": "Tidak ada istilah yang cocok dengan \"{searchTerm}\""
+  },
+  "RdnRecap": {
+    "title": "Rekap Reksa Dana",
+    "daily": {
+      "nav": "Input Harian",
+      "title": "Input Yield Harian",
+      "subtitle": "Kinerja Harian",
+      "selectDate": "Pilih Tanggal",
+      "saveData": "Simpan Data Harian",
+      "saving": "Menyimpan...",
+      "errorSaveData": "Silakan masukkan setidaknya satu nilai yield sebelum menyimpan.",
+      "errorSaveDataFailed": "Gagal menyimpan data. Silakan periksa konsol.",
+      "successSaveData": "Berhasil menyimpan data untuk ",
+      "loading": "Memuat daftar reksa dana...",
+      "yield1d": "1 Hari (%)",
+      "yieldYtd": "YTD (%)",
+      "reksadana": "Reksa Dana"
+    },
+    "weekly": {
+      "nav": "Kinerja Mingguan",
+      "title": "Kinerja Mingguan",
+      "subtitle": "Kinerja Mingguan",
+      "loading": "Memuat data kinerja mingguan...",
+      "week": "Minggu"
+    },
+    "monthly": {
+      "nav": "Kinerja Bulanan",
+      "title": "Kinerja Bulanan",
+      "subtitle": "Kinerja Bulanan",
+      "loading": "Memuat data kinerja bulanan..."
+    }
   },
   "Nav": {
     "home": "Beranda",
     "learn": "Belajar",
     "analyze": "Analisis",
     "glossary": "Glosarium",
-    "reksadana": "Reksa Dana",
+    "rdn-recap": "Rekap RDN",
     "about": "Tentang"
   },
+  "Footer": {
+    "links": "Tautan",
+    "privacyPolicy": "Kebijakan Privasi",
+    "termsOfService": "Ketentuan Layanan",
+    "allRightsReserved": "Hak cipta dilindungi undang-undang"
+  },
+  "ToggleTheme": {
+    "title": "Ganti Tema",
+    "light": "Terang",
+    "dark": "Gelap",
+    "system": "Sistem"
+  },
   "Common": {
+    "reksadana": "Reksa Dana",
+    "legend": "Keterangan",
+    "highestYield": "Paling Cuan",
+    "lowestYield": "Paling Tidak Cuan",
     "toggleTheme": "Ganti tema",
-    "switchLanguage": "Ganti bahasa"
+    "switchLanguage": "Ganti bahasa",
+    "noPerformanceData": "Tidak ada data tersedia. Gunakan tab input harian untuk menambahkan catatan."
   }
 }

@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { format } from "date-fns";
+import { useTranslations } from "next-intl";
 
 type RecordData = {
   id: string;
@@ -31,6 +32,9 @@ type AggregatedData = {
 };
 
 export default function WeeklyPage() {
+  const tCommon = useTranslations("Common");
+  const tRecapWeekly = useTranslations("RdnRecap.weekly");
+
   const [data, setData] = useState<AggregatedData[]>([]);
   const [weeks, setWeeks] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);
@@ -211,19 +215,19 @@ export default function WeeklyPage() {
   };
 
   if (loading) {
-    return <div className="p-4">Loading weekly performance data...</div>;
+    return <div className="p-4">{tRecapWeekly("loading")}</div>;
   }
 
   return (
     <div className="bg-white dark:bg-zinc-900 rounded-lg p-6 shadow-sm">
-      <h2 className="text-xl font-semibold mb-6">Weekly Performance</h2>
+      <h2 className="text-xl font-semibold mb-6">{tRecapWeekly("title")}</h2>
 
       <div className="overflow-auto max-h-[65vh] border border-zinc-200 dark:border-zinc-800 rounded-md">
         <table className="min-w-full text-left bg-white dark:bg-zinc-900 border-collapse">
           <thead className="sticky top-0 z-20 bg-zinc-100 dark:bg-zinc-800 border-b border-zinc-200 dark:border-zinc-700 shadow-sm">
             <tr>
               <th className="py-3 px-4 font-semibold w-64 sticky left-0 z-30 bg-zinc-100 dark:bg-zinc-800 border-r border-zinc-200 dark:border-zinc-700">
-                Reksa Dana
+                {tCommon("reksadana")}
               </th>
               {weeks.map((w) => {
                 const [yearMonth, weekStr] = w.split("-W");
@@ -236,7 +240,7 @@ export default function WeeklyPage() {
                     key={w}
                     className="py-3 px-4 font-semibold text-center whitespace-nowrap min-w-32"
                   >
-                    Week {weekStr}
+                    {tRecapWeekly("week")} {weekStr}
                     <br />
                     <span className="text-sm font-normal text-zinc-600 dark:text-zinc-400">
                       {format(dateObj, "MMM ''yy")}
@@ -299,7 +303,7 @@ export default function WeeklyPage() {
                   colSpan={weeks.length + 1}
                   className="p-4 text-center text-zinc-500"
                 >
-                  No data available. Use the daily input tab to add records.
+                  {tCommon("noPerformanceData")}
                 </td>
               </tr>
             )}
@@ -308,15 +312,15 @@ export default function WeeklyPage() {
       </div>
 
       <div className="mt-8">
-        <h4 className="font-semibold mb-2">Keterangan:</h4>
+        <h4 className="font-semibold mb-2">{tCommon("legend")}:</h4>
         <div className="flex gap-4">
           <div className="flex items-center gap-2">
             <div className="w-8 h-4 bg-green-500/30 rounded border border-green-500"></div>
-            <span className="text-sm">Paling Cuan</span>
+            <span className="text-sm">{tCommon("highestYield")}</span>
           </div>
           <div className="flex items-center gap-2">
             <div className="w-8 h-4 bg-red-500/30 rounded border border-red-500"></div>
-            <span className="text-sm">Paling Tidak Cuan</span>
+            <span className="text-sm">{tCommon("lowestYield")}</span>
           </div>
         </div>
       </div>
