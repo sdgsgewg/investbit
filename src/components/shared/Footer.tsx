@@ -1,11 +1,13 @@
 "use client";
 
+import { ROUTES } from "@/app/constants/routes";
 import { Link } from "@/navigation";
 import { useTranslations } from "next-intl";
 
 export function Footer() {
   const tHome = useTranslations("HomePage");
   const tNav = useTranslations("Nav");
+  const tReksadana = useTranslations("Nav.reksadana");
   const tFooter = useTranslations("Footer");
 
   return (
@@ -54,10 +56,10 @@ export function Footer() {
               </li>
               <li>
                 <Link
-                  href="/rdn-recap"
+                  href={ROUTES.REKSADANA.RECAP.INPUT}
                   className="hover:text-primary transition-colors"
                 >
-                  {tNav("rdn-recap")}
+                  {tReksadana("recap")}
                 </Link>
               </li>
             </ul>
@@ -79,7 +81,8 @@ export function Footer() {
           </div>
         </div>
         <div className="mt-8 pt-8 border-t text-center text-sm text-muted-foreground">
-          &copy; {new Date().getFullYear()} Investbit. {tFooter("allRightsReserved")}
+          &copy; {new Date().getFullYear()} Investbit.{" "}
+          {tFooter("allRightsReserved")}
         </div>
       </div>
     </footer>

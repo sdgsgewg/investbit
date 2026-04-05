@@ -11,9 +11,13 @@ export const ROUTES = {
   ANALYZE: "/analyze",
   LEARN: "/learn",
   GLOSSARY: "/glossary",
-  RDN_RECAP: {
-    INPUT: "/rdn-recap/input",
-    WEEKLY: "/rdn-recap/weekly",
-    MONTHLY: "/rdn-recap/monthly",
+  REKSADANA: {
+    RECAP: {
+      INPUT: "/reksadana/recap/input",
+      WEEKLY: "/reksadana/recap/weekly",
+      MONTHLY: "/reksadana/recap/monthly",
+    },
+    ITEMS: "/reksadana/items",
+    CATEGORIES: "/reksadana/categories",
   },
 };

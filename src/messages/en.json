@@ -47,7 +47,12 @@
     "learn": "Learn",
     "analyze": "Analyze",
     "glossary": "Glossary",
-    "rdn-recap": "Mutual Fund Recap",
+    "reksadana": {
+      "base": "Mutual Funds",
+      "recap": "Mutual Fund Recap",
+      "items": "Manage Items",
+      "categories": "Manage Categories"
+    },
     "about": "About"
   },
   "Footer": {
