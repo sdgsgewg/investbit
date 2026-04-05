@@ -16,9 +16,9 @@ export const HOME_FEATURES: HomeData = {
     },
     {
       key: "feature2",
-      title: "Reksa Dana Recap",
+      title: "Mutual Fund Recap",
       description:
-        "Easily log and manage your daily Reksa Dana yields. Groups your items securely by category entirely online.",
+        "Easily log and manage your daily mutual fund yields. Groups your items securely by category entirely online.",
     },
     {
       key: "feature3",
