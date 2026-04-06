@@ -1,10 +1,13 @@
 import { createClient } from "@/utils/supabase/server";
 import { cookies } from "next/headers";
 import { Database } from "@/types/supabase";
+import { CategoryData } from "@/app/types/reksadana/categories/CategoryData";
 
 type CategoryInsert = Database["public"]["Tables"]["rd_categories"]["Insert"];
 
-export async function getCategoriesRepo(params: { name?: string }) {
+export async function getCategoriesRepo(params: {
+  name?: string;
+}): Promise<CategoryData[]> {
   const supabase = createClient(await cookies());
 
   let query = supabase
@@ -25,7 +28,14 @@ export async function getCategoriesRepo(params: { name?: string }) {
 
   if (error) throw error;
 
-  return data;
+  const mappedData = data?.map((category) => ({
+    id: category.id,
+    name: category.name,
+    created_at: "",
+    updated_at: "",
+  }));
+
+  return mappedData || [];
 }
 
 export async function createCategoriesRepo(categories: CategoryInsert[]) {

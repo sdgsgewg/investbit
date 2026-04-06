@@ -18,4 +18,5 @@ export const recordsSchema = z.array(recordSchema).min(1);
 export const recordsQuerySchema = z.object({
   startDate: z.string().date().optional(),
   endDate: z.string().date().optional(),
+  categoryId: uuid.optional(),
 });

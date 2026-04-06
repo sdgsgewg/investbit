@@ -11,6 +11,7 @@ export async function GET(request: Request) {
     const query = {
       startDate: searchParams.get("startDate") || undefined,
       endDate: searchParams.get("endDate") || undefined,
+      categoryId: searchParams.get("categoryId") || undefined,
     };
 
     const data = await getRecordsService(query);

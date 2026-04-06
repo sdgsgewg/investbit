@@ -4,20 +4,10 @@ import { Database } from "@/types/supabase";
 
 type RecordInsert = Database["public"]["Tables"]["rd_records"]["Insert"];
 
-export async function upsertRecordsRepo(records: RecordInsert[]) {
-  const supabase = createClient(await cookies());
-
-  const { data, error } = await supabase
-    .from("rd_records")
-    .upsert(records, { onConflict: "item_id, date" });
-
-  if (error) throw error;
-  return data;
-}
-
 export async function getRecordsRepo(params: {
   startDate?: string;
   endDate?: string;
+  categoryId?: string | undefined;
 }) {
   const supabase = createClient(await cookies());
 
@@ -51,7 +41,22 @@ export async function getRecordsRepo(params: {
     query = query.lte("date", params.endDate);
   }
 
+  if (params.categoryId) {
+    query = query.eq("rd_items.category_id", params.categoryId);
+  }
+
   const { data, error } = await query;
+
+  if (error) throw error;
+  return data;
+}
+
+export async function upsertRecordsRepo(records: RecordInsert[]) {
+  const supabase = createClient(await cookies());
+
+  const { data, error } = await supabase
+    .from("rd_records")
+    .upsert(records, { onConflict: "item_id, date" });
 
   if (error) throw error;
   return data;

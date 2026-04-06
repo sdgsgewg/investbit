@@ -1,27 +1,28 @@
 import { createClient } from "@/utils/supabase/server";
 import { cookies } from "next/headers";
 import { Database } from "@/types/supabase";
+import { ItemData } from "@/app/types/reksadana/items/ItemData";
 
 type ItemInsert = Database["public"]["Tables"]["rd_items"]["Insert"];
 
 export async function getItemsRepo(params: {
   name?: string;
   category_id?: string;
-}) {
+}): Promise<ItemData[]> {
   const supabase = createClient(await cookies());
 
   let query = supabase
     .from("rd_items")
     .select(
       `
-      id,
-      name,
-      category_id,
-      rd_categories (
         id,
-        name
-      )
-    `,
+        name,
+        category_id,
+        category:rd_categories (
+          id,
+          name
+        )
+      `,
     )
     .order("name");
 
@@ -37,7 +38,29 @@ export async function getItemsRepo(params: {
 
   if (error) throw error;
 
-  return data;
+  const normalizeCategory = (cat: any) => {
+    if (!cat) return null;
+    if (Array.isArray(cat)) return cat[0] ?? null;
+    return cat;
+  };
+
+  const formattedData: ItemData[] = (data || []).map((item: any) => {
+    const category = normalizeCategory(item.category);
+
+    return {
+      id: item.id,
+      name: item.name,
+      category_id: item.category_id,
+      created_at: "",
+      updated_at: "",
+      category: {
+        id: category?.id,
+        name: category?.name,
+      },
+    };
+  });
+
+  return formattedData;
 }
 
 export async function createItemsRepo(items: ItemInsert[]) {
