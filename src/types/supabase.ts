@@ -33,7 +33,7 @@ export interface Database {
         Relationships: [
           {
             foreignKeyName: "rd_items_category_id_fkey";
-            columns: [rd_items.category_id];
+            columns: ["category_id"];
             isOneToMany: true;
             referencedRelation: "rd_items";
           },
@@ -61,13 +61,13 @@ export interface Database {
         Relationships: [
           {
             foreignKeyName: "rd_items_category_id_fkey";
-            columns: [rd_items.category_id];
+            columns: ["category_id"];
             isOneToMany: false;
             referencedRelation: "rd_categories";
           },
           {
             foreignKeyName: "rd_records_item_id_fkey";
-            columns: [rd_records.item_id];
+            columns: ["item_id"];
             isOneToMany: true;
             referencedRelation: "rd_records";
           },
@@ -101,7 +101,7 @@ export interface Database {
         Relationships: [
           {
             foreignKeyName: "rd_records_item_id_fkey";
-            columns: [rd_records.item_id];
+            columns: ["item_id"];
             isOneToMany: false;
             referencedRelation: "rd_items";
           },
