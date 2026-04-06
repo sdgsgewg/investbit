@@ -28,14 +28,14 @@ export async function getCategoriesRepo(params: {
 
   if (error) throw error;
 
-  const mappedData = data?.map((category) => ({
+  const mappedData: CategoryData[] = data?.map((category) => ({
     id: category.id,
     name: category.name,
     created_at: "",
     updated_at: "",
-  }));
+  })) || [];
 
-  return mappedData || [];
+  return mappedData;
 }
 
 export async function createCategoriesRepo(categories: CategoryInsert[]) {
