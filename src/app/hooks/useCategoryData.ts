@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { CategoryData } from "../types/reksadana/categories/CategoryData";
 import { UpsertCategory } from "../types/reksadana/categories/UpsertCategory";
 import axios from "axios";
+import { useTranslations } from "next-intl";
 
 interface UseCategoryDataReturn {
   categories: CategoryData[];
@@ -19,6 +20,8 @@ interface UseCategoryDataReturn {
 }
 
 export const useCategoryData = (): UseCategoryDataReturn => {
+  const tCommon = useTranslations("Common");
+
   const [categories, setCategories] = useState<CategoryData[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -27,7 +30,7 @@ export const useCategoryData = (): UseCategoryDataReturn => {
     name: "",
   });
 
-  const [buttonText, setButtonText] = useState<string>("Create");
+  const [buttonText, setButtonText] = useState<string>(tCommon("create"));
   const [isEditing, setIsEditing] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -36,14 +39,14 @@ export const useCategoryData = (): UseCategoryDataReturn => {
   }, []);
 
   useEffect(() => {
-    setButtonText(isEditing ? "Update" : "Create");
+    setButtonText(isEditing ? tCommon("update") : tCommon("create"));
   }, [isEditing]);
 
   useEffect(() => {
     if (isSubmitting) {
-      setButtonText(isEditing ? "Updating..." : "Creating...");
+      setButtonText(isEditing ? tCommon("updating") : tCommon("creating"));
     } else {
-      setButtonText(isEditing ? "Update" : "Create");
+      setButtonText(isEditing ? tCommon("update") : tCommon("create"));
     }
   }, [isSubmitting]);
 

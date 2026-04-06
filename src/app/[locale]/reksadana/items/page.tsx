@@ -4,8 +4,11 @@ import { useItemData } from "@/app/hooks/useItemData";
 import { useCategoryData } from "@/app/hooks/useCategoryData";
 import Loading from "@/components/shared/Loading";
 import { CrudPage } from "@/components/shared/CrudPage";
+import { useTranslations } from "next-intl";
 
 export default function ItemsManagementPage() {
+  const t = useTranslations("Reksadana.items");
+
   const {
     items,
     loading,
@@ -26,19 +29,19 @@ export default function ItemsManagementPage() {
 
   return (
     <CrudPage
-      title="Manage Items"
+      title={t("title")}
       formFields={[
-        { name: "name", label: "Item Name", type: "text" },
+        { name: "name", label: t("namePlaceholder"), type: "text" },
         {
           name: "category_id",
-          label: "Category",
+          label: t("categoryPlaceholder"),
           type: "select",
           options: categories,
         },
       ]}
       columns={[
-        { key: "name", label: "Name" },
-        { key: "category.name", label: "Category" },
+        { key: "name", label: t("name") },
+        { key: "category.name", label: t("category") },
       ]}
       data={items}
       form={form}

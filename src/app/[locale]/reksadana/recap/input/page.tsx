@@ -17,7 +17,7 @@ type Category = {
 
 export default function InputPage() {
   const tCommon = useTranslations("Common");
-  const tRecapDaily = useTranslations("RdnRecap.daily");
+  const tRecapDaily = useTranslations("Reksadana.recap.daily");
 
   const [categories, setCategories] = useState<Category[]>([]);
   const [loading, setLoading] = useState(true);

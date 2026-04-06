@@ -3,8 +3,11 @@
 import { useCategoryData } from "@/app/hooks/useCategoryData";
 import { CrudPage } from "@/components/shared/CrudPage";
 import Loading from "@/components/shared/Loading";
+import { useTranslations } from "next-intl";
 
 export default function CategoriesManagementPage() {
+  const t = useTranslations("Reksadana.categories");
+
   const {
     categories,
     loading,
@@ -24,9 +27,9 @@ export default function CategoriesManagementPage() {
 
   return (
     <CrudPage
-      title="Manage Categories"
-      formFields={[{ name: "name", label: "Category Name", type: "text" }]}
-      columns={[{ key: "name", label: "Name" }]}
+      title={t("title")}
+      formFields={[{ name: "name", label: t("namePlaceholder"), type: "text" }]}
+      columns={[{ key: "name", label: t("name") }]}
       data={categories}
       form={form}
       setForm={setForm}

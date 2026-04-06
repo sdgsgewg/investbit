@@ -12,34 +12,52 @@
     "implication": "Implication",
     "noResults": "No terms found matching \"{searchTerm}\""
   },
-  "RdnRecap": {
-    "title": "Mutual Fund Recap",
-    "daily": {
-      "nav": "Daily Input",
-      "title": "Input Daily Yield",
-      "subtitle": "Daily Performance",
-      "selectDate": "Select Date",
-      "saveData": "Save Daily Data",
-      "saving": "Saving...",
-      "errorSaveData": "Please enter at least one yield value before saving.",
-      "errorSaveDataFailed": "Failed to save data. Please check console.",
-      "successSaveData": "Successfully saved data for ",
-      "loading": "Loading mutual funds list...",
-      "yield1d": "1 Day (%)",
-      "yieldYtd": "YTD (%)"
+  "Reksadana": {
+    "recap": {
+      "title": "Mutual Fund Recap",
+      "daily": {
+        "nav": "Daily Input",
+        "title": "Input Daily Yield",
+        "subtitle": "Daily Performance",
+        "selectDate": "Select Date",
+        "saveData": "Save Daily Data",
+        "saving": "Saving...",
+        "errorSaveData": "Please enter at least one yield value before saving.",
+        "errorSaveDataFailed": "Failed to save data. Please check console.",
+        "successSaveData": "Successfully saved data for ",
+        "loading": "Loading mutual funds list...",
+        "yield1d": "1 Day (%)",
+        "yieldYtd": "YTD (%)"
+      },
+      "weekly": {
+        "nav": "Weekly Performance",
+        "title": "Weekly Performance",
+        "subtitle": "Weekly Performance",
+        "loading": "Loading weekly performance data...",
+        "week": "Week"
+      },
+      "monthly": {
+        "nav": "Monthly Performance",
+        "title": "Monthly Performance",
+        "subtitle": "Monthly Performance",
+        "loading": "Loading monthly performance data..."
+      }
     },
-    "weekly": {
-      "nav": "Weekly Performance",
-      "title": "Weekly Performance",
-      "subtitle": "Weekly Performance",
-      "loading": "Loading weekly performance data...",
-      "week": "Week"
+    "items": {
+      "title": "Manage Items",
+      "subtitle": "Add, edit, or delete mutual fund items.",
+      "namePlaceholder": "Item Name",
+      "categoryPlaceholder": "Select Category",
+      "name": "Name",
+      "category": "Category",
+      "addNew": "Add New Item"
     },
-    "monthly": {
-      "nav": "Monthly Performance",
-      "title": "Monthly Performance",
-      "subtitle": "Monthly Performance",
-      "loading": "Loading monthly performance data..."
+    "categories": {
+      "title": "Manage Categories",
+      "subtitle": "Add, edit, or delete mutual fund categories.",
+      "namePlaceholder": "Category Name",
+      "name": "Name",
+      "addNew": "Add New Category"
     }
   },
   "Nav": {
@@ -74,6 +92,15 @@
     "lowestYield": "Lowest Yield",
     "toggleTheme": "Toggle theme",
     "switchLanguage": "Switch language",
-    "noPerformanceData": "No data available. Use the daily input tab to add records."
+    "noPerformanceData": "No data available. Use the daily input tab to add records.",
+    "add": "Add",
+    "create": "Create",
+    "update": "Update",
+    "edit": "Edit",
+    "delete": "Delete",
+    "cancel": "Cancel",
+    "actions": "Actions",
+    "creating": "Creating...",
+    "updating": "Updating..."
   }
 }

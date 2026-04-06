@@ -9,10 +9,10 @@ export default function ReksaDanaLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const tRecap = useTranslations("RdnRecap");
-  const tRecapDaily = useTranslations("RdnRecap.daily");
-  const tRecapWeekly = useTranslations("RdnRecap.weekly");
-  const tRecapMonthly = useTranslations("RdnRecap.monthly");
+  const tRecap = useTranslations("Reksadana.recap");
+  const tRecapDaily = useTranslations("Reksadana.recap.daily");
+  const tRecapWeekly = useTranslations("Reksadana.recap.weekly");
+  const tRecapMonthly = useTranslations("Reksadana.recap.monthly");
   const pathname = usePathname();
 
   const isActive = (path: string) => pathname === path;

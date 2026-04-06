@@ -12,35 +12,52 @@
     "implication": "Implikasi",
     "noResults": "Tidak ada istilah yang cocok dengan \"{searchTerm}\""
   },
-  "RdnRecap": {
-    "title": "Rekap Reksa Dana",
-    "daily": {
-      "nav": "Input Harian",
-      "title": "Input Yield Harian",
-      "subtitle": "Kinerja Harian",
-      "selectDate": "Pilih Tanggal",
-      "saveData": "Simpan Data Harian",
-      "saving": "Menyimpan...",
-      "errorSaveData": "Silakan masukkan setidaknya satu nilai yield sebelum menyimpan.",
-      "errorSaveDataFailed": "Gagal menyimpan data. Silakan periksa konsol.",
-      "successSaveData": "Berhasil menyimpan data untuk ",
-      "loading": "Memuat daftar reksa dana...",
-      "yield1d": "1 Hari (%)",
-      "yieldYtd": "YTD (%)",
-      "reksadana": "Reksa Dana"
+  "Reksadana": {
+    "recap": {
+      "title": "Rekap Reksa Dana",
+      "daily": {
+        "nav": "Input Harian",
+        "title": "Input Hasil Harian",
+        "subtitle": "Performa Harian",
+        "selectDate": "Pilih Tanggal",
+        "saveData": "Simpan Data Harian",
+        "saving": "Menyimpan...",
+        "errorSaveData": "Silakan masukkan setidaknya satu nilai hasil sebelum menyimpan.",
+        "errorSaveDataFailed": "Gagal menyimpan data. Silakan periksa konsol.",
+        "successSaveData": "Berhasil menyimpan data untuk ",
+        "loading": "Memuat daftar reksa dana...",
+        "yield1d": "1 Hari (%)",
+        "yieldYtd": "YTD (%)"
+      },
+      "weekly": {
+        "nav": "Performa Mingguan",
+        "title": "Performa Mingguan",
+        "subtitle": "Performa Mingguan",
+        "loading": "Memuat data performa mingguan...",
+        "week": "Minggu"
+      },
+      "monthly": {
+        "nav": "Performa Bulanan",
+        "title": "Performa Bulanan",
+        "subtitle": "Performa Bulanan",
+        "loading": "Memuat data performa bulanan..."
+      }
     },
-    "weekly": {
-      "nav": "Kinerja Mingguan",
-      "title": "Kinerja Mingguan",
-      "subtitle": "Kinerja Mingguan",
-      "loading": "Memuat data kinerja mingguan...",
-      "week": "Minggu"
+    "items": {
+      "title": "Kelola Item",
+      "subtitle": "Tambah, edit, atau hapus item reksa dana.",
+      "namePlaceholder": "Nama Item",
+      "categoryPlaceholder": "Pilih Kategori",
+      "name": "Nama",
+      "category": "Kategori",
+      "addNew": "Tambah Item Baru"
     },
-    "monthly": {
-      "nav": "Kinerja Bulanan",
-      "title": "Kinerja Bulanan",
-      "subtitle": "Kinerja Bulanan",
-      "loading": "Memuat data kinerja bulanan..."
+    "categories": {
+      "title": "Kelola Kategori",
+      "subtitle": "Tambah, edit, atau hapus kategori reksa dana.",
+      "namePlaceholder": "Nama Kategori",
+      "name": "Nama",
+      "addNew": "Tambah Kategori Baru"
     }
   },
   "Nav": {
@@ -49,7 +66,12 @@
     "analyze": "Analisis",
     "glossary": "Glosarium",
     "rdn-recap": "Rekap RDN",
-    "reksadana": "Reksa Dana",
+    "reksadana": {
+      "base": "Reksa Dana",
+      "recap": "Rekap Reksa Dana",
+      "items": "Kelola Item",
+      "categories": "Kelola Kategori"
+    },
     "about": "Tentang"
   },
   "Footer": {
@@ -71,6 +93,15 @@
     "lowestYield": "Paling Tidak Cuan",
     "toggleTheme": "Ganti tema",
     "switchLanguage": "Ganti bahasa",
-    "noPerformanceData": "Tidak ada data tersedia. Gunakan tab input harian untuk menambahkan catatan."
+    "noPerformanceData": "Tidak ada data tersedia. Gunakan tab input harian untuk menambahkan catatan.",
+    "add": "Tambah",
+    "create": "Buat",
+    "update": "Perbarui",
+    "edit": "Edit",
+    "delete": "Hapus",
+    "cancel": "Batal",
+    "actions": "Aksi",
+    "creating": "Membuat...",
+    "updating": "Memperbarui..."
   }
 }

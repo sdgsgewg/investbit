@@ -1,3 +1,5 @@
+import { useTranslations } from "next-intl";
+
 type FieldType = "text" | "select";
 
 type FormField = {
@@ -30,6 +32,8 @@ type CrudPageProps = {
 };
 
 export function CrudPage(props: CrudPageProps) {
+  const tCommon = useTranslations("Common");
+
   const {
     title,
     formFields,
@@ -57,7 +61,7 @@ export function CrudPage(props: CrudPageProps) {
 
       {/* FORM */}
       <div className="border p-4 rounded space-y-4">
-        <h2 className="font-semibold">{isEditing ? "Edit" : "Add"}</h2>
+        <h2 className="font-semibold">{isEditing ? tCommon("edit") : tCommon("add")}</h2>
 
         {formFields.map((field) => {
           if (field.type === "text") {
@@ -85,7 +89,7 @@ export function CrudPage(props: CrudPageProps) {
                 className="border p-2 w-full"
               >
                 <option value="" className="bg-zinc-100 dark:bg-zinc-800">
-                  Select {field.label}
+                  {field.label}
                 </option>
                 {field.options?.map((opt) => (
                   <option
@@ -117,7 +121,7 @@ export function CrudPage(props: CrudPageProps) {
               onClick={resetForm}
               className="bg-gray-400 hover:bg-gray-500 text-white font-semibold px-4 py-2 rounded transition"
             >
-              Cancel
+              {tCommon("cancel")}
             </button>
           )}
         </div>
@@ -132,7 +136,7 @@ export function CrudPage(props: CrudPageProps) {
                 {col.label}
               </th>
             ))}
-            <th className="p-2">Actions</th>
+            <th className="p-2">{tCommon("actions")}</th>
           </tr>
         </thead>
 
@@ -150,13 +154,13 @@ export function CrudPage(props: CrudPageProps) {
                   onClick={() => onEdit(item)}
                   className="bg-yellow-500 text-white px-2 py-1 rounded"
                 >
-                  Edit
+                  {tCommon("edit")}
                 </button>
                 <button
                   onClick={() => onDelete(item.id)}
                   className="bg-red-600 text-white px-2 py-1 rounded"
                 >
-                  Delete
+                  {tCommon("delete")}
                 </button>
               </td>
             </tr>

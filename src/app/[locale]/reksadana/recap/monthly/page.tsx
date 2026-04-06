@@ -12,7 +12,7 @@ import { useCategoryData } from "@/app/hooks/useCategoryData";
 
 export default function MonthlyPage() {
   const tCommon = useTranslations("Common");
-  const tRecapMonthly = useTranslations("RdnRecap.monthly");
+  const tRecapMonthly = useTranslations("Reksadana.recap.monthly");
 
   const {
     data,

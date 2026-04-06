@@ -12,7 +12,7 @@ import { useCategoryData } from "@/app/hooks/useCategoryData";
 
 export default function WeeklyPage() {
   const tCommon = useTranslations("Common");
-  const tRecapWeekly = useTranslations("RdnRecap.weekly");
+  const tRecapWeekly = useTranslations("Reksadana.recap.weekly");
 
   const {
     data,
