@@ -1,4 +1,8 @@
-import { createItemsService, getItemsService } from "@/lib/services/reksadana/items.service";
+import {
+  createItemsService,
+  getItemsGroupedService,
+  getItemsService,
+} from "@/lib/services/reksadana/items.service";
 import { NextResponse } from "next/server";
 
 export async function GET(request: Request) {
@@ -10,7 +14,20 @@ export async function GET(request: Request) {
       category_id: searchParams.get("category_id") || undefined,
     };
 
-    const data = await getItemsService(query);
+    const grouped = searchParams.get("grouped") === "true";
+
+    const data = grouped
+      ? await getItemsGroupedService(query)
+      : await getItemsService(query);
+
+    console.log(
+      "GET /items with query",
+      query,
+      "grouped:",
+      grouped,
+      "result:",
+      data,
+    );
 
     return NextResponse.json(data);
   } catch (error: any) {

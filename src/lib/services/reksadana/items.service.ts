@@ -9,34 +9,34 @@ import {
   itemsSchema,
 } from "@/lib/validations/reksadana/items.schema";
 
-// export async function getItemsService(query: unknown) {
-//   const parsed = itemsQuerySchema.parse(query);
+export async function getItemsGroupedService(query: unknown) {
+  const parsed = itemsQuerySchema.parse(query);
 
-//   const items = await getItemsRepo(parsed);
+  const items = await getItemsRepo(parsed);
 
-//   // Group by category
-//   const map = new Map();
+  // Group by category
+  const map = new Map();
 
-//   items.forEach((item: any) => {
-//     const category = item.rd_categories;
-//     if (!category) return;
+  items.forEach((item: any) => {
+    const category = item.category;
+    if (!category) return;
 
-//     if (!map.has(category.id)) {
-//       map.set(category.id, {
-//         id: category.id,
-//         name: category.name,
-//         rd_items: [],
-//       });
-//     }
+    if (!map.has(category.id)) {
+      map.set(category.id, {
+        id: category.id,
+        name: category.name,
+        rd_items: [],
+      });
+    }
 
-//     map.get(category.id).rd_items.push({
-//       id: item.id,
-//       name: item.name,
-//     });
-//   });
+    map.get(category.id).rd_items.push({
+      id: item.id,
+      name: item.name,
+    });
+  });
 
-//   return Array.from(map.values());
-// }
+  return Array.from(map.values());
+}
 
 export async function getItemsService(query: unknown) {
   const parsed = itemsQuerySchema.parse(query);

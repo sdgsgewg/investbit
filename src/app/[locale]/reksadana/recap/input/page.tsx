@@ -18,7 +18,7 @@ type Category = {
 export default function InputPage() {
   const tCommon = useTranslations("Common");
   const tRecapDaily = useTranslations("RdnRecap.daily");
-  
+
   const [categories, setCategories] = useState<Category[]>([]);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
@@ -33,12 +33,13 @@ export default function InputPage() {
   >({});
 
   useEffect(() => {
-    fetchItems();
-  }, []);
+    const init = async () => {
+      await fetchItems();
+      await fetchRecordsForDate(selectedDate);
+    };
 
-  useEffect(() => {
-    fetchRecordsForDate(selectedDate);
-  }, [selectedDate]);
+    init();
+  }, []);
 
   const fetchRecordsForDate = async (date: string) => {
     try {
@@ -61,6 +62,9 @@ export default function InputPage() {
           };
         },
       );
+
+      console.log("Fetched records for date", date, newInputs);
+
       setInputs(newInputs);
     } catch (error) {
       console.error("Failed to load records", error);
@@ -69,7 +73,10 @@ export default function InputPage() {
 
   const fetchItems = async () => {
     try {
-      const { data } = await axios.get<Category[]>("/api/reksadana/items");
+      const { data } = await axios.get<Category[]>(
+        "/api/reksadana/items?grouped=true",
+      );
+      console.log("Fetched categories and items:", data);
       setCategories(data);
     } catch (error) {
       console.error("Failed to load categories", error);
@@ -143,7 +150,9 @@ export default function InputPage() {
         <div>
           <h2 className="text-xl font-semibold mb-2">{tRecapDaily("title")}</h2>
           <div className="flex items-center gap-2">
-            <label className="text-sm font-medium">{tRecapDaily("selectDate")}:</label>
+            <label className="text-sm font-medium">
+              {tRecapDaily("selectDate")}:
+            </label>
             <input
               type="date"
               value={selectedDate}
@@ -165,7 +174,9 @@ export default function InputPage() {
         <table className="min-w-full text-left bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800">
           <thead className="bg-zinc-100 dark:bg-zinc-800 border-b border-zinc-200 dark:border-zinc-700">
             <tr>
-              <th className="py-3 px-4 font-semibold">{tCommon("reksadana")}</th>
+              <th className="py-3 px-4 font-semibold">
+                {tCommon("reksadana")}
+              </th>
               <th className="py-3 px-4 font-semibold w-40 text-center">
                 {tRecapDaily("yield1d")}
               </th>
