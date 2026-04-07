@@ -32,16 +32,18 @@ export default function InputPage() {
     Record<string, { yield_1d: string; yield_ytd: string }>
   >({});
 
+  // 1. Load items sekali
   useEffect(() => {
-    const init = async () => {
-      await fetchItems();
-      await fetchRecordsForDate(selectedDate);
-    };
-
-    init();
+    fetchItems();
   }, []);
 
+  // 2. Load records tiap tanggal berubah
+  useEffect(() => {
+    fetchRecordsForDate(selectedDate);
+  }, [selectedDate]);
+
   const fetchRecordsForDate = async (date: string) => {
+    setLoading(true);
     try {
       const { data } = await axios.get(
         `/api/reksadana/records?startDate=${date}&endDate=${date}`,
@@ -68,6 +70,8 @@ export default function InputPage() {
       setInputs(newInputs);
     } catch (error) {
       console.error("Failed to load records", error);
+    } finally {
+      setLoading(false);
     }
   };
 
