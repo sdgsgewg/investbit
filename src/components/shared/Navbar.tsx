@@ -12,140 +12,182 @@ import { ModeToggle } from "./ModeToggle";
 import { LanguageSwitcher } from "./LanguageSwitcher";
 import { cn } from "@/lib/utils";
 import { ROUTES } from "@/app/constants/routes";
-import { ChevronDown } from "lucide-react";
+import { ChevronDown, Menu, X } from "lucide-react";
 import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 
 export function Navbar() {
   const t = useTranslations("Nav");
   const tReksadana = useTranslations("Nav.reksadana");
-
   const [open, setOpen] = useState(false);
-
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const pathname = usePathname();
 
   const isActive = (path: string) => pathname === path;
 
+  const navLinks = [
+    { name: t("home"), path: ROUTES.HOME },
+    { name: t("learn"), path: ROUTES.LEARN },
+    { name: t("glossary"), path: ROUTES.GLOSSARY },
+  ];
+
   return (
-    <nav className="border-b bg-background/95 backdrop-blur supports-backdrop-filter:bg-background/60 sticky top-0 z-50">
-      <div className="flex h-16 items-center px-4 container mx-auto">
-        <Link
-          href={ROUTES.HOME}
-          className="font-bold text-2xl mr-6 bg-linear-to-r from-blue-600 to-cyan-500 bg-clip-text text-transparent"
-        >
-          Investbit
-        </Link>
-        <div className="flex items-center space-x-4 lg:space-x-6 mx-6">
-          <Link
-            href={ROUTES.HOME}
-            className={cn(
-              "text-sm font-medium transition-colors hover:text-primary",
-              isActive(ROUTES.HOME) ? "text-primary" : "text-muted-foreground",
-            )}
-          >
-            {t("home")}
-          </Link>
-          <Link
-            href={ROUTES.LEARN}
-            className={cn(
-              "text-sm font-medium transition-colors hover:text-primary",
-              isActive(ROUTES.LEARN) ? "text-primary" : "text-muted-foreground",
-            )}
-          >
-            {t("learn")}
-          </Link>
-          {/*
-          <Link
-            href={ROUTES.ANALYZE}
-            className={cn(
-              "text-sm font-medium transition-colors hover:text-primary",
-              isActive(ROUTES.ANALYZE) ? "text-primary" : "text-muted-foreground"
-            )}
-          >
-            {t("analyze")}
-          </Link>
-          */}
-          <Link
-            href={ROUTES.GLOSSARY}
-            className={cn(
-              "text-sm font-medium transition-colors hover:text-primary",
-              isActive(ROUTES.GLOSSARY)
-                ? "text-primary"
-                : "text-muted-foreground",
-            )}
-          >
-            {t("glossary")}
-          </Link>
-          {/* <Link
-            href={ROUTES.RDN_RECAP.INPUT}
-            className={cn(
-              "text-sm font-medium transition-colors hover:text-primary",
-              isActive(ROUTES.RDN_RECAP.INPUT)
-                ? "text-primary"
-                : "text-muted-foreground",
-            )}
-          >
-            {t("rdn-recap")}
-          </Link> */}
-
-          {/* Dropdown Manage Item Menu */}
-          <DropdownMenu open={open} onOpenChange={setOpen}>
-            <DropdownMenuTrigger
-              className={cn(
-                "flex items-center gap-1 text-sm font-medium transition-colors hover:text-primary cursor-pointer",
-                pathname.startsWith("/reksadana")
-                  ? "text-primary"
-                  : "text-muted-foreground",
-              )}
+    <>
+      <nav className="border-b bg-background/95 backdrop-blur supports-backdrop-filter:bg-background/60 sticky top-0 z-50">
+        <div className="flex h-16 items-center px-4 container mx-auto justify-between">
+          <div className="flex items-center">
+            <Link
+              href={ROUTES.HOME}
+              className="font-bold text-2xl mr-6 bg-linear-to-r from-blue-600 to-cyan-500 bg-clip-text text-transparent shrink-0"
             >
-              {tReksadana("base")}
-              <ChevronDown
-                className={cn(
-                  "h-4 w-4 transition-transform duration-200",
-                  open && "rotate-180",
-                )}
-              />
-            </DropdownMenuTrigger>
+              Investbit
+            </Link>
 
-            <DropdownMenuContent align="start">
-              <DropdownMenuItem
-                asChild
-                className={cn(
-                  pathname === ROUTES.REKSADANA.RECAP.INPUT && "bg-accent",
-                )}
-              >
-                <Link href={ROUTES.REKSADANA.RECAP.INPUT}>
-                  {tReksadana("recap")}
+            {/* Desktop Navigation */}
+            <div className="hidden md:flex items-center space-x-4 lg:space-x-6 mx-6">
+              {navLinks.map((link) => (
+                <Link
+                  key={link.path}
+                  href={link.path}
+                  className={cn(
+                    "text-sm font-medium transition-colors hover:text-primary",
+                    isActive(link.path) ? "text-primary" : "text-muted-foreground"
+                  )}
+                >
+                  {link.name}
                 </Link>
-              </DropdownMenuItem>
+              ))}
 
-              <DropdownMenuItem
-                asChild
-                className={cn(
-                  pathname === ROUTES.REKSADANA.ITEMS && "bg-accent",
-                )}
-              >
-                <Link href={ROUTES.REKSADANA.ITEMS}>{tReksadana("items")}</Link>
-              </DropdownMenuItem>
+              <DropdownMenu open={open} onOpenChange={setOpen}>
+                <DropdownMenuTrigger
+                  className={cn(
+                    "flex items-center gap-1 text-sm font-medium transition-colors hover:text-primary cursor-pointer",
+                    pathname.startsWith("/reksadana")
+                      ? "text-primary"
+                      : "text-muted-foreground"
+                  )}
+                >
+                  {tReksadana("base")}
+                  <ChevronDown
+                    className={cn(
+                      "h-4 w-4 transition-transform duration-200",
+                      open && "rotate-180"
+                    )}
+                  />
+                </DropdownMenuTrigger>
 
-              <DropdownMenuItem
-                asChild
-                className={cn(
-                  pathname === ROUTES.REKSADANA.CATEGORIES && "bg-accent",
-                )}
-              >
-                <Link href={ROUTES.REKSADANA.CATEGORIES}>
-                  {tReksadana("categories")}
-                </Link>
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
+                <DropdownMenuContent align="start">
+                  <DropdownMenuItem asChild className={cn(pathname === ROUTES.REKSADANA.RECAP.INPUT && "bg-accent")}>
+                    <Link href={ROUTES.REKSADANA.RECAP.INPUT}>{tReksadana("recap")}</Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild className={cn(pathname === ROUTES.REKSADANA.ITEMS && "bg-accent")}>
+                    <Link href={ROUTES.REKSADANA.ITEMS}>{tReksadana("items")}</Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild className={cn(pathname === ROUTES.REKSADANA.CATEGORIES && "bg-accent")}>
+                    <Link href={ROUTES.REKSADANA.CATEGORIES}>{tReksadana("categories")}</Link>
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </div>
+          </div>
+
+          <div className="flex items-center space-x-2 md:space-x-4">
+            <LanguageSwitcher />
+            <ModeToggle />
+            
+            {/* Mobile Menu Toggle */}
+            <button
+              className="md:hidden p-2 text-foreground hover:bg-muted rounded-md focus:outline-none"
+              onClick={() => setMobileMenuOpen(true)}
+              aria-label="Open Mobile Menu"
+            >
+              <Menu className="h-6 w-6" />
+            </button>
+          </div>
         </div>
+      </nav>
 
-        <div className="ml-auto flex items-center space-x-4">
-          <LanguageSwitcher />
-          <ModeToggle />
-        </div>
-      </div>
-    </nav>
+      {/* Mobile Menu Overlay */}
+      <AnimatePresence>
+        {mobileMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0, x: "100%" }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: "100%" }}
+            transition={{ type: "spring", damping: 25, stiffness: 200 }}
+            className="fixed inset-0 z-50 md:hidden bg-background border-l shadow-2xl flex flex-col"
+          >
+            <div className="flex h-16 items-center px-4 justify-between border-b shrink-0">
+              <span className="font-bold text-2xl bg-linear-to-r from-blue-600 to-cyan-500 bg-clip-text text-transparent">
+                Menu
+              </span>
+              <button
+                className="p-2 text-foreground hover:bg-muted rounded-md focus:outline-none"
+                onClick={() => setMobileMenuOpen(false)}
+                aria-label="Close Mobile Menu"
+              >
+                <X className="h-6 w-6" />
+              </button>
+            </div>
+            
+            <div className="flex-1 overflow-y-auto py-6 px-4 flex flex-col space-y-6">
+              <div className="flex flex-col space-y-2">
+                {navLinks.map((link) => (
+                  <Link
+                    key={link.path}
+                    href={link.path}
+                    onClick={() => setMobileMenuOpen(false)}
+                    className={cn(
+                      "text-lg font-medium transition-colors p-2 rounded-md hover:bg-accent",
+                      isActive(link.path) ? "text-primary bg-primary/5" : "text-muted-foreground"
+                    )}
+                  >
+                    {link.name}
+                  </Link>
+                ))}
+              </div>
+
+              <div className="border-t pt-6">
+                <h3 className="text-sm font-semibold text-muted-foreground mb-4 uppercase tracking-wider px-2">
+                  {tReksadana("base")}
+                </h3>
+                <div className="flex flex-col space-y-2">
+                  <Link
+                    href={ROUTES.REKSADANA.RECAP.INPUT}
+                    onClick={() => setMobileMenuOpen(false)}
+                    className={cn(
+                      "text-lg font-medium transition-colors p-2 rounded-md hover:bg-accent",
+                      pathname === ROUTES.REKSADANA.RECAP.INPUT ? "text-primary bg-primary/5" : "text-muted-foreground"
+                    )}
+                  >
+                    {tReksadana("recap")}
+                  </Link>
+                  <Link
+                    href={ROUTES.REKSADANA.ITEMS}
+                    onClick={() => setMobileMenuOpen(false)}
+                    className={cn(
+                      "text-lg font-medium transition-colors p-2 rounded-md hover:bg-accent",
+                      pathname === ROUTES.REKSADANA.ITEMS ? "text-primary bg-primary/5" : "text-muted-foreground"
+                    )}
+                  >
+                    {tReksadana("items")}
+                  </Link>
+                  <Link
+                    href={ROUTES.REKSADANA.CATEGORIES}
+                    onClick={() => setMobileMenuOpen(false)}
+                    className={cn(
+                      "text-lg font-medium transition-colors p-2 rounded-md hover:bg-accent",
+                      pathname === ROUTES.REKSADANA.CATEGORIES ? "text-primary bg-primary/5" : "text-muted-foreground"
+                    )}
+                  >
+                    {tReksadana("categories")}
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </>
   );
 }

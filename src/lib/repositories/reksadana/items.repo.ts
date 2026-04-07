@@ -24,7 +24,8 @@ export async function getItemsRepo(params: {
         )
       `,
     )
-    .order("name");
+    .order("category(name)", { ascending: true })
+    .order("name", { ascending: true });
 
   if (params.name) {
     query = query.ilike("name", `%${params.name}%`);

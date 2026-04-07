@@ -1,4 +1,6 @@
 import { useTranslations } from "next-intl";
+import { Edit2, Trash2, Plus, Save, X, Database } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 type FieldType = "text" | "select";
 
@@ -56,117 +58,210 @@ export function CrudPage(props: CrudPageProps) {
   };
 
   return (
-    <div className="space-y-6">
-      <h1 className="text-3xl font-bold">{title}</h1>
-
-      {/* FORM */}
-      <div className="border p-4 rounded space-y-4">
-        <h2 className="font-semibold">{isEditing ? tCommon("edit") : tCommon("add")}</h2>
-
-        {formFields.map((field) => {
-          if (field.type === "text") {
-            return (
-              <input
-                key={field.name}
-                placeholder={field.label}
-                value={form[field.name] || ""}
-                onChange={(e) =>
-                  setForm({ ...form, [field.name]: e.target.value })
-                }
-                className="border p-2 w-full"
-              />
-            );
-          }
-
-          if (field.type === "select") {
-            return (
-              <select
-                key={field.name}
-                value={form[field.name] || ""}
-                onChange={(e) =>
-                  setForm({ ...form, [field.name]: e.target.value })
-                }
-                className="border p-2 w-full"
-              >
-                <option value="" className="bg-zinc-100 dark:bg-zinc-800">
-                  {field.label}
-                </option>
-                {field.options?.map((opt) => (
-                  <option
-                    key={opt.id}
-                    value={opt.id}
-                    className="bg-zinc-100 dark:bg-zinc-800"
-                  >
-                    {opt.name}
-                  </option>
-                ))}
-              </select>
-            );
-          }
-
-          return null;
-        })}
-
-        <div className="flex gap-2">
-          <button
-            onClick={onSubmit}
-            disabled={isSubmitting || isFormEmpty}
-            className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-6 rounded transition disabled:opacity-50"
-          >
-            {buttonText}
-          </button>
-
-          {isEditing && (
-            <button
-              onClick={resetForm}
-              className="bg-gray-400 hover:bg-gray-500 text-white font-semibold px-4 py-2 rounded transition"
-            >
-              {tCommon("cancel")}
-            </button>
-          )}
+    <div className="space-y-8">
+      <div className="flex items-center gap-3 pb-6 border-b border-border/40">
+        <div className="p-2.5 bg-primary/10 rounded-xl">
+          <Database className="w-6 h-6 text-primary" />
         </div>
+        <h1 className="text-3xl font-extrabold tracking-tight bg-clip-text text-transparent bg-linear-to-r from-foreground to-foreground/80">
+          {title}
+        </h1>
       </div>
 
-      {/* TABLE */}
-      <table className="w-full border">
-        <thead className="bg-zinc-100 dark:bg-zinc-800 border-b border-zinc-200 dark:border-zinc-700">
-          <tr>
-            {columns.map((col) => (
-              <th key={col.key} className="p-2 text-left">
-                {col.label}
-              </th>
-            ))}
-            <th className="p-2">{tCommon("actions")}</th>
-          </tr>
-        </thead>
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+        {/* FORM SECTION */}
+        <div className="lg:col-span-4 space-y-6">
+          <div className="bg-card border border-border/50 shadow-sm rounded-2xl overflow-hidden sticky top-24">
+            <div className="p-6 bg-muted/20 border-b border-border/50">
+              <h2 className="font-semibold text-lg flex items-center gap-2">
+                {isEditing ? (
+                  <>
+                    <Edit2 className="w-4 h-4 text-primary" />
+                    {tCommon("edit")} Entry
+                  </>
+                ) : (
+                  <>
+                    <Plus className="w-4 h-4 text-primary" />
+                    {tCommon("add")} Entry
+                  </>
+                )}
+              </h2>
+            </div>
 
-        <tbody>
-          {data.map((item) => (
-            <tr key={item.id} className="border-t">
-              {columns.map((col) => (
-                <td key={col.key} className="p-2">
-                  {getValue(item, col.key)}
-                </td>
-              ))}
+            <div className="p-6 space-y-5">
+              {formFields.map((field) => {
+                if (field.type === "text") {
+                  return (
+                    <div key={field.name} className="space-y-2">
+                      <label className="text-sm font-medium text-muted-foreground ml-1">
+                        {field.label}
+                      </label>
+                      <input
+                        placeholder={field.label}
+                        value={form[field.name] || ""}
+                        onChange={(e) =>
+                          setForm({ ...form, [field.name]: e.target.value })
+                        }
+                        className="flex h-10 w-full rounded-xl border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 transition-all"
+                      />
+                    </div>
+                  );
+                }
 
-              <td className="p-2 text-center space-x-2">
+                if (field.type === "select") {
+                  return (
+                    <div key={field.name} className="space-y-2">
+                      <label className="text-sm font-medium text-muted-foreground ml-1">
+                        {field.label}
+                      </label>
+                      <select
+                        value={form[field.name] || ""}
+                        onChange={(e) =>
+                          setForm({ ...form, [field.name]: e.target.value })
+                        }
+                        className="flex h-10 w-full rounded-xl border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 transition-all appearance-none"
+                      >
+                        <option value="" disabled className="bg-background">
+                          {field.label}
+                        </option>
+                        {field.options?.map((opt) => (
+                          <option
+                            key={opt.id}
+                            value={opt.id}
+                            className="bg-background text-foreground"
+                          >
+                            {opt.name}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                  );
+                }
+
+                return null;
+              })}
+
+              <div className="flex gap-3 pt-4 border-t border-border/50">
                 <button
-                  onClick={() => onEdit(item)}
-                  className="bg-yellow-500 text-white px-2 py-1 rounded"
+                  onClick={onSubmit}
+                  disabled={isSubmitting || isFormEmpty}
+                  className="flex-1 flex items-center justify-center gap-2 bg-primary hover:bg-primary/90 text-primary-foreground font-semibold h-10 px-4 rounded-xl transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-sm"
                 >
-                  {tCommon("edit")}
+                  <Save className="w-4 h-4" />
+                  {buttonText}
                 </button>
-                <button
-                  onClick={() => onDelete(item.id)}
-                  className="bg-red-600 text-white px-2 py-1 rounded"
-                >
-                  {tCommon("delete")}
-                </button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+
+                {isEditing && (
+                  <button
+                    onClick={resetForm}
+                    className="flex items-center justify-center gap-2 bg-muted hover:bg-muted/80 text-foreground font-medium h-10 px-4 rounded-xl transition-all"
+                    title={tCommon("cancel")}
+                  >
+                    <X className="w-4 h-4" />
+                  </button>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* TABLE SECTION */}
+        <div className="lg:col-span-8">
+          <div className="bg-card border border-border/50 shadow-sm rounded-2xl overflow-hidden">
+            <div className="overflow-x-auto">
+              <table className="w-full text-sm text-left">
+                <thead className="text-xs text-muted-foreground uppercase bg-muted/30 border-b border-border/50">
+                  <tr>
+                    {columns.map((col) => (
+                      <th
+                        key={col.key}
+                        className="px-6 py-4 font-semibold tracking-wider"
+                      >
+                        {col.label}
+                      </th>
+                    ))}
+                    <th className="px-6 py-4 font-semibold tracking-wider text-right">
+                      {tCommon("actions")}
+                    </th>
+                  </tr>
+                </thead>
+
+                <tbody className="divide-y divide-border/50">
+                  {data.length === 0 ? (
+                    <tr>
+                      <td
+                        colSpan={columns.length + 1}
+                        className="px-6 py-12 text-center text-muted-foreground"
+                      >
+                        <div className="flex flex-col items-center justify-center">
+                          <Database className="w-10 h-10 text-muted-foreground/30 mb-3" />
+                          <p>No records found.</p>
+                        </div>
+                      </td>
+                    </tr>
+                  ) : (
+                    data.map((item) => (
+                      <tr
+                        key={item.id}
+                        className="hover:bg-muted/30 transition-colors group"
+                      >
+                        {columns.map((col, index) => (
+                          <td
+                            key={col.key}
+                            className={cn(
+                              "px-6 py-4",
+                              index === 0 && "font-medium text-foreground",
+                            )}
+                          >
+                            {getValue(item, col.key) || (
+                              <span className="text-muted-foreground italic">
+                                -
+                              </span>
+                            )}
+                          </td>
+                        ))}
+
+                        <td className="px-6 py-4 text-right">
+                          <div className="hidden md:flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                            <button
+                              onClick={() => onEdit(item)}
+                              className="p-2 text-blue-500 hover:bg-blue-500/10 rounded-lg transition-colors"
+                              title={tCommon("edit")}
+                            >
+                              <Edit2 className="w-4 h-4" />
+                            </button>
+                            <button
+                              onClick={() => onDelete(item.id)}
+                              className="p-2 text-red-500 hover:bg-red-500/10 rounded-lg transition-colors"
+                              title={tCommon("delete")}
+                            >
+                              <Trash2 className="w-4 h-4" />
+                            </button>
+                          </div>
+                          <div className="flex md:hidden items-center justify-end gap-2">
+                            <button
+                              onClick={() => onEdit(item)}
+                              className="p-2 text-blue-500 hover:bg-blue-500/10 rounded-lg transition-colors"
+                            >
+                              <Edit2 className="w-4 h-4" />
+                            </button>
+                            <button
+                              onClick={() => onDelete(item.id)}
+                              className="p-2 text-red-500 hover:bg-red-500/10 rounded-lg transition-colors"
+                            >
+                              <Trash2 className="w-4 h-4" />
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                    ))
+                  )}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
