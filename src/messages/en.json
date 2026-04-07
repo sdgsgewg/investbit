@@ -5,6 +5,628 @@
     "getStarted": "Get Started",
     "learnMore": "Learn More"
   },
+  "LearnPage": {
+    "technicalAnalysis": {
+      "chapter1": {
+        "title": "Chapter 1: Chart Pattern",
+        "description": "How to identify trend changes and determine profit targets.",
+        "content_title": "Chart Patterns for Stock Trading",
+
+        "lessons": {
+          "bullish": {
+            "title": "Bullish Chart Pattern",
+            "description": "A bullish chart pattern means a pattern that has potential to rise.",
+            "topics": {
+              "ascending_triangle": {
+                "title": "Ascending Triangle",
+                "content": {
+                  "definition": {
+                    "text": [
+                      "This pattern resembles a right triangle, with the bottom line sloping upwards.",
+                      "Meanwhile, the top line is horizontal, representing resistance, or the neckline in this pattern.",
+                      "This pattern is considered valid or confirmed when the price successfully breaks through the straight line, also known as the neckline.",
+                      "Meanwhile, the target price can be measured as the distance between the neckline and the sideways line when it first formed."
+                    ]
+                  },
+                  "example": {
+                    "stock": "BBNI stock on July - October 2021",
+                    "explanation": [
+                      "Observe the price movement of BBNI since June 15, 2021.",
+                      "When BBNI's price plunged, it held at one point, namely 4500, which served as support.",
+                      "Then, when BBNI rebounded, it formed a straight line, also known as resistance, which served as a neckline.",
+                      "This neckline serves as a confirmation point for BBNI's price movement, which is forming an ascending triangle pattern, where the stock price consistently makes lows that are no lower than the previous low.",
+                      "When the price breaks through the neckline, this is called confirmation.",
+                      "With this chart pattern, we can set an upside target for BBNI along the ascending triangle, from the lowest point to the neckline.",
+                      "We can see from the chart above that BBNI has successfully achieved its upside target."
+                    ]
+                  }
+                }
+              },
+              "inverted_head_and_shoulders": {
+                "title": "Inverted Head and Shoulders",
+                "content": {
+                  "definition": {
+                    "text": [
+                      "This pattern resembles two shoulders and one head, but inverted.",
+                      "The two shoulders are nearly equal in size, while the head is the largest or has the deepest decline.",
+                      "Confirmation of the validity of this pattern occurs when the price successfully breaks through the neckline.",
+                      "Once confirmed, we can determine the price target based on the distance between the lowest point of the head and the neckline."
+                    ]
+                  },
+                  "example": {
+                    "stock": "ISAT stock on March - August 2019",
+                    "explanation": [
+                      "When the ISAT share price began to correct on March 26, 2019, it rebounded, then reached its last high at 2700, creating a resistance point.",
+                      "Note that ISAT then fell, forming a deeper trough. When ISAT rebounded again, it was again held back by the resistance area previously created by the highest trough. Therefore, when we draw a straight line, we create a resistance or supply area called an Inverted Head and Shoulders.",
+                      "This is what is called a neckline, which is the first shoulder movement, followed by a head, and finally forming a head and shoulders.",
+                      "When the ISAT price successfully breaks through the neckline, this is what is called pattern confirmation.",
+                      "The target movement of ISAT can be calculated along the movement from the trough, namely from the bottom to the neckline.",
+                      "Then, note that ISAT successfully touched the target area of ​​the inverted head and shoulders movement, then it corrected and was unable to continue its upward movement."
+                    ]
+                  }
+                }
+              },
+              "cup_and_handle": {
+                "title": "Cup and Handle",
+                "content": {
+                  "definition": {
+                    "text": [
+                      "This pattern resembles a cup and its handle. Ideally, the handle should not be larger than the cup. Both look like a large valley and a small valley, similar to a cup.",
+                      "The valley in the cup appears steeper than the valley in the handle. This is because the lowest point on the handle is higher than the lowest point on the cup.",
+                      "Confirmation of the validity of this pattern is when the price successfully breaks out or passes the cup boundary.",
+                      "After that, we can determine the target price based on the distance between the lowest point of the cup and the neckline or cup boundary, which is essentially the furthest or highest point."
+                    ]
+                  },
+                  "example": {
+                    "stock": "WIKA stock on July 22, 2021",
+                    "explanation": [
+                      "The rules of a cup and handle call for a very deep valley. Here, we see WIKA's price movement correcting, even breaking through its last low, then rebounding to reach the resistance area, the highest point on July 22nd, thus creating a supply area, also known as the neckline.",
+                      "Then, WIKA's correction formed a higher low, meaning it wasn't lower than the last low, so WIKA's shape resembled a cup.",
+                      "When WIKA's share price successfully broke through the neckline, this was called confirmation.",
+                      "With this chart pattern formed, we can set a price increase target by drawing from the lowest point to the neckline, then moving this movement to the neckline area.",
+                      "Then, we can see from the chart above that WIKA successfully achieved its increase target."
+                    ]
+                  }
+                }
+              },
+              "double_bottom": {
+                "title": "Double Bottom",
+                "content": {
+                  "definition": {
+                    "text": [
+                      "This pattern resembles two adjacent or side-by-side valleys, and it's one of the most common.",
+                      "Ideally, the lowest points are at the same level.",
+                      "Confirmation of the validity of this pattern is when the price successfully breaks through the neckline.",
+                      "After that, we can determine the target price by using the distance between the lowest point of one of the bottoms and the neckline, which is usually the same low point."
+                    ]
+                  },
+                  "example": {
+                    "stock": "ADHI stock on July - August 2021",
+                    "explanation": [
+                      "Let's look at the two lowest points (pivot lows) of ADHI stock, namely at 660.",
+                      "Then, far above that, ADHI formed a resistance line, which was ADHI's last high before forming the second bottom.",
+                      "Now, this area is what we call the neckline if we draw a straight line.",
+                      "As of August 20, 2021, ADHI cannot be considered to have formed a double bottom pattern until the neckline area is broken, which is what is called confirmation.",
+                      "With the formation of this chart pattern, we can set a price increase target by drawing from the lowest point to the neckline, then moving this movement to the neckline area.",
+                      "Then, we can see from the chart above that ADHI has successfully achieved its increase target."
+                    ]
+                  }
+                }
+              },
+              "bullish_flag": {
+                "title": "Bullish Flag",
+                "content": {
+                  "definition": {
+                    "text": [
+                      "This pattern begins with the formation of a pole, which indicates a rapid price increase, followed by the formation of a flag.",
+                      "The flag forms after the pole forms and can be identified by price movement that resembles a downward-sloping rectangle.",
+                      "A flag is simply a box formed by a channel line in a downtrend.",
+                      "Confirmation of the validity of this pattern occurs when the price successfully breaks through the rectangular area formed by the flag.",
+                      "Traders can then determine the target price using the height of the previously formed pole."
+                    ]
+                  },
+                  "example": {
+                    "stock": "ADRO stock on September - December 2021",
+                    "explanation": [
+                      "We can see that on September 21, 2021, there was a massive upward movement.",
+                      "It then corrected, forming a flag or a downward-sloping rectangle. When this rectangle area is successfully broken upward, it serves as a confirmation area.",
+                      "This is a retracement period, or resting period, for a stock experiencing a trend.",
+                      "Then, we can see that ADRO successfully confirmed the continuation of the bullish flag, meaning it continued its uptrend. To calculate the target, we can use the pole area of ​​the bullish flag, which is from September 21 to October 6.",
+                      "Therefore, ADRO successfully achieved its upside target."
+                    ]
+                  }
+                }
+              },
+              "bullish_pennant": {
+                "title": "Bullish Pennant",
+                "content": {
+                  "definition": {
+                    "text": [
+                      "This pattern resembles a flagpole, similar to a bullish flag, but this time the flag is triangular instead of square, or what is commonly known as a pennant.",
+                      "The pole is formed from a significant surge in stock prices over a short period of time.",
+                      "Meanwhile, the flag, or pennant, is formed from price movements with increasingly higher support points and lower resistance points.",
+                      "Confirmation of the validity of this pattern is when the price successfully moves past the upper line of the triangle.",
+                      "After that, traders can determine the target price using the height of the previously formed pole."
+                    ]
+                  },
+                  "example": {
+                    "stock": "DMAS stock on May - July 2021",
+                    "explanation": [
+                      "We can see that on May 19, 2020, there was a massive upward movement.",
+                      "It then corrected, forming a pennant or triangle.",
+                      "Confirmation of the validity of this pattern is when the price successfully breaks through the diagonal resistance of the pennant.",
+                      "After that, traders can determine the target price using the height of the previously formed pole."
+                    ]
+                  }
+                }
+              },
+              "falling_wedge": {
+                "title": "Falling Wedge",
+                "content": {
+                  "definition": {
+                    "text": [
+                      "This pattern resembles a wedge-shaped shoe often worn to parties.",
+                      "This pattern can be identified by the increasingly narrow distance between the high and low points.",
+                      "Confirmation of the validity of this pattern is when the price successfully moves past the upper line of the wedge triangle.",
+                      "After that, we can determine the price target by using the distance between the highest and lowest wedge areas at the initial formation area."
+                    ]
+                  },
+                  "example": {
+                    "stock": "LPPF stock on 7 February 2022",
+                    "explanation": [
+                      "We can see that the stock's movement consistently breaks through lower lows.",
+                      "This movement creates a downward trendline.",
+                      "Furthermore, at the top, it also creates a downward trendline, forming a wedge-like shape.",
+                      "Confirmation of the validity of this pattern is when the price successfully breaks through its resistance (the upper line of the wedge).",
+                      "After that, traders can determine the target price by measuring the largest gap between the two lines, which is the starting point of the wedge's formation.",
+                      "Then, we measure the upward target from the breakout point."
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "bearish": {
+            "title": "Bearish Chart Pattern",
+            "description": "A bearish chart pattern means a pattern that, if formed, indicates a potential drop in stock prices. The purpose of understanding this pattern is to be prepared before the price reaches its target decline or to project how far the price will fall.",
+            "topics": {
+              "descending_triangle": {
+                "title": "Descending Triangle",
+                "content": {
+                  "definition": {
+                    "text": [
+                      "This pattern resembles a right-angled triangle with a downward-pointing trendline and a neckline (support) below it.",
+                      "Confirmation of the validity of this pattern occurs when the price successfully falls below the neckline, a process known as a breakdown.",
+                      "Just like an ascending triangle, we can determine the price target by measuring the distance between the neckline and the sideline when it first forms."
+                    ]
+                  },
+                  "example": {
+                    "stock": "UNTR stock on July - October 2021",
+                    "explanation": [
+                      "UNTR's peak was at 40312, and note that when UNTR corrected, it created a support area.",
+                      "When we draw an equation from 40312, it corrected and then rebounded. UNTR's rebound failed to create a new high, so it made a movement that continued to make higher lows.",
+                      "When we draw a trend line, it will create a downward trend line.",
+                      "This downward trend line is already a sign that the stock price is weakening.",
+                      "When we look at the neckline below, this is a movement called a descending triangle.",
+                      "When the stock price breaks through the neckline, this is what is called confirmation.",
+                      "With the formation of this chart pattern, we can set a downside target, which is from the top point to the neckline.",
+                      "We can see from the chart above that UNTR successfully achieved the downside target of its bearish pattern."
+                    ]
+                  }
+                }
+              },
+              "head_and_shoulders": {
+                "title": "Head and Shoulders",
+                "content": {
+                  "definition": {
+                    "text": [
+                      "This pattern resembles a head with two shoulders.",
+                      "Confirmation of the validity of this pattern occurs when the price successfully falls below the neckline (breakdown).",
+                      "The neckline can be drawn by drawing a line from the low point formed by each head and shoulder.",
+                      "Traders can determine price targets by measuring the distance from the head to the neckline."
+                    ]
+                  },
+                  "example": {
+                    "stock": "SMRA stock on August - December 2021",
+                    "explanation": []
+                  }
+                }
+              },
+              "inverted_cup_and_handle": {
+                "title": "Inverted Cup and Handle",
+                "content": {
+                  "definition": {
+                    "text": [
+                      "This pattern resembles an inverted cup with a handle.",
+                      "Confirmation of the validity of this pattern occurs when the price successfully falls below its neckline (breakdown).",
+                      "Afterward, traders can determine the target price based on the greatest distance between the top of the cup and the neckline, as shown in the cup above."
+                    ]
+                  },
+                  "example": {
+                    "stock": "BBNI stock on June - July 2019",
+                    "explanation": []
+                  }
+                }
+              },
+              "double_top": {
+                "title": "Double Top",
+                "content": {
+                  "definition": {
+                    "text": [
+                      "This pattern resembles two mountains. It occurs when the stock price fails to break through the previous high.",
+                      "Confirmation of the validity of this pattern is when the price successfully falls below its neckline (breakdown).",
+                      "We can think of the neckline as the lower boundary or foot of a mountain.",
+                      "Traders can then determine the target price decline based on the distance between the peak and the foot of the mountain."
+                    ]
+                  },
+                  "example": {
+                    "stock": "PGAS stock on November 2020 - April 2021",
+                    "explanation": []
+                  }
+                }
+              },
+              "bearish_flag": {
+                "title": "Bearish Flag",
+                "content": {
+                  "definition": {
+                    "text": [
+                      "This pattern begins with a sharp price decline and is identified by price movement forming an upward-sloping rectangular pattern.",
+                      "Confirmation of the validity of this pattern is when the price successfully falls from below the flag (breakdown).",
+                      "Afterward, traders can determine a price target using the height of the previously formed pole."
+                    ]
+                  },
+                  "example": {
+                    "stock": "BUKA stock on September 2021 - January 2022",
+                    "explanation": []
+                  }
+                }
+              },
+              "bearish_pennant": {
+                "title": "Bearish Pennant",
+                "content": {
+                  "definition": {
+                    "text": [
+                      "This pattern can be identified when there is a sudden or abrupt price drop, followed by a price reversal.",
+                      "In this pattern, the steep price drop creates a flagpole.",
+                      "Then, when the price experiences sideways movement or consolidation, it forms a triangle pattern as its pennant.",
+                      "Confirmation of the validity of this pattern is when the price successfully falls below the pennant or a breakdown occurs.",
+                      "After that, we can determine the price target using the height of the previously formed flagpole."
+                    ]
+                  },
+                  "example": {
+                    "stock": "PGAS stock on January - August 2021",
+                    "explanation": []
+                  }
+                }
+              }
+            }
+          },
+          "sideways": {
+            "title": "Sideways Chart Pattern",
+            "description": "A sideways chart pattern means a pattern that has no clear direction, but has potential to rise or fall.",
+            "topics": {
+              "symmetrical_triangle": {
+                "title": "Symmetrical Triangle",
+                "content": {
+                  "definition": {
+                    "text": [
+                      "This pattern resembles an equilateral triangle that gradually tapers.",
+                      "This pattern typically forms when the price fails to form a lower low or a higher high.",
+                      "The triangle in this pattern forms because the high and low points become closer together over time.",
+                      "Confirmation of the validity of this pattern occurs when the price successfully falls below or rises above the triangle, or experiences a breakout or breakdown.",
+                      "Afterward, determine the target price using the distance between the high and low of the triangle when it first formed."
+                    ]
+                  },
+                  "example": {
+                    "stock": "ARTO stock on March - June 2021",
+                    "explanation": [
+                      "We can see that the stock price has moved sideways for quite a long time.",
+                      "This sideways movement creates a symmetrical triangle pattern.",
+                      "Confirmation of the validity of this pattern occurs when the price successfully falls below or rises above the triangle, or experiences a breakout or breakdown.",
+                      "Afterward, determine the target price using the distance between the high and low of the triangle when it first formed."
+                    ]
+                  }
+                }
+              },
+              "rectangle": {
+                "title": "Rectangle",
+                "content": {
+                  "definition": {
+                    "text": [
+                      "As the name suggests, this pattern resembles a rectangle.",
+                      "In this pattern, the price forms a sideways pattern with resistance and support points that are nearly parallel to the previous points (the numbers are almost the same).",
+                      "Confirmation of the validity of this pattern is when the price successfully falls below (breaks down) or rises above (breaks out) the rectangle.",
+                      "After that, we can determine the price target based on the height of the rectangle."
+                    ]
+                  },
+                  "example": {
+                    "stock": "ULTJ stock on February - November 2021",
+                    "explanation": [
+                      "We can see that the stock price has moved sideways for quite a long time.",
+                      "This sideways movement creates a rectangle pattern.",
+                      "Confirmation of the validity of this pattern is when the price successfully falls below (breaks down) or rises above (breaks out) the rectangle.",
+                      "Afterward, determine the price target based on the height of the rectangle."
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "false_break": {
+            "title": "False Break",
+            "description": "A false break can be defined as a failed breakout, where resistance remains strong, causing the price, which had previously broken through, to fall back below its resistance.",
+            "content": {
+              "definition": {
+                "text": [
+                  "After understanding chart patterns and projecting stock price movements after a pattern forms, it's helpful to understand the term false break.",
+                  "A false break can be defined as a failed breakout, where resistance remains strong, causing the price, which had previously broken through, to fall back below its resistance.",
+                  "This also applies to a false breakdown, which can be defined as a failed breakdown, where support remains strong, causing the price, which had previously broken through, to rise back above its support."
+                ]
+              },
+              "example": {
+                "stock": "WIKA stock on July 2018",
+                "explanation": [
+                  "First, we can see that WIKA's price has formed a double bottom pattern.",
+                  "This means that the price has touched a low point twice, and then rebounded.",
+                  "However, after the price broke through the resistance of the double bottom pattern, it failed to hold above it.",
+                  "This is called a false breakout.",
+                  "This can happen because the resistance is still strong, or because there is not enough buying volume to push the price higher.",
+                  "As a result, the price fell back below the resistance, and the double bottom pattern was invalidated."
+                ]
+              }
+            }
+          },
+          "key_takeaways_c1": {
+            "title": "Key Takeaways",
+            "description": "",
+            "content": {
+              "text": [
+                "In conclusion, chart patterns serve as signals for traders to take positions before prices rise, or to sell a stock before the price drops further.",
+                "Furthermore, to support or confirm a breakout from a pattern, support, or resistance level, we must also look at volume.",
+                "This is because there's a possibility that the chart pattern formed is invalid, leading to a false breakout."
+              ]
+            }
+          }
+        }
+      },
+
+      "chapter2": {
+        "title": "Chapter 2: Volume",
+        "description": "How to validate changes in stock price trend movements.",
+        "content_title": "How to Analyze Volume When Trading Stocks",
+
+        "lessons": {
+          "volume_indicators": {
+            "title": "Get to know Volume Indicators",
+            "description": "",
+            "content": {
+              "p1": "The volume indicator shows the size of the number of transactions on a stock.",
+              "p2": "Volume analysis is an inseparable part of technical analysis because volume is the key to price movements.",
+              "p3": "Price movements without being based on volume can be said to be useless.",
+              "p4": "The main use of volume is to confirm the strength of the ongoing trend and also confirm the price movements that occur, such as chart patterns, resistance breakouts, and support breakdowns.",
+              "p5": "Because of its confirmatory nature, the volume indicator cannot be used alone, but is used to complement other analyses."
+            }
+          },
+          "how_to_read_volumes": {
+            "title": "How to Read Volumes",
+            "description": "",
+            "content": {
+              "p1": "Since volume is an indicator of the number of stock transactions, a higher volume indicates a greater number of transactions.",
+              "p2": "Conversely, a lower volume indicates a smaller number of transactions."
+            }
+          },
+          "volume_on_trend": {
+            "title": "Volume On Trend",
+            "description": "",
+            "content": {
+              "p1": "As an indicator, high volume indicates positive confirmation of the current price movement.",
+              "p2": "This can also be interpreted as meaning that high volume means the trend or price movement is strong or has power.",
+              "p3": "Conversely, low volume indicates that the price movement is not \"well-confirmed\" or lacks power.",
+              "p4": "Therefore, it is highly likely that the current trend or price movement will not last long, could turn into a reversal, or even a false break.",
+              "p5": "In an ongoing trend, volume can be a supporting indicator to determine the strength of the ongoing trend.",
+              "p6": "By looking at the volume indicator, we can determine whether the trend will continue, weaken, or has the potential to reverse.",
+              "p7": "Increasing or high volume indicates that the trend still has the power to continue. Meanwhile, low volume indicates that the trend is weakening and will soon end or reverse."
+            }
+          },
+          "important_things_in_trends": {
+            "title": "Important Things in Trends",
+            "description": "",
+            "content": {
+              "p1": "Bullish Trend + Volume naik / besar → Konfirmasi trend akan berlanjut",
+              "p2": "Bullish Trend + Volume turun / kecil → Tren melemah / akan reversal",
+              "p3": "Bearish Trend + Volume naik / besar → Konfirmasi trend akan berlanjut",
+              "p4": "Bearish Trend + Volume turun / kecil → Tren melemah / berpotensi reversal"
+            }
+          },
+          "volume_at_breakout_breakdown": {
+            "title": "Volume At Breakout/Breakdown",
+            "description": "",
+            "content": {
+              "p1": "When the price breaks through resistance or support, also known as a breakout or breakdown, volume can be an indicator of whether the breakout is valid or not.",
+              "p2": "By looking at the volume indicator, we can determine whether the breakout is valid and has the potential to continue, or whether it is a false breakout and a reversal.",
+              "p3": "For example, if the price successfully breaks through resistance and is supported by relatively large volume, it is considered a valid breakout, and the price is likely to continue rising.",
+              "p4": "Breakout + High Volume → Valid and potential for further upside. Breakout + Low Volume → No power, potential for a false breakout. Breakdown + High Volume → Valid and potential for further downside. Breakdown + Low Volume → No power, potential for a false breakout"
+            }
+          },
+          "volume_on_chart_pattern": {
+            "title": "Volume on Chart Pattern",
+            "description": "",
+            "content": {
+              "p1": "Volume is also used to confirm chart patterns. For example, price confirmation in the Cup and Handle pattern.",
+              "example": {
+                "title": "Example of Volume Confirmation in Cup & Handle Pattern",
+                "explanation": [
+                  "When a 'Cup' forms, the price moves down, accompanied by low volume.",
+                  "However, when the price rises, the volume is greater than when it falls.",
+                  "If the price successfully breaks through the neckline, we can expect the highest volume compared to previous volumes.",
+                  "If these three things occur, it can be said that the volume confirms a change in the trend of the chart pattern, or the signal from the pattern is valid."
+                ]
+              },
+              "p2": "In the Cup and Handle pattern, volume is expected to decrease during the formation of the cup and increase during the formation of the handle.",
+              "p3": "This indicates that the price is consolidating and the trend is weakening, then the price breaks through resistance with increased volume, indicating that the trend is strengthening.",
+              "list": {
+                "title": "Volume confirmation in the formation of a bullish pattern:",
+                "points": [
+                  "Small volume when the price corrects",
+                  "Large volume when the price rises",
+                  "Volume confirmation in the formation of a bullish pattern"
+                ]
+              }
+            }
+          },
+          "determining_volume_size": {
+            "title": "Determining Volume Size",
+            "description": "",
+            "content": {
+              "p1": "The high or low volume is actually a subjective assessment.",
+              "p2": "However, a basic rule of thumb is that high volume occurs when volume is above the 20-day moving average.",
+              "highlight": "Tips: Use the MA20 Volume indicator"
+            }
+          }
+        }
+      },
+
+      "chapter3": {
+        "title": "Chapter 3: Candlestick Pattern",
+        "description": "How to predict price movements using candlestick patterns.",
+        "content_title": "7 Candlestick Patterns for Stock Trading That Traders Need to Know",
+
+        "lessons": {
+          "marubozu": {
+            "title": "Marubozu",
+            "description": "",
+            "content": {
+              "p1": "The Marubozu pattern is characterized by a candle with a full body and no wick.",
+              "p2": "If the Marubozu candle forms with a closing price higher than the opening price, the price will likely rise the next day, and vice versa.",
+              "p3": "The strength of this candle can be determined by its volume; the greater the volume, the greater the strength of the candle."
+            }
+          },
+          "key_takeaways": {
+            "title": "Key Takeaways",
+            "description": "",
+            "content": {
+              "p1": "In conclusion, candlestick patterns are used by traders as signals to predict stock price movements or the candlesticks that will form the following day.",
+              "p2": "Furthermore, the volume at the time of the candle's formation also plays a significant role in determining its validity.",
+              "p3": "The greater the volume, the more valid the candlestick pattern."
+            }
+          }
+        }
+      },
+
+      "chapter4": {
+        "title": "Chapter 4: Indicator",
+        "description": "Tools to support technical analysis.",
+        "content_title": "How to Use Trading Indicators to Find Bullish Stocks (MA, MACD, RSI, Fibonacci)",
+
+        "lessons": {
+          "introduction": {
+            "title": "Introduction",
+            "description": "",
+            "content": {
+              "p1": "In addition to analyzing trends, patterns, and candlestick shapes, traders can also use trading indicators to aid technical analysis.",
+              "p2": "Why can indicators help improve a trader's analysis?",
+              "p3": "The reason is that indicators are created from mathematical calculations based on a stock's price.",
+              "p4": "However, traders should remember that indicators are only used as a tool to help predict future stock price movements, not as the sole and primary tool for traders to buy or sell stocks.",
+              "p5": "Indicators are basically divided into two types: lagging and leading indicators."
+            }
+          },
+          "key_takeaways": {
+            "title": "Key Takeaways",
+            "description": "",
+            "content": {
+              "p1": "In conclusion, trading indicators are categorized into two categories: lagging and leading.",
+              "p2": "The role of indicators is to help traders predict price movements and can be combined with other analysis tools such as trends, chart patterns, and volume.",
+              "p3": "Many indicators are available, allowing traders to trial and error and choose the indicator that best suits their trading style."
+            }
+          }
+        }
+      },
+
+      "chapter5": {
+        "title": "Chapter 5: Trading Tactics with Technical Analysis",
+        "description": "Tips & tricks for combining patterns, volume, and indicators.",
+        "content_title": "Stock Trading Tactics for Maximum Profit",
+
+        "lessons": {
+          "buy_on_weakness": {
+            "title": "Buy on Weakness/Support",
+            "description": "",
+            "content": {}
+          },
+          "buy_on_breakout": {
+            "title": "Buy on Breakout",
+            "description": "",
+            "content": {}
+          },
+          "sell_on_breakdown": {
+            "title": "Sell on Breakdown",
+            "description": "",
+            "content": {}
+          },
+          "sell_on_strength": {
+            "title": "Sell on Strength",
+            "description": "",
+            "content": {}
+          },
+          "key_takeaways": {
+            "title": "Key Takeaways",
+            "description": "",
+            "content": {
+              "p1": "In this chapter, we have learned four buy and sell strategies: Buy on Weakness, Buy on Breakout, Sell on Breakdown, and Sell on Strength.",
+              "highlight": {
+                "title": "Common Trading Technique Pairs",
+                "points": [
+                  "Buy on Weakness + Sell on Strength",
+                  "Buy on Breakout + Sell on Breakdown"
+                ]
+              },
+              "p2": "Using this strategy, we can determine the appropriate trading tactics."
+            }
+          }
+        }
+      },
+
+      "chapter6": {
+        "title": "Chapter 6: How to Maintain Trading Consistency",
+        "description": "Understanding financial management tips for stock trading to achieve consistent profits.",
+        "content_title": "Financial Management Tips for Stock Trading to Achieve Consistent Profits",
+
+        "lessons": {
+          "money_management": {
+            "title": "Money Management",
+            "description": "",
+            "topics": {
+              "stop_loss": {
+                "title": "Stop Loss",
+                "description": "",
+                "content": {}
+              },
+              "avoid_using_hot_money": {
+                "title": "Avoid Using \"Hot Money\"",
+                "description": "",
+                "content": {}
+              },
+              "trading_plan": {
+                "title": "Trading Plan",
+                "description": "",
+                "content": {}
+              },
+              "risk_reward_ratio": {
+                "title": "Risk to Reward Ratio",
+                "description": "",
+                "content": {}
+              },
+              "position_sizing": {
+                "title": "Position Sizing",
+                "description": "",
+                "content": {}
+              }
+            }
+          }
+        }
+      }
+    }
+  },
   "GlossaryPage": {
     "title": "Stock Glossary",
     "subtitle": "Understand the language of the stock market.",

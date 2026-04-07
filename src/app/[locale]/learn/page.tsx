@@ -6,12 +6,16 @@ import {
   Card,
   CardContent,
   CardDescription,
+  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Button } from "@/components/ui/button";
+import { useRouter } from "next/navigation";
 
 export default function LearnPage() {
+  const router = useRouter();
   const t = useTranslations("Nav");
   const locale = useLocale();
 
@@ -41,6 +45,19 @@ export default function LearnPage() {
                 <CardContent>
                   <p className="leading-7">{section.content}</p>
                 </CardContent>
+                {section.seeMore && (
+                  <CardFooter>
+                    <Button
+                      variant="outline"
+                      className="cursor-pointer"
+                      onClick={() =>
+                        router.push(`/${locale}/learn/${section.slug}`)
+                      }
+                    >
+                      See More
+                    </Button>
+                  </CardFooter>
+                )}
               </Card>
             ))}
           </TabsContent>

@@ -5,6 +5,42 @@
     "getStarted": "Mulai Sekarang",
     "learnMore": "Pelajari Lebih Lanjut"
   },
+  "LearnPage": {
+    "technicalAnalysis": {
+      "chapter1": {
+        "title": "Chapter 1: Chart Pattern",
+        "description": "Memahami pola chart.",
+        "content_title": "Jenis-Jenis Chart Pattern",
+
+        "lessons": {
+          "bullish": {
+            "title": "Bullish Chart Pattern",
+            "description": "Pattern yang berpotensi naik."
+          }
+        },
+
+        "topics": {
+          "ascending_triangle": {
+            "title": "Ascending Triangle"
+          }
+        }
+      },
+
+      "ascending_triangle": {
+        "definition": {
+          "p1": "Pola ini menyerupai segitiga...",
+          "p2": "Garis atas adalah resistance..."
+        },
+        "example": {
+          "stock": "Saham BBNI Juli - Oktober 2021",
+          "explanation": [
+            "Perhatikan pergerakan harga...",
+            "Ketika harga turun..."
+          ]
+        }
+      }
+    }
+  },
   "GlossaryPage": {
     "title": "Glosarium Saham",
     "subtitle": "Pahami bahasa pasar saham.",
