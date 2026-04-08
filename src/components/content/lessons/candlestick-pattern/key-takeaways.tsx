@@ -3,7 +3,7 @@ import TechAnalysisLessonContent from "../TechAnalysisLessonContent";
 
 export default function KeyTakeaways() {
   const t = useTranslations(
-    "LearnPage.technicalAnalysis.chapter1.lessons.key_takeaways_c1.content",
+    "LearnPage.technicalAnalysis.chapter3.lessons.key_takeaways_c3.content",
   );
 
   const paragraphs: string[] = t.raw("paragraphs");

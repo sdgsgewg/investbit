@@ -380,7 +380,7 @@
             "title": "Key Takeaways",
             "description": "",
             "content": {
-              "text": [
+              "paragraphs": [
                 "In conclusion, chart patterns serve as signals for traders to take positions before prices rise, or to sell a stock before the price drops further.",
                 "Furthermore, to support or confirm a breakout from a pattern, support, or resistance level, we must also look at volume.",
                 "This is because there's a possibility that the chart pattern formed is invalid, leading to a false breakout."
@@ -515,22 +515,123 @@
         "content_title": "7 Candlestick Patterns for Stock Trading That Traders Need to Know",
 
         "lessons": {
-          "marubozu": {
-            "title": "Marubozu",
-            "description": "",
-            "content": {
-              "p1": "The Marubozu pattern is characterized by a candle with a full body and no wick.",
-              "p2": "If the Marubozu candle forms with a closing price higher than the opening price, the price will likely rise the next day, and vice versa.",
-              "p3": "The strength of this candle can be determined by its volume; the greater the volume, the greater the strength of the candle."
+          "candlestick_pattern": {
+            "title": "Candlestick Pattern",
+            "description": "A candlestick pattern is a graphical representation of price action that helps traders identify potential reversal or continuation opportunities.",
+            "topics": {
+              "marubozu": {
+                "title": "Marubozu",
+                "content": {
+                  "definition": {
+                    "text": [
+                      "The Marubozu pattern is characterized by a candle with a full body and no wick.",
+                      "If the Marubozu candle forms with a closing price higher than the opening price, the price will likely rise the next day, and vice versa.",
+                      "The strength of this candle can be determined by its volume; the greater the volume, the greater the strength of the candle."
+                    ]
+                  }
+                }
+              },
+              "hammer": {
+                "title": "Hammer",
+                "content": {
+                  "definition": {
+                    "text": [
+                      "A pattern shaped like a hammer and with a long wick (tail).",
+                      "This pattern explains that during trading, the price fell, but rebounded and closed at nearly the same price as its opening.",
+                      "This indicates strong buying demand, preventing the price from falling further.",
+                      "This pattern can be considered strong or valid when the price is declining and supported by high volume.",
+                      "Usually, after this pattern forms, there is potential for a reversal. Therefore, it is best to use this pattern in combination with identifying support."
+                    ]
+                  }
+                }
+              },
+              "inverted_hammer": {
+                "title": "Inverted Hammer",
+                "content": {
+                  "definition": {
+                    "text": [
+                      "This pattern is the opposite of the hammer pattern, more commonly known as the shooting star.",
+                      "While buyers dominate in the hammer, sellers dominate in the inverted hammer.",
+                      "This is because the price rose during trading hours, but then fell and closed at the same price as the opening.",
+                      "This pattern is considered stronger or more valid when it forms during a price rally or uptrend supported by high volume.",
+                      "Usually, after this pattern forms, the price reversal occurs, turning downward.",
+                      "It's best to use this pattern in combination with resistance."
+                    ]
+                  }
+                }
+              },
+              "doji": {
+                "title": "Doji",
+                "content": {
+                  "definition": {
+                    "text": [
+                      "The doji pattern is characterized by a candlestick with no body, where the price during trading hours rises above or falls below the opening price, but closes at the opening price.",
+                      "This pattern indicates a lack of dominant market power, either buyers or sellers.",
+                      "However, when a doji forms after a significant stock price decline and is supported by volume, a reversal is likely.",
+                      "Conversely, when a doji forms during a stock rally and is supported by high volume, a price decline is likely."
+                    ]
+                  }
+                }
+              },
+              "bullish_or_bearish_engulfing": {
+                "title": "Bullish/Bearish Engulfing",
+                "content": {
+                  "definition": {
+                    "text": [
+                      "A bullish engulfing pattern is formed by two candlesticks, where the first candlestick indicates a price decline with a closing price lower than the opening price. The next day, the candlestick that forms covers the entire candlestick of the previous day with a closing price higher than the opening price.",
+                      "The opposite of a bullish engulfing pattern is a bearish engulfing pattern, which occurs when the first candlestick rises, and the next day, the candlestick shows a price decline, covering the entire previous candlestick.",
+                      "A bullish engulfing pattern indicates potential price movement upward, while a bearish engulfing pattern indicates potential price movement downward."
+                    ]
+                  }
+                }
+              },
+              "morning_star": {
+                "title": "Morning Star",
+                "content": {
+                  "definition": {
+                    "text": [
+                      "This pattern forms when a doji or hammer candlestick forms after the previous day's price decline.",
+                      "If accompanied by high volume, there's a high potential for price increases."
+                    ]
+                  }
+                }
+              },
+              "evening_star": {
+                "title": "Evening Star",
+                "content": {
+                  "definition": {
+                    "text": [
+                      "This pattern forms if the price rose the previous day and a doji or hammer candlestick formed.",
+                      "If accompanied by high volume, the price has a high potential to fall."
+                    ]
+                  }
+                }
+              },
+              "harami": {
+                "title": "Harami",
+                "content": {
+                  "definition": {
+                    "text": [
+                      "Harami, derived from the Japanese word \"harami\", means \"pregnant\", so this pattern resembles a mother carrying her child, seen from the side.",
+                      "It begins with one large candle and is followed by a smaller candle the next day.",
+                      "If the Harami pattern formation begins with a declining candle and is followed by a candle whose closing price is above the opening price, then the price is likely to rise the next day (Bullish Harami).",
+                      "Conversely, if the formation begins with a rising candle and is followed by a candle whose closing price is below the opening price, then the price is likely to fall the next day (Bearish Harami)."
+                    ]
+                  }
+                }
+              }
             }
           },
-          "key_takeaways": {
+
+          "key_takeaways_c3": {
             "title": "Key Takeaways",
             "description": "",
             "content": {
-              "p1": "In conclusion, candlestick patterns are used by traders as signals to predict stock price movements or the candlesticks that will form the following day.",
-              "p2": "Furthermore, the volume at the time of the candle's formation also plays a significant role in determining its validity.",
-              "p3": "The greater the volume, the more valid the candlestick pattern."
+              "paragraphs": [
+                "In conclusion, candlestick patterns are used by traders as signals to predict stock price movements or the candlesticks that will form the following day.",
+                "Furthermore, the volume at the time of the candle's formation also plays a significant role in determining its validity.",
+                "The greater the volume, the more valid the candlestick pattern."
+              ]
             }
           }
         }

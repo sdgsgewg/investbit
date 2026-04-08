@@ -1,3 +1,11 @@
+import BullishOrBearishEngulfing from "./candlestick-pattern/bullish-or-bearish-engulfing";
+import Doji from "./candlestick-pattern/doji";
+import EveningStar from "./candlestick-pattern/evening-star";
+import Hammer from "./candlestick-pattern/hammer";
+import Harami from "./candlestick-pattern/harami";
+import InvertedHammer from "./candlestick-pattern/inverted-hammer";
+import Marubozu from "./candlestick-pattern/marubozu";
+import MorningStar from "./candlestick-pattern/morning-star";
 import BearishFlag from "./chart-pattern/bearish/bearish-flag";
 import BearishPennant from "./chart-pattern/bearish/bearish-pennant";
 import DescendingTriangle from "./chart-pattern/bearish/descending-triangle.";
@@ -37,4 +45,14 @@ export const TOPIC_COMPONENTS = {
   // Sideways
   symmetrical_triangle: SymmetricalTriangle,
   rectangle: Rectangle,
+
+  // Chapter 3: Candlestick Pattern
+  marubozu: Marubozu,
+  hammer: Hammer,
+  inverted_hammer: InvertedHammer,
+  doji: Doji,
+  bullish_or_bearish_engulfing: BullishOrBearishEngulfing,
+  morning_star: MorningStar,
+  evening_star: EveningStar,
+  harami: Harami,
 };

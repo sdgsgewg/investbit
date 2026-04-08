@@ -189,9 +189,55 @@ export const CHAPTER_DATA: ChapterData = [
     contentTitleKey: "chapter3.content_title",
     lessons: [
       {
-        titleKey: "chapter3.lessons.marubozu.title",
-        descriptionKey: "chapter3.lessons.marubozu.description",
-        contentKey: "marubozu",
+        titleKey: "chapter3.lessons.candlestick_pattern.title",
+        descriptionKey: "chapter3.lessons.candlestick_pattern.description",
+        topics: [
+          {
+            titleKey:
+              "chapter3.lessons.candlestick_pattern.topics.marubozu.title",
+            contentKey: "marubozu",
+          },
+          {
+            titleKey:
+              "chapter3.lessons.candlestick_pattern.topics.hammer.title",
+            contentKey: "hammer",
+          },
+          {
+            titleKey:
+              "chapter3.lessons.candlestick_pattern.topics.inverted_hammer.title",
+            contentKey: "inverted_hammer",
+          },
+          {
+            titleKey: "chapter3.lessons.candlestick_pattern.topics.doji.title",
+            contentKey: "doji",
+          },
+          {
+            titleKey:
+              "chapter3.lessons.candlestick_pattern.topics.bullish_or_bearish_engulfing.title",
+            contentKey: "bullish_or_bearish_engulfing",
+          },
+          {
+            titleKey:
+              "chapter3.lessons.candlestick_pattern.topics.morning_star.title",
+            contentKey: "morning_star",
+          },
+          {
+            titleKey:
+              "chapter3.lessons.candlestick_pattern.topics.evening_star.title",
+            contentKey: "evening_star",
+          },
+
+          {
+            titleKey:
+              "chapter3.lessons.candlestick_pattern.topics.harami.title",
+            contentKey: "harami",
+          },
+        ],
+      },
+      {
+        titleKey: "chapter3.lessons.key_takeaways_c3.title",
+        descriptionKey: "chapter3.lessons.key_takeaways_c3.description",
+        contentKey: "key_takeaways_c3",
       },
     ],
   },

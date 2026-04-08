@@ -21,4 +21,7 @@ export const LESSON_COMPONENTS = {
   volume_on_breakout_breakdown: VolumeOnBreakoutBreakdown,
   volume_on_chart_pattern: VolumeOnChartPattern,
   determining_volume_size: DeterminingVolumeSize,
+
+  // Chapter 3: Candlestick Pattern
+  key_takeaways_c3: KeyTakeaways,
 };

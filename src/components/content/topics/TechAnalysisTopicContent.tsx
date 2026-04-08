@@ -8,7 +8,7 @@ interface TechAnalysisTopicContentProps {
     sideBySideImage?: string[];
     text: string[];
   };
-  example: ExampleData;
+  example?: ExampleData;
 }
 
 const TechAnalysisTopicContent = ({
@@ -18,7 +18,7 @@ const TechAnalysisTopicContent = ({
   return (
     <div className="space-y-12">
       <DefinitionSection definition={definition} />
-      <ExampleSection example={example} />
+      {example && <ExampleSection example={example} />}
     </div>
   );
 };

@@ -135,4 +135,38 @@ export const IMAGES = {
         "https://glzgwbbiaqnwvtblertt.supabase.co/storage/v1/object/public/volume/volume-on-chart-pattern/example.png",
     },
   },
+  CANDLESTICK_PATTERN: {
+    MARUBOZU: {
+      DEFINITION:
+        "https://glzgwbbiaqnwvtblertt.supabase.co/storage/v1/object/public/candlestick-pattern/marubozu/definition.png",
+    },
+    HAMMER: {
+      DEFINITION:
+        "https://glzgwbbiaqnwvtblertt.supabase.co/storage/v1/object/public/candlestick-pattern/hammer/definition.png",
+    },
+    INVERTED_HAMMER: {
+      DEFINITION:
+        "https://glzgwbbiaqnwvtblertt.supabase.co/storage/v1/object/public/candlestick-pattern/inverted-hammer/definition.png",
+    },
+    DOJI: {
+      DEFINITION:
+        "https://glzgwbbiaqnwvtblertt.supabase.co/storage/v1/object/public/candlestick-pattern/doji/definition.png",
+    },
+    BULLISH_OR_BEARISH_ENGULFING: {
+      DEFINITION:
+        "https://glzgwbbiaqnwvtblertt.supabase.co/storage/v1/object/public/candlestick-pattern/bullish-or-bearish-engulfing/definition.png",
+    },
+    MORNING_STAR: {
+      DEFINITION:
+        "https://glzgwbbiaqnwvtblertt.supabase.co/storage/v1/object/public/candlestick-pattern/morning-star/definition.png",
+    },
+    EVENING_STAR: {
+      DEFINITION:
+        "https://glzgwbbiaqnwvtblertt.supabase.co/storage/v1/object/public/candlestick-pattern/evening-star/definition.png",
+    },
+    HARAMI: {
+      DEFINITION:
+        "https://glzgwbbiaqnwvtblertt.supabase.co/storage/v1/object/public/candlestick-pattern/harami/definition.png",
+    },
+  },
 };
