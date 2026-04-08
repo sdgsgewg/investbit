@@ -1,6 +1,6 @@
 import { IMAGES } from "@/app/constants/images";
-import TechAnalysisContent from "@/components/content/TechAnalysisTopicContent";
 import { useTranslations } from "next-intl";
+import TechAnalysisTopicContent from "../../TechAnalysisTopicContent";
 
 export default function BearishPennant() {
   const t = useTranslations(
@@ -8,7 +8,7 @@ export default function BearishPennant() {
   );
 
   return (
-    <TechAnalysisContent
+    <TechAnalysisTopicContent
       definition={{
         image: [IMAGES.CHART_PATTERN.BEARISH.BEARISH_PENNANT.DEFINITION],
         text: t.raw("definition.text"),

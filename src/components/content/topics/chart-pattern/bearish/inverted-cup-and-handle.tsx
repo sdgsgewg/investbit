@@ -1,6 +1,6 @@
 import { IMAGES } from "@/app/constants/images";
-import TechAnalysisContent from "@/components/content/TechAnalysisTopicContent";
 import { useTranslations } from "next-intl";
+import TechAnalysisTopicContent from "../../TechAnalysisTopicContent";
 
 export default function InvertedCupAndHandle() {
   const t = useTranslations(
@@ -8,7 +8,7 @@ export default function InvertedCupAndHandle() {
   );
 
   return (
-    <TechAnalysisContent
+    <TechAnalysisTopicContent
       definition={{
         sideBySideImage: [
           IMAGES.CHART_PATTERN.BEARISH.INVERTED_CUP_AND_HANDLE.DEFINITION.P1,

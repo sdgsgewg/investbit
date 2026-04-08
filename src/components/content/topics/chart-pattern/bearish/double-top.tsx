@@ -1,6 +1,6 @@
 import { IMAGES } from "@/app/constants/images";
-import TechAnalysisContent from "@/components/content/TechAnalysisTopicContent";
 import { useTranslations } from "next-intl";
+import TechAnalysisTopicContent from "../../TechAnalysisTopicContent";
 
 export default function DoubleTop() {
   const t = useTranslations(
@@ -8,7 +8,7 @@ export default function DoubleTop() {
   );
 
   return (
-    <TechAnalysisContent
+    <TechAnalysisTopicContent
       definition={{
         sideBySideImage: [
           IMAGES.CHART_PATTERN.BEARISH.DOUBLE_TOP.DEFINITION.P1,

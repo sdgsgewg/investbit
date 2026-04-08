@@ -2,7 +2,7 @@ import DeterminingVolumeSize from "./volume/determining_volume_size";
 import HowToReadVolumes from "./volume/how_to_read_volumes";
 import ImportantThingsInTrends from "./volume/important_things_in_trends";
 import VolumeOnTrend from "./volume/volume_on_trend";
-import VolumeAtBreakoutBreakdown from "./volume/volume_at_breakout_breakdown";
+import VolumeOnBreakoutBreakdown from "./volume/volume_on_breakout_breakdown";
 import VolumeIndicators from "./volume/volume_indicators";
 import VolumeOnChartPattern from "./volume/volume_on_chart_pattern";
 import FalseBreak from "./chart-pattern/false-break";
@@ -18,7 +18,7 @@ export const LESSON_COMPONENTS = {
   how_to_read_volumes: HowToReadVolumes,
   volume_on_trend: VolumeOnTrend,
   important_things_in_trends: ImportantThingsInTrends,
-  volume_at_breakout_breakdown: VolumeAtBreakoutBreakdown,
+  volume_on_breakout_breakdown: VolumeOnBreakoutBreakdown,
   volume_on_chart_pattern: VolumeOnChartPattern,
   determining_volume_size: DeterminingVolumeSize,
 };

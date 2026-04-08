@@ -164,10 +164,10 @@ export const CHAPTER_DATA: ChapterData = [
         contentKey: "important_things_in_trends",
       },
       {
-        titleKey: "chapter2.lessons.volume_at_breakout_breakdown.title",
+        titleKey: "chapter2.lessons.volume_on_breakout_breakdown.title",
         descriptionKey:
-          "chapter2.lessons.volume_at_breakout_breakdown.description",
-        contentKey: "volume_at_breakout_breakdown",
+          "chapter2.lessons.volume_on_breakout_breakdown.description",
+        contentKey: "volume_on_breakout_breakdown",
       },
       {
         titleKey: "chapter2.lessons.volume_on_chart_pattern.title",

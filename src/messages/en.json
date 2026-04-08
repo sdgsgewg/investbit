@@ -400,52 +400,71 @@
             "title": "Get to know Volume Indicators",
             "description": "",
             "content": {
-              "p1": "The volume indicator shows the size of the number of transactions on a stock.",
-              "p2": "Volume analysis is an inseparable part of technical analysis because volume is the key to price movements.",
-              "p3": "Price movements without being based on volume can be said to be useless.",
-              "p4": "The main use of volume is to confirm the strength of the ongoing trend and also confirm the price movements that occur, such as chart patterns, resistance breakouts, and support breakdowns.",
-              "p5": "Because of its confirmatory nature, the volume indicator cannot be used alone, but is used to complement other analyses."
+              "paragraphs": [
+                "The volume indicator shows the size of the number of transactions on a stock.",
+                "Volume analysis is an inseparable part of technical analysis because volume is the key to price movements.",
+                "Price movements without being based on volume can be said to be useless.",
+                "The main use of volume is to confirm the strength of the ongoing trend and also confirm the price movements that occur, such as chart patterns, resistance breakouts, and support breakdowns.",
+                "Because of its confirmatory nature, the volume indicator cannot be used alone, but is used to complement other analyses."
+              ]
             }
           },
           "how_to_read_volumes": {
             "title": "How to Read Volumes",
             "description": "",
             "content": {
-              "p1": "Since volume is an indicator of the number of stock transactions, a higher volume indicates a greater number of transactions.",
-              "p2": "Conversely, a lower volume indicates a smaller number of transactions."
+              "paragraphs": [
+                "Since volume is an indicator of the number of stock transactions, a higher volume indicates a greater number of transactions.",
+                "Conversely, a lower volume indicates a smaller number of transactions."
+              ]
             }
           },
           "volume_on_trend": {
             "title": "Volume On Trend",
             "description": "",
             "content": {
-              "p1": "As an indicator, high volume indicates positive confirmation of the current price movement.",
-              "p2": "This can also be interpreted as meaning that high volume means the trend or price movement is strong or has power.",
-              "p3": "Conversely, low volume indicates that the price movement is not \"well-confirmed\" or lacks power.",
-              "p4": "Therefore, it is highly likely that the current trend or price movement will not last long, could turn into a reversal, or even a false break.",
-              "p5": "In an ongoing trend, volume can be a supporting indicator to determine the strength of the ongoing trend.",
-              "p6": "By looking at the volume indicator, we can determine whether the trend will continue, weaken, or has the potential to reverse.",
-              "p7": "Increasing or high volume indicates that the trend still has the power to continue. Meanwhile, low volume indicates that the trend is weakening and will soon end or reverse."
+              "paragraphs": [
+                "As an indicator, high volume indicates positive confirmation of the current price movement.",
+                "This can also be interpreted as meaning that high volume means the trend or price movement is strong or has power.",
+                "Conversely, low volume indicates that the price movement is not \"well-confirmed\" or lacks power.",
+                "Therefore, it is highly likely that the current trend or price movement will not last long, could turn into a reversal, or even a false break.",
+                "In an ongoing trend, volume can be a supporting indicator to determine the strength of the ongoing trend.",
+                "By looking at the volume indicator, we can determine whether the trend will continue, weaken, or has the potential to reverse.",
+                "Increasing or high volume indicates that the trend still has the power to continue. Meanwhile, low volume indicates that the trend is weakening and will soon end or reverse."
+              ]
             }
           },
           "important_things_in_trends": {
             "title": "Important Things in Trends",
             "description": "",
             "content": {
-              "p1": "Bullish Trend + Volume naik / besar → Konfirmasi trend akan berlanjut",
-              "p2": "Bullish Trend + Volume turun / kecil → Tren melemah / akan reversal",
-              "p3": "Bearish Trend + Volume naik / besar → Konfirmasi trend akan berlanjut",
-              "p4": "Bearish Trend + Volume turun / kecil → Tren melemah / berpotensi reversal"
+              "highlight": {
+                "points": [
+                  "Bullish Trend + Increasing/Large Volume → Confirmation of Trend Continuation",
+                  "Bullish Trend + Decreasing/Large Volume → Trend Weakening/Potential for Reversal",
+                  "Bearish Trend + Increasing/Large Volume → Confirmation of Trend Continuation",
+                  "Bearish Trend + Decreasing/Large Volume → Trend Weakening/Potential for Reversal"
+                ]
+              }
             }
           },
-          "volume_at_breakout_breakdown": {
-            "title": "Volume At Breakout/Breakdown",
+          "volume_on_breakout_breakdown": {
+            "title": "Volume On Breakout/Breakdown",
             "description": "",
             "content": {
-              "p1": "When the price breaks through resistance or support, also known as a breakout or breakdown, volume can be an indicator of whether the breakout is valid or not.",
-              "p2": "By looking at the volume indicator, we can determine whether the breakout is valid and has the potential to continue, or whether it is a false breakout and a reversal.",
-              "p3": "For example, if the price successfully breaks through resistance and is supported by relatively large volume, it is considered a valid breakout, and the price is likely to continue rising.",
-              "p4": "Breakout + High Volume → Valid and potential for further upside. Breakout + Low Volume → No power, potential for a false breakout. Breakdown + High Volume → Valid and potential for further downside. Breakdown + Low Volume → No power, potential for a false breakout"
+              "paragraphs": [
+                "When the price breaks through resistance or support, also known as a breakout or breakdown, volume can be an indicator of whether the breakout is valid or not.",
+                "By looking at the volume indicator, we can determine whether the breakout is valid and has the potential to continue, or whether it is a false breakout and a reversal.",
+                "For example, if the price successfully breaks through resistance and is supported by relatively large volume, it is considered a valid breakout, and the price is likely to continue rising."
+              ],
+              "list": {
+                "points": [
+                  "Breakout + High Volume → Valid and potential for further upside.",
+                  "Breakout + Low Volume → No power, potential for a false breakout.",
+                  "Breakdown + High Volume → Valid and potential for further downside.",
+                  "Breakdown + Low Volume → No power, potential for a false breakout."
+                ]
+              }
             }
           },
           "volume_on_chart_pattern": {
@@ -478,9 +497,13 @@
             "title": "Determining Volume Size",
             "description": "",
             "content": {
-              "p1": "The high or low volume is actually a subjective assessment.",
-              "p2": "However, a basic rule of thumb is that high volume occurs when volume is above the 20-day moving average.",
-              "highlight": "Tips: Use the MA20 Volume indicator"
+              "paragraphs": [
+                "The high or low volume is actually a subjective assessment.",
+                "However, a basic rule of thumb is that high volume occurs when volume is above the 20-day moving average."
+              ],
+              "highlight": {
+                "text": "Tips: Use the MA20 Volume indicator"
+              }
             }
           }
         }

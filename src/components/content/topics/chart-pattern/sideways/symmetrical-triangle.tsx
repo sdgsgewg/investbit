@@ -1,6 +1,6 @@
 import { IMAGES } from "@/app/constants/images";
-import TechAnalysisContent from "@/components/content/TechAnalysisTopicContent";
 import { useTranslations } from "next-intl";
+import TechAnalysisTopicContent from "../../TechAnalysisTopicContent";
 
 export default function SymmetricalTriangle() {
   const t = useTranslations(
@@ -8,7 +8,7 @@ export default function SymmetricalTriangle() {
   );
 
   return (
-    <TechAnalysisContent
+    <TechAnalysisTopicContent
       definition={{
         image: [IMAGES.CHART_PATTERN.SIDEWAYS.SYMMETRICAL_TRIANGLE.DEFINITION],
         text: t.raw("definition.text"),

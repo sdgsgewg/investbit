@@ -1,6 +1,6 @@
 import { IMAGES } from "@/app/constants/images";
-import TechAnalysisContent from "@/components/content/TechAnalysisTopicContent";
 import { useTranslations } from "next-intl";
+import TechAnalysisTopicContent from "../../TechAnalysisTopicContent";
 
 export default function HeadAndShoulders() {
   const t = useTranslations(
@@ -8,7 +8,7 @@ export default function HeadAndShoulders() {
   );
 
   return (
-    <TechAnalysisContent
+    <TechAnalysisTopicContent
       definition={{
         sideBySideImage: [
           IMAGES.CHART_PATTERN.BEARISH.HEAD_AND_SHOULDERS.DEFINITION.P1,

@@ -121,4 +121,18 @@ export const IMAGES = {
         "https://glzgwbbiaqnwvtblertt.supabase.co/storage/v1/object/public/chart-pattern/false-break/example.png",
     },
   },
+  VOLUME: {
+    VOLUME_ON_BREAKOUT_BREAKDOWN: {
+      EXAMPLE: {
+        P1: "https://glzgwbbiaqnwvtblertt.supabase.co/storage/v1/object/public/volume/volume-on-breakout-breakdown/example-1.png",
+        P2: "https://glzgwbbiaqnwvtblertt.supabase.co/storage/v1/object/public/volume/volume-on-breakout-breakdown/example-2.png",
+        P3: "https://glzgwbbiaqnwvtblertt.supabase.co/storage/v1/object/public/volume/volume-on-breakout-breakdown/example-3.png",
+        P4: "https://glzgwbbiaqnwvtblertt.supabase.co/storage/v1/object/public/volume/volume-on-breakout-breakdown/example-4.png",
+      },
+    },
+    VOLUME_ON_CHART_PATTERN: {
+      EXAMPLE:
+        "https://glzgwbbiaqnwvtblertt.supabase.co/storage/v1/object/public/volume/volume-on-chart-pattern/example.png",
+    },
+  },
 };
