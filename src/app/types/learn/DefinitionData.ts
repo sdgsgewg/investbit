@@ -1,5 +1,7 @@
 export type DefinitionData = {
-  image?: string[];
-  sideBySideImage?: string[];
-  text: string[];
+  title?: string;
+  images?: string[];
+  sideBySideImages?: string[];
+  paragraphs?: string[];
+  children?: React.ReactNode;
 };

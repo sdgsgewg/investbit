@@ -1,14 +1,15 @@
 // app/hooks/usePerformanceData.ts
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { format, startOfMonth } from "date-fns";
+import { format, startOfMonth, getWeekOfMonth } from "date-fns";
 import { RecordData } from "@/app/types/reksadana/records/RecordData";
 import { FilterPerformance } from "@/app/types/reksadana/recap/FilterPerformance";
 import { CategoryStats } from "@/app/types/reksadana/recap/CategoryStats";
 import { WeeklyPerformanceAggregatedData } from "@/app/types/reksadana/recap/WeeklyPerformanceAggregatedData";
 import { MonthlyPerformanceAggregatedData } from "@/app/types/reksadana/recap/MonthlyPerformanceAggregatedData";
+import { YearlyPerformanceAggregatedData } from "@/app/types/reksadana/recap/YearlyPerformanceAggregatedData";
 
-type PerformanceType = "weekly" | "monthly";
+type PerformanceType = "weekly" | "monthly" | "yearly";
 
 interface UsePerformanceDataProps {
   type: PerformanceType;
@@ -16,7 +17,7 @@ interface UsePerformanceDataProps {
 }
 
 interface UsePerformanceDataReturn {
-  data: WeeklyPerformanceAggregatedData[] | MonthlyPerformanceAggregatedData[];
+  data: WeeklyPerformanceAggregatedData[] | MonthlyPerformanceAggregatedData[] | YearlyPerformanceAggregatedData[];
   timePeriods: string[];
   loading: boolean;
   form: FilterPerformance;
@@ -36,20 +37,19 @@ export const usePerformanceData = ({
   initialForm = { category_id: "" },
 }: UsePerformanceDataProps): UsePerformanceDataReturn => {
   const [data, setData] = useState<
-    WeeklyPerformanceAggregatedData[] | MonthlyPerformanceAggregatedData[]
+    WeeklyPerformanceAggregatedData[] | MonthlyPerformanceAggregatedData[] | YearlyPerformanceAggregatedData[]
   >([]);
   const [timePeriods, setTimePeriods] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);
   const [form, setForm] = useState<FilterPerformance>(initialForm);
   const [categoryStats, setCategoryStats] = useState<CategoryStats>({});
 
-  // Helper function to get custom week of month
+  // Helper function to get week of month based on calendar (Monday start)
   const getCustomWeekOfMonth = (date: Date) => {
-    const startOfMonth = new Date(date.getFullYear(), date.getMonth(), 1);
-    const diffDays = Math.floor(
-      (date.getTime() - startOfMonth.getTime()) / (1000 * 60 * 60 * 24),
-    );
-    return Math.floor(diffDays / 7) + 1;
+    // using date-fns getWeekOfMonth to get calendar week
+    // we must import it at the top, since date-fns format and startOfMonth are already imported
+    // wait, I can just use getWeekOfMonth directly instead of writing logic if I import it
+    return getWeekOfMonth(date, { weekStartsOn: 1 });
   };
 
   // Fetch weekly performance data
@@ -184,6 +184,100 @@ export const usePerformanceData = ({
     }
   };
 
+  // Fetch yearly performance data
+  const fetchYearlyData = async () => {
+    try {
+      const response = await axios.get<RecordData[]>("/api/reksadana/records", {
+        params: {
+          categoryId: form.category_id || undefined,
+        },
+      });
+      const records = response.data;
+
+      const yearsSet = new Set<string>();
+      const groupedData: Record<
+        string,
+        {
+          categoryName: string;
+          items: Record<
+            string,
+            {
+              itemId: string;
+              itemName: string;
+              yearlyYields: Record<string, number>;
+            }
+          >;
+        }
+      > = {};
+
+      records.forEach((req) => {
+        const item = req.rd_items;
+        if (!item || !item.rd_categories) return;
+
+        const catName = item.rd_categories.name;
+        // Group by year
+        const yearStr = req.date.substring(0, 4); // YYYY
+        yearsSet.add(yearStr);
+
+        if (!groupedData[catName]) {
+          groupedData[catName] = { categoryName: catName, items: {} };
+        }
+
+        if (!groupedData[catName].items[item.id]) {
+          groupedData[catName].items[item.id] = {
+            itemId: item.id,
+            itemName: item.name,
+            yearlyYields: {},
+          };
+        }
+
+        const currentYield = req.yield_1d || 0;
+        const existingYield =
+          groupedData[catName].items[item.id].yearlyYields[yearStr] || 0;
+        groupedData[catName].items[item.id].yearlyYields[yearStr] =
+          existingYield + currentYield;
+      });
+
+      const sortedYears = Array.from(yearsSet).sort();
+      setTimePeriods(sortedYears);
+
+      const stats: CategoryStats = {};
+
+      const aggregatedArr = Object.values(groupedData)
+        .map((cat) => {
+          const catItems = Object.values(cat.items).sort((a, b) =>
+            a.itemName.localeCompare(b.itemName),
+          );
+
+          stats[cat.categoryName] = {};
+          sortedYears.forEach((y) => {
+            const yields = catItems
+              .map((item) => item.yearlyYields[y])
+              .filter((v) => v !== undefined);
+            if (yields.length > 0) {
+              stats[cat.categoryName][y] = {
+                min: Math.min(...yields),
+                max: Math.max(...yields),
+              };
+            }
+          });
+
+          return {
+            categoryName: cat.categoryName,
+            items: catItems,
+          };
+        })
+        .sort((a, b) => a.categoryName.localeCompare(b.categoryName));
+
+      setCategoryStats(stats);
+      setData(aggregatedArr);
+    } catch (error) {
+      console.error("Failed to load yearly records", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   // Fetch monthly performance data
   const fetchMonthlyData = async () => {
     try {
@@ -284,8 +378,10 @@ export const usePerformanceData = ({
     setLoading(true);
     if (type === "weekly") {
       await fetchWeeklyData();
-    } else {
+    } else if (type === "monthly") {
       await fetchMonthlyData();
+    } else {
+      await fetchYearlyData();
     }
   };
 

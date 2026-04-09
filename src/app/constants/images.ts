@@ -169,4 +169,77 @@ export const IMAGES = {
         "https://glzgwbbiaqnwvtblertt.supabase.co/storage/v1/object/public/candlestick-pattern/harami/definition.png",
     },
   },
+  INDICATOR: {
+    LAGGING: {
+      MA: {
+        TUTORIAL:
+          "https://glzgwbbiaqnwvtblertt.supabase.co/storage/v1/object/public/indicator/lagging/moving-average/tutorial.png",
+        EXAMPLE: {
+          P_1_1:
+            "https://glzgwbbiaqnwvtblertt.supabase.co/storage/v1/object/public/indicator/lagging/moving-average/example-1-1.png",
+          P_2_1:
+            "https://glzgwbbiaqnwvtblertt.supabase.co/storage/v1/object/public/indicator/lagging/moving-average/example-2-1.png",
+          P_2_2:
+            "https://glzgwbbiaqnwvtblertt.supabase.co/storage/v1/object/public/indicator/lagging/moving-average/example-2-2.png",
+        },
+      },
+      MACD: {
+        DEFINITION: {
+          BASE: "https://glzgwbbiaqnwvtblertt.supabase.co/storage/v1/object/public/indicator/lagging/moving-average-convergence-divergence/definition-base.png",
+          UPTREND:
+            "https://glzgwbbiaqnwvtblertt.supabase.co/storage/v1/object/public/indicator/lagging/moving-average-convergence-divergence/definition-uptrend.png",
+          DOWNTREND:
+            "https://glzgwbbiaqnwvtblertt.supabase.co/storage/v1/object/public/indicator/lagging/moving-average-convergence-divergence/definition-downtrend.png",
+        },
+        EXAMPLE: {
+          BUY_SIGNAL:
+            "https://glzgwbbiaqnwvtblertt.supabase.co/storage/v1/object/public/indicator/lagging/moving-average-convergence-divergence/example-buying-signal.png",
+          SELL_SIGNAL:
+            "https://glzgwbbiaqnwvtblertt.supabase.co/storage/v1/object/public/indicator/lagging/moving-average-convergence-divergence/example-selling-signal.png",
+        },
+        MACD_BEARISH_DIVERGENCE: {
+          EXAMPLE:
+            "https://glzgwbbiaqnwvtblertt.supabase.co/storage/v1/object/public/indicator/lagging/moving-average-convergence-divergence/macd-bearish-divergence/example.png",
+        },
+        MACD_BULLISH_DIVERGENCE: {
+          EXAMPLE:
+            "https://glzgwbbiaqnwvtblertt.supabase.co/storage/v1/object/public/indicator/lagging/moving-average-convergence-divergence/macd-bullish-divergence/example.png",
+        },
+      },
+      BOLLINGER_BANDS: {
+        EXAMPLE:
+          "https://glzgwbbiaqnwvtblertt.supabase.co/storage/v1/object/public/indicator/lagging/bollinger-bands/example.png",
+      },
+    },
+    LEADING: {
+      RSI: {
+        EXAMPLE:
+          "https://glzgwbbiaqnwvtblertt.supabase.co/storage/v1/object/public/indicator/leading/relative-strength-index/example.png",
+      },
+      FIBONACCI_RETRACEMENT: {
+        EXAMPLE: {
+          P_1_1:
+            "https://glzgwbbiaqnwvtblertt.supabase.co/storage/v1/object/public/indicator/leading/fibonacci-retracement/example-1-1.png",
+          P_2_1:
+            "https://glzgwbbiaqnwvtblertt.supabase.co/storage/v1/object/public/indicator/leading/fibonacci-retracement/example-2-1.png",
+          P_2_2:
+            "https://glzgwbbiaqnwvtblertt.supabase.co/storage/v1/object/public/indicator/leading/fibonacci-retracement/example-2-2.png",
+        },
+      },
+    },
+  },
+  TRADING_TACTIC: {
+    BUY_ON_WEAKNESS: {
+      EXAMPLE:
+        "https://glzgwbbiaqnwvtblertt.supabase.co/storage/v1/object/public/trading-tactic/buy-on-weakness/example.png",
+    },
+    BUY_ON_BREAKOUT: {
+      EXAMPLE:
+        "https://glzgwbbiaqnwvtblertt.supabase.co/storage/v1/object/public/trading-tactic/buy-on-breakout/example.png",
+    },
+    SELL_ON_BREAKDOWN: {
+      EXAMPLE:
+        "https://glzgwbbiaqnwvtblertt.supabase.co/storage/v1/object/public/trading-tactic/sell-on-breakdown/example.png",
+    },
+  },
 };

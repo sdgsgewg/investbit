@@ -1,4 +1,6 @@
 export type HighlightData = {
-  text?: string;
+  title?: string;
+  text?: string[];
   points?: string[];
+  pointsType?: "bullet" | "numbering";
 };

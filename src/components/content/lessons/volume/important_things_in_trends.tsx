@@ -8,5 +8,9 @@ export default function ImportantThingsInTrends() {
 
   const highlightPoints = t.raw("highlight.points");
 
-  return <TechAnalysisLessonContent highlight={{ points: highlightPoints }} />;
+  return (
+    <TechAnalysisLessonContent
+      highlight={{ points: highlightPoints, pointsType: "bullet" }}
+    />
+  );
 }

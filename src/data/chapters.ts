@@ -20,11 +20,17 @@ export type Lesson = {
   topics?: Topic[];
 };
 
+type Link = {
+  label: string;
+  url: string;
+};
+
 export type Chapter = {
   titleKey: string;
   slug: string;
   icon: LucideIcon;
   descriptionKey: string;
+  links: Link[];
   contentTitleKey: string;
   lessons: Lesson[];
 };
@@ -37,6 +43,12 @@ export const CHAPTER_DATA: ChapterData = [
     slug: "chart-pattern",
     icon: ChartArea,
     descriptionKey: "chapter1.description",
+    links: [
+      {
+        label: "Chart Pattern",
+        url: "https://www.youtube.com/watch?v=cVG4P2uBj1Q&t=2s",
+      },
+    ],
     contentTitleKey: "chapter1.content_title",
     lessons: [
       {
@@ -140,6 +152,12 @@ export const CHAPTER_DATA: ChapterData = [
     slug: "volume",
     icon: BarChart3,
     descriptionKey: "chapter2.description",
+    links: [
+      {
+        label: "Volume",
+        url: "https://youtu.be/YA2zyuDQbtI?si=B-aQ8l4JVQUM7Hs6",
+      },
+    ],
     contentTitleKey: "chapter2.content_title",
     lessons: [
       {
@@ -186,6 +204,12 @@ export const CHAPTER_DATA: ChapterData = [
     slug: "candlestick-pattern",
     icon: CandlestickChart,
     descriptionKey: "chapter3.description",
+    links: [
+      {
+        label: "Candlestick Pattern",
+        url: "https://youtu.be/JG57e4C5LMc?si=bFHmAa1iI2LqfpwG",
+      },
+    ],
     contentTitleKey: "chapter3.content_title",
     lessons: [
       {
@@ -246,6 +270,12 @@ export const CHAPTER_DATA: ChapterData = [
     slug: "indicator",
     icon: LineChart,
     descriptionKey: "chapter4.description",
+    links: [
+      {
+        label: "Indicator",
+        url: "https://www.youtube.com/watch?v=SgLGILWTRos",
+      },
+    ],
     contentTitleKey: "chapter4.content_title",
     lessons: [
       {
@@ -254,9 +284,46 @@ export const CHAPTER_DATA: ChapterData = [
         contentKey: "introduction",
       },
       {
-        titleKey: "chapter4.lessons.key_takeaways.title",
-        descriptionKey: "chapter4.lessons.key_takeaways.description",
-        contentKey: "key_takeaways",
+        titleKey: "chapter4.lessons.lagging_indicator.title",
+        descriptionKey: "chapter4.lessons.lagging_indicator.description",
+        topics: [
+          {
+            titleKey:
+              "chapter4.lessons.lagging_indicator.topics.moving_average.title",
+            contentKey: "moving_average",
+          },
+          {
+            titleKey:
+              "chapter4.lessons.lagging_indicator.topics.moving_average_convergence_divergence.title",
+            contentKey: "moving_average_convergence_divergence",
+          },
+          {
+            titleKey:
+              "chapter4.lessons.lagging_indicator.topics.bollinger_bands.title",
+            contentKey: "bollinger_bands",
+          },
+        ],
+      },
+      {
+        titleKey: "chapter4.lessons.leading_indicator.title",
+        descriptionKey: "chapter4.lessons.leading_indicator.description",
+        topics: [
+          {
+            titleKey:
+              "chapter4.lessons.leading_indicator.topics.relative_strength_index.title",
+            contentKey: "relative_strength_index",
+          },
+          {
+            titleKey:
+              "chapter4.lessons.leading_indicator.topics.fibonacci_retracement.title",
+            contentKey: "fibonacci_retracement",
+          },
+        ],
+      },
+      {
+        titleKey: "chapter4.lessons.key_takeaways_c4.title",
+        descriptionKey: "chapter4.lessons.key_takeaways_c4.description",
+        contentKey: "key_takeaways_c4",
       },
     ],
   },
@@ -265,6 +332,12 @@ export const CHAPTER_DATA: ChapterData = [
     slug: "trading-tactics",
     icon: Target,
     descriptionKey: "chapter5.description",
+    links: [
+      {
+        label: "Trading Tactics",
+        url: "https://youtu.be/8UJF1jd_Zh0?si=dsldkTAuojOhjeHc",
+      },
+    ],
     contentTitleKey: "chapter5.content_title",
     lessons: [
       {
@@ -288,9 +361,9 @@ export const CHAPTER_DATA: ChapterData = [
         contentKey: "sell_on_strength",
       },
       {
-        titleKey: "chapter5.lessons.key_takeaways.title",
-        descriptionKey: "chapter5.lessons.key_takeaways.description",
-        contentKey: "key_takeaways",
+        titleKey: "chapter5.lessons.key_takeaways_c5.title",
+        descriptionKey: "chapter5.lessons.key_takeaways_c5.description",
+        contentKey: "key_takeaways_c5",
       },
     ],
   },
@@ -299,6 +372,12 @@ export const CHAPTER_DATA: ChapterData = [
     slug: "financial-management",
     icon: Wallet,
     descriptionKey: "chapter6.description",
+    links: [
+      {
+        label: "Financial Management",
+        url: "https://youtu.be/5vhgbghPMq4?si=jiUDbNhKQR6SJ19G",
+      },
+    ],
     contentTitleKey: "chapter6.content_title",
     lessons: [
       {
@@ -327,8 +406,8 @@ export const CHAPTER_DATA: ChapterData = [
           },
           {
             titleKey:
-              "chapter6.lessons.money_management.topics.risk_reward_ratio.title",
-            contentKey: "risk_reward_ratio",
+              "chapter6.lessons.money_management.topics.risk_to_reward_ratio.title",
+            contentKey: "risk_to_reward_ratio",
           },
         ],
       },

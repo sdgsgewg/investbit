@@ -1,5 +1,6 @@
 import { CategoryData } from "@/app/types/reksadana/categories/CategoryData";
 import { FilterPerformance } from "@/app/types/reksadana/recap/FilterPerformance";
+import { useTranslations } from "next-intl";
 import React from "react";
 
 interface FilterPerformanceSectionProps {
@@ -17,10 +18,12 @@ const FilterPerformanceSection = ({
   setForm,
   handleApplyFilter,
 }: FilterPerformanceSectionProps) => {
+  const tCommon = useTranslations("Common");
+
   return (
     <div className="flex flex-col sm:flex-row justify-between gap-4 mb-6">
       <div className="flex flex-col sm:flex-row w-full sm:w-80 gap-2 sm:gap-0">
-        <label htmlFor="category">Select Category:</label>
+        <label htmlFor="category">{tCommon("select_category")}</label>
         <select
           id="category"
           value={form.category_id}
@@ -31,7 +34,7 @@ const FilterPerformanceSection = ({
           className="border p-2 w-full"
         >
           <option value="" className="bg-zinc-100 dark:bg-zinc-800">
-            All
+            {tCommon("all")}
           </option>
           {categories.map((c) => (
             <option
@@ -50,7 +53,7 @@ const FilterPerformanceSection = ({
           onClick={handleApplyFilter}
           className="bg-blue-500 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded cursor-pointer"
         >
-          Apply
+          {tCommon("apply")}
         </button>
       </div>
     </div>

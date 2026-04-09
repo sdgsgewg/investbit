@@ -11,14 +11,15 @@ export default function ReksaDanaLayout({
 }) {
   const tRecap = useTranslations("Reksadana.recap");
   const tRecapDaily = useTranslations("Reksadana.recap.daily");
-  const tRecapWeekly = useTranslations("Reksadana.recap.weekly");
-  const tRecapMonthly = useTranslations("Reksadana.recap.monthly");
+  const tRecapPerformance = useTranslations("Reksadana.recap.performance");
   const pathname = usePathname();
 
   const tabs: { path: string; label: string }[] = [
     { path: ROUTES.REKSADANA.RECAP.INPUT, label: tRecapDaily("nav") },
-    { path: ROUTES.REKSADANA.RECAP.WEEKLY, label: tRecapWeekly("nav") },
-    { path: ROUTES.REKSADANA.RECAP.MONTHLY, label: tRecapMonthly("nav") },
+    {
+      path: ROUTES.REKSADANA.RECAP.PERFORMANCE,
+      label: tRecapPerformance("nav"),
+    },
   ];
 
   const isActive = (path: string) => pathname === path;

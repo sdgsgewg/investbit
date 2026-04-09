@@ -1,3 +1,8 @@
+import AvoidUsingHotMoney from "../lessons/money-management/avoid-using-hot-money";
+import PositionSizing from "../lessons/money-management/position-sizing";
+import RiskToRewardRatio from "../lessons/money-management/risk-to-reward-ratio";
+import StopLoss from "../lessons/money-management/stop-loss";
+import TradingPlan from "../lessons/money-management/trading-plan";
 import BullishOrBearishEngulfing from "./candlestick-pattern/bullish-or-bearish-engulfing";
 import Doji from "./candlestick-pattern/doji";
 import EveningStar from "./candlestick-pattern/evening-star";
@@ -21,6 +26,11 @@ import FallingWedge from "./chart-pattern/bullish/falling-wedge";
 import InvertedHeadAndShoulders from "./chart-pattern/bullish/inverted-head-and-shoulders";
 import Rectangle from "./chart-pattern/sideways/rectangle";
 import SymmetricalTriangle from "./chart-pattern/sideways/symmetrical-triangle";
+import BollingerBands from "./indicator/lagging/bollinger-bands";
+import MovingAverage from "./indicator/lagging/moving-average";
+import MovingAverageConvergenceDivergence from "./indicator/lagging/moving-average-convergence-divergence";
+import FibonacciRetracement from "./indicator/leading/fibonacci-retracement";
+import RelativeStrengthIndex from "./indicator/leading/relative-strength-index";
 
 export const TOPIC_COMPONENTS = {
   // Chapter 1: Chart Pattern
@@ -55,4 +65,21 @@ export const TOPIC_COMPONENTS = {
   morning_star: MorningStar,
   evening_star: EveningStar,
   harami: Harami,
+
+  //Chapter 4: Indicator
+  // Lagging
+  moving_average: MovingAverage,
+  moving_average_convergence_divergence: MovingAverageConvergenceDivergence,
+  bollinger_bands: BollingerBands,
+
+  // Leading
+  relative_strength_index: RelativeStrengthIndex,
+  fibonacci_retracement: FibonacciRetracement,
+
+  //Chapter 6: Money Management
+  stop_loss: StopLoss,
+  avoid_using_hot_money: AvoidUsingHotMoney,
+  trading_plan: TradingPlan,
+  risk_to_reward_ratio: RiskToRewardRatio,
+  position_sizing: PositionSizing,
 };

@@ -1,0 +1,56 @@
+import { IMAGES } from "@/app/constants/images";
+import { useTranslations } from "next-intl";
+import TechAnalysisTopicContent from "../../TechAnalysisTopicContent";
+import { DefinitionData } from "@/app/types/learn/DefinitionData";
+import { mapExamplesWithCharts } from "@/lib/mappers/example.mapper";
+import { ExampleData } from "@/app/types/learn/ExampleData";
+import { mapDefinitionWithImages } from "@/lib/mappers/definition.mapper";
+import { FunctionData } from "@/app/types/learn/FunctionData";
+import { mapFunction } from "@/lib/mappers/function.mapper";
+import { mapListWithImages } from "@/lib/mappers/list.mapper";
+import { ListData } from "@/app/types/learn/ListData";
+import { ConclusionData } from "@/app/types/learn/ConclusionData";
+import { mapConclusion } from "@/lib/mappers/conclusion.mapper";
+import ListSection from "@/components/content/sections/ListSection";
+
+export default function BollingerBands() {
+  const t = useTranslations(
+    "LearnPage.technicalAnalysis.chapter4.lessons.lagging_indicator.topics.bollinger_bands.content",
+  );
+
+  const getListData = (): ListData => {
+    const rawList = t.raw("list");
+    return mapListWithImages(rawList);
+  };
+
+  const getDefinitionData = (): DefinitionData => {
+    const rawDefinition = t.raw("definition");
+    const children = <ListSection list={getListData()} />;
+    return mapDefinitionWithImages(rawDefinition, { children });
+  };
+
+  const getFunctionData = (): FunctionData => {
+    const rawFunction = t.raw("function");
+    return mapFunction(rawFunction);
+  };
+
+  const getExamplesData = (): ExampleData[] => {
+    const rawExamples = t.raw("examples");
+    const charts = [[[IMAGES.INDICATOR.LAGGING.BOLLINGER_BANDS.EXAMPLE]]];
+    return mapExamplesWithCharts(rawExamples, charts);
+  };
+
+  const getConclusionData = (): ConclusionData => {
+    const rawConclusion = t.raw("conclusion");
+    return mapConclusion(rawConclusion);
+  };
+
+  return (
+    <TechAnalysisTopicContent
+      definition={getDefinitionData()}
+      functionData={getFunctionData()}
+      examples={getExamplesData()}
+      conclusion={getConclusionData()}
+    />
+  );
+}

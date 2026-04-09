@@ -1,6 +1,9 @@
+import { ExplanationData } from "./ExplanationData";
+import { HighlightData } from "./HighlightData";
+
 export type ExampleData = {
   title?: string;
   stock?: string;
-  chart: string[];
-  explanation: string[];
+  highlight?: HighlightData;
+  explanation: ExplanationData[];
 };

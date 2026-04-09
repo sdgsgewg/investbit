@@ -1,26 +1,30 @@
 import { BookText } from "lucide-react";
 import { DefinitionData } from "@/app/types/learn/DefinitionData";
 import ImageWrapper from "@/components/shared/ImageWrapper";
+import SectionWrapper from "./SectionWrapper";
+import SectionTitle from "./SectionTitle";
 
 interface DefinitionSectionProps {
   definition: DefinitionData;
+  children?: React.ReactNode;
 }
 
-const DefinitionSection = ({ definition }: DefinitionSectionProps) => {
+const DefinitionSection = ({
+  definition,
+  children,
+}: DefinitionSectionProps) => {
   return (
-    <section className="bg-card/50 rounded-2xl p-6 md:p-8 border border-border shadow-sm">
-      <div className="flex items-center gap-3 mb-6">
-        <div className="p-2.5 bg-primary/10 rounded-xl">
-          <BookText className="h-6 w-6 text-primary" />
-        </div>
-        <h2 className="text-2xl font-bold bg-clip-text text-transparent bg-linear-to-r from-foreground to-foreground/80">
-          Definition
-        </h2>
-      </div>
+    <SectionWrapper>
+      <SectionTitle
+        icon={BookText}
+        title={definition.title || "Definition"}
+        fallbackTitle="Definition"
+      />
+
       <div className="prose prose-lg dark:prose-invert max-w-none text-muted-foreground prose-p:leading-relaxed">
         <div className="flex flex-col gap-4">
-          {definition.image &&
-            definition.image.map((image, index) => (
+          {definition.images &&
+            definition.images.map((image, index) => (
               <ImageWrapper
                 key={index}
                 src={image}
@@ -29,8 +33,8 @@ const DefinitionSection = ({ definition }: DefinitionSectionProps) => {
             ))}
 
           <div className="w-full flex flex-col sm:flex-row gap-2">
-            {definition.sideBySideImage &&
-              definition.sideBySideImage.map((image, index) => (
+            {definition.sideBySideImages &&
+              definition.sideBySideImages.map((image, index) => (
                 <ImageWrapper
                   key={index}
                   src={image}
@@ -39,12 +43,17 @@ const DefinitionSection = ({ definition }: DefinitionSectionProps) => {
               ))}
           </div>
 
-          {definition.text.map((text, index) => (
-            <p key={index}>{text}</p>
-          ))}
+          {definition.paragraphs &&
+            definition.paragraphs.map((paragraph, index) => (
+              <p key={index}>{paragraph}</p>
+            ))}
+
+          {definition.children}
+
+          {children}
         </div>
       </div>
-    </section>
+    </SectionWrapper>
   );
 };
 

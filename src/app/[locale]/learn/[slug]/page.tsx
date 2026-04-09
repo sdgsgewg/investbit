@@ -12,7 +12,24 @@ export default function Page() {
   const locale = params.locale;
   const router = useRouter();
 
-  const t = useTranslations("LearnPage.technicalAnalysis");
+  const modifyWord = (word: string) => {
+    const firstChar = word.slice(0, 1).toUpperCase();
+    const remainingChar = word.slice(1);
+    return firstChar + remainingChar;
+  };
+
+  const getSlugKey = (slug: string) => {
+    const slugKey = slug
+      .split("-")
+      .map((word, index) => (index > 0 ? modifyWord(word) : word))
+      .join("");
+
+    return slugKey;
+  };
+
+  const slugKey = getSlugKey(slug as string);
+
+  const t = useTranslations(`LearnPage.${slugKey}`);
 
   const chapters = CHAPTER_DATA;
 
@@ -30,11 +47,10 @@ export default function Page() {
             </div>
           </div>
           <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight bg-clip-text text-transparent bg-linear-to-r from-foreground to-foreground/70">
-            Select a Chapter
+            {t("title")}
           </h1>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Master the art of reading charts, recognizing patterns, and
-            understanding volume to make knowledgeable investment decisions.
+            {t("subtitle")}
           </p>
         </motion.div>
 
@@ -59,7 +75,7 @@ export default function Page() {
 
                 <div className="relative max-w-md z-10 flex-1">
                   <div className="inline-block px-3 py-1 bg-primary/10 text-primary text-xs font-semibold rounded-full uppercase tracking-widest mb-4">
-                    Chapter {index + 1}
+                    {t("chapter")} {index + 1}
                   </div>
                   <h2 className="text-2xl font-bold mb-3 group-hover:text-primary transition-colors">
                     {t(chapter.titleKey)}
@@ -70,7 +86,7 @@ export default function Page() {
                 </div>
 
                 <div className="relative z-10 mt-8 flex items-center text-sm font-semibold text-primary/80 group-hover:text-primary transition-colors">
-                  Start Chapter
+                  {t("startChapter")}
                   <ChevronRight className="ml-2 h-4 w-4 group-hover:translate-x-1.5 transition-transform" />
                 </div>
               </motion.div>
