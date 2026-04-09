@@ -51,10 +51,10 @@ const TopPerformers: React.FC<TopPerformersProps> = ({
     let overallBest: Winner | null = null;
     const categoryBests: Winner[] = [];
 
-    data.forEach((category) => {
+    for (const category of data) {
       let bestInCategory: { name: string; yieldVal: number } | null = null;
 
-      category.items.forEach((item) => {
+      for (const item of category.items) {
         const yieldVal = item[columnKey]?.[latestPeriod];
 
         if (
@@ -62,12 +62,10 @@ const TopPerformers: React.FC<TopPerformersProps> = ({
           typeof yieldVal === "number" &&
           !isNaN(yieldVal)
         ) {
-          // Check for category best
           if (!bestInCategory || yieldVal > bestInCategory.yieldVal) {
             bestInCategory = { name: item.itemName, yieldVal };
           }
 
-          // Check for overall best
           if (!overallBest || yieldVal > overallBest.yieldVal) {
             overallBest = {
               name: item.itemName,
@@ -76,7 +74,7 @@ const TopPerformers: React.FC<TopPerformersProps> = ({
             };
           }
         }
-      });
+      }
 
       if (bestInCategory) {
         categoryBests.push({
@@ -85,7 +83,7 @@ const TopPerformers: React.FC<TopPerformersProps> = ({
           yieldVal: bestInCategory.yieldVal,
         });
       }
-    });
+    }
 
     return { latestPeriod, overallBest, categoryBests };
   }, [data, timePeriods, columnKey]);
