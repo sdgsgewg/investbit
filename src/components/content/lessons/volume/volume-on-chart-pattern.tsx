@@ -23,7 +23,7 @@ export default function VolumeOnChartPattern() {
 
   const getListData = () => {
     const list = t.raw("list");
-    const listTitle: string = list.title;
+    const listText: string = list.text;
     const listPoints: PointData[] = list.points;
 
     const getListPoints = () => {
@@ -35,7 +35,7 @@ export default function VolumeOnChartPattern() {
     };
 
     const modifiedList: ListData = {
-      title: listTitle,
+      text: listText,
       points: getListPoints(),
     };
 
