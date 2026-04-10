@@ -9,13 +9,13 @@ export default function ReksaDanaLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const tRecap = useTranslations("Reksadana.recap");
-  const tRecapDaily = useTranslations("Reksadana.recap.daily");
-  const tRecapPerformance = useTranslations("Reksadana.recap.performance");
+  const tRecap = useTranslations("reksadana.recap");
+  const tRecapInput = useTranslations("reksadana.recap.input");
+  const tRecapPerformance = useTranslations("reksadana.recap.performance");
   const pathname = usePathname();
 
   const tabs: { path: string; label: string }[] = [
-    { path: ROUTES.REKSADANA.RECAP.INPUT, label: tRecapDaily("nav") },
+    { path: ROUTES.REKSADANA.RECAP.INPUT, label: tRecapInput("nav") },
     {
       path: ROUTES.REKSADANA.RECAP.PERFORMANCE,
       label: tRecapPerformance("nav"),

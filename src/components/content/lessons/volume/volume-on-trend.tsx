@@ -3,7 +3,7 @@ import TechAnalysisLessonContent from "../TechAnalysisLessonContent";
 
 export default function VolumeOnTrend() {
   const t = useTranslations(
-    "LearnPage.technicalAnalysis.chapter2.lessons.volume_on_trend.content",
+    "learn.technicalAnalysis.chapter2.lessons.volume_on_trend.content",
   );
 
   const paragraphs: string[] = t.raw("paragraphs");

@@ -20,7 +20,8 @@ interface UseItemDataReturn {
 }
 
 export const useItemData = (): UseItemDataReturn => {
-  const tCommon = useTranslations("Common");
+  const tCommonActions = useTranslations("common.actions");
+  const tCommonStates = useTranslations("common.states");
 
   const [items, setItems] = useState<ItemData[]>([]);
   const [loading, setLoading] = useState(true);
@@ -31,7 +32,9 @@ export const useItemData = (): UseItemDataReturn => {
     category_id: "",
   });
 
-  const [buttonText, setButtonText] = useState<string>(tCommon("create"));
+  const [buttonText, setButtonText] = useState<string>(
+    tCommonActions("create"),
+  );
   const [isEditing, setIsEditing] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -40,14 +43,20 @@ export const useItemData = (): UseItemDataReturn => {
   }, []);
 
   useEffect(() => {
-    setButtonText(isEditing ? tCommon("update") : tCommon("create"));
+    setButtonText(
+      isEditing ? tCommonActions("update") : tCommonActions("create"),
+    );
   }, [isEditing]);
 
   useEffect(() => {
     if (isSubmitting) {
-      setButtonText(isEditing ? tCommon("updating") : tCommon("creating"));
+      setButtonText(
+        isEditing ? tCommonStates("updating") : tCommonStates("creating"),
+      );
     } else {
-      setButtonText(isEditing ? tCommon("update") : tCommon("create"));
+      setButtonText(
+        isEditing ? tCommonActions("update") : tCommonActions("create"),
+      );
     }
   }, [isSubmitting, isEditing]);
 

@@ -10,7 +10,7 @@ import { mapTips } from "@/lib/mappers/tips.mapper";
 
 export default function RelativeStrengthIndex() {
   const t = useTranslations(
-    "LearnPage.technicalAnalysis.chapter4.lessons.leading_indicator.topics.relative_strength_index.content",
+    "learn.technicalAnalysis.chapter4.lessons.leading_indicator.topics.relative_strength_index.content",
   );
 
   const getDefinitionData = (): DefinitionData => {

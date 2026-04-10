@@ -3,7 +3,7 @@ import TechAnalysisLessonContent from "../TechAnalysisLessonContent";
 
 export default function HowToReadVolumes() {
   const t = useTranslations(
-    "LearnPage.technicalAnalysis.chapter2.lessons.how_to_read_volumes.content",
+    "learn.technicalAnalysis.chapter2.lessons.how_to_read_volumes.content",
   );
 
   const paragraphs: string[] = t.raw("paragraphs");

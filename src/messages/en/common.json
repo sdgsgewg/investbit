@@ -1,0 +1,33 @@
+{
+  "actions": {
+    "add": "Add",
+    "create": "Create",
+    "update": "Update",
+    "edit": "Edit",
+    "delete": "Delete",
+    "cancel": "Cancel",
+    "apply": "Apply"
+  },
+
+  "states": {
+    "creating": "Creating...",
+    "updating": "Updating...",
+    "emptyData": "No data available. Use the daily input tab to add records."
+  },
+
+  "ui": {
+    "toggleTheme": "Toggle theme",
+    "switchLanguage": "Switch language",
+    "entry": "Entry"
+  },
+
+  "table": {
+    "actions": "Actions"
+  },
+
+  "filter": {
+    "selectCategory": "Select Category",
+    "all": "All",
+    "apply": "Apply"
+  }
+}

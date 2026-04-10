@@ -16,7 +16,7 @@ import { mapDefinitionWithImages } from "@/lib/mappers/definition.mapper";
 
 export default function MovingAverageConvergenceDivergence() {
   const t = useTranslations(
-    "LearnPage.technicalAnalysis.chapter4.lessons.lagging_indicator.topics.moving_average_convergence_divergence.content",
+    "learn.technicalAnalysis.chapter4.lessons.lagging_indicator.topics.moving_average_convergence_divergence.content",
   );
 
   const macdDefinitionData: DefinitionData = {

@@ -8,7 +8,7 @@ import { mapDefinitionWithImages } from "@/lib/mappers/definition.mapper";
 
 export default function FibonacciRetracement() {
   const t = useTranslations(
-    "LearnPage.technicalAnalysis.chapter4.lessons.leading_indicator.topics.fibonacci_retracement.content",
+    "learn.technicalAnalysis.chapter4.lessons.leading_indicator.topics.fibonacci_retracement.content",
   );
 
   const getDefinitionData = (): DefinitionData => {

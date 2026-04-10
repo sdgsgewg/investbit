@@ -1,0 +1,32 @@
+{
+  "actions": {
+    "add": "Tambah",
+    "create": "Buat",
+    "update": "Perbarui",
+    "edit": "Edit",
+    "delete": "Hapus",
+    "cancel": "Batal"
+  },
+
+  "states": {
+    "creating": "Membuat...",
+    "updating": "Memperbarui...",
+    "emptyData": "No data available. Use the daily input tab to add records."
+  },
+
+  "ui": {
+    "toggleTheme": "Ganti tema",
+    "switchLanguage": "Ganti bahasa",
+    "entry": "Entri"
+  },
+
+  "table": {
+    "actions": "Aksi"
+  },
+
+  "filter": {
+    "select_category": "Pilih Kategori:",
+    "all": "Semua",
+    "apply": "Terapkan"
+  }
+}

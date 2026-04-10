@@ -6,7 +6,7 @@ import { mapExampleWithCharts } from "@/lib/mappers/example.mapper";
 
 export default function BuyOnWeakness() {
   const t = useTranslations(
-    "LearnPage.technicalAnalysis.chapter5.lessons.buy_on_weakness.content",
+    "learn.technicalAnalysis.chapter5.lessons.buy_on_weakness.content",
   );
 
   const highlight = t.raw("highlight");

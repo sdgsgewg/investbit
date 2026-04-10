@@ -1,15 +1,11 @@
-// app/hooks/usePerformanceData.ts
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { format, startOfMonth, getWeekOfMonth } from "date-fns";
 import { RecordData } from "@/app/types/reksadana/records/RecordData";
-import { FilterPerformance } from "@/app/types/reksadana/recap/FilterPerformance";
+import { FilterPerformance } from "@/app/types/reksadana/recap/performance/FilterPerformance";
 import { CategoryStats } from "@/app/types/reksadana/recap/CategoryStats";
-import { WeeklyPerformanceAggregatedData } from "@/app/types/reksadana/recap/WeeklyPerformanceAggregatedData";
-import { MonthlyPerformanceAggregatedData } from "@/app/types/reksadana/recap/MonthlyPerformanceAggregatedData";
-import { YearlyPerformanceAggregatedData } from "@/app/types/reksadana/recap/YearlyPerformanceAggregatedData";
-
-type PerformanceType = "weekly" | "monthly" | "yearly";
+import { DataType } from "../types/reksadana/recap/performance/DataType";
+import { PerformanceType } from "../types/reksadana/recap/performance/PerformanceType";
 
 interface UsePerformanceDataProps {
   type: PerformanceType;
@@ -17,7 +13,7 @@ interface UsePerformanceDataProps {
 }
 
 interface UsePerformanceDataReturn {
-  data: WeeklyPerformanceAggregatedData[] | MonthlyPerformanceAggregatedData[] | YearlyPerformanceAggregatedData[];
+  data: DataType;
   timePeriods: string[];
   loading: boolean;
   form: FilterPerformance;
@@ -36,9 +32,7 @@ export const usePerformanceData = ({
   type,
   initialForm = { category_id: "" },
 }: UsePerformanceDataProps): UsePerformanceDataReturn => {
-  const [data, setData] = useState<
-    WeeklyPerformanceAggregatedData[] | MonthlyPerformanceAggregatedData[] | YearlyPerformanceAggregatedData[]
-  >([]);
+  const [data, setData] = useState<DataType>([]);
   const [timePeriods, setTimePeriods] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);
   const [form, setForm] = useState<FilterPerformance>(initialForm);
@@ -50,6 +44,107 @@ export const usePerformanceData = ({
     // we must import it at the top, since date-fns format and startOfMonth are already imported
     // wait, I can just use getWeekOfMonth directly instead of writing logic if I import it
     return getWeekOfMonth(date, { weekStartsOn: 1 });
+  };
+
+  // Fetch daily performance data
+  const fetchDailyData = async () => {
+    try {
+      const response = await axios.get<RecordData[]>("/api/reksadana/records", {
+        params: {
+          categoryId: form.category_id || undefined,
+        },
+      });
+
+      const records = response.data;
+
+      const datesSet = new Set<string>();
+
+      const groupedData: Record<
+        string,
+        {
+          categoryName: string;
+          items: Record<
+            string,
+            {
+              itemId: string;
+              itemName: string;
+              dailyYields: Record<string, number>;
+            }
+          >;
+        }
+      > = {};
+
+      records.forEach((req) => {
+        const item = req.rd_items;
+        if (!item || !item.rd_categories) return;
+
+        const catName = item.rd_categories.name;
+
+        const dateKey = req.date;
+
+        if (!dateKey) return;
+
+        datesSet.add(dateKey);
+
+        if (!groupedData[catName]) {
+          groupedData[catName] = { categoryName: catName, items: {} };
+        }
+
+        if (!groupedData[catName].items[item.id]) {
+          groupedData[catName].items[item.id] = {
+            itemId: item.id,
+            itemName: item.name,
+            dailyYields: {},
+          };
+        }
+
+        // optional: kalau ada duplicate tanggal -> tetap aman (overwrite)
+        groupedData[catName].items[item.id].dailyYields[dateKey] =
+          req.yield_1d || 0;
+      });
+
+      // sort by date (safe karena format yyyy-MM-dd)
+      const sortedDates = Array.from(datesSet).sort(
+        (a, b) => new Date(a).getTime() - new Date(b).getTime(),
+      );
+
+      setTimePeriods(sortedDates);
+
+      const aggregatedArr = Object.values(groupedData)
+        .map((cat) => ({
+          categoryName: cat.categoryName,
+          items: Object.values(cat.items).sort((a, b) =>
+            a.itemName.localeCompare(b.itemName),
+          ),
+        }))
+        .sort((a, b) => a.categoryName.localeCompare(b.categoryName));
+
+      const stats: CategoryStats = {};
+
+      Object.values(groupedData).forEach((cat) => {
+        stats[cat.categoryName] = {};
+
+        sortedDates.forEach((date) => {
+          const yields = Object.values(cat.items)
+            .map((item) => item.dailyYields[date])
+            .filter((v) => v !== undefined);
+
+          if (yields.length > 0) {
+            stats[cat.categoryName][date] = {
+              min: Math.min(...yields),
+              max: Math.max(...yields),
+            };
+          }
+        });
+      });
+
+      setCategoryStats(stats);
+      setData(aggregatedArr);
+    } catch (err) {
+      console.error("Failed to load daily records", err);
+    } finally {
+      setLoading(false);
+    }
   };
 
   // Fetch weekly performance data
@@ -184,100 +279,6 @@ export const usePerformanceData = ({
     }
   };
 
-  // Fetch yearly performance data
-  const fetchYearlyData = async () => {
-    try {
-      const response = await axios.get<RecordData[]>("/api/reksadana/records", {
-        params: {
-          categoryId: form.category_id || undefined,
-        },
-      });
-      const records = response.data;
-
-      const yearsSet = new Set<string>();
-      const groupedData: Record<
-        string,
-        {
-          categoryName: string;
-          items: Record<
-            string,
-            {
-              itemId: string;
-              itemName: string;
-              yearlyYields: Record<string, number>;
-            }
-          >;
-        }
-      > = {};
-
-      records.forEach((req) => {
-        const item = req.rd_items;
-        if (!item || !item.rd_categories) return;
-
-        const catName = item.rd_categories.name;
-        // Group by year
-        const yearStr = req.date.substring(0, 4); // YYYY
-        yearsSet.add(yearStr);
-
-        if (!groupedData[catName]) {
-          groupedData[catName] = { categoryName: catName, items: {} };
-        }
-
-        if (!groupedData[catName].items[item.id]) {
-          groupedData[catName].items[item.id] = {
-            itemId: item.id,
-            itemName: item.name,
-            yearlyYields: {},
-          };
-        }
-
-        const currentYield = req.yield_1d || 0;
-        const existingYield =
-          groupedData[catName].items[item.id].yearlyYields[yearStr] || 0;
-        groupedData[catName].items[item.id].yearlyYields[yearStr] =
-          existingYield + currentYield;
-      });
-
-      const sortedYears = Array.from(yearsSet).sort();
-      setTimePeriods(sortedYears);
-
-      const stats: CategoryStats = {};
-
-      const aggregatedArr = Object.values(groupedData)
-        .map((cat) => {
-          const catItems = Object.values(cat.items).sort((a, b) =>
-            a.itemName.localeCompare(b.itemName),
-          );
-
-          stats[cat.categoryName] = {};
-          sortedYears.forEach((y) => {
-            const yields = catItems
-              .map((item) => item.yearlyYields[y])
-              .filter((v) => v !== undefined);
-            if (yields.length > 0) {
-              stats[cat.categoryName][y] = {
-                min: Math.min(...yields),
-                max: Math.max(...yields),
-              };
-            }
-          });
-
-          return {
-            categoryName: cat.categoryName,
-            items: catItems,
-          };
-        })
-        .sort((a, b) => a.categoryName.localeCompare(b.categoryName));
-
-      setCategoryStats(stats);
-      setData(aggregatedArr);
-    } catch (error) {
-      console.error("Failed to load yearly records", error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
   // Fetch monthly performance data
   const fetchMonthlyData = async () => {
     try {
@@ -373,13 +374,212 @@ export const usePerformanceData = ({
     }
   };
 
+  // Fetch ytd performance data
+  const fetchYtdData = async () => {
+    try {
+      const response = await axios.get<RecordData[]>("/api/reksadana/records", {
+        params: {
+          categoryId: form.category_id || undefined,
+        },
+      });
+
+      const records = response.data;
+
+      const groupedData: Record<
+        string,
+        {
+          categoryName: string;
+          items: Record<
+            string,
+            {
+              itemId: string;
+              itemName: string;
+              ytdYields: Record<string, number>;
+            }
+          >;
+        }
+      > = {};
+
+      records.forEach((req) => {
+        const item = req.rd_items;
+        if (!item || !item.rd_categories) return;
+
+        const catName = item.rd_categories.name;
+        const year = req.date.substring(0, 4); // YYYY
+
+        if (!groupedData[catName]) {
+          groupedData[catName] = { categoryName: catName, items: {} };
+        }
+
+        if (!groupedData[catName].items[item.id]) {
+          groupedData[catName].items[item.id] = {
+            itemId: item.id,
+            itemName: item.name,
+            ytdYields: {},
+          };
+        }
+
+        const currentYield = req.yield_1d || 0;
+        const existing =
+          groupedData[catName].items[item.id].ytdYields[year] || 0;
+
+        groupedData[catName].items[item.id].ytdYields[year] =
+          existing + currentYield;
+      });
+
+      const years = Object.keys(
+        records.reduce(
+          (acc, r) => {
+            acc[r.date.substring(0, 4)] = true;
+            return acc;
+          },
+          {} as Record<string, boolean>,
+        ),
+      ).sort();
+
+      setTimePeriods(years);
+
+      const aggregatedArr = Object.values(groupedData).map((cat) => ({
+        categoryName: cat.categoryName,
+        items: Object.values(cat.items),
+      }));
+
+      const stats: CategoryStats = {};
+
+      years.forEach((year) => {
+        Object.values(groupedData).forEach((cat) => {
+          if (!stats[cat.categoryName]) {
+            stats[cat.categoryName] = {};
+          }
+
+          const yields = Object.values(cat.items)
+            .map((item) => item.ytdYields[year])
+            .filter((v) => v !== undefined);
+
+          if (yields.length > 0) {
+            stats[cat.categoryName][year] = {
+              min: Math.min(...yields),
+              max: Math.max(...yields),
+            };
+          }
+        });
+      });
+
+      setCategoryStats(stats);
+      setData(aggregatedArr);
+    } catch (err) {
+      console.error("Failed to load YTD records", err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Fetch yearly performance data
+  const fetchYearlyData = async () => {
+    try {
+      const response = await axios.get<RecordData[]>("/api/reksadana/records", {
+        params: {
+          categoryId: form.category_id || undefined,
+        },
+      });
+      const records = response.data;
+
+      const yearsSet = new Set<string>();
+      const groupedData: Record<
+        string,
+        {
+          categoryName: string;
+          items: Record<
+            string,
+            {
+              itemId: string;
+              itemName: string;
+              yearlyYields: Record<string, number>;
+            }
+          >;
+        }
+      > = {};
+
+      records.forEach((req) => {
+        const item = req.rd_items;
+        if (!item || !item.rd_categories) return;
+
+        const catName = item.rd_categories.name;
+        // Group by year
+        const yearStr = req.date.substring(0, 4); // YYYY
+        yearsSet.add(yearStr);
+
+        if (!groupedData[catName]) {
+          groupedData[catName] = { categoryName: catName, items: {} };
+        }
+
+        if (!groupedData[catName].items[item.id]) {
+          groupedData[catName].items[item.id] = {
+            itemId: item.id,
+            itemName: item.name,
+            yearlyYields: {},
+          };
+        }
+
+        const currentYield = req.yield_1d || 0;
+        const existingYield =
+          groupedData[catName].items[item.id].yearlyYields[yearStr] || 0;
+        groupedData[catName].items[item.id].yearlyYields[yearStr] =
+          existingYield + currentYield;
+      });
+
+      const sortedYears = Array.from(yearsSet).sort();
+      setTimePeriods(sortedYears);
+
+      const stats: CategoryStats = {};
+
+      const aggregatedArr = Object.values(groupedData)
+        .map((cat) => {
+          const catItems = Object.values(cat.items).sort((a, b) =>
+            a.itemName.localeCompare(b.itemName),
+          );
+
+          stats[cat.categoryName] = {};
+          sortedYears.forEach((y) => {
+            const yields = catItems
+              .map((item) => item.yearlyYields[y])
+              .filter((v) => v !== undefined);
+            if (yields.length > 0) {
+              stats[cat.categoryName][y] = {
+                min: Math.min(...yields),
+                max: Math.max(...yields),
+              };
+            }
+          });
+
+          return {
+            categoryName: cat.categoryName,
+            items: catItems,
+          };
+        })
+        .sort((a, b) => a.categoryName.localeCompare(b.categoryName));
+
+      setCategoryStats(stats);
+      setData(aggregatedArr);
+    } catch (error) {
+      console.error("Failed to load yearly records", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   // Main fetch function that calls the appropriate fetch based on type
   const fetchPerformanceData = async () => {
     setLoading(true);
-    if (type === "weekly") {
+
+    if (type === "daily") {
+      await fetchDailyData();
+    } else if (type === "weekly") {
       await fetchWeeklyData();
     } else if (type === "monthly") {
       await fetchMonthlyData();
+    } else if (type === "ytd") {
+      await fetchYtdData();
     } else {
       await fetchYearlyData();
     }
@@ -418,7 +618,7 @@ export const usePerformanceData = ({
   // Initial data fetch
   useEffect(() => {
     fetchPerformanceData();
-  }, [type]);
+  }, [type, form.category_id]);
 
   return {
     data,

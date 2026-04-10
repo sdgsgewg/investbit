@@ -8,7 +8,7 @@ import { mapDefinitionWithImages } from "@/lib/mappers/definition.mapper";
 
 export default function BearishPennant() {
   const t = useTranslations(
-    "LearnPage.technicalAnalysis.chapter1.lessons.bearish.topics.bearish_pennant.content",
+    "learn.technicalAnalysis.chapter1.lessons.bearish.topics.bearish_pennant.content",
   );
 
   const getDefinitionData = (): DefinitionData => {

@@ -3,7 +3,7 @@ import TechAnalysisLessonContent from "../TechAnalysisLessonContent";
 
 export default function ImportantThingsInTrends() {
   const t = useTranslations(
-    "LearnPage.technicalAnalysis.chapter2.lessons.important_things_in_trends.content",
+    "learn.technicalAnalysis.chapter2.lessons.important_things_in_trends.content",
   );
 
   const highlightPoints = t.raw("highlight.points");

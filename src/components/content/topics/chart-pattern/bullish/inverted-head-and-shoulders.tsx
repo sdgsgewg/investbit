@@ -8,7 +8,7 @@ import { ExampleData } from "@/app/types/learn/ExampleData";
 
 export default function InvertedHeadAndShoulders() {
   const t = useTranslations(
-    "LearnPage.technicalAnalysis.chapter1.lessons.bullish.topics.inverted_head_and_shoulders.content",
+    "learn.technicalAnalysis.chapter1.lessons.bullish.topics.inverted_head_and_shoulders.content",
   );
 
   const getDefinitionData = (): DefinitionData => {

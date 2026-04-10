@@ -1,0 +1,11 @@
+{
+  "title": "Glosarium Saham",
+  "subtitle": "Pahami bahasa pasar saham.",
+  "search": {
+    "placeholder": "Cari istilah...",
+    "noResults": "Tidak ada istilah yang cocok dengan \"{searchTerm}\""
+  },
+  "fields": {
+    "implication": "Implikasi"
+  }
+}

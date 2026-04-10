@@ -8,7 +8,7 @@ import { mapDefinitionWithImages } from "@/lib/mappers/definition.mapper";
 
 export default function BullishFlag() {
   const t = useTranslations(
-    "LearnPage.technicalAnalysis.chapter1.lessons.bullish.topics.bullish_flag.content",
+    "learn.technicalAnalysis.chapter1.lessons.bullish.topics.bullish_flag.content",
   );
 
   const getDefinitionData = (): DefinitionData => {

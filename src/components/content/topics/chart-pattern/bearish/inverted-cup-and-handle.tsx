@@ -8,7 +8,7 @@ import { ExampleData } from "@/app/types/learn/ExampleData";
 
 export default function InvertedCupAndHandle() {
   const t = useTranslations(
-    "LearnPage.technicalAnalysis.chapter1.lessons.bearish.topics.inverted_cup_and_handle.content",
+    "learn.technicalAnalysis.chapter1.lessons.bearish.topics.inverted_cup_and_handle.content",
   );
 
   const getDefinitionData = (): DefinitionData => {

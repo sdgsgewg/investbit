@@ -5,10 +5,10 @@ import { Link } from "@/navigation";
 import { useTranslations } from "next-intl";
 
 export function Footer() {
-  const tHome = useTranslations("HomePage");
-  const tNav = useTranslations("Nav");
-  const tReksadana = useTranslations("Nav.reksadana");
-  const tFooter = useTranslations("Footer");
+  const tHome = useTranslations("home");
+  const tNav = useTranslations("navigation");
+  const tReksadana = useTranslations("navigation.reksadana");
+  const tFooter = useTranslations("footer");
 
   return (
     <footer className="border-t bg-background/95 backdrop-blur supports-backdrop-filter:bg-background/60">
@@ -69,12 +69,12 @@ export function Footer() {
             <ul className="space-y-2 text-sm text-muted-foreground">
               <li>
                 <Link href="#" className="hover:text-primary transition-colors">
-                  {tFooter("privacyPolicy")}
+                  {tFooter("legal.privacyPolicy")}
                 </Link>
               </li>
               <li>
                 <Link href="#" className="hover:text-primary transition-colors">
-                  {tFooter("termsOfService")}
+                  {tFooter("legal.termsOfService")}
                 </Link>
               </li>
             </ul>
@@ -82,7 +82,7 @@ export function Footer() {
         </div>
         <div className="mt-8 pt-8 border-t text-center text-sm text-muted-foreground">
           &copy; {new Date().getFullYear()} Investbit.{" "}
-          {tFooter("allRightsReserved")}
+          {tFooter("copyright")}
         </div>
       </div>
     </footer>

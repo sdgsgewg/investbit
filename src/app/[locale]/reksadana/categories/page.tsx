@@ -6,7 +6,7 @@ import Loading from "@/components/shared/Loading";
 import { useTranslations } from "next-intl";
 
 export default function CategoriesManagementPage() {
-  const t = useTranslations("Reksadana.categories");
+  const t = useTranslations("reksadana.categories");
 
   const {
     categories,
@@ -28,8 +28,8 @@ export default function CategoriesManagementPage() {
   return (
     <CrudPage
       title={t("title")}
-      formFields={[{ name: "name", label: t("namePlaceholder"), type: "text" }]}
-      columns={[{ key: "name", label: t("name") }]}
+      formFields={[{ name: "name", label: t("form.namePlaceholder"), type: "text" }]}
+      columns={[{ key: "name", label: t("columns.name") }]}
       data={categories}
       form={form}
       setForm={setForm}

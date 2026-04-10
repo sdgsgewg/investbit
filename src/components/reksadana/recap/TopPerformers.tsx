@@ -2,11 +2,16 @@ import React, { useMemo } from "react";
 import { Trophy, Award, TrendingUp } from "lucide-react";
 import { motion } from "framer-motion";
 import { useTranslations } from "next-intl";
+import { TimeFrameType } from "@/app/types/reksadana/recap/performance/TimeFrameType";
+import Loading from "@/components/shared/Loading";
+
 interface PerformanceItem {
   itemId: string;
   itemName: string;
+  dailyYields?: Record<string, number>;
   weeklyYields?: Record<string, number>;
   monthlyYields?: Record<string, number>;
+  ytdYields?: Record<string, number>;
   yearlyYields?: Record<string, number>;
   [key: string]: any;
 }
@@ -19,8 +24,10 @@ interface PerformanceCategory {
 interface TopPerformersProps {
   data: PerformanceCategory[];
   timePeriods: string[];
+  loading: boolean;
+  loadingText: string;
   columnKey: string;
-  viewMode: "weekly" | "monthly" | "yearly";
+  viewMode: TimeFrameType;
 }
 
 interface Winner {
@@ -32,13 +39,17 @@ interface Winner {
 const TopPerformers: React.FC<TopPerformersProps> = ({
   data,
   timePeriods,
+  loading,
+  loadingText,
   columnKey,
   viewMode,
 }) => {
   const tTopPerformers = useTranslations(
-    "Reksadana.recap.performance.topPerformers",
+    "reksadana.recap.performance.topPerformers",
   );
-  const tRecapWeekly = useTranslations("Reksadana.recap.weekly");
+  const tRecapPerformanceTfWeekly = useTranslations(
+    "reksadana.recap.performance.timeframe.weekly",
+  );
 
   // Compute winners
   const winners = useMemo(() => {
@@ -46,7 +57,8 @@ const TopPerformers: React.FC<TopPerformersProps> = ({
       return null;
 
     // Get the latest period (the last one in the sorted array)
-    const latestPeriod = timePeriods[timePeriods.length - 1];
+    const latestPeriod = timePeriods?.[timePeriods.length - 1];
+    if (!latestPeriod) return null;
 
     let overallBest: Winner | null = null;
     const categoryBests: Winner[] = [];
@@ -88,34 +100,94 @@ const TopPerformers: React.FC<TopPerformersProps> = ({
     return { latestPeriod, overallBest, categoryBests };
   }, [data, timePeriods, columnKey]);
 
-  if (!winners) return null;
+  if (loading) {
+    return <Loading message={loadingText} />;
+  }
+
+  if (!winners || !winners.overallBest) {
+    return (
+      <div className="text-center py-10 text-muted-foreground">
+        {tTopPerformers("noData")}
+      </div>
+    );
+  }
+
   const { overallBest, categoryBests, latestPeriod } = winners;
-  if (!overallBest) return null;
 
   const getLabel = () => {
-    if (viewMode === "weekly") return tTopPerformers("mutualFundOfTheWeek");
-    if (viewMode === "monthly") return tTopPerformers("mutualFundOfTheMonth");
-    return tTopPerformers("mutualFundOfTheYear");
+    if (viewMode === "daily") return tTopPerformers("labels.daily");
+    if (viewMode === "weekly") return tTopPerformers("labels.weekly");
+    if (viewMode === "monthly") return tTopPerformers("labels.monthly");
+    if (viewMode === "ytd") return tTopPerformers("labels.ytd");
+    return tTopPerformers("labels.yearly");
   };
 
   const getPeriodDisplay = () => {
-    if (viewMode === "yearly") {
-      return latestPeriod; // "2026"
-    } else if (latestPeriod.includes("-W")) {
-      const [ym, w] = latestPeriod.split("-W");
-      return `${tRecapWeekly("week")} ${w}, ${ym}`;
-    } else {
-      // Monthly 2026-04-01 -> approx display
-      try {
+    try {
+      if (viewMode === "daily") {
+        try {
+          const safeDateStr = latestPeriod.split("T")[0];
+          const d = new Date(safeDateStr + "T00:00:00");
+
+          if (!isNaN(d.getTime())) {
+            return d.toLocaleDateString("en-US", {
+              day: "numeric",
+              month: "long",
+              year: "numeric",
+            });
+          }
+
+          return safeDateStr;
+        } catch {
+          return latestPeriod;
+        }
+      }
+
+      if (viewMode === "weekly") {
+        if (latestPeriod.includes("-W")) {
+          const [ym, w] = latestPeriod.split("-W");
+          return `${tRecapPerformanceTfWeekly("week")} ${w}, ${ym}`;
+        }
+        return latestPeriod;
+      }
+
+      if (viewMode === "monthly") {
         const d = new Date(latestPeriod);
-        if (!isNaN(d.getTime()))
+        if (!isNaN(d.getTime())) {
           return d.toLocaleDateString("en-US", {
             month: "long",
             year: "numeric",
           });
-      } catch {}
+        }
+        return latestPeriod;
+      }
+
+      if (viewMode === "ytd") {
+        return `YTD ${latestPeriod}`;
+      }
+
+      if (viewMode === "yearly") {
+        return latestPeriod;
+      }
+
+      return latestPeriod;
+    } catch {
       return latestPeriod;
     }
+  };
+
+  const getBestYieldClassName = (num: number | string): string => {
+    const modifiedNumber = Number(num);
+    return modifiedNumber >= 0
+      ? "text-green-600 dark:text-green-400 bg-green-50 dark:bg-green-900/20"
+      : "text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-900/20";
+  };
+
+  const getModifiedBestYield = (num: number | string): string => {
+    const modifiedNumber = Number(num);
+    return modifiedNumber >= 0
+      ? `+${modifiedNumber.toFixed(2)}`
+      : `${modifiedNumber.toFixed(2)}`;
   };
 
   return (
@@ -163,7 +235,7 @@ const TopPerformers: React.FC<TopPerformersProps> = ({
 
             <div className="mt-6 flex items-baseline gap-1">
               <span className="text-3xl font-black text-green-600 dark:text-green-400">
-                +{overallBest.yieldVal.toFixed(2)}
+                {getModifiedBestYield(overallBest.yieldVal.toFixed(2))}
               </span>
               <span className="text-green-600 dark:text-green-500 font-semibold">
                 %
@@ -186,7 +258,7 @@ const TopPerformers: React.FC<TopPerformersProps> = ({
                 <div className="flex items-center gap-1.5 text-blue-600 dark:text-blue-400 font-medium mb-3">
                   <Award size={16} />
                   <span className="text-xs uppercase tracking-wider">
-                    {tTopPerformers("topIn")} {catBest.category}
+                    {tTopPerformers("labels.topIn")} {catBest.category}
                   </span>
                 </div>
                 <h4 className="font-bold text-gray-900 dark:text-gray-100 line-clamp-2">
@@ -195,8 +267,10 @@ const TopPerformers: React.FC<TopPerformersProps> = ({
               </div>
 
               <div className="mt-3 flex justify-end">
-                <span className="font-bold text-green-600 dark:text-green-400 bg-green-50 dark:bg-green-900/20 px-2 py-1 rounded-md text-sm">
-                  +{catBest.yieldVal.toFixed(2)}%
+                <span
+                  className={`font-bold ${getBestYieldClassName(catBest.yieldVal.toFixed(2))} px-2 py-1 rounded-md text-sm`}
+                >
+                  {getModifiedBestYield(catBest.yieldVal.toFixed(2))}%
                 </span>
               </div>
             </motion.div>

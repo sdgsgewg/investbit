@@ -5,7 +5,7 @@ import HighlightSection from "../../sections/HighlightSection";
 
 export default function KeyTakeawaysC5() {
   const t = useTranslations(
-    "LearnPage.technicalAnalysis.chapter5.lessons.key_takeaways_c5.content",
+    "learn.technicalAnalysis.chapter5.lessons.key_takeaways_c5.content",
   );
 
   const highlight = t.raw("highlight");

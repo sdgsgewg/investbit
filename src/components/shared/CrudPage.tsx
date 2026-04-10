@@ -34,7 +34,9 @@ type CrudPageProps = {
 };
 
 export function CrudPage(props: CrudPageProps) {
-  const tCommon = useTranslations("Common");
+  const tCommonActions = useTranslations("common.actions");
+  const tCommonUi = useTranslations("common.ui");
+  const tCommonTable = useTranslations("common.table");
 
   const {
     title,
@@ -77,12 +79,12 @@ export function CrudPage(props: CrudPageProps) {
                 {isEditing ? (
                   <>
                     <Edit2 className="w-4 h-4 text-primary" />
-                    {tCommon("edit")} Entry
+                    {tCommonActions("edit")} {tCommonUi("entry")}
                   </>
                 ) : (
                   <>
                     <Plus className="w-4 h-4 text-primary" />
-                    {tCommon("add")} Entry
+                    {tCommonActions("add")} {tCommonUi("entry")}
                   </>
                 )}
               </h2>
@@ -155,7 +157,7 @@ export function CrudPage(props: CrudPageProps) {
                   <button
                     onClick={resetForm}
                     className="flex items-center justify-center gap-2 bg-muted hover:bg-muted/80 text-foreground font-medium h-10 px-4 rounded-xl transition-all"
-                    title={tCommon("cancel")}
+                    title={tCommonActions("cancel")}
                   >
                     <X className="w-4 h-4" />
                   </button>
@@ -181,7 +183,7 @@ export function CrudPage(props: CrudPageProps) {
                       </th>
                     ))}
                     <th className="px-6 py-4 font-semibold tracking-wider text-right">
-                      {tCommon("actions")}
+                      {tCommonTable("actions")}
                     </th>
                   </tr>
                 </thead>
@@ -226,14 +228,14 @@ export function CrudPage(props: CrudPageProps) {
                             <button
                               onClick={() => onEdit(item)}
                               className="p-2 text-blue-500 hover:bg-blue-500/10 rounded-lg transition-colors"
-                              title={tCommon("edit")}
+                              title={tCommonActions("edit")}
                             >
                               <Edit2 className="w-4 h-4" />
                             </button>
                             <button
                               onClick={() => onDelete(item.id)}
                               className="p-2 text-red-500 hover:bg-red-500/10 rounded-lg transition-colors"
-                              title={tCommon("delete")}
+                              title={tCommonActions("delete")}
                             >
                               <Trash2 className="w-4 h-4" />
                             </button>

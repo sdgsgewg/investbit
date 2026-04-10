@@ -8,7 +8,7 @@ import { mapDefinitionWithImages } from "@/lib/mappers/definition.mapper";
 
 export default function DoubleTop() {
   const t = useTranslations(
-    "LearnPage.technicalAnalysis.chapter1.lessons.bearish.topics.double_top.content",
+    "learn.technicalAnalysis.chapter1.lessons.bearish.topics.double_top.content",
   );
 
   const getDefinitionData = (): DefinitionData => {

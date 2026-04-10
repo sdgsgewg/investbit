@@ -12,7 +12,7 @@ import { mapFunction } from "@/lib/mappers/function.mapper";
 
 export default function MovingAverage() {
   const t = useTranslations(
-    "LearnPage.technicalAnalysis.chapter4.lessons.lagging_indicator.topics.moving_average.content",
+    "learn.technicalAnalysis.chapter4.lessons.lagging_indicator.topics.moving_average.content",
   );
 
   const getDefinitionData = (): DefinitionData => {

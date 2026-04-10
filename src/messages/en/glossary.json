@@ -1,0 +1,11 @@
+{
+  "title": "Stock Glossary",
+  "subtitle": "Understand the language of the stock market.",
+  "search": {
+    "placeholder": "Search term...",
+    "noResults": "No terms found matching \"{searchTerm}\""
+  },
+  "fields": {
+    "implication": "Implication"
+  }
+}

@@ -1,0 +1,1 @@
+export type PerformanceType = "daily" | "weekly" | "monthly" | "ytd" | "yearly";

@@ -6,7 +6,7 @@ import { mapDefinitionWithImages } from "@/lib/mappers/definition.mapper";
 
 export default function Hammer() {
   const t = useTranslations(
-    "LearnPage.technicalAnalysis.chapter3.lessons.candlestick_pattern.topics.hammer.content",
+    "learn.technicalAnalysis.chapter3.lessons.candlestick_pattern.topics.hammer.content",
   );
 
   const getDefinitionData = (): DefinitionData => {

@@ -16,8 +16,7 @@ type Category = {
 };
 
 export default function InputPage() {
-  const tCommon = useTranslations("Common");
-  const tRecapDaily = useTranslations("Reksadana.recap.daily");
+  const tRecapInput = useTranslations("reksadana.recap.input");
 
   const [categories, setCategories] = useState<Category[]>([]);
   const [loading, setLoading] = useState(true);
@@ -127,35 +126,35 @@ export default function InputPage() {
         .filter((doc) => doc.yield_1d !== null || doc.yield_ytd !== null);
 
       if (payload.length === 0) {
-        alert(tRecapDaily("errorSaveData"));
+        alert(tRecapInput("form.errors.empty"));
         setSaving(false);
         return;
       }
 
       await axios.post("/api/reksadana/records", payload);
-      alert(tRecapDaily("successSaveData") + selectedDate);
+      alert(tRecapInput("success") + selectedDate);
       // Fetch the latest records again to ensure fields are populated correctly
       fetchRecordsForDate(selectedDate);
     } catch (error) {
       console.error("Error saving data", error);
-      alert(tRecapDaily("errorSaveDataFailed"));
+      alert(tRecapInput("errors.failed"));
     } finally {
       setSaving(false);
     }
   };
 
   if (loading) {
-    return <div className="p-4">{tRecapDaily("loading")}</div>;
+    return <div className="p-4">{tRecapInput("loading")}</div>;
   }
 
   return (
     <div className="bg-white dark:bg-zinc-900 rounded-lg p-6 shadow-sm">
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
         <div>
-          <h2 className="text-xl font-semibold mb-2">{tRecapDaily("title")}</h2>
+          <h2 className="text-xl font-semibold mb-2">{tRecapInput("title")}</h2>
           <div className="flex items-center gap-2">
             <label className="text-sm font-medium">
-              {tRecapDaily("selectDate")}:
+              {tRecapInput("form.selectDate")}:
             </label>
             <input
               type="date"
@@ -170,7 +169,7 @@ export default function InputPage() {
           disabled={saving}
           className="bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-6 rounded transition disabled:opacity-50"
         >
-          {saving ? tRecapDaily("saving") : tRecapDaily("saveData")}
+          {saving ? tRecapInput("form.saving") : tRecapInput("form.save")}
         </button>
       </div>
 
@@ -179,13 +178,13 @@ export default function InputPage() {
           <thead className="bg-zinc-100 dark:bg-zinc-800 border-b border-zinc-200 dark:border-zinc-700">
             <tr>
               <th className="py-3 px-4 font-semibold">
-                {tCommon("reksadana")}
+                {tRecapInput("table.mutualFund")}
               </th>
               <th className="py-3 px-4 font-semibold w-40 text-center">
-                {tRecapDaily("yield1d")}
+                {tRecapInput("table.yield1d")}
               </th>
               <th className="py-3 px-4 font-semibold w-40 text-center">
-                {tRecapDaily("yieldYtd")}
+                {tRecapInput("table.yieldYtd")}
               </th>
             </tr>
           </thead>

@@ -6,7 +6,7 @@ import { mapDefinitionWithImages } from "@/lib/mappers/definition.mapper";
 
 export default function Doji() {
   const t = useTranslations(
-    "LearnPage.technicalAnalysis.chapter3.lessons.candlestick_pattern.topics.doji.content",
+    "learn.technicalAnalysis.chapter3.lessons.candlestick_pattern.topics.doji.content",
   );
 
   const getDefinitionData = (): DefinitionData => {

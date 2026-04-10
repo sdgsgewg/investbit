@@ -6,7 +6,7 @@ import { mapDefinitionWithImages } from "@/lib/mappers/definition.mapper";
 
 export default function Marubozu() {
   const t = useTranslations(
-    "LearnPage.technicalAnalysis.chapter3.lessons.candlestick_pattern.topics.marubozu.content",
+    "learn.technicalAnalysis.chapter3.lessons.candlestick_pattern.topics.marubozu.content",
   );
 
   const getDefinitionData = (): DefinitionData => {

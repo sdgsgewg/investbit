@@ -8,7 +8,7 @@ import { ExampleData } from "@/app/types/learn/ExampleData";
 
 export default function Rectangle() {
   const t = useTranslations(
-    "LearnPage.technicalAnalysis.chapter1.lessons.sideways.topics.rectangle.content",
+    "learn.technicalAnalysis.chapter1.lessons.sideways.topics.rectangle.content",
   );
 
   const getDefinitionData = (): DefinitionData => {

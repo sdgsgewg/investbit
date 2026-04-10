@@ -29,7 +29,7 @@ export default function Page() {
 
   const slugKey = getSlugKey(slug as string);
 
-  const t = useTranslations(`LearnPage.${slugKey}`);
+  const t = useTranslations(`learn.${slugKey}`);
 
   const chapters = CHAPTER_DATA;
 

@@ -8,7 +8,7 @@ import { ExampleData } from "@/app/types/learn/ExampleData";
 
 export default function DoubleBottom() {
   const t = useTranslations(
-    "LearnPage.technicalAnalysis.chapter1.lessons.bullish.topics.double_bottom.content",
+    "learn.technicalAnalysis.chapter1.lessons.bullish.topics.double_bottom.content",
   );
 
   const getDefinitionData = (): DefinitionData => {

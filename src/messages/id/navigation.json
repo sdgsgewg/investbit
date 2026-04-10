@@ -1,0 +1,13 @@
+{
+  "home": "Beranda",
+  "learn": "Belajar",
+  "analyze": "Analisis",
+  "glossary": "Glosarium",
+  "reksadana": {
+    "base": "Reksa Dana",
+    "recap": "Rekap Reksa Dana",
+    "items": "Kelola Item",
+    "categories": "Kelola Kategori"
+  },
+  "about": "Tentang"
+}

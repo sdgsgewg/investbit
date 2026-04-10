@@ -3,7 +3,6 @@ export type LearnSection = {
   slug?: string;
   description: string;
   content: string;
-  seeMore?: boolean;
 };
 
 export type LearnTab = {
@@ -50,7 +49,6 @@ export const LEARN_DATA: LearnData = {
           description: "Studying price patterns and trends.",
           content:
             "Technical analysis is a trading discipline used to evaluate investments.",
-          seeMore: true,
         },
       ],
     },
@@ -108,7 +106,6 @@ export const LEARN_DATA: LearnData = {
           description: "Mempelajari pola dan tren harga.",
           content:
             "Analisis teknikal digunakan untuk mengidentifikasi peluang trading dari pergerakan harga.",
-          seeMore: true,
         },
       ],
     },

@@ -8,7 +8,7 @@ import { mapDefinitionWithImages } from "@/lib/mappers/definition.mapper";
 
 export default function BullishPennant() {
   const t = useTranslations(
-    "LearnPage.technicalAnalysis.chapter1.lessons.bullish.topics.bullish_pennant.content",
+    "learn.technicalAnalysis.chapter1.lessons.bullish.topics.bullish_pennant.content",
   );
 
   const getDefinitionData = (): DefinitionData => {

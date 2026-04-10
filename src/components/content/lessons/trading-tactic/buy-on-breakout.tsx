@@ -6,7 +6,7 @@ import { mapExampleWithCharts } from "@/lib/mappers/example.mapper";
 
 export default function BuyOnBreakout() {
   const t = useTranslations(
-    "LearnPage.technicalAnalysis.chapter5.lessons.buy_on_breakout.content",
+    "learn.technicalAnalysis.chapter5.lessons.buy_on_breakout.content",
   );
 
   const highlight = t.raw("highlight");

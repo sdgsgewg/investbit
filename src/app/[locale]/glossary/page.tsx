@@ -18,7 +18,7 @@ export default function GlossaryPage() {
   const filteredTerms = terms.filter(
     (item) =>
       item.term.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      item.definition.toLowerCase().includes(searchTerm.toLowerCase())
+      item.definition.toLowerCase().includes(searchTerm.toLowerCase()),
   );
 
   return (
@@ -29,15 +29,13 @@ export default function GlossaryPage() {
             <BookOpen className="h-10 w-10 text-primary" />
             {t("title")}
           </h1>
-          <p className="text-muted-foreground mt-2">
-            {t("subtitle")}
-          </p>
+          <p className="text-muted-foreground mt-2">{t("subtitle")}</p>
         </div>
 
         <div className="relative w-full md:w-80">
           <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
           <Input
-            placeholder={t("searchPlaceholder")}
+            placeholder={t("search.placeholder")}
             className="pl-8"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
@@ -62,7 +60,9 @@ export default function GlossaryPage() {
             <CardContent>
               <p className="text-sm font-medium mb-2">{item.definition}</p>
               <p className="text-xs text-muted-foreground bg-muted p-2 rounded-md">
-                <span className="font-semibold text-primary">{t("implication")}</span>{" "}
+                <span className="font-semibold text-primary">
+                  {t("fields.implication")}
+                </span>{" "}
                 {item.implication}
               </p>
             </CardContent>
@@ -71,7 +71,7 @@ export default function GlossaryPage() {
 
         {filteredTerms.length === 0 && (
           <div className="col-span-full text-center py-12 text-muted-foreground">
-            {t("noResults", { searchTerm })}
+            {t("search.noResults", { searchTerm })}
           </div>
         )}
       </div>

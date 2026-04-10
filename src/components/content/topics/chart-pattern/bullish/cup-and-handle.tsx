@@ -8,7 +8,7 @@ import { mapDefinitionWithImages } from "@/lib/mappers/definition.mapper";
 
 export default function CupAndHandle() {
   const t = useTranslations(
-    "LearnPage.technicalAnalysis.chapter1.lessons.bullish.topics.cup_and_handle.content",
+    "learn.technicalAnalysis.chapter1.lessons.bullish.topics.cup_and_handle.content",
   );
 
   const getDefinitionData = (): DefinitionData => {

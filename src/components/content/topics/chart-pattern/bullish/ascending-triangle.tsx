@@ -8,7 +8,7 @@ import { ExampleData } from "@/app/types/learn/ExampleData";
 
 export default function AscendingTriangle() {
   const t = useTranslations(
-    "LearnPage.technicalAnalysis.chapter1.lessons.bullish.topics.ascending_triangle.content",
+    "learn.technicalAnalysis.chapter1.lessons.bullish.topics.ascending_triangle.content",
   );
 
   const getDefinitionData = (): DefinitionData => {

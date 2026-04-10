@@ -16,14 +16,14 @@ import { useRouter } from "next/navigation";
 
 export default function LearnPage() {
   const router = useRouter();
-  const t = useTranslations("Nav");
+  const tNav = useTranslations("navigation");
   const locale = useLocale();
 
   const data = LEARN_DATA[locale as keyof typeof LEARN_DATA] || LEARN_DATA.en;
 
   return (
     <div className="container mx-auto py-12 px-4">
-      <h1 className="text-4xl font-bold mb-8">{t("learn")}</h1>
+      <h1 className="text-4xl font-bold mb-8">{tNav("learn")}</h1>
 
       <Tabs defaultValue="basics" className="w-full">
         <TabsList className="grid w-full grid-cols-3 mb-8">
@@ -45,7 +45,7 @@ export default function LearnPage() {
                 <CardContent>
                   <p className="leading-7">{section.content}</p>
                 </CardContent>
-                {section.seeMore && (
+                {section.slug && (
                   <CardFooter>
                     <Button
                       variant="outline"
@@ -54,7 +54,7 @@ export default function LearnPage() {
                         router.push(`/${locale}/learn/${section.slug}`)
                       }
                     >
-                      See More
+                      Explore
                     </Button>
                   </CardFooter>
                 )}

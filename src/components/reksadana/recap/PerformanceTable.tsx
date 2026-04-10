@@ -1,4 +1,3 @@
-// app/components/reksadana/recap/PerformanceTable.tsx
 import React from "react";
 import { useTranslations } from "next-intl";
 
@@ -38,7 +37,10 @@ const PerformanceTable: React.FC<PerformanceTableProps> = ({
   getCellColor,
   noDataMessage,
 }) => {
-  const tCommon = useTranslations("Common");
+  const tPerformance = useTranslations("reksadana.recap.performance");
+  const tPerformanceAnalytics = useTranslations(
+    "reksadana.recap.performance.analytics",
+  );
 
   return (
     <div className="overflow-auto max-h-[65vh] border border-zinc-200 dark:border-zinc-800 rounded-md">
@@ -46,7 +48,7 @@ const PerformanceTable: React.FC<PerformanceTableProps> = ({
         <thead className="sticky top-0 z-20 bg-zinc-100 dark:bg-zinc-800 border-b border-zinc-200 dark:border-zinc-700 shadow-sm">
           <tr>
             <th className="py-3 px-4 font-semibold w-64 sticky left-0 z-30 bg-zinc-100 dark:bg-zinc-800 border-r border-zinc-200 dark:border-zinc-700">
-              {tCommon("reksadana")}
+              {tPerformanceAnalytics("table.mutualFund")}
             </th>
             {columns.map((col) => (
               <th
@@ -122,7 +124,7 @@ const PerformanceTable: React.FC<PerformanceTableProps> = ({
                 colSpan={columns.length + 1}
                 className="p-4 text-center text-zinc-500"
               >
-                {noDataMessage || tCommon("noPerformanceData")}
+                {noDataMessage || tPerformance("noData")}
               </td>
             </tr>
           )}

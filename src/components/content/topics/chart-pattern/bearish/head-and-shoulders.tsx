@@ -8,7 +8,7 @@ import { mapDefinitionWithImages } from "@/lib/mappers/definition.mapper";
 
 export default function HeadAndShoulders() {
   const t = useTranslations(
-    "LearnPage.technicalAnalysis.chapter1.lessons.bearish.topics.head_and_shoulders.content",
+    "learn.technicalAnalysis.chapter1.lessons.bearish.topics.head_and_shoulders.content",
   );
 
   const getDefinitionData = (): DefinitionData => {

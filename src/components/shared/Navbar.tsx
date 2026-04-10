@@ -17,8 +17,8 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 export function Navbar() {
-  const t = useTranslations("Nav");
-  const tReksadana = useTranslations("Nav.reksadana");
+  const tNav = useTranslations("navigation");
+  const tReksadana = useTranslations("navigation.reksadana");
   const [open, setOpen] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const pathname = usePathname();
@@ -26,9 +26,9 @@ export function Navbar() {
   const isActive = (path: string) => pathname === path;
 
   const navLinks = [
-    { name: t("home"), path: ROUTES.HOME },
-    { name: t("learn"), path: ROUTES.LEARN },
-    { name: t("glossary"), path: ROUTES.GLOSSARY },
+    { name: tNav("home"), path: ROUTES.HOME },
+    { name: tNav("learn"), path: ROUTES.LEARN },
+    { name: tNav("glossary"), path: ROUTES.GLOSSARY },
   ];
 
   return (
@@ -51,7 +51,9 @@ export function Navbar() {
                   href={link.path}
                   className={cn(
                     "text-sm font-medium transition-colors hover:text-primary",
-                    isActive(link.path) ? "text-primary" : "text-muted-foreground"
+                    isActive(link.path)
+                      ? "text-primary"
+                      : "text-muted-foreground",
                   )}
                 >
                   {link.name}
@@ -64,27 +66,48 @@ export function Navbar() {
                     "flex items-center gap-1 text-sm font-medium transition-colors hover:text-primary cursor-pointer",
                     pathname.startsWith("/reksadana")
                       ? "text-primary"
-                      : "text-muted-foreground"
+                      : "text-muted-foreground",
                   )}
                 >
                   {tReksadana("base")}
                   <ChevronDown
                     className={cn(
                       "h-4 w-4 transition-transform duration-200",
-                      open && "rotate-180"
+                      open && "rotate-180",
                     )}
                   />
                 </DropdownMenuTrigger>
 
                 <DropdownMenuContent align="start">
-                  <DropdownMenuItem asChild className={cn(pathname === ROUTES.REKSADANA.RECAP.INPUT && "bg-accent")}>
-                    <Link href={ROUTES.REKSADANA.RECAP.INPUT}>{tReksadana("recap")}</Link>
+                  <DropdownMenuItem
+                    asChild
+                    className={cn(
+                      pathname === ROUTES.REKSADANA.RECAP.INPUT && "bg-accent",
+                    )}
+                  >
+                    <Link href={ROUTES.REKSADANA.RECAP.INPUT}>
+                      {tReksadana("recap")}
+                    </Link>
                   </DropdownMenuItem>
-                  <DropdownMenuItem asChild className={cn(pathname === ROUTES.REKSADANA.ITEMS && "bg-accent")}>
-                    <Link href={ROUTES.REKSADANA.ITEMS}>{tReksadana("items")}</Link>
+                  <DropdownMenuItem
+                    asChild
+                    className={cn(
+                      pathname === ROUTES.REKSADANA.ITEMS && "bg-accent",
+                    )}
+                  >
+                    <Link href={ROUTES.REKSADANA.ITEMS}>
+                      {tReksadana("items")}
+                    </Link>
                   </DropdownMenuItem>
-                  <DropdownMenuItem asChild className={cn(pathname === ROUTES.REKSADANA.CATEGORIES && "bg-accent")}>
-                    <Link href={ROUTES.REKSADANA.CATEGORIES}>{tReksadana("categories")}</Link>
+                  <DropdownMenuItem
+                    asChild
+                    className={cn(
+                      pathname === ROUTES.REKSADANA.CATEGORIES && "bg-accent",
+                    )}
+                  >
+                    <Link href={ROUTES.REKSADANA.CATEGORIES}>
+                      {tReksadana("categories")}
+                    </Link>
                   </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
@@ -94,7 +117,7 @@ export function Navbar() {
           <div className="flex items-center space-x-2 md:space-x-4">
             <LanguageSwitcher />
             <ModeToggle />
-            
+
             {/* Mobile Menu Toggle */}
             <button
               className="md:hidden p-2 text-foreground hover:bg-muted rounded-md focus:outline-none"
@@ -129,7 +152,7 @@ export function Navbar() {
                 <X className="h-6 w-6" />
               </button>
             </div>
-            
+
             <div className="flex-1 overflow-y-auto py-6 px-4 flex flex-col space-y-6">
               <div className="flex flex-col space-y-2">
                 {navLinks.map((link) => (
@@ -139,7 +162,9 @@ export function Navbar() {
                     onClick={() => setMobileMenuOpen(false)}
                     className={cn(
                       "text-lg font-medium transition-colors p-2 rounded-md hover:bg-accent",
-                      isActive(link.path) ? "text-primary bg-primary/5" : "text-muted-foreground"
+                      isActive(link.path)
+                        ? "text-primary bg-primary/5"
+                        : "text-muted-foreground",
                     )}
                   >
                     {link.name}
@@ -157,7 +182,9 @@ export function Navbar() {
                     onClick={() => setMobileMenuOpen(false)}
                     className={cn(
                       "text-lg font-medium transition-colors p-2 rounded-md hover:bg-accent",
-                      pathname === ROUTES.REKSADANA.RECAP.INPUT ? "text-primary bg-primary/5" : "text-muted-foreground"
+                      pathname === ROUTES.REKSADANA.RECAP.INPUT
+                        ? "text-primary bg-primary/5"
+                        : "text-muted-foreground",
                     )}
                   >
                     {tReksadana("recap")}
@@ -167,7 +194,9 @@ export function Navbar() {
                     onClick={() => setMobileMenuOpen(false)}
                     className={cn(
                       "text-lg font-medium transition-colors p-2 rounded-md hover:bg-accent",
-                      pathname === ROUTES.REKSADANA.ITEMS ? "text-primary bg-primary/5" : "text-muted-foreground"
+                      pathname === ROUTES.REKSADANA.ITEMS
+                        ? "text-primary bg-primary/5"
+                        : "text-muted-foreground",
                     )}
                   >
                     {tReksadana("items")}
@@ -177,7 +206,9 @@ export function Navbar() {
                     onClick={() => setMobileMenuOpen(false)}
                     className={cn(
                       "text-lg font-medium transition-colors p-2 rounded-md hover:bg-accent",
-                      pathname === ROUTES.REKSADANA.CATEGORIES ? "text-primary bg-primary/5" : "text-muted-foreground"
+                      pathname === ROUTES.REKSADANA.CATEGORIES
+                        ? "text-primary bg-primary/5"
+                        : "text-muted-foreground",
                     )}
                   >
                     {tReksadana("categories")}

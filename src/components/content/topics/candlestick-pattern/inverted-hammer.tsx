@@ -6,7 +6,7 @@ import { mapDefinitionWithImages } from "@/lib/mappers/definition.mapper";
 
 export default function InvertedHammer() {
   const t = useTranslations(
-    "LearnPage.technicalAnalysis.chapter3.lessons.candlestick_pattern.topics.inverted_hammer.content",
+    "learn.technicalAnalysis.chapter3.lessons.candlestick_pattern.topics.inverted_hammer.content",
   );
 
   const getDefinitionData = (): DefinitionData => {

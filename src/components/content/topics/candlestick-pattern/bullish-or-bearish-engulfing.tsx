@@ -6,7 +6,7 @@ import { mapDefinitionWithImages } from "@/lib/mappers/definition.mapper";
 
 export default function BullishOrBearishEngulfing() {
   const t = useTranslations(
-    "LearnPage.technicalAnalysis.chapter3.lessons.candlestick_pattern.topics.bullish_or_bearish_engulfing.content",
+    "learn.technicalAnalysis.chapter3.lessons.candlestick_pattern.topics.bullish_or_bearish_engulfing.content",
   );
 
   const getDefinitionData = (): DefinitionData => {

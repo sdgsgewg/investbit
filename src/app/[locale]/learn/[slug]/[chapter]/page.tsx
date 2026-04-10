@@ -18,7 +18,7 @@ export default function Page() {
   );
 
   // Notice we use the slug as the namespace, but fallback to technicalAnalysis if it is the only one we have for now.
-  const t = useTranslations("LearnPage.technicalAnalysis");
+  const t = useTranslations("learn.technicalAnalysis");
 
   if (!chapter) {
     return (

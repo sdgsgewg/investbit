@@ -13,7 +13,7 @@ const ICON_MAP = {
 };
 
 export default function LandingPage() {
-  const t = useTranslations("HomePage");
+  const t = useTranslations("home");
   const locale = useLocale();
 
   const features =
@@ -34,7 +34,7 @@ export default function LandingPage() {
             <div className="flex flex-col sm:flex-row justify-center gap-4 animate-in fade-in slide-in-from-bottom-12 duration-1000 delay-400">
               <Button size="lg" asChild className="text-lg px-8">
                 <Link href="/reksadana">
-                  {t("getStarted")} <ArrowRight className="ml-2 h-5 w-5" />
+                  {t("actions.getStarted")} <ArrowRight className="ml-2 h-5 w-5" />
                 </Link>
               </Button>
               <Button
@@ -43,7 +43,7 @@ export default function LandingPage() {
                 asChild
                 className="text-lg px-8"
               >
-                <Link href="/learn">{t("learnMore")}</Link>
+                <Link href="/learn">{t("actions.learnMore")}</Link>
               </Button>
             </div>
           </div>

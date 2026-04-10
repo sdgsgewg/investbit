@@ -3,7 +3,7 @@ import TechAnalysisLessonContent from "../TechAnalysisLessonContent";
 
 export default function VolumeIndicators() {
   const t = useTranslations(
-    "LearnPage.technicalAnalysis.chapter2.lessons.volume_indicators.content",
+    "learn.technicalAnalysis.chapter2.lessons.volume_indicators.content",
   );
 
   const paragraphs: string[] = t.raw("paragraphs");

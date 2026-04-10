@@ -1,0 +1,8 @@
+{
+  "title": "Toggle Theme",
+  "options": {
+    "light": "Light",
+    "dark": "Dark",
+    "system": "System"
+  }
+}

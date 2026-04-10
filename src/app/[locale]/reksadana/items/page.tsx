@@ -7,7 +7,7 @@ import { CrudPage } from "@/components/shared/CrudPage";
 import { useTranslations } from "next-intl";
 
 export default function ItemsManagementPage() {
-  const t = useTranslations("Reksadana.items");
+  const t = useTranslations("reksadana.items");
 
   const {
     items,
@@ -31,17 +31,17 @@ export default function ItemsManagementPage() {
     <CrudPage
       title={t("title")}
       formFields={[
-        { name: "name", label: t("namePlaceholder"), type: "text" },
+        { name: "name", label: t("form.namePlaceholder"), type: "text" },
         {
           name: "category_id",
-          label: t("categoryPlaceholder"),
+          label: t("form.categoryPlaceholder"),
           type: "select",
           options: categories,
         },
       ]}
       columns={[
-        { key: "name", label: t("name") },
-        { key: "category.name", label: t("category") },
+        { key: "name", label: t("columns.name") },
+        { key: "category.name", label: t("columns.category") },
       ]}
       data={items}
       form={form}

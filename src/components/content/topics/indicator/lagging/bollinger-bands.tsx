@@ -15,7 +15,7 @@ import ListSection from "@/components/content/sections/ListSection";
 
 export default function BollingerBands() {
   const t = useTranslations(
-    "LearnPage.technicalAnalysis.chapter4.lessons.lagging_indicator.topics.bollinger_bands.content",
+    "learn.technicalAnalysis.chapter4.lessons.lagging_indicator.topics.bollinger_bands.content",
   );
 
   const getListData = (): ListData => {

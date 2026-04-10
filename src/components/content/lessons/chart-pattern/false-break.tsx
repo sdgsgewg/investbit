@@ -10,7 +10,7 @@ import { mapExampleWithCharts } from "@/lib/mappers/example.mapper";
 
 export default function FalseBreak() {
   const t = useTranslations(
-    "LearnPage.technicalAnalysis.chapter1.lessons.false_break.content",
+    "learn.technicalAnalysis.chapter1.lessons.false_break.content",
   );
 
   const getDefinitionData = (): DefinitionData => {
