@@ -132,12 +132,12 @@ export default function InputPage() {
       }
 
       await axios.post("/api/reksadana/records", payload);
-      alert(tRecapInput("success") + selectedDate);
+      alert(tRecapInput("form.success") + selectedDate);
       // Fetch the latest records again to ensure fields are populated correctly
       fetchRecordsForDate(selectedDate);
     } catch (error) {
       console.error("Error saving data", error);
-      alert(tRecapInput("errors.failed"));
+      alert(tRecapInput("form.errors.failed"));
     } finally {
       setSaving(false);
     }
