@@ -2,6 +2,15 @@
   "actions": {
     "explore": "Explore"
   },
+  "material": {
+    "chapter": {
+      "references_and_disclaimer": {
+        "title": "References and Disclaimer",
+        "subtitle": "View sources used in this chapter",
+        "text": "The materials and examples in this chapter are based on publicly available data and educational resources."
+      }
+    }
+  },
   "technicalAnalysis": {
     "title": "Select a Chapter",
     "subtitle": "Master the art of reading charts, recognizing patterns, and understanding volume to make knowledgeable investment decisions.",

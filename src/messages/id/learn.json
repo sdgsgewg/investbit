@@ -230,32 +230,32 @@
         },
         "bearish": {
           "title": "Pola Grafik Bearish",
-          "description": "A bearish chart pattern means a pattern that, if formed, indicates a potential drop in stock prices. The purpose of understanding this pattern is to be prepared before the price reaches its target decline or to project how far the price will fall.",
+          "description": "Pola grafik bearish berarti pattern yang jika terbentuk, maka harga saham berpotensi untuk turun. Tujuan mengetahui pattern ini adalah agar kita dapat berjaga-jaga sebelum harganya mencapai target penurunan atau kita bisa memproyeksikan sampai sejauh mana harga itu akan turun.",
           "topics": {
             "descending_triangle": {
               "title": "Descending Triangle",
               "content": {
                 "definition": {
                   "paragraphs": [
-                    "This pattern resembles a right-angled triangle with a downward-pointing trendline and a neckline (support) below it.",
-                    "Confirmation of the validity of this pattern occurs when the price successfully falls below the neckline, a process known as a breakdown.",
-                    "Just like an ascending triangle, we can determine the price target by measuring the distance between the neckline and the sideline when it first forms."
+                    "Pattern ini berbentuk seperti segitiga siku-siku dengan garis menyamping (trend line) yang mengarah ke bawah dan neckline (support) nya berada di bawah.",
+                    "Konfirmasi atas valid-nya pattern ini adalah ketika harga berhasil turun di bawah necklinenya atau yang disebut dengan breakdown.",
+                    "Sama seperti ascending triangle, kita dapat menentukan target harga dengan mengukur jarak antara neckline dan garis menyamping ketika pertama kali terbentuk."
                   ]
                 },
                 "examples": [
                   {
-                    "stock": "UNTR stock on July - October 2021",
+                    "stock": "Saham UNTR pada Juli - Oktober 2021",
                     "explanation": [
                       {
                         "text": [
-                          "UNTR's peak was at 40312, and note that when UNTR corrected, it created a support area.",
-                          "When we draw an equation from 40312, it corrected and then rebounded. UNTR's rebound failed to create a new high, so it made a movement that continued to make higher lows.",
-                          "When we draw a trend line, it will create a downward trend line.",
-                          "This downward trend line is already a sign that the stock price is weakening.",
-                          "When we look at the neckline below, this is a movement called a descending triangle.",
-                          "When the stock price breaks through the neckline, this is what is called confirmation.",
-                          "With the formation of this chart pattern, we can set a downside target, which is from the top point to the neckline.",
-                          "We can see from the chart above that UNTR successfully achieved the downside target of its bearish pattern."
+                          "Puncak UNTR berada di 40312, dan perhatikan bahwa ketika UNTR terkoreksi, ia membentuk area support.",
+                          "Ketika kita menarik garis dari 40312, ia terkoreksi dan kemudian memantul. Pantulan UNTR gagal menciptakan titik tertinggi baru, sehingga ia bergerak terus membuat titik terendah yang lebih tinggi.",
+                          "Ketika kita menarik garis trendline, maka akan terbentuk sebuah garis trendline yang menurun.",
+                          "Garis trendline yang menurun ini sudah menjadi pertanda bahwa harga saham melemah.",
+                          "Ketika kita melihat neckline di bagian bawah, maka terbentuklah sebuah pergerakan yang disebut dengan descending triangle.",
+                          "Ketika harga saham menembus neckline, maka inilah yang disebut dengan konfirmasi.",
+                          "Dengan terbentuknya pola grafik ini, kita dapat menentukan target penurunan, yaitu dari titik puncak ke neckline.",
+                          "Kita dapat melihat dari grafik di atas bahwa UNTR berhasil mencapai target penurunan dari pola bearishnya."
                         ]
                       }
                     ]
@@ -268,15 +268,15 @@
               "content": {
                 "definition": {
                   "paragraphs": [
-                    "This pattern resembles a head with two shoulders.",
-                    "Confirmation of the validity of this pattern occurs when the price successfully falls below the neckline (breakdown).",
-                    "The neckline can be drawn by drawing a line from the low point formed by each head and shoulder.",
-                    "Traders can determine price targets by measuring the distance from the head to the neckline."
+                    "Pola ini menyerupai kepala dengan dua bahu.",
+                    "Konfirmasi atas valid-nya pattern ini adalah ketika harga berhasil turun di bawah necklinenya atau yang disebut dengan breakdown.",
+                    "Garis neckline dapat digambar dengan menarik garis dari titik terendah yang terbentuk oleh masing-masing kepala dan bahu.",
+                    "Trader dapat menentukan target harga dengan mengukur jarak dari kepala ke neckline."
                   ]
                 },
                 "examples": [
                   {
-                    "stock": "SMRA stock on August - December 2021",
+                    "stock": "Saham SMRA pada Agustus - Desember 2021",
                     "explanation": []
                   }
                 ]
@@ -287,14 +287,14 @@
               "content": {
                 "definition": {
                   "paragraphs": [
-                    "This pattern resembles an inverted cup with a handle.",
-                    "Confirmation of the validity of this pattern occurs when the price successfully falls below its neckline (breakdown).",
-                    "Afterward, traders can determine the target price based on the greatest distance between the top of the cup and the neckline, as shown in the cup above."
+                    "Pola ini menyerupai cangkir terbalik dengan pegangannya.",
+                    "Konfirmasi atas valid-nya pattern ini adalah ketika harga berhasil turun di bawah necklinenya atau yang disebut dengan breakdown.",
+                    "Setelah itu, trader dapat menentukan target harga berdasarkan jarak terbesar antara puncak cangkir dan neckline, seperti yang ditunjukkan pada cangkir di atas."
                   ]
                 },
                 "examples": [
                   {
-                    "stock": "BBNI stock on June - July 2019",
+                    "stock": "Saham BBNI pada Juni - Juli 2019",
                     "explanation": []
                   }
                 ]
@@ -305,15 +305,15 @@
               "content": {
                 "definition": {
                   "paragraphs": [
-                    "This pattern resembles two mountains. It occurs when the stock price fails to break through the previous high.",
-                    "Confirmation of the validity of this pattern is when the price successfully falls below its neckline (breakdown).",
-                    "We can think of the neckline as the lower boundary or foot of a mountain.",
-                    "Traders can then determine the target price decline based on the distance between the peak and the foot of the mountain."
+                    "Pola ini menyerupai dua gunung. Pola ini terjadi ketika harga saham gagal menembus titik tertinggi sebelumnya.",
+                    "Konfirmasi atas valid-nya pattern ini adalah ketika harga berhasil turun di bawah necklinenya atau yang disebut dengan breakdown.",
+                    "Kita dapat menganggap neckline sebagai batas bawah atau kaki gunung.",
+                    "Trader kemudian dapat menentukan target penurunan harga berdasarkan jarak antara puncak dan kaki gunung."
                   ]
                 },
                 "examples": [
                   {
-                    "stock": "PGAS stock on November 2020 - April 2021",
+                    "stock": "Saham PGAS pada November 2020 - April 2021",
                     "explanation": []
                   }
                 ]
@@ -324,14 +324,14 @@
               "content": {
                 "definition": {
                   "paragraphs": [
-                    "This pattern begins with a sharp price decline and is identified by price movement forming an upward-sloping rectangular pattern.",
-                    "Confirmation of the validity of this pattern is when the price successfully falls from below the flag (breakdown).",
-                    "Afterward, traders can determine a price target using the height of the previously formed pole."
+                    "Pola ini dimulai dengan penurunan harga yang tajam dan diidentifikasi oleh pergerakan harga yang membentuk pola persegi panjang yang miring ke atas.",
+                    "Konfirmasi atas valid-nya pattern ini adalah ketika harga berhasil turun dari bawah flag atau yang disebut dengan breakdown.",
+                    "Setelah itu, trader dapat menentukan target harga menggunakan tinggi tiang yang terbentuk sebelumnya."
                   ]
                 },
                 "examples": [
                   {
-                    "stock": "BUKA stock on September 2021 - January 2022",
+                    "stock": "Saham BUKA pada September 2021 - Januari 2022",
                     "explanation": []
                   }
                 ]
@@ -342,16 +342,16 @@
               "content": {
                 "definition": {
                   "paragraphs": [
-                    "This pattern can be identified when there is a sudden or abrupt price drop, followed by a price reversal.",
-                    "In this pattern, the steep price drop creates a flagpole.",
-                    "Then, when the price experiences sideways movement or consolidation, it forms a triangle pattern as its pennant.",
-                    "Confirmation of the validity of this pattern is when the price successfully falls below the pennant or a breakdown occurs.",
-                    "After that, we can determine the price target using the height of the previously formed flagpole."
+                    "Pola ini dapat diidentifikasi ketika terjadi penurunan harga yang tiba-tiba atau drastis, diikuti oleh pembalikan harga.",
+                    "Dalam pola ini, penurunan harga yang tajam menciptakan tiang bendera (flagpole).",
+                    "Kemudian, ketika harga mengalami pergerakan menyamping atau konsolidasi, ia membentuk pola segitiga sebagai benderanya (pennant).",
+                    "Konfirmasi atas valid-nya pattern ini adalah ketika harga berhasil turun di bawah pennant atau yang disebut dengan breakdown.",
+                    "Setelah itu, kita dapat menentukan target harga menggunakan tinggi tiang yang terbentuk sebelumnya."
                   ]
                 },
                 "examples": [
                   {
-                    "stock": "PGAS stock on January - August 2021",
+                    "stock": "Saham PGAS pada Januari - Agustus 2021",
                     "explanation": []
                   }
                 ]
@@ -360,31 +360,31 @@
           }
         },
         "sideways": {
-          "title": "Sideways Chart Pattern",
-          "description": "A sideways chart pattern means a pattern that has no clear direction, but has potential to rise or fall.",
+          "title": "Pola Grafik Sideways",
+          "description": "Pola grafik sideways berarti pola yang tidak memiliki arah yang jelas, tetapi memiliki potensi untuk naik atau turun.",
           "topics": {
             "symmetrical_triangle": {
               "title": "Symmetrical Triangle",
               "content": {
                 "definition": {
                   "paragraphs": [
-                    "This pattern resembles an equilateral triangle that gradually tapers.",
-                    "This pattern typically forms when the price fails to form a lower low or a higher high.",
-                    "The triangle in this pattern forms because the high and low points become closer together over time.",
-                    "Confirmation of the validity of this pattern occurs when the price successfully falls below or rises above the triangle, or experiences a breakout or breakdown.",
-                    "Afterward, determine the target price using the distance between the high and low of the triangle when it first formed."
+                    "Pola ini menyerupai segitiga sama sisi yang semakin mengecil.",
+                    "Pola ini biasanya terbentuk ketika harga gagal membentuk titik terendah yang lebih rendah atau titik tertinggi yang lebih tinggi.",
+                    "Segitiga dalam pola ini terbentuk karena titik tertinggi dan terendah menjadi semakin dekat seiring waktu.",
+                    "Konfirmasi atas valid-nya pattern ini adalah ketika harga berhasil turun di bawah atau naik di atas segitiga, atau mengalami breakout atau breakdown.",
+                    "Setelah itu, tentukan target harga menggunakan jarak antara titik tertinggi dan terendah dari segitiga ketika pertama kali terbentuk."
                   ]
                 },
                 "examples": [
                   {
-                    "stock": "ARTO stock on March - June 2021",
+                    "stock": "Saham ARTO pada Maret - Juni 2021",
                     "explanation": [
                       {
                         "text": [
-                          "We can see that the stock price has moved sideways for quite a long time.",
-                          "This sideways movement creates a symmetrical triangle pattern.",
-                          "Confirmation of the validity of this pattern occurs when the price successfully falls below or rises above the triangle, or experiences a breakout or breakdown.",
-                          "Afterward, determine the target price using the distance between the high and low of the triangle when it first formed."
+                          "Kita dapat melihat bahwa harga saham bergerak sideways untuk waktu yang cukup lama.",
+                          "Pergerakan sideways ini menciptakan pola segitiga simetris.",
+                          "Konfirmasi atas valid-nya pattern ini adalah ketika harga berhasil turun di bawah atau naik di atas segitiga, atau mengalami breakout atau breakdown.",
+                          "Setelah itu, tentukan target harga menggunakan jarak antara titik tertinggi dan terendah dari segitiga ketika pertama kali terbentuk."
                         ]
                       }
                     ]
@@ -397,22 +397,22 @@
               "content": {
                 "definition": {
                   "paragraphs": [
-                    "As the name suggests, this pattern resembles a rectangle.",
-                    "In this pattern, the price forms a sideways pattern with resistance and support points that are nearly parallel to the previous points (the numbers are almost the same).",
-                    "Confirmation of the validity of this pattern is when the price successfully falls below (breaks down) or rises above (breaks out) the rectangle.",
-                    "After that, we can determine the price target based on the height of the rectangle."
+                    "Seperti namanya, pola ini menyerupai persegi panjang.",
+                    "Dalam pola ini, harga membentuk pola sideways dengan titik resistance dan support yang hampir sejajar dengan titik sebelumnya (angka-angkanya hampir sama).",
+                    "Konfirmasi atas valid-nya pattern ini adalah ketika harga berhasil turun di bawah (breakdown) atau naik di atas (break out) persegi panjang.",
+                    "Setelah itu, kita dapat menentukan target harga berdasarkan tinggi persegi panjang."
                   ]
                 },
                 "examples": [
                   {
-                    "stock": "ULTJ stock on February - November 2021",
+                    "stock": "Saham ULTJ pada Februari - November 2021",
                     "explanation": [
                       {
                         "text": [
-                          "We can see that the stock price has moved sideways for quite a long time.",
-                          "This sideways movement creates a rectangle pattern.",
-                          "Confirmation of the validity of this pattern is when the price successfully falls below (breaks down) or rises above (breaks out) the rectangle.",
-                          "Afterward, determine the price target based on the height of the rectangle."
+                          "Kita dapat melihat bahwa harga saham bergerak sideways untuk waktu yang cukup lama.",
+                          "Pergerakan sideways ini menciptakan pola persegi panjang.",
+                          "Konfirmasi atas valid-nya pattern ini adalah ketika harga berhasil turun di bawah (breakdown) atau naik di atas (break out) persegi panjang.",
+                          "Setelah itu, kita dapat menentukan target harga berdasarkan tinggi persegi panjang."
                         ]
                       }
                     ]
@@ -424,26 +424,26 @@
         },
         "false_break": {
           "title": "False Break",
-          "description": "A false break can be defined as a failed breakout, where resistance remains strong, causing the price, which had previously broken through, to fall back below its resistance.",
+          "description": "False break dapat didefinisikan sebagai breakout yang gagal, di mana resistance tetap kuat, menyebabkan harga, yang sebelumnya telah menembus, jatuh kembali di bawah resistance-nya.",
           "content": {
             "definition": {
               "paragraphs": [
-                "After understanding chart patterns and projecting stock price movements after a pattern forms, it's helpful to understand the term false break.",
-                "A false break can be defined as a failed breakout, where resistance remains strong, causing the price, which had previously broken through, to fall back below its resistance.",
-                "This also applies to a false breakdown, which can be defined as a failed breakdown, where support remains strong, causing the price, which had previously broken through, to rise back above its support."
+                "Setelah memahami pola grafik dan memproyeksikan pergerakan harga saham setelah pola terbentuk, ada baiknya untuk memahami istilah false break.",
+                "False break dapat didefinisikan sebagai breakout yang gagal, di mana resistance tetap kuat, menyebabkan harga, yang sebelumnya telah menembus, jatuh kembali di bawah resistance-nya.",
+                "Hal ini juga berlaku untuk false breakdown, yang dapat didefinisikan sebagai breakdown yang gagal, di mana support tetap kuat, menyebabkan harga, yang sebelumnya telah menembus, naik kembali di atas support-nya."
               ]
             },
             "example": {
-              "stock": "WIKA stock on July 2018",
+              "stock": "Saham WIKA pada Juli 2018",
               "explanation": [
                 {
                   "text": [
-                    "First, we can see that WIKA's price has formed a double bottom pattern.",
-                    "This means that the price has touched a low point twice, and then rebounded.",
-                    "However, after the price broke through the resistance of the double bottom pattern, it failed to hold above it.",
-                    "This is called a false breakout.",
-                    "This can happen because the resistance is still strong, or because there is not enough buying volume to push the price higher.",
-                    "As a result, the price fell back below the resistance, and the double bottom pattern was invalidated."
+                    "Pertama, kita dapat melihat bahwa harga WIKA telah membentuk pola double bottom.",
+                    "Ini berarti bahwa harga telah menyentuh titik terendah dua kali, dan kemudian memantul.",
+                    "Namun, setelah harga menembus resistance dari pola double bottom, harga gagal bertahan di atasnya.",
+                    "Ini disebut false breakout.",
+                    "Ini bisa terjadi karena resistance masih kuat, atau karena tidak ada volume pembelian yang cukup untuk mendorong harga lebih tinggi.",
+                    "Akibatnya, harga jatuh kembali di bawah resistance, dan pola double bottom menjadi tidak valid."
                   ]
                 }
               ]
@@ -455,9 +455,9 @@
           "description": "",
           "content": {
             "paragraphs": [
-              "In conclusion, chart patterns serve as signals for traders to take positions before prices rise, or to sell a stock before the price drops further.",
-              "Furthermore, to support or confirm a breakout from a pattern, support, or resistance level, we must also look at volume.",
-              "This is because there's a possibility that the chart pattern formed is invalid, leading to a false breakout."
+              "Kesimpulannya, pola grafik berfungsi sebagai sinyal bagi trader untuk mengambil posisi sebelum harga naik, atau untuk menjual saham sebelum harga turun lebih jauh.",
+              "Selain itu, untuk mendukung atau mengkonfirmasi breakout dari pola, level support, atau resistance, kita juga harus melihat volume.",
+              "Ini karena ada kemungkinan bahwa pola grafik yang terbentuk tidak valid, yang mengarah ke false breakout."
             ]
           }
         }
@@ -477,120 +477,120 @@
             "paragraphs": [
               "Indikator volume menunjukkan besar kecilnya jumlah transaksi pada suatu saham.",
               "Analisis volume itu hal yang tidak bisa dipisahkan dalam melakukan analisa teknikal karena volume merupakan kunci dari pergerakan harga.",
-              "Price movements without being based on volume can be said to be useless.",
-              "The main use of volume is to confirm the strength of the ongoing trend and also confirm the price movements that occur, such as chart patterns, resistance breakouts, and support breakdowns.",
-              "Because of its confirmatory nature, the volume indicator cannot be used alone, but is used to complement other analyses."
+              "Pergerakan harga tanpa didasari oleh volume bisa dikatakan sia-sia.",
+              "Kegunaan utama dari volume adalah untuk mengkonfirmasi kekuatan tren yang sedang berlangsung dan juga mengkonfirmasi pergerakan harga yang terjadi, seperti chart pattern, breakout resistance, dan breakdown support.",
+              "Karena sifatnya yang mengkonfirmasi, indikator volume tidak bisa digunakan sendiri, melainkan digunakan untuk melengkapi analisa lainnya."
             ]
           }
         },
         "how_to_read_volumes": {
-          "title": "How to Read Volumes",
+          "title": "Cara Membaca Volume",
           "description": "",
           "content": {
             "paragraphs": [
-              "Since volume is an indicator of the number of stock transactions, a higher volume indicates a greater number of transactions.",
-              "Conversely, a lower volume indicates a smaller number of transactions."
+              "Karena volume merupakan indikator jumlah transaksi saham, maka volume yang tinggi menunjukkan jumlah transaksi yang besar.",
+              "Sebaliknya, volume yang rendah menunjukkan jumlah transaksi yang kecil."
             ]
           }
         },
         "volume_on_trend": {
-          "title": "Volume On Trend",
+          "title": "Volume Pada Tren",
           "description": "",
           "content": {
             "paragraphs": [
-              "As an indicator, high volume indicates positive confirmation of the current price movement.",
-              "This can also be interpreted as meaning that high volume means the trend or price movement is strong or has power.",
-              "Conversely, low volume indicates that the price movement is not \"well-confirmed\" or lacks power.",
-              "Therefore, it is highly likely that the current trend or price movement will not last long, could turn into a reversal, or even a false break.",
-              "In an ongoing trend, volume can be a supporting indicator to determine the strength of the ongoing trend.",
-              "By looking at the volume indicator, we can determine whether the trend will continue, weaken, or has the potential to reverse.",
-              "Increasing or high volume indicates that the trend still has the power to continue. Meanwhile, low volume indicates that the trend is weakening and will soon end or reverse."
+              "Sebagai indikator, volume yang tinggi menunjukkan konfirmasi positif terhadap pergerakan harga saat ini.",
+              "Hal ini juga dapat diartikan bahwa volume yang tinggi berarti tren atau pergerakan harga kuat atau memiliki kekuatan.",
+              "Sebaliknya, volume yang rendah menunjukkan bahwa pergerakan harga tidak terkonfirmasi dengan baik atau tidak memiliki kekuatan.",
+              "Oleh karena itu, sangat mungkin bahwa tren atau pergerakan harga saat ini tidak akan bertahan lama, bisa berubah menjadi pembalikan, atau bahkan false break.",
+              "Dalam tren yang sedang berlangsung, volume dapat menjadi indikator pendukung untuk menentukan kekuatan tren yang sedang berlangsung.",
+              "Dengan melihat indikator volume, kita dapat menentukan apakah tren akan berlanjut, melemah, atau memiliki potensi untuk berbalik.",
+              "Volume yang meningkat atau tinggi menunjukkan bahwa tren masih memiliki kekuatan untuk berlanjut. Sementara itu, volume yang rendah menunjukkan bahwa tren melemah dan akan segera berakhir atau berbalik."
             ]
           }
         },
         "important_things_in_trends": {
-          "title": "Important Things in Trends",
+          "title": "Hal Penting dalam Tren",
           "description": "",
           "content": {
             "highlight": {
               "points": [
-                "Bullish Trend + Increasing/Large Volume → Confirmation of Trend Continuation",
-                "Bullish Trend + Decreasing/Large Volume → Trend Weakening/Potential for Reversal",
-                "Bearish Trend + Increasing/Large Volume → Confirmation of Trend Continuation",
-                "Bearish Trend + Decreasing/Large Volume → Trend Weakening/Potential for Reversal"
+                "Tren Naik + Volume Meningkat/Besar → Konfirmasi Kelanjutan Tren",
+                "Tren Naik + Volume Menurun/Kecil → Tren Melemah/Potensi Pembalikan",
+                "Tren Turun + Volume Meningkat/Besar → Konfirmasi Kelanjutan Tren",
+                "Tren Turun + Volume Menurun/Kecil → Tren Melemah/Potensi Pembalikan"
               ]
             }
           }
         },
         "volume_on_breakout_breakdown": {
-          "title": "Volume On Breakout/Breakdown",
+          "title": "Volume Pada Breakout/Breakdown",
           "description": "",
           "content": {
             "paragraphs": [
-              "When the price breaks through resistance or support, also known as a breakout or breakdown, volume can be an indicator of whether the breakout is valid or not.",
-              "By looking at the volume indicator, we can determine whether the breakout is valid and has the potential to continue, or whether it is a false breakout and a reversal.",
-              "For example, if the price successfully breaks through resistance and is supported by relatively large volume, it is considered a valid breakout, and the price is likely to continue rising."
+              "Ketika harga menembus resistance atau support, juga dikenal sebagai breakout atau breakdown, volume dapat menjadi indikator apakah breakout tersebut valid atau tidak.",
+              "Dengan melihat indikator volume, kita dapat menentukan apakah breakout tersebut valid dan memiliki potensi untuk berlanjut, atau apakah itu false breakout dan pembalikan.",
+              "Sebagai contoh, jika harga berhasil menembus resistance dan didukung oleh volume yang relatif besar, maka dianggap sebagai breakout yang valid, dan harga kemungkinan akan terus naik."
             ],
             "list": {
               "points": [
                 {
-                  "text": "Breakout + High Volume → Valid and potential for further upside."
+                  "text": "Breakout + Volume Tinggi → Valid dan potensi untuk kenaikan lebih lanjut."
                 },
                 {
-                  "text": "Breakout + Low Volume → No power, potential for a false breakout."
+                  "text": "Breakout + Volume Rendah → Tidak ada kekuatan, potensi false breakout."
                 },
                 {
-                  "text": "Breakdown + High Volume → Valid and potential for further downside."
+                  "text": "Breakdown + Volume Tinggi → Valid dan potensi untuk penurunan lebih lanjut."
                 },
                 {
-                  "text": "Breakdown + Low Volume → No power, potential for a false breakout."
+                  "text": "Breakdown + Volume Rendah → Tidak ada kekuatan, potensi false breakdown."
                 }
               ]
             }
           }
         },
         "volume_on_chart_pattern": {
-          "title": "Volume on Chart Pattern",
+          "title": "Volume pada Pola Grafik",
           "description": "",
           "content": {
-            "p1": "Volume is also used to confirm chart patterns. For example, price confirmation in the Cup and Handle pattern.",
+            "p1": "Volume juga digunakan untuk mengkonfirmasi pola grafik. Sebagai contoh, konfirmasi harga pada pola Cup and Handle.",
             "example": {
-              "title": "Example of Volume Confirmation in Cup & Handle Pattern",
+              "title": "Contoh Konfirmasi Volume pada Pola Cup & Handle",
               "explanation": [
                 {
                   "text": [
-                    "When a 'Cup' forms, the price moves down, accompanied by low volume.",
-                    "However, when the price rises, the volume is greater than when it falls.",
-                    "If the price successfully breaks through the neckline, we can expect the highest volume compared to previous volumes.",
-                    "If these three things occur, it can be said that the volume confirms a change in the trend of the chart pattern, or the signal from the pattern is valid."
+                    "Ketika pola 'Cup' terbentuk, harga bergerak turun disertai dengan volume yang rendah.",
+                    "Namun, ketika harga naik, volume lebih besar daripada saat turun.",
+                    "Jika harga berhasil menembus garis leher (neckline), kita dapat mengharapkan volume tertinggi dibandingkan volume sebelumnya.",
+                    "Jika ketiga hal ini terjadi, dapat dikatakan bahwa volume mengkonfirmasi perubahan tren pola grafik, atau sinyal dari pola tersebut valid."
                   ]
                 }
               ]
             },
-            "p2": "In the Cup and Handle pattern, volume is expected to decrease during the formation of the cup and increase during the formation of the handle.",
-            "p3": "This indicates that the price is consolidating and the trend is weakening, then the price breaks through resistance with increased volume, indicating that the trend is strengthening.",
+            "p2": "Pada pola Cup and Handle, volume diharapkan menurun selama pembentukan cup dan meningkat selama pembentukan handle.",
+            "p3": "Hal ini menunjukkan bahwa harga sedang konsolidasi dan tren melemah, kemudian harga menembus resistance dengan volume yang meningkat, menunjukkan bahwa tren menguat.",
             "list": {
-              "title": "Volume confirmation in the formation of a bullish pattern:",
+              "title": "Konfirmasi volume dalam pembentukan pola bullish:",
               "points": [
-                { "text": "Small volume when the price corrects" },
-                { "text": "Large volume when the price rises" },
+                { "text": "Volume kecil saat harga terkoreksi" },
+                { "text": "Volume besar saat harga naik" },
                 {
-                  "text": "Volume confirmation in the formation of a bullish pattern"
+                  "text": "Konfirmasi volume dalam pembentukan pola bullish"
                 }
               ]
             }
           }
         },
         "determining_volume_size": {
-          "title": "Determining Volume Size",
+          "title": "Menentukan Ukuran Volume",
           "description": "",
           "content": {
             "paragraphs": [
-              "The high or low volume is actually a subjective assessment.",
-              "However, a basic rule of thumb is that high volume occurs when volume is above the 20-day moving average."
+              "Volume tinggi atau rendah sebenarnya adalah penilaian subjektif.",
+              "Namun, aturan praktisnya adalah volume tinggi terjadi ketika volume di atas rata-rata pergerakan 20 hari."
             ],
             "highlight": {
-              "text": ["Tips: Use the MA20 Volume indicator"]
+              "text": ["Tips: Gunakan indikator MA20 Volume"]
             }
           }
         }
@@ -605,16 +605,16 @@
       "lessons": {
         "candlestick_pattern": {
           "title": "Candlestick Pattern",
-          "description": "A candlestick pattern is a graphical representation of price action that helps traders identify potential reversal or continuation opportunities.",
+          "description": "Pola candlestick adalah representasi grafis dari aksi harga yang membantu trader mengidentifikasi potensi peluang pembalikan atau kelanjutan.",
           "topics": {
             "marubozu": {
               "title": "Marubozu",
               "content": {
                 "definition": {
                   "paragraphs": [
-                    "The Marubozu pattern is characterized by a candle with a full body and no wick.",
-                    "If the Marubozu candle forms with a closing price higher than the opening price, the price will likely rise the next day, and vice versa.",
-                    "The strength of this candle can be determined by its volume; the greater the volume, the greater the strength of the candle."
+                    "Pola Marubozu ditandai dengan candle yang memiliki badan penuh tanpa sumbu.",
+                    "Jika candle Marubozu terbentuk dengan harga penutupan lebih tinggi dari harga pembukaan, harga kemungkinan akan naik keesokan harinya, dan sebaliknya.",
+                    "Kekuatan candle ini dapat ditentukan oleh volumenya; semakin besar volumenya, semakin besar kekuatan candle tersebut."
                   ]
                 }
               }
@@ -624,11 +624,11 @@
               "content": {
                 "definition": {
                   "paragraphs": [
-                    "A pattern shaped like a hammer and with a long wick (tail).",
-                    "This pattern explains that during trading, the price fell, but rebounded and closed at nearly the same price as its opening.",
-                    "This indicates strong buying demand, preventing the price from falling further.",
-                    "This pattern can be considered strong or valid when the price is declining and supported by high volume.",
-                    "Usually, after this pattern forms, there is potential for a reversal. Therefore, it is best to use this pattern in combination with identifying support."
+                    "Pola berbentuk seperti palu dan memiliki sumbu panjang.",
+                    "Pola ini menjelaskan bahwa selama perdagangan, harga turun, tetapi bangkit kembali dan ditutup pada harga yang hampir sama dengan harga pembukaannya.",
+                    "Ini menunjukkan permintaan beli yang kuat, mencegah harga turun lebih jauh.",
+                    "Pola ini dapat dianggap kuat atau valid ketika harga menurun dan didukung oleh volume tinggi.",
+                    "Biasanya, setelah pola ini terbentuk, ada potensi pembalikan. Oleh karena itu, sebaiknya menggunakan pola ini dikombinasikan dengan identifikasi support."
                   ]
                 }
               }
@@ -638,12 +638,12 @@
               "content": {
                 "definition": {
                   "paragraphs": [
-                    "This pattern is the opposite of the hammer pattern, more commonly known as the shooting star.",
-                    "While buyers dominate in the hammer, sellers dominate in the inverted hammer.",
-                    "This is because the price rose during trading hours, but then fell and closed at the same price as the opening.",
-                    "This pattern is considered stronger or more valid when it forms during a price rally or uptrend supported by high volume.",
-                    "Usually, after this pattern forms, the price reversal occurs, turning downward.",
-                    "It's best to use this pattern in combination with resistance."
+                    "Pola ini adalah kebalikan dari pola hammer, lebih dikenal sebagai shooting star.",
+                    "Sementara pembeli mendominasi pada hammer, penjual mendominasi pada inverted hammer.",
+                    "Ini karena harga naik selama jam perdagangan, tetapi kemudian turun dan ditutup pada harga yang sama dengan harga pembukaannya.",
+                    "Pola ini dianggap lebih kuat atau lebih valid ketika terbentuk selama kenaikan harga atau tren naik yang didukung oleh volume tinggi.",
+                    "Biasanya, setelah pola ini terbentuk, terjadi pembalikan harga, berbalik turun.",
+                    "Sebaiknya menggunakan pola ini dikombinasikan dengan resistance."
                   ]
                 }
               }
@@ -653,10 +653,10 @@
               "content": {
                 "definition": {
                   "paragraphs": [
-                    "The doji pattern is characterized by a candlestick with no body, where the price during trading hours rises above or falls below the opening price, but closes at the opening price.",
-                    "This pattern indicates a lack of dominant market power, either buyers or sellers.",
-                    "However, when a doji forms after a significant stock price decline and is supported by volume, a reversal is likely.",
-                    "Conversely, when a doji forms during a stock rally and is supported by high volume, a price decline is likely."
+                    "Pola doji ditandai dengan candlestick yang tidak memiliki badan, di mana harga selama jam perdagangan naik di atas atau turun di bawah harga pembukaan, tetapi ditutup pada harga pembukaan.",
+                    "Pola ini menunjukkan kurangnya kekuatan pasar yang dominan, baik pembeli maupun penjual.",
+                    "Namun, ketika doji terbentuk setelah penurunan harga yang signifikan dan didukung oleh volume, pembalikan kemungkinan akan terjadi.",
+                    "Sebaliknya, ketika doji terbentuk selama kenaikan harga dan didukung oleh volume tinggi, penurunan harga kemungkinan akan terjadi."
                   ]
                 }
               }
@@ -666,9 +666,9 @@
               "content": {
                 "definition": {
                   "paragraphs": [
-                    "A bullish engulfing pattern is formed by two candlesticks, where the first candlestick indicates a price decline with a closing price lower than the opening price. The next day, the candlestick that forms covers the entire candlestick of the previous day with a closing price higher than the opening price.",
-                    "The opposite of a bullish engulfing pattern is a bearish engulfing pattern, which occurs when the first candlestick rises, and the next day, the candlestick shows a price decline, covering the entire previous candlestick.",
-                    "A bullish engulfing pattern indicates potential price movement upward, while a bearish engulfing pattern indicates potential price movement downward."
+                    "Pola bullish engulfing terbentuk dari dua candlestick, di mana candlestick pertama menunjukkan penurunan harga dengan harga penutupan lebih rendah dari harga pembukaan. Pada hari berikutnya, candlestick yang terbentuk menutupi seluruh candlestick hari sebelumnya dengan harga penutupan lebih tinggi dari harga pembukaan.",
+                    "Kebalikan dari pola bullish engulfing adalah pola bearish engulfing, yang terjadi ketika candlestick pertama naik, dan pada hari berikutnya, candlestick menunjukkan penurunan harga, menutupi seluruh candlestick sebelumnya.",
+                    "Pola bullish engulfing menunjukkan potensi pergerakan harga ke atas, sedangkan pola bearish engulfing menunjukkan potensi pergerakan harga ke bawah."
                   ]
                 }
               }
@@ -678,8 +678,8 @@
               "content": {
                 "definition": {
                   "paragraphs": [
-                    "This pattern forms when a doji or hammer candlestick forms after the previous day's price decline.",
-                    "If accompanied by high volume, there's a high potential for price increases."
+                    "Pola ini terbentuk ketika candlestick doji atau hammer terbentuk setelah penurunan harga hari sebelumnya.",
+                    "Jika disertai dengan volume tinggi, ada potensi besar untuk kenaikan harga."
                   ]
                 }
               }
@@ -689,8 +689,8 @@
               "content": {
                 "definition": {
                   "paragraphs": [
-                    "This pattern forms if the price rose the previous day and a doji or hammer candlestick formed.",
-                    "If accompanied by high volume, the price has a high potential to fall."
+                    "Pola ini terbentuk jika harga naik pada hari sebelumnya dan terbentuk candlestick doji atau hammer.",
+                    "Jika disertai dengan volume tinggi, harga memiliki potensi besar untuk turun."
                   ]
                 }
               }
@@ -700,10 +700,10 @@
               "content": {
                 "definition": {
                   "paragraphs": [
-                    "Harami, derived from the Japanese word \"harami\", means \"pregnant\", so this pattern resembles a mother carrying her child, seen from the side.",
-                    "It begins with one large candle and is followed by a smaller candle the next day.",
-                    "If the Harami pattern formation begins with a declining candle and is followed by a candle whose closing price is above the opening price, then the price is likely to rise the next day (Bullish Harami).",
-                    "Conversely, if the formation begins with a rising candle and is followed by a candle whose closing price is below the opening price, then the price is likely to fall the next day (Bearish Harami)."
+                    "Harami, berasal dari kata Jepang \"harami\", berarti \"hamil\", sehingga pola ini menyerupai seorang ibu yang sedang menggendong anaknya, dilihat dari samping.",
+                    "Dimulai dengan satu candle besar dan diikuti oleh candle yang lebih kecil pada hari berikutnya.",
+                    "Jika pembentukan pola Harami dimulai dengan candle menurun dan diikuti oleh candle yang harga penutupannya di atas harga pembukaan, maka harga kemungkinan akan naik keesokan harinya (Bullish Harami).",
+                    "Sebaliknya, jika pembentukan dimulai dengan candle naik dan diikuti oleh candle yang harga penutupannya di bawah harga pembukaan, maka harga kemungkinan akan turun keesokan harinya (Bearish Harami)."
                   ]
                 }
               }
@@ -715,9 +715,9 @@
           "description": "",
           "content": {
             "paragraphs": [
-              "In conclusion, candlestick patterns are used by traders as signals to predict stock price movements or the candlesticks that will form the following day.",
-              "Furthermore, the volume at the time of the candle's formation also plays a significant role in determining its validity.",
-              "The greater the volume, the more valid the candlestick pattern."
+              "Kesimpulannya, pola candlestick digunakan oleh trader sebagai sinyal untuk memprediksi pergerakan harga saham atau candlestick yang akan terbentuk pada hari berikutnya.",
+              "Selain itu, volume pada saat pembentukan candle juga memainkan peran penting dalam menentukan validitasnya.",
+              "Semakin besar volumenya, semakin valid pola candlestick tersebut."
             ]
           }
         }
@@ -735,22 +735,22 @@
           "description": "",
           "content": {
             "paragraphs": [
-              "In addition to analyzing trends, patterns, and candlestick shapes, traders can also use trading indicators to aid technical analysis.",
-              "Why can indicators help improve a trader's analysis?",
-              "The reason is that indicators are created from mathematical calculations based on a stock's price.",
-              "However, traders should remember that indicators are only used as a tool to help predict future stock price movements, not as the sole and primary tool for traders to buy or sell stocks.",
-              "Indicators are basically divided into two types: lagging and leading indicators."
+              "Selain menganalisis tren, pola, dan bentuk candlestick, trader juga dapat menggunakan indikator trading untuk membantu analisis teknikal.",
+              "Mengapa indikator dapat membantu meningkatkan analisis trader?",
+              "Alasannya adalah indikator dibuat dari perhitungan matematis berdasarkan harga saham.",
+              "Namun, trader harus ingat bahwa indikator hanya digunakan sebagai alat bantu untuk memprediksi pergerakan harga saham di masa depan, bukan sebagai alat utama dan satu-satunya bagi trader untuk membeli atau menjual saham.",
+              "Indikator pada dasarnya dibagi menjadi dua jenis: lagging dan leading indicators."
             ]
           }
         },
         "lagging_indicator": {
           "title": "Lagging Indicator",
-          "description": "",
+          "description": "Lagging indicator adalah indikator yang muncul terlambat. Artinya memberikan sinyal buy or sell ketika harga saham sudah bergerak. Cocok digunakan oleh swing trader yang cenderung pasif atau jarang melakukan aktivitas jual dan beli dan lebih cocok untuk mid or long term trader. Karena cenderung lebih lambat, indikator ini memberikan konfirmasi dan akurasi yang lebih solid.",
           "content": {
             "paragraphs": [
-              "A lagging indicator is an indicator that appears late. This means it provides a buy or sell signal after the stock price has already moved.",
-              "It's suitable for swing traders who tend to be passive or rarely engage in buying and selling activities, and is more suitable for mid- to long-term traders.",
-              "Because it tends to be slower, this indicator provides more solid confirmation and accuracy."
+              "Lagging indicator adalah indikator yang muncul belakangan. Artinya, indikator ini memberikan sinyal beli atau jual setelah harga saham bergerak.",
+              "Indikator ini cocok untuk swing trader yang cenderung pasif atau jarang melakukan aktivitas jual beli, dan lebih cocok untuk trader jangka menengah hingga panjang.",
+              "Karena cenderung lebih lambat, indikator ini memberikan konfirmasi dan akurasi yang lebih solid."
             ]
           },
           "topics": {
@@ -759,70 +759,70 @@
               "content": {
                 "definition": {
                   "paragraphs": [
-                    "A moving average is a line indicator that shows the average price over a specific period.",
-                    "Moving averages can be presented in various time periods, for example, MA5, MA10, MA20, MA50, and even MA200.",
-                    "The number after the MA indicates the selected time period.",
-                    "Example: MA5 represents the average stock price over the last 5 days."
+                    "Moving average adalah indikator berupa garis yang menunjukkan rata-rata harga dalam periode waktu tertentu.",
+                    "Moving average dapat disajikan dalam berbagai periode waktu, misalnya MA5, MA10, MA20, MA50, bahkan MA200.",
+                    "Angka setelah MA menunjukkan periode waktu yang dipilih.",
+                    "Contoh: MA5 menunjukkan rata-rata harga saham selama 5 hari terakhir."
                   ]
                 },
                 "tutorial": {
-                  "title": "How to Use Moving Average (MA) Indicator",
+                  "title": "Cara Menggunakan Indikator Moving Average (MA)",
                   "highlight": {
-                    "text": ["Step by step:"],
+                    "text": ["Langkah demi langkah:"],
                     "points": [
-                      "Select the 'Indicators' menu.",
-                      "Select 'Moving Average' from the list of indicators.",
-                      "By default, a yellow line will appear, as shown in the image below."
+                      "Pilih menu 'Indicators'.",
+                      "Pilih 'Moving Average' dari daftar indikator.",
+                      "Secara default, akan muncul garis berwarna kuning, seperti yang terlihat pada gambar di bawah."
                     ],
                     "pointsType": "numbering"
                   }
                 },
                 "function": {
-                  "title": "Function of Moving Average (MA) Indicator",
+                  "title": "Fungsi Indikator Moving Average (MA)",
                   "paragraphs": [
-                    "The Moving Average indicator can be used to help us identify stock price trends.",
-                    "If the stock price is above the MA line, the price trend is up.",
-                    "In practice, if the price is above the 200-day MA, the stock is considered to be in a strong uptrend.",
-                    "Furthermore, the MA line can also be used as support and resistance."
+                    "Indikator Moving Average dapat digunakan untuk membantu kita mengidentifikasi tren harga saham.",
+                    "Jika harga saham berada di atas garis MA, maka tren harga adalah naik.",
+                    "Dalam praktiknya, jika harga berada di atas MA 200, saham tersebut dianggap berada dalam tren naik yang kuat.",
+                    "Selain itu, garis MA juga dapat digunakan sebagai support dan resistance."
                   ]
                 },
                 "examples": [
                   {
-                    "title": "Role of Moving Average (MA) as Support and Resistance",
+                    "title": "Peran Moving Average (MA) sebagai Support dan Resistance",
                     "stock": "BBCA",
                     "highlight": {
                       "text": [
-                        "Support: Price above the moving average (MA) line",
-                        "Resistance: Price below the moving average (MA) line",
-                        "MA200 is one of the most frequently used MAs to assess a trend as an uptrend or downtrend."
+                        "Support: Harga berada di atas garis moving average (MA)",
+                        "Resistance: Harga berada di bawah garis moving average (MA)",
+                        "MA200 adalah salah satu MA yang paling sering digunakan untuk menilai tren naik atau turun."
                       ]
                     },
                     "explanation": [
                       {
                         "text": [
-                          "In 2016, when BBCA rebounded and began to correct, it was stuck in the 200-day moving average (MA200).",
-                          "Similarly, in 2018, when BBCA corrected, it briefly traded in the 200-day moving average (MA200). This also occurred in October 2018 and again in May 2019.",
-                          "When the COVID-19 virus entered Indonesia, the 200-day moving average (MA200) was broken, and BBCA subsequently moved bearish to 4200."
+                          "Pada tahun 2016, ketika BBCA rebound dan mulai koreksi, harga tertahan di garis 200-day moving average (MA200).",
+                          "Demikian pula pada tahun 2018, ketika BBCA koreksi, harga sempat bergerak di area 200-day moving average (MA200). Hal ini juga terjadi pada bulan Oktober 2018 dan kembali terjadi pada bulan Mei 2019.",
+                          "Ketika virus COVID-19 masuk ke Indonesia, garis 200-day moving average (MA200) ditembus, dan BBCA selanjutnya bergerak bearish ke level 4200."
                         ]
                       }
                     ]
                   },
                   {
-                    "title": "Role of Moving Average (MA) as Buy/Sell Signal",
+                    "title": "Peran Moving Average (MA) sebagai Sinyal Beli/Jual",
                     "stock": "ASII",
                     "highlight": {
-                      "text": ["MA20: blue", "MA50: black"]
+                      "text": ["MA20: biru", "MA50: hitam"]
                     },
                     "explanation": [
                       {
                         "text": [
-                          "Buying Signal: If the small MA line (MA20) penetrates the MA50 area from bottom to top, this moment is called as \"golden cross\"."
+                          "Sinyal Beli: Jika garis MA kecil (MA20) menembus area MA50 dari bawah ke atas, momen ini disebut sebagai \"golden cross\"."
                         ],
                         "type": "highlight"
                       },
                       {
                         "text": [
-                          "Selling Signal: If the small MA line (MA20) penetrates the MA50 area from top to bottom, this moment is called as \"death cross\"."
+                          "Sinyal Jual: Jika garis MA kecil (MA20) menembus area MA50 dari atas ke bawah, momen ini disebut sebagai \"death cross\"."
                         ],
                         "type": "highlight"
                       }
@@ -835,10 +835,10 @@
               "title": "Moving Average Convergence Divergence (MACD)",
               "content": {
                 "definition": {
-                  "title": "What is MACD?",
-                  "p1": "MACD is a derivative indicator of Moving Average which stands for Moving Average Convergence Divergence.",
+                  "title": "Apa itu MACD?",
+                  "p1": "MACD adalah indikator turunan dari Moving Average yang merupakan singkatan dari Moving Average Convergence Divergence.",
                   "list": {
-                    "text": "In the MACD indicator there are several important components that must be considered, namely:",
+                    "text": "Pada indikator MACD terdapat beberapa komponen penting yang harus diperhatikan, yaitu:",
                     "points": [
                       { "text": "0 line" },
                       { "text": "signal line" },
@@ -849,12 +849,12 @@
                   "p3": "Downtrend:"
                 },
                 "example": {
-                  "title": "Example of using the MACD indicator",
+                  "title": "Contoh Penggunaan Indikator MACD",
                   "highlight": {
-                    "text": ["Step by step:"],
+                    "text": ["Langkah demi langkah:"],
                     "points": [
-                      "Select the 'Indicators' menu",
-                      "Select 'MACD' in the indicators list"
+                      "Pilih menu 'Indicators'.",
+                      "Pilih 'MACD' dari daftar indikator."
                     ],
                     "pointsType": "numbering"
                   },
@@ -862,57 +862,57 @@
                   "explanation": [
                     {
                       "text": [
-                        "Buying Signal: If the signal line (black) is penetrated by the MACD line (red) from bottom to top, this moment is called as \"golden cross\"."
+                        "Sinyal Beli: Jika garis sinyal (hitam) ditembus oleh garis MACD (merah) dari bawah ke atas, momen ini disebut sebagai \"golden cross\"."
                       ],
                       "type": "highlight"
                     },
                     {
                       "text": [
-                        "Selling Signal: If the signal line (black) is penetrated by the MACD line (red) from top to bottom, this moment is called a \"death cross\"."
+                        "Sinyal Jual: Jika garis sinyal (hitam) ditembus oleh garis MACD (merah) dari atas ke bawah, momen ini disebut sebagai \"death cross\"."
                       ],
                       "type": "highlight"
                     }
                   ]
                 },
-                "connecting_text_1": "In addition to the above techniques, there is an additional technique in using the MACD indicator, namely divergence.",
+                "connecting_text_1": "Selain teknik di atas, ada teknik tambahan dalam menggunakan indikator MACD, yaitu divergence.",
                 "definition_macd_divergence": {
-                  "title": "What is MACD Divergence?",
+                  "title": "Apa itu MACD Divergence?",
                   "paragraphs": [
-                    "As the name suggests, divergence means difference.",
-                    "So, MACD Divergence is a technique that identifies differences between the direction of stock price movement and the MACD indicator.",
-                    "The stock price shows an uptrend with the formation of continuously higher highs, but the MACD indicator declines below it.",
-                    "This phenomenon is also known as MACD bearish divergence and is a bear signal, or a signal to sell the stock."
+                    "Seperti namanya, divergence berarti perbedaan.",
+                    "Jadi, MACD Divergence adalah teknik yang mengidentifikasi perbedaan antara arah pergerakan harga saham dan indikator MACD.",
+                    "Harga saham menunjukkan tren naik dengan terbentuknya level tertinggi yang terus meningkat, namun indikator MACD justru menurun di bawahnya.",
+                    "Fenomena ini juga dikenal sebagai MACD bearish divergence dan merupakan sinyal bearish, atau sinyal untuk menjual saham."
                   ]
                 },
                 "example_macd_bearish_divergence": {
-                  "title": "MACD Bearish Divergence Has Occurred in the Following Stock",
+                  "title": "MACD Bearish Divergence Terjadi pada Saham Berikut",
                   "stock": "INCO stock on January - August 2018",
                   "explanation": [
                     {
                       "text": [
-                        "When INCO's stock price successfully creates a higher high for up to three candles, something different happens in its MACD, where the MACD crossover point actually decreases, creating a divergence, which is a sell signal.",
-                        "Furthermore, when a bearish divergence occurs, INCO's stock price is unable to continue its upward movement and enters a bearish phase."
+                        "Ketika harga saham INCO berhasil membentuk level tertinggi yang lebih tinggi hingga tiga candle, terjadi hal yang berbeda pada MACD-nya, di mana titik crossover MACD justru menurun, menciptakan divergence, yang merupakan sinyal jual.",
+                        "Selanjutnya, ketika bearish divergence terjadi, harga saham INCO tidak mampu melanjutkan kenaikannya dan memasuki fase bearish."
                       ],
                       "type": "numbered-list"
                     }
                   ]
                 },
-                "connecting_text_2": "Besides bearish divergence, there is also something called bullish divergence.",
+                "connecting_text_2": "Selain bearish divergence, ada juga yang disebut bullish divergence.",
                 "definition_macd_bullish_divergence": {
-                  "title": "What is MACD Bullish Divergence?",
+                  "title": "Apa itu MACD Bullish Divergence?",
                   "paragraphs": [
-                    "This is the opposite of bearish divergence, where the stock price shows a downward trend. The candlesticks form increasingly lower lows.",
-                    "However, the MACD indicator trend below shows an upward trend. Conversely, there is divergence."
+                    "Ini adalah kebalikan dari bearish divergence, di mana harga saham menunjukkan tren turun. Candlestick membentuk level terendah yang semakin menurun.",
+                    "Namun, tren indikator MACD di bawahnya justru menunjukkan tren naik. Sebaliknya, terjadi divergence."
                   ]
                 },
                 "example_macd_bullish_divergence": {
-                  "title": "MACD Bullish Divergence Has Occurred in the Following Stocks",
+                  "title": "MACD Bullish Divergence Terjadi pada Saham Berikut",
                   "stock": "INCO stock on September - December 2018",
                   "explanation": [
                     {
                       "text": [
-                        "INCO successfully created a lower low, or a lower price movement, but there was a difference in the strength of the MACD. The MACD crossover point rose, creating a divergence, which signaled a buy signal.",
-                        "This was a reversal moment, a sign that INCO would soon continue its price increase and end the bearish phase."
+                        "INCO berhasil membentuk level terendah yang lebih rendah, atau pergerakan harga yang lebih rendah, namun terjadi perbedaan kekuatan pada MACD. Titik crossover MACD naik, menciptakan divergence, yang menandakan sinyal beli.",
+                        "Ini adalah momen pembalikan, tanda bahwa INCO akan segera melanjutkan kenaikan harga dan mengakhiri fase bearish."
                       ],
                       "type": "numbered-list"
                     }
@@ -924,47 +924,47 @@
               "title": "Bollinger Bands",
               "content": {
                 "definition": {
-                  "title": "What is Bollinger Bands?",
+                  "title": "Apa itu Bollinger Bands?",
                   "paragraphs": [
-                    "Bollinger Bands is a trading indicator that is formed from three components, namely:"
+                    "Bollinger Bands adalah indikator trading yang terbentuk dari tiga komponen, yaitu:"
                   ]
                 },
                 "list": {
                   "points": [
                     {
-                      "text": "A moving average line (usually the 20-day MA), which represents the mean or average price over a specific period."
+                      "text": "Garis moving average (biasanya MA 20), yang mewakili rata-rata harga selama periode tertentu."
                     },
-                    { "text": "The upper band" },
-                    { "text": "The lower band" }
+                    { "text": "Garis batas atas (upper band)" },
+                    { "text": "Garis batas bawah (lower band)" }
                   ]
                 },
                 "function": {
                   "paragraphs": [
-                    "This indicator is used to monitor the volatility of a stock price.",
-                    "The wider the distance between the upper and lower bands, the greater the volatility.",
-                    "Furthermore, we can use the lower band as support and the upper band as resistance.",
-                    "The moving average (MA) line acts as a reference area or benchmark, indicating the high probability that the price will return to that level if it fails to break through the lower or upper band."
+                    "Indikator ini digunakan untuk memantau volatilitas harga saham.",
+                    "Semakin lebar jarak antara garis batas atas dan bawah, semakin besar volatilitasnya.",
+                    "Selain itu, kita dapat menggunakan garis batas bawah sebagai support dan garis batas atas sebagai resistance.",
+                    "Garis moving average (MA) berfungsi sebagai area acuan atau patokan, yang menunjukkan kemungkinan besar harga akan kembali ke level tersebut jika gagal menembus garis batas bawah atau atas."
                   ]
                 },
                 "examples": [
                   {
-                    "title": "Example of Using Bollinger Bands Indicator as Support and Resistance",
+                    "title": "Contoh Penggunaan Indikator Bollinger Bands sebagai Support dan Resistance",
                     "highlight": {
-                      "text": ["Step by step:"],
+                      "text": ["Langkah demi langkah:"],
                       "points": [
-                        "Select the 'Indicators' menu.",
-                        "Select 'Bollinger Bands' from the list of indicators.",
-                        "The correct Bollinger Bands use MA20 (already set by default)"
+                        "Pilih menu 'Indicators'.",
+                        "Pilih 'Bollinger Bands' dari daftar indikator.",
+                        "Bollinger Bands yang benar menggunakan MA20 (sudah diatur secara default)"
                       ],
                       "pointsType": "numbering"
                     },
                     "explanation": [
                       {
                         "text": [
-                          "Simply put, Bollinger Bands create a cloud or demand area and subline.",
-                          "If the price successfully breaks through the upper Bollinger Band area, it will tend to re-enter the cloud area, and vice versa.",
-                          "When SIDO breaks through the lower Bollinger Band area, the price then rebounds back into the Bollinger Band area.",
-                          "When it breaks through the upper Bollinger Band area again, the price re-enters."
+                          "Secara sederhana, Bollinger Bands menciptakan area awan atau area permintaan dan subline.",
+                          "Jika harga berhasil menembus area Bollinger Bands atas, harga cenderung akan masuk kembali ke area awan, dan sebaliknya.",
+                          "Ketika SIDO menembus area Bollinger Bands bawah, harga kemudian memantul kembali ke area Bollinger Bands.",
+                          "Ketika harga menembus area Bollinger Bands atas lagi, harga masuk kembali."
                         ]
                       }
                     ]
@@ -972,8 +972,8 @@
                 ],
                 "conclusion": {
                   "paragraphs": [
-                    "Besides being used as support and resistance, Bollinger Bands can also be used to identify changes or trends.",
-                    "A new trend is likely to form when the distance between the previously relatively wide bands begins to narrow."
+                    "Selain digunakan sebagai support dan resistance, Bollinger Bands juga dapat digunakan untuk mengidentifikasi perubahan atau tren.",
+                    "Tren baru kemungkinan akan terbentuk ketika jarak antara garis batas yang sebelumnya relatif lebar mulai menyempit."
                   ]
                 }
               }
@@ -982,11 +982,11 @@
         },
         "leading_indicator": {
           "title": "Leading Indicator",
-          "description": "",
+          "description": "Leading indicator memberikan forecasting atau proyeksi harga yang sinyalnya sebelum harganya bergerak. Cocok digunakan untuk trader jangka pendek dengan intensitas *trading* dalam jumlah banyak dan sering.",
           "content": {
             "paragraphs": [
-              "Leading indicators provide forecasts or price projections, signaling them before the price moves.",
-              "Suitable for short-term traders with high and frequent trading volumes."
+              "Leading indicator memberikan forecasting atau proyeksi harga yang sinyalnya sebelum harganya bergerak.",
+              "Cocok digunakan untuk trader jangka pendek dengan intensitas trading dalam jumlah banyak dan sering."
             ]
           },
           "topics": {
@@ -994,32 +994,32 @@
               "title": "Relative Strength Index (RSI)",
               "content": {
                 "definition": {
-                  "title": "What is RSI?",
+                  "title": "Apa itu RSI?",
                   "paragraphs": [
-                    "The Relative Strength Index (RSI) analyzes the magnitude of price changes or volatility in a stock's price to evaluate whether the stock is overbought or oversold.",
-                    "The RSI indicator ranges from 20 to 80. Essentially, if the RSI line reaches 80 or above, the stock is considered overbought.",
-                    "Conversely, if the RSI line falls below 20, the stock is considered oversold."
+                    "Relative Strength Index (RSI) menganalisis besarnya perubahan harga atau volatilitas harga saham untuk mengevaluasi apakah saham tersebut jenuh beli (overbought) atau jenuh jual (oversold).",
+                    "Indikator RSI memiliki rentang dari 20 hingga 80. Pada dasarnya, jika garis RSI mencapai 80 atau lebih, saham dianggap jenuh beli.",
+                    "Sebaliknya, jika garis RSI turun di bawah 20, saham dianggap jenuh jual."
                   ]
                 },
                 "examples": [
                   {
-                    "title": "Usage Example",
+                    "title": "Contoh Penggunaan RSI",
                     "highlight": {
-                      "text": ["Step by step:"],
+                      "text": ["Langkah demi langkah:"],
                       "points": [
-                        "Select the 'Indicators' menu.",
-                        "Select 'Relative Strength Index' from the list of indicators."
+                        "Pilih menu 'Indicators'.",
+                        "Pilih 'Relative Strength Index' dari daftar indikator."
                       ],
                       "pointsType": "numbering"
                     },
                     "explanation": [
                       {
                         "text": [
-                          "When ITMG's stock price rises sharply and reaches the 80 area and begins to correct, it indicates a sell signal.",
-                          "Furthermore, when ITMG's stock corrects and falls to the 20 area, it indicates an oversold area.",
-                          "When it reaches the oversold area and the indicator begins to show an increase, it is a buy signal.",
-                          "Afterward, the ITMG stock price can be seen to rise.",
-                          "If the indicator subsequently shows a decrease, prepare to close your ITMG position."
+                          "Ketika harga saham ITMG naik tajam dan mencapai area 80 kemudian mulai terkoreksi, ini mengindikasikan sinyal jual.",
+                          "Selanjutnya, ketika saham ITMG terkoreksi dan turun ke area 20, ini mengindikasikan area jenuh jual.",
+                          "Ketika mencapai area jenuh jual dan indikator mulai menunjukkan kenaikan, ini adalah sinyal beli.",
+                          "Setelah itu, harga saham ITMG dapat terlihat naik.",
+                          "Jika indikator selanjutnya menunjukkan penurunan, bersiaplah untuk menutup posisi ITMG."
                         ]
                       }
                     ]
@@ -1027,9 +1027,9 @@
                 ],
                 "tips": {
                   "paragraphs": [
-                    "In practice, the RSI can also be used in combination with chart patterns.",
-                    "For example, a stock price forms a bullish chart pattern, accompanied by the RSI rising from 20.",
-                    "This can be considered a stronger buy signal because it is supported by two signals: the chart pattern and the leading indicator."
+                    "Pada praktiknya, RSI juga dapat digunakan dengan dikombinasikan dengan chart pattern.",
+                    "Contohnya, harga saham membentuk chart pattern bullish, disertai dengan RSI yang naik dari 20.",
+                    "Ini bisa dianggap sebagai sinyal beli yang lebih kuat karena didukung oleh dua sinyal, yaitu dari chart pattern dan dari leading indicator."
                   ]
                 }
               }
@@ -1038,61 +1038,61 @@
               "title": "Fibonacci Retracement",
               "content": {
                 "definition": {
-                  "title": "What is Fibonacci Retracement?",
+                  "title": "Apa itu Fibonacci Retracement?",
                   "paragraphs": [
-                    "Fibonacci retracement is a tool that can be used to gain momentum.",
-                    "The Fibonacci sequence is used in various disciplines such as biology, astronomy, architecture, geology, and finance.",
-                    "Fibonacci is commonly used to find rebounds or corrections in a stock, using the golden ratio points on the Fibonacci as support or resistance.",
-                    "Fibonacci is created by drawing a range from the highest point to the lowest point, or vice versa, from the lowest point to the highest point.",
-                    "When the Fibonacci line is drawn, several golden ratio points will automatically form, which can be used as support and resistance levels."
+                    "Fibonacci retracement adalah alat yang dapat digunakan untuk mendapatkan momentum.",
+                    "Deret Fibonacci digunakan dalam berbagai disiplin ilmu seperti biologi, astronomi, arsitektur, geologi, dan keuangan.",
+                    "Fibonacci umumnya digunakan untuk menemukan pantulan atau koreksi dalam saham, menggunakan titik rasio emas pada Fibonacci sebagai support atau resistance.",
+                    "Fibonacci dibuat dengan menarik rentang dari titik tertinggi ke titik terendah, atau sebaliknya, dari titik terendah ke titik tertinggi.",
+                    "Ketika garis Fibonacci ditarik, beberapa titik rasio emas akan terbentuk secara otomatis, yang dapat digunakan sebagai level support dan resistance."
                   ]
                 },
                 "examples": [
                   {
-                    "title": "Fibonacci for Uptrend",
+                    "title": "Fibonacci untuk Uptrend",
                     "highlight": {
-                      "text": ["Step by step:"],
+                      "text": ["Langkah demi langkah:"],
                       "points": [
-                        "Select the menu with the '4 strip' icon to the left of the chart.",
-                        "Select the menu named 'Fib Retracement'."
+                        "Pilih menu dengan ikon '4 strip' di sebelah kiri grafik.",
+                        "Pilih menu bernama 'Fib Retracement'."
                       ],
                       "pointsType": "numbering"
                     },
                     "explanation": [
                       {
                         "text": [
-                          "In BBRI stock, when you look at the lowest point on May 18, 2020, and the highest point on August 25, 2020, when the BBRI stock price began to correct, we're certainly confused about what price to enter.",
-                          "Well, we can use Fibonacci because it can assess momentum.",
-                          "When we draw a line from the lowest point to the highest point, we can see that BBRI successfully rebounded at three key Fibonacci levels.",
-                          "Namely, at 38.20%, 50.00%, or 61.80% (These three points are the three key Fibonacci levels).",
-                          "In this case, BBRI rebounded from the 50.00% level and continued its price increase."
+                          "Pada saham BBRI, ketika kita melihat titik terendah pada tanggal 18 Mei 2020 dan titik tertinggi pada tanggal 25 Agustus 2020, ketika harga saham BBRI mulai terkoreksi, kita tentu bingung harus masuk di harga berapa.",
+                          "Nah, kita bisa menggunakan Fibonacci karena dapat menilai momentum.",
+                          "Ketika kita menarik garis dari titik terendah ke titik tertinggi, kita dapat melihat bahwa BBRI berhasil memantul di tiga level Fibonacci utama.",
+                          "Yaitu, di 38,20%, 50,00%, atau 61,80% (Ketiga titik ini adalah tiga level Fibonacci utama).",
+                          "Dalam kasus ini, BBRI memantul dari level 50,00% dan melanjutkan kenaikan harganya."
                         ]
                       }
                     ]
                   },
                   {
-                    "title": "Fibonacci for Downtrend",
+                    "title": "Fibonacci untuk Downtrend",
                     "highlight": {
                       "text": [
-                        "Fibonacci can also be used to indicate a rebound in stocks experiencing a downtrend.",
-                        "Rebounds typically occur at the 0.618 or 61.8% Fibonacci level."
+                        "Fibonacci juga dapat digunakan untuk mengindikasikan pantulan pada saham yang mengalami downtrend.",
+                        "Pantulan biasanya terjadi pada level Fibonacci 0,618 atau 61,8%."
                       ]
                     },
                     "explanation": [
                       {
                         "text": [
-                          "To find the target point, we draw a line from the top of the price down.",
-                          "BBNI's highest point before the pandemic outbreak on January 23, 2020, was 4670.",
-                          "Then, BBNI began to rebound to its lowest point on May 18, 2020.",
-                          "When it begins to rebound, we want to determine the price it can rebound to.",
-                          "To find its potential price, we can use Fibonacci.",
-                          "We'll draw a line from the highest price to the lowest. Here, Fibonacci provides the highest area or golden ratio for BBRI at 61.80, or 3700."
+                          "Untuk menemukan titik target, kita menarik garis dari titik tertinggi harga ke bawah.",
+                          "Titik tertinggi BBNI sebelum wabah pandemi pada tanggal 23 Januari 2020 adalah 4670.",
+                          "Kemudian, BBNI mulai memantul ke titik terendahnya pada tanggal 18 Mei 2020.",
+                          "Ketika mulai memantul, kita ingin menentukan harga berapa yang bisa dicapai.",
+                          "Untuk menemukan harga potensialnya, kita bisa menggunakan Fibonacci.",
+                          "Kita akan menarik garis dari harga tertinggi ke terendah. Di sini, Fibonacci memberikan area tertinggi atau rasio emas untuk BBRI di 61,80, atau 3700."
                         ]
                       },
                       {
                         "text": [
-                          "Note that BBRI was temporarily held in this area, creating a supply and demand area.",
-                          "This area is resistance when it hasn't been broken through and becomes support when it has been broken through."
+                          "Perlu dicatat bahwa BBRI sempat tertahan di area ini, sehingga menciptakan area supply and demand.",
+                          "Area ini menjadi resistance ketika belum ditembus dan menjadi support ketika sudah ditembus."
                         ]
                       }
                     ]
@@ -1107,9 +1107,9 @@
           "description": "",
           "content": {
             "paragraphs": [
-              "In conclusion, trading indicators are categorized into two categories: lagging and leading.",
-              "The role of indicators is to help traders predict price movements and can be combined with other analysis tools such as trends, chart patterns, and volume.",
-              "Many indicators are available, allowing traders to trial and error and choose the indicator that best suits their trading style."
+              "Kesimpulannya, trading indicator terbagi menjadi dua kategori, yaitu lagging dan leading.",
+              "Peran indicator adalah untuk membantu trader memprediksi pergerakan harga dan dapat dikombinasikan dengan tools analisis lainnya seperti trend, chart pattern, dan volume.",
+              "Banyak indicator yang tersedia, sehingga trader dapat melakukan trial and error dan memilih indicator yang paling sesuai dengan gaya tradingnya."
             ]
           }
         }
@@ -1128,23 +1128,23 @@
           "content": {
             "highlight": {
               "text": [
-                "Strategy for buying shares when the price falls near support"
+                "Strategi membeli saham ketika harga turun mendekati support"
               ]
             },
             "paragraphs": [
-              "This strategy is usually used on stocks that are still in an uptrend, but are undergoing a natural correction or are being hit by profit-taking.",
-              "For example, this strategy can be used when the price is in an uptrend and forming higher highs or higher lows.",
-              "Traders can buy when the price forms higher lows along a trendline that acts as support."
+              "Strategi ini biasanya digunakan pada saham yang masih dalam tren naik, namun sedang mengalami koreksi wajar atau sedang terkena profit taking.",
+              "Sebagai contoh, strategi ini bisa digunakan ketika harga sedang dalam tren naik dan membentuk higher high atau higher low.",
+              "Trader bisa membeli ketika harga membentuk higher low di sepanjang garis tren yang bertindak sebagai support."
             ],
             "example": {
-              "title": "Illustration",
-              "stock": "ACES stock on March - August 2020",
+              "title": "Ilustrasi",
+              "stock": "Saham ACES periode Maret - Agustus 2020",
               "explanation": [
                 {
                   "text": [
-                    "As can be seen, this stock is in an uptrend, touching the support area.",
-                    "The stock price touched the lowest level in the uptrend but failed to break through the support area and continue its uptrend.",
-                    "Therefore, when this happens, traders can use it as an opportunity to take a buy position."
+                    "Seperti yang terlihat, saham ini berada dalam tren naik, menyentuh area support.",
+                    "Harga saham menyentuh level terendah dalam tren naik tetapi gagal menembus area support dan melanjutkan tren naiknya.",
+                    "Oleh karena itu, ketika ini terjadi, trader dapat menggunakannya sebagai peluang untuk mengambil posisi beli."
                   ]
                 }
               ]
@@ -1157,22 +1157,22 @@
           "content": {
             "highlight": {
               "text": [
-                "Strategy for buying shares when the price breaks through resistance"
+                "Strategi membeli saham ketika harga menembus resistance"
               ]
             },
             "paragraphs": [
-              "Traders who use this technique hope to sell their stock at a higher price, buying high and selling higher.",
-              "The advantage of this tactic is that traders usually don't have to wait long for the stock to move higher.",
-              "However, it's not uncommon for the stock to fall back below the newly broken resistance level, a phenomenon known as a false breakout."
+              "Trader yang menggunakan teknik ini berharap untuk menjual saham mereka dengan harga yang lebih tinggi, membeli tinggi dan menjual lebih tinggi.",
+              "Keuntungan dari taktik ini adalah trader biasanya tidak perlu menunggu lama bagi saham untuk bergerak lebih tinggi.",
+              "Namun, tidak jarang harga saham turun kembali di bawah level resistance yang baru saja ditembus, fenomena yang dikenal sebagai false breakout."
             ],
             "example": {
-              "title": "Illustration",
-              "stock": "ISAT stock on August - November 2015",
+              "title": "Ilustrasi",
+              "stock": "Saham ISAT periode Agustus - November 2015",
               "explanation": [
                 {
                   "text": [
-                    "Here, ISAT successfully broke through the neckline of the inverted head and shoulders pattern, which also acts as resistance at the neckline.",
-                    "Traders with a buy-on-breakout strategy will buy at a price above the neckline."
+                    "Di sini, ISAT berhasil menembus neckline dari pola inverted head and shoulders, yang juga bertindak sebagai resistance di neckline.",
+                    "Trader dengan strategi buy-on-breakout akan membeli pada harga di atas neckline."
                   ]
                 }
               ]
@@ -1185,20 +1185,20 @@
           "content": {
             "highlight": {
               "text": [
-                "Strategy to sell when the price experiences a trend reversal"
+                "Strategi menjual saham ketika harga mengalami pembalikan tren"
               ]
             },
             "paragraphs": [
-              "The advantage of using this strategy is that traders can follow the overall trend in stocks, thereby maximizing profits on stocks that are experiencing an upward trend in the long term."
+              "Keuntungan menggunakan strategi ini adalah trader dapat mengikuti tren keseluruhan saham, sehingga memaksimalkan keuntungan pada saham yang mengalami tren naik dalam jangka panjang."
             ],
             "example": {
-              "title": "Illustration",
-              "stock": "SMRA stock on October 2010 - January 2011",
+              "title": "Ilustrasi",
+              "stock": "Saham SMRA periode Oktober 2010 - Januari 2011",
               "explanation": [
                 {
                   "text": [
-                    "In the example above, the price continued to fall as the stock formed a support area.",
-                    "Traders using a sell-on-breakdown strategy would sell when the price broke below the support area."
+                    "Pada contoh di atas, harga terus turun seiring dengan terbentuknya area support.",
+                    "Trader dengan strategi sell-on-breakdown akan menjual ketika harga menembus di bawah area support."
                   ]
                 }
               ]
@@ -1211,11 +1211,11 @@
           "content": {
             "highlight": {
               "text": [
-                "Strategy to sell when the price approaches the resistance line"
+                "Strategi menjual saham ketika harga mendekati garis resistance"
               ]
             },
             "paragraphs": [
-              "This strategy is very suitable for use on stocks that move sideways."
+              "Strategi ini sangat cocok digunakan pada saham yang bergerak sideways."
             ]
           }
         },
@@ -1223,15 +1223,15 @@
           "title": "Key Takeaways",
           "description": "",
           "content": {
-            "p1": "In this chapter, we have learned four buy and sell strategies: Buy on Weakness, Buy on Breakout, Sell on Breakdown, and Sell on Strength.",
+            "p1": "Pada bab ini, kita telah mempelajari empat strategi buy and sell, yaitu Buy on Weakness, Buy on Breakout, Sell on Breakdown, dan Sell on Strength.",
             "highlight": {
-              "title": "Common Trading Technique Pairs",
+              "title": "Pasangan Teknik Trading Umum",
               "text": [
                 "Buy on Weakness + Sell on Strength",
                 "Buy on Breakout + Sell on Breakdown"
               ]
             },
-            "p2": "Using this strategy, we can determine the appropriate trading tactics."
+            "p2": "Dengan menggunakan strategi ini, kita dapat menentukan taktik trading yang tepat."
           }
         }
       }
