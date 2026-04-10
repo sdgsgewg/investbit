@@ -5,6 +5,7 @@ import { HOME_FEATURES } from "@/lib/home-data";
 import { Button } from "@/components/ui/button";
 import { Link } from "@/navigation";
 import { ArrowRight, BarChart2, BookOpen, BrainCircuit } from "lucide-react";
+import { ROUTES } from "../constants/routes";
 
 const ICON_MAP = {
   feature1: BookOpen,
@@ -33,8 +34,9 @@ export default function LandingPage() {
             </p>
             <div className="flex flex-col sm:flex-row justify-center gap-4 animate-in fade-in slide-in-from-bottom-12 duration-1000 delay-400">
               <Button size="lg" asChild className="text-lg px-8">
-                <Link href="/reksadana">
-                  {t("actions.getStarted")} <ArrowRight className="ml-2 h-5 w-5" />
+                <Link href={ROUTES.REKSADANA.RECAP.INPUT}>
+                  {t("actions.getStarted")}{" "}
+                  <ArrowRight className="ml-2 h-5 w-5" />
                 </Link>
               </Button>
               <Button
@@ -43,7 +45,7 @@ export default function LandingPage() {
                 asChild
                 className="text-lg px-8"
               >
-                <Link href="/learn">{t("actions.learnMore")}</Link>
+                <Link href={ROUTES.LEARN}>{t("actions.learnMore")}</Link>
               </Button>
             </div>
           </div>

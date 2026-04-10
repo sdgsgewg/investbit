@@ -14,8 +14,6 @@ export const ROUTES = {
   REKSADANA: {
     RECAP: {
       INPUT: "/reksadana/recap/input",
-      WEEKLY: "/reksadana/recap/weekly",
-      MONTHLY: "/reksadana/recap/monthly",
       PERFORMANCE: "/reksadana/recap/performance",
     },
     ITEMS: "/reksadana/items",

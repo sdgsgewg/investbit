@@ -25,7 +25,7 @@
   },
 
   "filter": {
-    "select_category": "Pilih Kategori:",
+    "selectCategory": "Pilih Kategori:",
     "all": "Semua",
     "apply": "Terapkan"
   }
