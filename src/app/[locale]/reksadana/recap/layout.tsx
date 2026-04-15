@@ -1,6 +1,6 @@
 "use client";
 
-import { ROUTES } from "@/app/constants/routes";
+import { ROUTES } from "@/constants/routes";
 import { Link, usePathname } from "@/navigation";
 import { useTranslations } from "next-intl";
 

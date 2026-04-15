@@ -1,14 +1,14 @@
-import { ExampleData } from "@/app/types/learn/ExampleData";
+import { ExampleData } from "@/types/learn/ExampleData";
 import DefinitionSection from "../sections/DefinitionSection";
 import ExampleSection from "../sections/ExampleSection";
-import { TutorialData } from "@/app/types/learn/TutorialData";
-import { FunctionData } from "@/app/types/learn/FunctionData";
+import { TutorialData } from "@/types/learn/TutorialData";
+import { FunctionData } from "@/types/learn/FunctionData";
 import TutorialSection from "../sections/TutorialSection";
 import FunctionSection from "../sections/FunctionSection";
-import { DefinitionData } from "@/app/types/learn/DefinitionData";
-import { ConclusionData } from "@/app/types/learn/ConclusionData";
+import { DefinitionData } from "@/types/learn/DefinitionData";
+import { ConclusionData } from "@/types/learn/ConclusionData";
 import ConclusionSection from "../sections/ConclusionSection";
-import { TipsData } from "@/app/types/learn/TipsData";
+import { TipsData } from "@/types/learn/TipsData";
 import TipsSection from "../sections/TipsSection";
 
 interface TechAnalysisTopicContentProps {

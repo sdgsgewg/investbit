@@ -3,8 +3,8 @@
 import * as React from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Check, ChevronDown } from "lucide-react";
-import { useClickOutside } from "@/app/hooks/uceClickOutside";
-import { TimeFrameType } from "@/app/types/reksadana/recap/performance/TimeFrameType";
+import { useClickOutside } from "@/hooks/uceClickOutside";
+import { TimeFrameType } from "@/types/reksadana/recap/performance/TimeFrameType";
 
 type Option = {
   label: string;

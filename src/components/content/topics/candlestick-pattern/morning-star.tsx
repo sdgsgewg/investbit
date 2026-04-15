@@ -1,7 +1,7 @@
-import { IMAGES } from "@/app/constants/images";
+import { IMAGES } from "@/constants/images";
 import { useTranslations } from "next-intl";
 import TechAnalysisTopicContent from "../TechAnalysisTopicContent";
-import { DefinitionData } from "@/app/types/learn/DefinitionData";
+import { DefinitionData } from "@/types/learn/DefinitionData";
 import { mapDefinitionWithImages } from "@/lib/mappers/definition.mapper";
 
 export default function MorningStar() {

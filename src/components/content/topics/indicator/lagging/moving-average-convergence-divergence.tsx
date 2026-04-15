@@ -1,16 +1,16 @@
 import { useTranslations } from "next-intl";
 import TechAnalysisTopicContent from "../../TechAnalysisTopicContent";
 import DefinitionSection from "@/components/content/sections/DefinitionSection";
-import { DefinitionData } from "@/app/types/learn/DefinitionData";
+import { DefinitionData } from "@/types/learn/DefinitionData";
 import ContentParagraph from "@/components/content/ContentParagraph";
 import ImageWrapper from "@/components/shared/ImageWrapper";
-import { IMAGES } from "@/app/constants/images";
+import { IMAGES } from "@/constants/images";
 import ListSection from "@/components/content/sections/ListSection";
-import { ListData } from "@/app/types/learn/ListData";
+import { ListData } from "@/types/learn/ListData";
 import ImageSection from "@/components/content/sections/ImageSection";
-import { ImageData } from "@/app/types/learn/ImageData";
+import { ImageData } from "@/types/learn/ImageData";
 import ExampleSection from "@/components/content/sections/ExampleSection";
-import { ExampleData } from "@/app/types/learn/ExampleData";
+import { ExampleData } from "@/types/learn/ExampleData";
 import { mapExampleWithCharts } from "@/lib/mappers/example.mapper";
 import { mapDefinitionWithImages } from "@/lib/mappers/definition.mapper";
 

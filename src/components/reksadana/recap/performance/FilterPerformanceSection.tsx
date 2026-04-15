@@ -1,9 +1,9 @@
-import { FilterPerformance } from "@/app/types/reksadana/recap/performance/FilterPerformance";
+import { FilterPerformance } from "@/types/reksadana/recap/performance/FilterPerformance";
 import { useTranslations } from "next-intl";
 import React from "react";
-import { useCategoryData } from "@/app/hooks/useCategoryData";
+import { useCategoryData } from "@/hooks/useCategoryData";
 import TimeframeDropdown from "./TimeFrameDropdown";
-import { TimeFrameType } from "@/app/types/reksadana/recap/performance/TimeFrameType";
+import { TimeFrameType } from "@/types/reksadana/recap/performance/TimeFrameType";
 
 interface FilterPerformanceSectionProps {
   viewMode: TimeFrameType;

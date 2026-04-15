@@ -1,7 +1,7 @@
 import { BookText } from "lucide-react";
 import SectionWrapper from "./SectionWrapper";
 import SectionTitle from "./SectionTitle";
-import { TipsData } from "@/app/types/learn/TipsData";
+import { TipsData } from "@/types/learn/TipsData";
 
 interface TipsSectionProps {
   tipsData: TipsData;

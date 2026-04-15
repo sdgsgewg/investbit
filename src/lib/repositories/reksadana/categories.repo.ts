@@ -1,9 +1,10 @@
 import { createClient } from "@/utils/supabase/server";
 import { cookies } from "next/headers";
-import { Database } from "@/types/supabase";
-import { CategoryData } from "@/app/types/reksadana/categories/CategoryData";
+import { CategoryData } from "@/types/reksadana/categories/CategoryData";
+import { Database } from "@/types/database.types";
 
 type CategoryInsert = Database["public"]["Tables"]["rd_categories"]["Insert"];
+type CategoryUpdate = Database["public"]["Tables"]["rd_categories"]["Update"];
 
 export async function getCategoriesRepo(params: {
   name?: string;
@@ -28,12 +29,13 @@ export async function getCategoriesRepo(params: {
 
   if (error) throw error;
 
-  const mappedData: CategoryData[] = data?.map((category) => ({
-    id: category.id,
-    name: category.name,
-    created_at: "",
-    updated_at: "",
-  })) || [];
+  const mappedData: CategoryData[] =
+    data?.map((category) => ({
+      id: category.id,
+      name: category.name,
+      created_at: "",
+      updated_at: "",
+    })) || [];
 
   return mappedData;
 }
@@ -63,7 +65,7 @@ export async function createCategoriesRepo(categories: CategoryInsert[]) {
   return result;
 }
 
-export async function updateCategoryRepo(id: string, data: { name: string }) {
+export async function updateCategoryRepo(id: string, data: CategoryUpdate) {
   const supabase = createClient(await cookies());
 
   // cek apakah name sudah dipakai category lain

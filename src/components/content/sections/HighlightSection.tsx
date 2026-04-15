@@ -1,4 +1,4 @@
-import { HighlightData } from "@/app/types/learn/HighlightData";
+import { HighlightData } from "@/types/learn/HighlightData";
 import { Info } from "lucide-react";
 
 interface HighlightSectionProps {

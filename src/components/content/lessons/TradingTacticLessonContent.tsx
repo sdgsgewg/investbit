@@ -1,8 +1,8 @@
 import React from "react";
-import { HighlightData } from "@/app/types/learn/HighlightData";
+import { HighlightData } from "@/types/learn/HighlightData";
 import HighlightSection from "../sections/HighlightSection";
 import ParagraphSection from "../sections/ParagraphSection";
-import { ExampleData } from "@/app/types/learn/ExampleData";
+import { ExampleData } from "@/types/learn/ExampleData";
 import ExampleSection from "../sections/ExampleSection";
 
 interface TradingTacticLessonContentProps {

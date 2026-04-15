@@ -1,6 +1,6 @@
 import ImageWrapper from "@/components/shared/ImageWrapper";
 import ContentParagraph from "../ContentParagraph";
-import { ImageData } from "@/app/types/learn/ImageData";
+import { ImageData } from "@/types/learn/ImageData";
 
 interface ImageSectionProps {
   data: ImageData;

@@ -1,6 +1,6 @@
+import { Database } from "@/types/database.types";
 import { createClient } from "@/utils/supabase/server";
 import { cookies } from "next/headers";
-import { Database } from "@/types/supabase";
 
 type RecordInsert = Database["public"]["Tables"]["rd_records"]["Insert"];
 

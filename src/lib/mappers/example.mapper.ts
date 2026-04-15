@@ -1,5 +1,5 @@
-import { ExampleData } from "@/app/types/learn/ExampleData";
-import { ExplanationData } from "@/app/types/learn/ExplanationData";
+import { ExampleData } from "@/types/learn/ExampleData";
+import { ExplanationData } from "@/types/learn/ExplanationData";
 
 export function mapExamplesWithCharts(
   examples: any[],

@@ -3,7 +3,7 @@ import ImageWrapper from "@/components/shared/ImageWrapper";
 import { ListChecks } from "lucide-react";
 import SectionWrapper from "./SectionWrapper";
 import SectionTitle from "./SectionTitle";
-import { TutorialData } from "@/app/types/learn/TutorialData";
+import { TutorialData } from "@/types/learn/TutorialData";
 
 interface TutorialSectionProps {
   tutorial: TutorialData;

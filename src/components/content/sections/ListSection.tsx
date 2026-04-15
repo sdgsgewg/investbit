@@ -1,4 +1,4 @@
-import { ListData } from "@/app/types/learn/ListData";
+import { ListData } from "@/types/learn/ListData";
 import ImageWrapper from "@/components/shared/ImageWrapper";
 
 interface ListSectionProps {

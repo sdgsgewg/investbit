@@ -1,4 +1,4 @@
-import { FunctionData } from "@/app/types/learn/FunctionData";
+import { FunctionData } from "@/types/learn/FunctionData";
 
 export function mapFunction(func: any): FunctionData {
   const mappedFunction: FunctionData = {

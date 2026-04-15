@@ -1,9 +1,9 @@
 import { useTranslations } from "next-intl";
 import TechAnalysisLessonContent from "../TechAnalysisLessonContent";
 import ListSection from "../../sections/ListSection";
-import { IMAGES } from "@/app/constants/images";
+import { IMAGES } from "@/constants/images";
 import ParagraphSection from "../../sections/ParagraphSection";
-import { ListData, PointData } from "@/app/types/learn/ListData";
+import { ListData, PointData } from "@/types/learn/ListData";
 
 export default function VolumeOnBreakoutBreakdown() {
   const t = useTranslations(

@@ -1,7 +1,7 @@
 "use client";
 
-import { useItemData } from "@/app/hooks/useItemData";
-import { useCategoryData } from "@/app/hooks/useCategoryData";
+import { useItemData } from "@/hooks/useItemData";
+import { useCategoryData } from "@/hooks/useCategoryData";
 import Loading from "@/components/shared/Loading";
 import { CrudPage } from "@/components/shared/CrudPage";
 import { useTranslations } from "next-intl";

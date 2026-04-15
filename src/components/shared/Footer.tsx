@@ -1,6 +1,6 @@
 "use client";
 
-import { ROUTES } from "@/app/constants/routes";
+import { ROUTES } from "@/constants/routes";
 import { Link } from "@/navigation";
 import { useTranslations } from "next-intl";
 
@@ -81,8 +81,7 @@ export function Footer() {
           </div>
         </div>
         <div className="mt-8 pt-8 border-t text-center text-sm text-muted-foreground">
-          &copy; {new Date().getFullYear()} Investbit.{" "}
-          {tFooter("copyright")}
+          &copy; {new Date().getFullYear()} Investbit. {tFooter("copyright")}
         </div>
       </div>
     </footer>

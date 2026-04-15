@@ -1,4 +1,4 @@
-import { TutorialData } from "@/app/types/learn/TutorialData";
+import { TutorialData } from "@/types/learn/TutorialData";
 
 export function mapTutorialWithChart(
   tutorial: any,

@@ -1,7 +1,7 @@
 import { useTranslations } from "next-intl";
 import TradingTacticLessonContent from "../TradingTacticLessonContent";
-import { ExampleData } from "@/app/types/learn/ExampleData";
-import { IMAGES } from "@/app/constants/images";
+import { ExampleData } from "@/types/learn/ExampleData";
+import { IMAGES } from "@/constants/images";
 import { mapExampleWithCharts } from "@/lib/mappers/example.mapper";
 
 export default function BuyOnBreakout() {

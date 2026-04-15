@@ -1,4 +1,4 @@
-import { HighlightData } from "@/app/types/learn/HighlightData";
+import { HighlightData } from "@/types/learn/HighlightData";
 import HighlightSection from "./HighlightSection";
 
 const HighlightExplanationText = ({

@@ -1,12 +1,12 @@
 import { format, isValid, parseISO } from "date-fns";
 
 export function safeFormatDate(
-  value: string,
+  dateStr: string,
   formatStr: string,
-  fallback = "-"
+  fallback = "-",
 ) {
   try {
-    const date = parseISO(value); // lebih strict dari new Date()
+    const date = parseISO(dateStr); // lebih strict dari new Date()
 
     if (!isValid(date)) return fallback;
 

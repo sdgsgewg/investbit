@@ -1,6 +1,6 @@
 "use client";
 
-import { useCategoryData } from "@/app/hooks/useCategoryData";
+import { useCategoryData } from "@/hooks/useCategoryData";
 import { CrudPage } from "@/components/shared/CrudPage";
 import Loading from "@/components/shared/Loading";
 import { useTranslations } from "next-intl";
@@ -28,7 +28,9 @@ export default function CategoriesManagementPage() {
   return (
     <CrudPage
       title={t("title")}
-      formFields={[{ name: "name", label: t("form.namePlaceholder"), type: "text" }]}
+      formFields={[
+        { name: "name", label: t("form.namePlaceholder"), type: "text" },
+      ]}
       columns={[{ key: "name", label: t("columns.name") }]}
       data={categories}
       form={form}

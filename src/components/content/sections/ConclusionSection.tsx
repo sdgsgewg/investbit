@@ -1,7 +1,7 @@
 import { BookText } from "lucide-react";
 import SectionWrapper from "./SectionWrapper";
 import SectionTitle from "./SectionTitle";
-import { ConclusionData } from "@/app/types/learn/ConclusionData";
+import { ConclusionData } from "@/types/learn/ConclusionData";
 
 interface ConclusionSectionProps {
   conclusion: ConclusionData;

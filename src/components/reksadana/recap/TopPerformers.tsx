@@ -2,7 +2,7 @@ import React, { useMemo } from "react";
 import { Trophy, Award, TrendingUp } from "lucide-react";
 import { motion } from "framer-motion";
 import { useTranslations } from "next-intl";
-import { TimeFrameType } from "@/app/types/reksadana/recap/performance/TimeFrameType";
+import { TimeFrameType } from "@/types/reksadana/recap/performance/TimeFrameType";
 import Loading from "@/components/shared/Loading";
 
 interface PerformanceItem {

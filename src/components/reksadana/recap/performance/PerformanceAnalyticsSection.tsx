@@ -1,12 +1,13 @@
-import { SortOrderType } from "@/app/types/reksadana/recap/performance/SortOrderType";
+import { SortOrderType } from "@/types/reksadana/recap/performance/SortOrderType";
 import Loading from "@/components/shared/Loading";
 import { useTranslations } from "next-intl";
 import PerformanceTable from "../PerformanceTable";
 import PerformanceInformationSection from "../PerformanceInformationSection";
 import { format } from "date-fns";
-import { TimeFrameType } from "@/app/types/reksadana/recap/performance/TimeFrameType";
-import { DataType } from "@/app/types/reksadana/recap/performance/DataType";
+import { TimeFrameType } from "@/types/reksadana/recap/performance/TimeFrameType";
+import { DataType } from "@/types/reksadana/recap/performance/DataType";
 import { safeFormatDate } from "@/helper/date";
+import { PerformanceKey } from "@/types/reksadana/recap/performance/PerformanceKey";
 
 interface PerformanceAnalyticsSectionProps {
   data: DataType;
@@ -15,7 +16,7 @@ interface PerformanceAnalyticsSectionProps {
   loadingText: string;
   viewMode: TimeFrameType;
   sortOrder: SortOrderType;
-  columnKey: string;
+  columnKey: PerformanceKey;
   onChangeSortOrder: (sortOrder: SortOrderType) => void;
   getCellColor: (
     val: number | undefined,
@@ -47,48 +48,49 @@ const PerformanceAnalyticsSection = ({
     sortOrder === "desc" ? [...timePeriods].reverse() : timePeriods;
 
   // Prepare columns for the PerformanceTable based on viewMode
-  const columns = sortedTimePeriods.map((period) => {
-    if (viewMode === "weekly") {
-      const [yearMonth, weekStr] = period.split("-W");
-      const [year, month] = yearMonth.split("-");
-      const dateObj = new Date(Number(year), Number(month) - 1);
+  const columns = sortedTimePeriods
+    .filter((p): p is string => Boolean(p))
+    .map((period) => {
+      if (viewMode === "weekly") {
+        const [yearMonth, weekStr] = period.split("-W");
+        const [year, month] = yearMonth.split("-");
+        const dateObj = new Date(Number(year), Number(month) - 1);
 
+        return {
+          key: period,
+          label: `${tPerformanceTfWeekly("week")} ${weekStr}`,
+          subLabel: format(dateObj, "MMM ''yy"),
+        };
+      }
+
+      if (viewMode === "daily") {
+        return {
+          key: period,
+          label: safeFormatDate(period, "dd MMM"),
+          subLabel: safeFormatDate(period, "yyyy"),
+        };
+      }
+
+      if (viewMode === "monthly") {
+        return {
+          key: period,
+          label: safeFormatDate(period, "MMMM yyyy"),
+        };
+      }
+
+      if (viewMode === "ytd") {
+        return {
+          key: period,
+          label: `YTD ${period}`,
+        };
+      }
+
+      // yearly
       return {
         key: period,
-        label: `${tPerformanceTfWeekly("week")} ${weekStr}`,
-        subLabel: format(dateObj, "MMM ''yy"),
+        label: period,
       };
-    }
-
-    if (viewMode === "daily") {
-      console.log("period:", period, new Date(period));
-      return {
-        key: period,
-        label: safeFormatDate(period, "dd MMM"),
-        subLabel: safeFormatDate(period, "yyyy"),
-      };
-    }
-
-    if (viewMode === "monthly") {
-      return {
-        key: period,
-        label: format(new Date(period), "MMMM yyyy"),
-      };
-    }
-
-    if (viewMode === "ytd") {
-      return {
-        key: period,
-        label: `YTD ${period}`,
-      };
-    }
-
-    // yearly
-    return {
-      key: period,
-      label: period,
-    };
-  });
+    });
 
   return (
     <div className="flex flex-col gap-4">

@@ -1,5 +1,5 @@
 import React from "react";
-import { HighlightData } from "@/app/types/learn/HighlightData";
+import { HighlightData } from "@/types/learn/HighlightData";
 import HighlightSection from "../sections/HighlightSection";
 import ParagraphSection from "../sections/ParagraphSection";
 

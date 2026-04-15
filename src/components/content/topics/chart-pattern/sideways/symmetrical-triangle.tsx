@@ -1,10 +1,10 @@
-import { IMAGES } from "@/app/constants/images";
+import { IMAGES } from "@/constants/images";
 import { useTranslations } from "next-intl";
 import TechAnalysisTopicContent from "../../TechAnalysisTopicContent";
 import { mapExamplesWithCharts } from "@/lib/mappers/example.mapper";
 import { mapDefinitionWithImages } from "@/lib/mappers/definition.mapper";
-import { DefinitionData } from "@/app/types/learn/DefinitionData";
-import { ExampleData } from "@/app/types/learn/ExampleData";
+import { DefinitionData } from "@/types/learn/DefinitionData";
+import { ExampleData } from "@/types/learn/ExampleData";
 
 export default function SymmetricalTriangle() {
   const t = useTranslations(

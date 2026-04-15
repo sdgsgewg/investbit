@@ -1,5 +1,5 @@
 import { BookText } from "lucide-react";
-import { DefinitionData } from "@/app/types/learn/DefinitionData";
+import { DefinitionData } from "@/types/learn/DefinitionData";
 import ImageWrapper from "@/components/shared/ImageWrapper";
 import SectionWrapper from "./SectionWrapper";
 import SectionTitle from "./SectionTitle";

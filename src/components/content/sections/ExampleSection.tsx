@@ -1,7 +1,7 @@
 import React from "react";
 import { LineChart, Target } from "lucide-react";
 import ImageWrapper from "../../shared/ImageWrapper";
-import { ExampleData } from "@/app/types/learn/ExampleData";
+import { ExampleData } from "@/types/learn/ExampleData";
 import HighlightSection from "./HighlightSection";
 import NumberedListExplanationText from "./NumberedListExplanationText";
 import HighlightExplanationText from "./HighlightExplanationText";

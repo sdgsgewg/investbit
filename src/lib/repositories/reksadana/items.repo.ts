@@ -1,9 +1,10 @@
 import { createClient } from "@/utils/supabase/server";
 import { cookies } from "next/headers";
-import { Database } from "@/types/supabase";
-import { ItemData } from "@/app/types/reksadana/items/ItemData";
+import { ItemData } from "@/types/reksadana/items/ItemData";
+import { Database } from "@/types/database.types";
 
 type ItemInsert = Database["public"]["Tables"]["rd_items"]["Insert"];
+type ItemUpdate = Database["public"]["Tables"]["rd_items"]["Update"];
 
 export async function getItemsRepo(params: {
   name?: string;
@@ -87,10 +88,7 @@ export async function createItemsRepo(items: ItemInsert[]) {
   return result;
 }
 
-export async function updateItemRepo(
-  id: string,
-  data: { name: string; category_id: string },
-) {
+export async function updateItemRepo(id: string, data: ItemUpdate) {
   const supabase = createClient(await cookies());
 
   // cek apakah name sudah dipakai item lain

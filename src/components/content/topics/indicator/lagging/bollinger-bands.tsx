@@ -1,15 +1,15 @@
-import { IMAGES } from "@/app/constants/images";
+import { IMAGES } from "@/constants/images";
 import { useTranslations } from "next-intl";
 import TechAnalysisTopicContent from "../../TechAnalysisTopicContent";
-import { DefinitionData } from "@/app/types/learn/DefinitionData";
+import { DefinitionData } from "@/types/learn/DefinitionData";
 import { mapExamplesWithCharts } from "@/lib/mappers/example.mapper";
-import { ExampleData } from "@/app/types/learn/ExampleData";
+import { ExampleData } from "@/types/learn/ExampleData";
 import { mapDefinitionWithImages } from "@/lib/mappers/definition.mapper";
-import { FunctionData } from "@/app/types/learn/FunctionData";
+import { FunctionData } from "@/types/learn/FunctionData";
 import { mapFunction } from "@/lib/mappers/function.mapper";
 import { mapListWithImages } from "@/lib/mappers/list.mapper";
-import { ListData } from "@/app/types/learn/ListData";
-import { ConclusionData } from "@/app/types/learn/ConclusionData";
+import { ListData } from "@/types/learn/ListData";
+import { ConclusionData } from "@/types/learn/ConclusionData";
 import { mapConclusion } from "@/lib/mappers/conclusion.mapper";
 import ListSection from "@/components/content/sections/ListSection";
 

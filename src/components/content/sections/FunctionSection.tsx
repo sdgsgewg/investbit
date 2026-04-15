@@ -1,7 +1,7 @@
 import { BookText } from "lucide-react";
 import SectionWrapper from "./SectionWrapper";
 import SectionTitle from "./SectionTitle";
-import { FunctionData } from "@/app/types/learn/FunctionData";
+import { FunctionData } from "@/types/learn/FunctionData";
 
 interface FunctionSectionProps {
   functionData: FunctionData;

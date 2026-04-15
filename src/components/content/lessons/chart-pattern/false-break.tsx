@@ -1,10 +1,10 @@
 import { useTranslations } from "next-intl";
-import { IMAGES } from "@/app/constants/images";
-import { ExampleData } from "@/app/types/learn/ExampleData";
+import { IMAGES } from "@/constants/images";
+import { ExampleData } from "@/types/learn/ExampleData";
 import ExampleSection from "../../sections/ExampleSection";
 import DefinitionSection from "../../sections/DefinitionSection";
 import TechAnalysisLessonContent from "../TechAnalysisLessonContent";
-import { DefinitionData } from "@/app/types/learn/DefinitionData";
+import { DefinitionData } from "@/types/learn/DefinitionData";
 import { mapDefinitionWithImages } from "@/lib/mappers/definition.mapper";
 import { mapExampleWithCharts } from "@/lib/mappers/example.mapper";
 

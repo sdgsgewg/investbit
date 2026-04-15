@@ -11,6 +11,6 @@ export type RecordData = {
     rd_categories: {
       id: string;
       name: string;
-    };
-  };
+    } | null;
+  } | null;
 };

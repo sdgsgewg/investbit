@@ -1,4 +1,4 @@
-import { ConclusionData } from "@/app/types/learn/ConclusionData";
+import { ConclusionData } from "@/types/learn/ConclusionData";
 
 export function mapConclusion(conclusion: any): ConclusionData {
   const mappedConclusion: ConclusionData = {

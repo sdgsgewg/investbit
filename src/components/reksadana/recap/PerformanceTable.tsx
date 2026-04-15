@@ -1,5 +1,6 @@
 import React from "react";
 import { useTranslations } from "next-intl";
+import { PerformanceKey } from "@/types/reksadana/recap/performance/PerformanceKey";
 
 interface ColumnHeader {
   key: string;
@@ -7,10 +8,16 @@ interface ColumnHeader {
   subLabel?: string;
 }
 
+type YieldMap = Record<string, number>;
+
 interface PerformanceItem {
   itemId: string;
   itemName: string;
-  [key: string]: any; // For weeklyYields, monthlyYields, etc.
+  dailyYields?: YieldMap;
+  weeklyYields?: YieldMap;
+  monthlyYields?: YieldMap;
+  yearlyYields?: YieldMap;
+  ytdYields?: YieldMap;
 }
 
 interface PerformanceCategory {
@@ -21,7 +28,7 @@ interface PerformanceCategory {
 interface PerformanceTableProps {
   data: PerformanceCategory[];
   columns: ColumnHeader[];
-  columnKey: string; // 'weeklyYields' or 'monthlyYields'
+  columnKey: PerformanceKey;
   getCellColor: (
     val: number | undefined,
     catName: string,

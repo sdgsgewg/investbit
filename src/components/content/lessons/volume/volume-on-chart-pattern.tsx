@@ -2,11 +2,11 @@
 
 import { useTranslations } from "next-intl";
 import TechAnalysisLessonContent from "../TechAnalysisLessonContent";
-import { IMAGES } from "@/app/constants/images";
+import { IMAGES } from "@/constants/images";
 import ListSection from "../../sections/ListSection";
 import ExampleSection from "../../sections/ExampleSection";
-import { ExampleData } from "@/app/types/learn/ExampleData";
-import { ListData, PointData } from "@/app/types/learn/ListData";
+import { ExampleData } from "@/types/learn/ExampleData";
+import { ListData, PointData } from "@/types/learn/ListData";
 import { mapExampleWithCharts } from "@/lib/mappers/example.mapper";
 import ContentParagraph from "../../ContentParagraph";
 

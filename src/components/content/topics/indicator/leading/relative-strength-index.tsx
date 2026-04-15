@@ -1,11 +1,11 @@
-import { IMAGES } from "@/app/constants/images";
+import { IMAGES } from "@/constants/images";
 import { useTranslations } from "next-intl";
 import TechAnalysisTopicContent from "../../TechAnalysisTopicContent";
-import { DefinitionData } from "@/app/types/learn/DefinitionData";
+import { DefinitionData } from "@/types/learn/DefinitionData";
 import { mapExamplesWithCharts } from "@/lib/mappers/example.mapper";
-import { ExampleData } from "@/app/types/learn/ExampleData";
+import { ExampleData } from "@/types/learn/ExampleData";
 import { mapDefinitionWithImages } from "@/lib/mappers/definition.mapper";
-import { TipsData } from "@/app/types/learn/TipsData";
+import { TipsData } from "@/types/learn/TipsData";
 import { mapTips } from "@/lib/mappers/tips.mapper";
 
 export default function RelativeStrengthIndex() {

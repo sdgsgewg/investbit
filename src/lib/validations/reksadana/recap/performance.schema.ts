@@ -1,0 +1,8 @@
+import { z } from "zod";
+
+const uuid = z.string().uuid();
+
+export const performanceQuerySchema = z.object({
+  timeFrame: z.enum(["daily", "weekly", "monthly", "ytd", "yearly"]),
+  categoryId: uuid.optional(),
+});

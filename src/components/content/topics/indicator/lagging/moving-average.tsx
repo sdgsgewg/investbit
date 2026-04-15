@@ -1,13 +1,13 @@
-import { IMAGES } from "@/app/constants/images";
+import { IMAGES } from "@/constants/images";
 import { useTranslations } from "next-intl";
 import TechAnalysisTopicContent from "../../TechAnalysisTopicContent";
-import { DefinitionData } from "@/app/types/learn/DefinitionData";
-import { TutorialData } from "@/app/types/learn/TutorialData";
+import { DefinitionData } from "@/types/learn/DefinitionData";
+import { TutorialData } from "@/types/learn/TutorialData";
 import { mapExamplesWithCharts } from "@/lib/mappers/example.mapper";
 import { mapTutorialWithChart } from "@/lib/mappers/tutorial.mapper";
-import { ExampleData } from "@/app/types/learn/ExampleData";
+import { ExampleData } from "@/types/learn/ExampleData";
 import { mapDefinitionWithImages } from "@/lib/mappers/definition.mapper";
-import { FunctionData } from "@/app/types/learn/FunctionData";
+import { FunctionData } from "@/types/learn/FunctionData";
 import { mapFunction } from "@/lib/mappers/function.mapper";
 
 export default function MovingAverage() {
