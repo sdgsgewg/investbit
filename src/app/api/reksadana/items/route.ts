@@ -20,15 +20,6 @@ export async function GET(request: Request) {
       ? await getItemsGroupedService(query)
       : await getItemsService(query);
 
-    console.log(
-      "GET /items with query",
-      query,
-      "grouped:",
-      grouped,
-      "result:",
-      data,
-    );
-
     return NextResponse.json(data);
   } catch (error: any) {
     console.error("GET /items error:", error);

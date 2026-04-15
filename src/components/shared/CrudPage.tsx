@@ -182,7 +182,7 @@ export function CrudPage(props: CrudPageProps) {
                         {col.label}
                       </th>
                     ))}
-                    <th className="px-6 py-4 font-semibold tracking-wider text-right">
+                    <th className="w-20 px-6 py-4 font-semibold tracking-wider">
                       {tCommonTable("actions")}
                     </th>
                   </tr>

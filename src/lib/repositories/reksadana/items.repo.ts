@@ -12,10 +12,8 @@ export async function getItemsRepo(params: {
 }): Promise<ItemData[]> {
   const supabase = createClient(await cookies());
 
-  let query = supabase
-    .from("rd_items")
-    .select(
-      `
+  let query = supabase.from("rd_items").select(
+    `
         id,
         name,
         category_id,
@@ -24,9 +22,9 @@ export async function getItemsRepo(params: {
           name
         )
       `,
-    )
-    .order("category(name)", { ascending: true })
-    .order("name", { ascending: true });
+  )
+  .order("category(name)", { ascending: true })
+  .order("name", { ascending: true });
 
   if (params.name) {
     query = query.ilike("name", `%${params.name}%`);
