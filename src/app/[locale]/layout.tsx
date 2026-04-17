@@ -3,9 +3,9 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "../globals.css";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
-import { ThemeProvider } from "@/components/theme-provider";
 import { Navbar } from "@/components/shared/Navbar";
 import { Footer } from "@/components/shared/Footer";
+import Providers from "./providers";
 // import { AIAdvisor } from "@/components/shared/AIAdvisor";
 
 const geistSans = Geist({
@@ -39,17 +39,12 @@ export default async function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <NextIntlClientProvider messages={messages}>
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-          >
+          <Providers>
             <Navbar />
             <main className="min-h-screen">{children}</main>
             <Footer />
             {/* <AIAdvisor /> */}
-          </ThemeProvider>
+          </Providers>
         </NextIntlClientProvider>
       </body>
     </html>

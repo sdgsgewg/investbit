@@ -2,8 +2,8 @@ import { FilterPerformance } from "@/types/reksadana/recap/performance/FilterPer
 import { useTranslations } from "next-intl";
 import React from "react";
 import { useCategoryData } from "@/hooks/useCategoryData";
-import TimeframeDropdown from "./TimeFrameDropdown";
 import { TimeFrameType } from "@/types/reksadana/recap/performance/TimeFrameType";
+import Dropdown from "@/components/shared/Dropdown";
 
 interface FilterPerformanceSectionProps {
   viewMode: TimeFrameType;
@@ -49,7 +49,7 @@ const FilterPerformanceSection = ({
             ? tPerformanceTfYtd("title")
             : tPerformanceTfYearly("title");
 
-  const options: { label: string; value: TimeFrameType }[] = [
+  const timeFrameOptions: { label: string; value: TimeFrameType }[] = [
     { value: "daily", label: tTf("options.daily") },
     { value: "weekly", label: tTf("options.weekly") },
     { value: "monthly", label: tTf("options.monthly") },
@@ -57,49 +57,43 @@ const FilterPerformanceSection = ({
     { value: "yearly", label: tTf("options.yearly") },
   ];
 
+  const categoryOptions = [
+    { label: tCommonFilter("allCategory"), value: "" },
+    ...categories.map((c) => ({
+      label: c.name,
+      value: c.id,
+    })),
+  ];
+
   return (
     <div className="bg-white dark:bg-zinc-900 rounded-xl p-6 shadow-sm border border-zinc-100 dark:border-zinc-800/50">
-      <div className="flex flex-col sm:flex-row justify-between items-start md:items-center mb-6 gap-4">
-        <h2 className="text-xl font-semibold">{title}</h2>
+      <div className="w-full flex flex-col gap-4">
+        <div className="w-full flex flex-col sm:flex-row justify-between items-start gap-4">
+          <h2 className="text-xl font-semibold">{title}</h2>
 
-        <TimeframeDropdown
-          value={form.timeframe || "weekly"}
-          onChange={(val: TimeFrameType) => {
+          <Dropdown
+            value={form.timeframe || "weekly"}
+            onChange={(val: TimeFrameType) => {
+              setForm({ ...form, timeframe: val });
+              onChangeViewMode(val);
+            }}
+            options={timeFrameOptions}
+            className="sm:w-48"
+          />
+        </div>
+
+        <Dropdown
+          value={form.category_id}
+          onChange={(val) =>
             setForm({
               ...form,
-              timeframe: val,
-            });
-            onChangeViewMode(val);
-          }}
-          options={options}
+              category_id: val,
+            })
+          }
+          options={categoryOptions}
+          placeholder={tCommonFilter("allCategory")}
+          className="sm:w-48"
         />
-      </div>
-
-      {/* Select Category */}
-      <div className="flex flex-col w-full sm:w-80 gap-2">
-        <label htmlFor="category">{tCommonFilter("selectCategory")}</label>
-        <select
-          id="category"
-          value={form.category_id}
-          onChange={(e) => setForm({ ...form, category_id: e.target.value })}
-          onLoad={() => {
-            setForm({ ...form, category_id: "" });
-          }}
-          className="border p-2 w-full"
-        >
-          <option value="" className="bg-zinc-100 dark:bg-zinc-800">
-            {tCommonFilter("all")}
-          </option>
-          {categories.map((c) => (
-            <option
-              key={c.id}
-              value={c.id}
-              className="bg-zinc-100 dark:bg-zinc-800"
-            >
-              {c.name}
-            </option>
-          ))}
-        </select>
       </div>
     </div>
   );

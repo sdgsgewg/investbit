@@ -4,38 +4,44 @@ import * as React from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Check, ChevronDown } from "lucide-react";
 import { useClickOutside } from "@/hooks/uceClickOutside";
-import { TimeFrameType } from "@/types/reksadana/recap/performance/TimeFrameType";
 
-type Option = {
+export type DropdownOption<T> = {
   label: string;
-  value: TimeFrameType;
+  value: T;
 };
 
-interface Props {
-  value: string;
-  onChange: (val: TimeFrameType) => void;
-  options: Option[];
+interface DropdownProps<T> {
+  value: T;
+  onChange: (val: T) => void;
+  options: DropdownOption<T>[];
+  placeholder?: string;
+  className?: string;
 }
 
-export default function TimeframeDropdown({ value, onChange, options }: Props) {
+export default function Dropdown<T>({
+  value,
+  onChange,
+  options,
+  placeholder = "Select...",
+  className = "",
+}: DropdownProps<T>) {
   const [open, setOpen] = React.useState(false);
   const ref = React.useRef<HTMLDivElement>(null);
 
+  useClickOutside(ref, () => setOpen(false));
+
   const selected = options.find((o) => o.value === value);
 
-  // CLOSE WHEN CLICK OUTSIDE
-  useClickOutside(ref, () => {
-    setOpen(false);
-  });
-
   return (
-    <div ref={ref} className="relative w-full sm:w-56">
+    <div ref={ref} className={`relative w-full ${className}`}>
       {/* Trigger */}
       <button
         onClick={() => setOpen((prev) => !prev)}
-        className="w-full flex items-center justify-between px-4 py-2 rounded-full bg-gray-100 dark:bg-zinc-800 hover:bg-gray-200 dark:hover:bg-zinc-700 transition shadow-sm"
+        className="w-full flex items-center gap-2 justify-between px-4 py-2 rounded-full bg-gray-100 dark:bg-zinc-800 hover:bg-gray-200 dark:hover:bg-zinc-700 transition shadow-sm"
       >
-        <span className="text-sm font-medium">{selected?.label}</span>
+        <span className="text-sm font-medium">
+          {selected?.label || placeholder}
+        </span>
         <ChevronDown
           className={`h-4 w-4 transition-transform ${open ? "rotate-180" : ""}`}
         />
@@ -56,7 +62,7 @@ export default function TimeframeDropdown({ value, onChange, options }: Props) {
 
               return (
                 <button
-                  key={opt.value}
+                  key={String(opt.value)}
                   onClick={() => {
                     onChange(opt.value);
                     setOpen(false);

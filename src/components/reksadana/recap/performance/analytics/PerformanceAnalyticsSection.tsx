@@ -1,19 +1,21 @@
 import { SortOrderType } from "@/types/reksadana/recap/performance/SortOrderType";
-import Loading from "@/components/shared/Loading";
 import { useTranslations } from "next-intl";
-import PerformanceTable from "../PerformanceTable";
+import PerformanceTable from "./PerformanceTable";
 import PerformanceInformationSection from "../PerformanceInformationSection";
 import { format } from "date-fns";
 import { TimeFrameType } from "@/types/reksadana/recap/performance/TimeFrameType";
 import { DataType } from "@/types/reksadana/recap/performance/DataType";
 import { safeFormatDate } from "@/helper/date";
 import { PerformanceKey } from "@/types/reksadana/recap/performance/PerformanceKey";
+import PerformanceTableSkeleton from "./PerformanceTableSkeleton";
+import TopProgressBar from "@/components/shared/TopProgressBar";
+import TableOverlay from "@/components/shared/TableOverlay";
 
 interface PerformanceAnalyticsSectionProps {
   data: DataType;
   timePeriods: string[];
   loading: boolean;
-  loadingText: string;
+  fetching: boolean;
   viewMode: TimeFrameType;
   sortOrder: SortOrderType;
   columnKey: PerformanceKey;
@@ -29,7 +31,7 @@ const PerformanceAnalyticsSection = ({
   data,
   timePeriods,
   loading,
-  loadingText,
+  fetching,
   viewMode,
   sortOrder,
   columnKey,
@@ -160,15 +162,21 @@ const PerformanceAnalyticsSection = ({
       </div>
 
       {loading ? (
-        <Loading message={loadingText} />
+        <PerformanceTableSkeleton />
       ) : (
-        <PerformanceTable
-          data={data}
-          columns={columns}
-          columnKey={columnKey}
-          getCellColor={getCellColor}
-          noDataMessage={tRecapPerformance("noData")}
-        />
+        <div className="flex flex-col gap-4">
+          <div className="relative">
+            {fetching && <TableOverlay />}
+
+            <PerformanceTable
+              data={data}
+              columns={columns}
+              columnKey={columnKey}
+              getCellColor={getCellColor}
+              noDataMessage={tRecapPerformance("noData")}
+            />
+          </div>
+        </div>
       )}
 
       <PerformanceInformationSection />

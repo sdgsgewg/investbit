@@ -2,37 +2,20 @@
 
 import React, { useState } from "react";
 import { usePerformanceData } from "@/hooks/usePerformanceData";
-import FilterPerformanceSection from "@/components/reksadana/recap/performance/FilterPerformanceSection";
-import TopPerformers from "@/components/reksadana/recap/TopPerformers";
+import TopPerformers from "@/components/reksadana/recap/performance/top-performers/TopPerformers";
 import PerformanceSectionWrapper from "@/components/reksadana/recap/performance/PerformanceSectionWrapper";
-import PerformanceAnalyticsSection from "@/components/reksadana/recap/performance/PerformanceAnalyticsSection";
+import PerformanceAnalyticsSection from "@/components/reksadana/recap/performance/analytics/PerformanceAnalyticsSection";
 import { SortOrderType } from "@/types/reksadana/recap/performance/SortOrderType";
 import { TimeFrameType } from "@/types/reksadana/recap/performance/TimeFrameType";
-import { useTranslations } from "next-intl";
 import { getPerformanceKey } from "@/lib/utils/reksadana/recap/performance";
+import FilterPerformanceSection from "@/components/reksadana/recap/performance/filter/FilterPerformanceSection";
+import TopProgressBar from "@/components/shared/TopProgressBar";
 
 export default function PerformancePage() {
-  const tPerformance = useTranslations("reksadana.recap.performance");
-  const tPerformanceTfDaily = useTranslations(
-    "reksadana.recap.performance.timeframe.daily",
-  );
-  const tPerformanceTfWeekly = useTranslations(
-    "reksadana.recap.performance.timeframe.weekly",
-  );
-  const tPerformanceTfMonthly = useTranslations(
-    "reksadana.recap.performance.timeframe.monthly",
-  );
-  const tPerformanceTfYtd = useTranslations(
-    "reksadana.recap.performance.timeframe.ytd",
-  );
-  const tPerformanceTfYearly = useTranslations(
-    "reksadana.recap.performance.timeframe.yearly",
-  );
-
   const [viewMode, setViewMode] = useState<TimeFrameType>("weekly");
   const [sortOrder, setSortOrder] = useState<SortOrderType>("desc");
 
-  const { data, timePeriods, loading, form, setForm, getCellColor } =
+  const { data, timePeriods, loading, fetching, form, setForm, getCellColor } =
     usePerformanceData({ timeFrame: viewMode });
 
   const handleChangeViewMode = (viewMode: TimeFrameType) => {
@@ -41,29 +24,6 @@ export default function PerformancePage() {
 
   const handleChangeSortOrder = (sortOrder: SortOrderType) => {
     setSortOrder(sortOrder);
-  };
-
-  const getLoadingText = () => {
-    switch (viewMode) {
-      case "daily":
-        return tPerformanceTfDaily("loading");
-        break;
-      case "weekly":
-        return tPerformanceTfWeekly("loading");
-        break;
-      case "monthly":
-        return tPerformanceTfMonthly("loading");
-        break;
-      case "ytd":
-        return tPerformanceTfYtd("loading");
-        break;
-      case "yearly":
-        return tPerformanceTfYearly("loading");
-        break;
-      default:
-        return tPerformance("loading");
-        break;
-    }
   };
 
   const columnKey = getPerformanceKey(viewMode);
@@ -78,13 +38,15 @@ export default function PerformancePage() {
         setForm={setForm}
       />
 
+        {fetching && <TopProgressBar />}
+
       {/* TOP PERFORMERS SECTION */}
       <PerformanceSectionWrapper>
         <TopPerformers
           data={data}
           timePeriods={timePeriods}
           loading={loading}
-          loadingText={getLoadingText()}
+          fetching={fetching}
           columnKey={columnKey}
           viewMode={viewMode}
         />
@@ -96,7 +58,7 @@ export default function PerformancePage() {
           data={data}
           timePeriods={timePeriods}
           loading={loading}
-          loadingText={getLoadingText()}
+          fetching={fetching}
           viewMode={viewMode}
           sortOrder={sortOrder}
           columnKey={columnKey}

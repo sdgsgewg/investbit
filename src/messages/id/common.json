@@ -5,7 +5,8 @@
     "update": "Perbarui",
     "edit": "Edit",
     "delete": "Hapus",
-    "cancel": "Batal"
+    "cancel": "Batal",
+    "apply": "Terapkan"
   },
 
   "states": {
@@ -25,6 +26,7 @@
   },
 
   "filter": {
+    "allCategory": "Semua Kategori",
     "selectCategory": "Pilih Kategori:",
     "all": "Semua",
     "apply": "Terapkan"

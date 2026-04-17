@@ -3,7 +3,7 @@ import { Trophy, Award, TrendingUp } from "lucide-react";
 import { motion } from "framer-motion";
 import { useTranslations } from "next-intl";
 import { TimeFrameType } from "@/types/reksadana/recap/performance/TimeFrameType";
-import Loading from "@/components/shared/Loading";
+import TopPerformersSkeleton from "./TopPerformersSkeleton";
 
 interface PerformanceItem {
   itemId: string;
@@ -25,7 +25,7 @@ interface TopPerformersProps {
   data: PerformanceCategory[];
   timePeriods: string[];
   loading: boolean;
-  loadingText: string;
+  fetching: boolean;
   columnKey: string;
   viewMode: TimeFrameType;
 }
@@ -40,7 +40,7 @@ const TopPerformers: React.FC<TopPerformersProps> = ({
   data,
   timePeriods,
   loading,
-  loadingText,
+  fetching,
   columnKey,
   viewMode,
 }) => {
@@ -100,16 +100,25 @@ const TopPerformers: React.FC<TopPerformersProps> = ({
     return { latestPeriod, overallBest, categoryBests };
   }, [data, timePeriods, columnKey]);
 
+  // 1. First load → full skeleton
   if (loading) {
-    return <Loading message={loadingText} />;
+    return <TopPerformersSkeleton />;
   }
 
+  // 2. While refetching → tetap tampil skeleton (lebih clean)
+  if (fetching) {
+    return <TopPerformersSkeleton />;
+  }
+
+  // 3. No data beneran
   if (!winners || !winners.overallBest) {
     return (
       <div className="text-center py-10 text-muted-foreground">
         {tTopPerformers("noData")}
       </div>
     );
+
+    // return <TopPerformersSkeleton />;
   }
 
   const { overallBest, categoryBests, latestPeriod } = winners;
