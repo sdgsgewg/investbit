@@ -88,10 +88,16 @@ export const useRecapInputData = (): UseRecapInputDataReturn => {
   }, [recordsData]);
 
   const inputs = useMemo(() => {
-    return {
-      ...mappedInputs,
-      ...localInputs,
-    };
+    const result: YieldInputByItemId = { ...mappedInputs };
+
+    Object.entries(localInputs).forEach(([itemId, values]) => {
+      result[itemId] = {
+        ...result[itemId],
+        ...values,
+      };
+    });
+
+    return result;
   }, [mappedInputs, localInputs]);
 
   const canSave = useMemo(() => {
@@ -171,7 +177,10 @@ export const useRecapInputData = (): UseRecapInputDataReturn => {
     setLocalInputs((prev) => ({
       ...prev,
       [itemId]: {
-        ...prev[itemId],
+        yield_1d:
+          prev[itemId]?.yield_1d ?? mappedInputs[itemId]?.yield_1d ?? "",
+        yield_ytd:
+          prev[itemId]?.yield_ytd ?? mappedInputs[itemId]?.yield_ytd ?? "",
         [field]: value,
       },
     }));
