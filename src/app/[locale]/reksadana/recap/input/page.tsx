@@ -19,6 +19,7 @@ export default function InputPage() {
     loading,
     fetching,
     saving,
+    canSave,
   } = useRecapInputData();
 
   return (
@@ -29,17 +30,16 @@ export default function InputPage() {
         onSelectedDateChange={setSelectedDate}
         onSave={handleSave}
         saving={saving}
+        canSave={canSave}
       />
 
       {loading ? (
         <SkeletonTable />
       ) : (
         <div className="flex flex-col gap-4">
-          {/* 🔵 Top progress bar */}
           {fetching && <TopProgressBar />}
 
           <div className="relative">
-            {/* overlay */}
             {fetching && <TableOverlay />}
 
             <InputTable

@@ -41,5 +41,5 @@ export const fetchPerformance = async (params: {
 export const saveRecords = async (payload: unknown) => {
   const parsed = recordsSchema.parse(payload); // validation
 
-  await apiClient.post("/api/reksadana/records", parsed);
+  await apiClient.post("/reksadana/records", parsed);
 };

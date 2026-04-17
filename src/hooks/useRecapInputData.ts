@@ -12,7 +12,8 @@ import {
 } from "@/lib/api/reksadana";
 import { queryConfig } from "@/lib/react-query/queryConfig";
 import { RecordsInput } from "@/lib/validations/reksadana/records.schema";
-import { parseNumber } from "@/lib/utils/number";
+import { useNumberFormatter } from "./useNumberFormatter";
+import { useTranslations } from "next-intl";
 
 interface UseRecapInputDataReturn {
   categories: Category[];
@@ -35,10 +36,14 @@ interface UseRecapInputDataReturn {
   loading: boolean;
   fetching: boolean;
   saving: boolean;
+  canSave: boolean;
 }
 
 export const useRecapInputData = (): UseRecapInputDataReturn => {
+  const tReksdanaRecapInput = useTranslations("reksadana.recap.input");
+
   const queryClient = useQueryClient();
+  const { parseNumber } = useNumberFormatter();
 
   const [draftDate, setDraftDate] = useState(
     new Date().toISOString().split("T")[0],
@@ -89,6 +94,39 @@ export const useRecapInputData = (): UseRecapInputDataReturn => {
     };
   }, [mappedInputs, localInputs]);
 
+  const canSave = useMemo(() => {
+    const entries = Object.entries(inputs);
+
+    if (entries.length === 0) return false;
+
+    let hasAnyValue = false;
+    let hasChanges = false;
+
+    for (const [itemId, val] of entries) {
+      const original = mappedInputs[itemId];
+
+      const current1d = val.yield_1d ?? "";
+      const currentYtd = val.yield_ytd ?? "";
+
+      const original1d = original?.yield_1d ?? "";
+      const originalYtd = original?.yield_ytd ?? "";
+
+      // cek ada isi
+      if (current1d !== "" || currentYtd !== "") {
+        hasAnyValue = true;
+      }
+
+      // cek perubahan
+      if (current1d !== original1d || currentYtd !== originalYtd) {
+        hasChanges = true;
+      }
+
+      if (hasAnyValue && hasChanges) return true;
+    }
+
+    return false;
+  }, [inputs, mappedInputs]);
+
   // 4. Mutation
   const mutation = useMutation({
     mutationFn: async () => {
@@ -107,15 +145,20 @@ export const useRecapInputData = (): UseRecapInputDataReturn => {
         .filter((doc) => doc.yield_1d !== null || doc.yield_ytd !== null);
 
       if (payload.length === 0) {
+        alert(tReksdanaRecapInput("form.errors.empty"));
         throw new Error("EMPTY");
       }
 
       await saveRecords(payload);
     },
     onSuccess: () => {
+      alert(`${tReksdanaRecapInput("form.success")} ${selectedDate}`);
       queryClient.invalidateQueries({
         queryKey: queryKeys.records(selectedDate),
       });
+    },
+    onError: (error) => {
+      alert(tReksdanaRecapInput("form.errors.failed"));
     },
   });
 
@@ -182,5 +225,6 @@ export const useRecapInputData = (): UseRecapInputDataReturn => {
     loading: isLoadingItems || isLoadingRecords,
     fetching: isFetching,
     saving: mutation.isPending,
+    canSave,
   };
 };

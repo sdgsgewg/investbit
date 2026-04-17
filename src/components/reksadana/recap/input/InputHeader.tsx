@@ -1,3 +1,4 @@
+import { cn } from "@/lib/utils";
 import { useTranslations } from "next-intl";
 import React from "react";
 
@@ -7,6 +8,7 @@ interface InputHeaderProps {
   onSelectedDateChange: (date: string) => void;
   onSave: () => void;
   saving: boolean;
+  canSave: boolean;
 }
 
 const InputHeader = ({
@@ -15,6 +17,7 @@ const InputHeader = ({
   onSelectedDateChange,
   onSave,
   saving,
+  canSave,
 }: InputHeaderProps) => {
   const tRecapInput = useTranslations("reksadana.recap.input");
   const tCommon = useTranslations("common");
@@ -49,8 +52,13 @@ const InputHeader = ({
       <div className="flex items-start md:items-end">
         <button
           onClick={onSave}
-          disabled={saving}
-          className="bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-6 rounded cursor-pointer transition disabled:opacity-50"
+          disabled={saving || !canSave}
+          className={cn(
+            "font-semibold py-2 px-6 rounded transition text-white",
+            saving || !canSave
+              ? "bg-green-400 dark:bg-green-800 cursor-not-allowed opacity-50"
+              : "bg-green-600 hover:bg-green-700 cursor-pointer active:scale-95",
+          )}
         >
           {saving ? tRecapInput("form.saving") : tRecapInput("form.save")}
         </button>
