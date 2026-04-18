@@ -18,7 +18,6 @@ export default function InputPage() {
     handleSave,
     loading,
     fetching,
-    canApplyDateChange,
     saving,
     canSave,
   } = useRecapInputData();
@@ -30,7 +29,6 @@ export default function InputPage() {
         onDraftDateChange={setDraftDate}
         onSelectedDateChange={setSelectedDate}
         onSave={handleSave}
-        canApplyDateChange={canApplyDateChange}
         saving={saving}
         canSave={canSave}
       />

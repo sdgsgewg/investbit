@@ -13,6 +13,7 @@ import { RecordsInput } from "@/lib/validations/reksadana/records.schema";
 import { useTranslations } from "next-intl";
 import { CategoryWithItems } from "@/features/reksadana/recap/input/types/CategoryWithItems";
 import { useNumberFormatter } from "@/hooks/useNumberFormatter";
+import { getLastWorkingDay, safeFormatDate } from "@/lib/utils/date";
 
 interface UseRecapInputDataReturn {
   categoriesWithItems: CategoryWithItems[];
@@ -34,7 +35,6 @@ interface UseRecapInputDataReturn {
 
   loading: boolean;
   fetching: boolean;
-  canApplyDateChange: boolean;
   saving: boolean;
   canSave: boolean;
 }
@@ -45,10 +45,15 @@ export const useRecapInputData = (): UseRecapInputDataReturn => {
   const queryClient = useQueryClient();
   const { parseNumber } = useNumberFormatter();
 
+  const initialDate = getLastWorkingDay();
+
   const [draftDate, setDraftDate] = useState(
-    new Date().toISOString().split("T")[0],
+    safeFormatDate(initialDate, "yyyy-MM-dd"),
   );
-  const [selectedDate, setSelectedDate] = useState(draftDate);
+
+  const [selectedDate, setSelectedDate] = useState(
+    safeFormatDate(initialDate, "yyyy-MM-dd"),
+  );
 
   const [localInputs, setLocalInputs] = useState<YieldInputByItemId>({});
 
@@ -100,11 +105,6 @@ export const useRecapInputData = (): UseRecapInputDataReturn => {
 
     return result;
   }, [mappedInputs, localInputs]);
-
-  const canApplyDateChange = useMemo(() => {
-    if (draftDate !== selectedDate) return true;
-    return false;
-  }, [draftDate, selectedDate]);
 
   const canSave = useMemo(() => {
     const entries = Object.entries(inputs);
@@ -239,7 +239,6 @@ export const useRecapInputData = (): UseRecapInputDataReturn => {
 
     loading: isLoadingItems || isLoadingRecords,
     fetching: isFetching,
-    canApplyDateChange,
     saving: mutation.isPending,
     canSave,
   };

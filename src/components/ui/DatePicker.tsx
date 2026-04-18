@@ -16,6 +16,7 @@ import { Button } from "@/components/ui/button";
 interface DatePickerProps {
   value?: Date;
   onChange?: (date: Date | undefined) => void;
+  onSelectFinal?: (date: Date) => void;
 
   placeholder?: string;
   className?: string;
@@ -27,13 +28,16 @@ interface DatePickerProps {
 export const DatePicker: React.FC<DatePickerProps> = ({
   value,
   onChange,
+  onSelectFinal,
   placeholder = "Pick a date",
   className,
   disabled,
   formatStr = "yyyy-MM-dd",
 }) => {
+  const [open, setOpen] = React.useState(false);
+
   return (
-    <Popover>
+    <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
         <Button
           variant="outline"
@@ -52,7 +56,14 @@ export const DatePicker: React.FC<DatePickerProps> = ({
         <Calendar
           mode="single"
           selected={value}
-          onSelect={onChange}
+          onSelect={(date) => {
+            onChange?.(date);
+
+            if (date) {
+              onSelectFinal?.(date); // trigger fetch di sini
+              setOpen(false); // close popover setelah memilih tanggal
+            }
+          }}
           disabled={disabled}
           required
         />
