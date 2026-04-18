@@ -1,4 +1,4 @@
-import { TimeFrameType } from "@/types/reksadana/recap/performance/TimeFrameType";
+import { TimeFrameType } from "@/features/reksadana/recap/performance/types/TimeFrameType";
 
 const PERFORMANCE_KEY_MAP = {
   daily: "dailyYields",

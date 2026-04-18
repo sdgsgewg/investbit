@@ -1,6 +1,6 @@
 import { createClient } from "@/utils/supabase/server";
 import { cookies } from "next/headers";
-import { ItemData } from "@/types/reksadana/items/ItemData";
+import { ItemData } from "@/features/reksadana/items/types/ItemData";
 import { Database } from "@/types/database.types";
 
 type ItemInsert = Database["public"]["Tables"]["rd_items"]["Insert"];
@@ -12,8 +12,10 @@ export async function getItemsRepo(params: {
 }): Promise<ItemData[]> {
   const supabase = createClient(await cookies());
 
-  let query = supabase.from("rd_items").select(
-    `
+  let query = supabase
+    .from("rd_items")
+    .select(
+      `
         id,
         name,
         category_id,
@@ -22,9 +24,9 @@ export async function getItemsRepo(params: {
           name
         )
       `,
-  )
-  .order("category(name)", { ascending: true })
-  .order("name", { ascending: true });
+    )
+    .order("category(name)", { ascending: true })
+    .order("name", { ascending: true });
 
   if (params.name) {
     query = query.ilike("name", `%${params.name}%`);
@@ -63,10 +65,8 @@ export async function getItemsRepo(params: {
   return formattedData;
 }
 
-export async function createItemsRepo(items: ItemInsert[]) {
+export async function createItemRepo(item: ItemInsert) {
   const supabase = createClient(await cookies());
-
-  const item = items[0]; // Karena kita hanya insert 1 item
 
   // cek apakah name sudah dipakai item lain
   const { data: existing } = await supabase
@@ -80,7 +80,7 @@ export async function createItemsRepo(items: ItemInsert[]) {
   }
 
   // create
-  const { data: result, error } = await supabase.from("rd_items").insert(items);
+  const { data: result, error } = await supabase.from("rd_items").insert(item);
 
   if (error) throw error;
   return result;

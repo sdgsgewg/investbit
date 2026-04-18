@@ -1,12 +1,14 @@
+import { ItemData } from "@/features/reksadana/items/types/ItemData";
 import {
   getItemsRepo,
-  createItemsRepo,
   updateItemRepo,
+  createItemRepo,
 } from "@/lib/repositories/reksadana/items.repo";
 import {
+  createItemSchema,
   itemSchema,
   itemsQuerySchema,
-  itemsSchema,
+  updateItemSchema,
 } from "@/lib/validations/reksadana/items.schema";
 
 export async function getItemsGroupedService(query: unknown) {
@@ -17,7 +19,7 @@ export async function getItemsGroupedService(query: unknown) {
   // Group by category
   const map = new Map();
 
-  items.forEach((item: any) => {
+  items.forEach((item: ItemData) => {
     const category = item.category;
     if (!category) return;
 
@@ -44,16 +46,16 @@ export async function getItemsService(query: unknown) {
   return await getItemsRepo(parsed);
 }
 
-export async function createItemsService(input: unknown) {
+export async function createItemService(input: unknown) {
   // Validate
-  const parsed = itemsSchema.parse(input);
+  const parsed = createItemSchema.parse(input);
 
   // Call repo
-  return await createItemsRepo(parsed);
+  return await createItemRepo(parsed);
 }
 
 export async function updateItemService(id: string, input: unknown) {
-  const parsed = itemSchema.parse(input);
+  const parsed = updateItemSchema.parse(input);
 
   return await updateItemRepo(id, parsed);
 }

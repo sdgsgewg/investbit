@@ -1,4 +1,4 @@
-import { ListData, PointData } from "@/types/learn/ListData";
+import { ListData, PointData } from "@/features/learn/types/ListData";
 
 export function mapListWithImages(
   list: any,

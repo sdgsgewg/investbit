@@ -1,7 +1,5 @@
 import { z } from "zod";
 
-const uuid = z.string().uuid();
-
 // CREATE
 export const createCategorySchema = z.object({
   name: z.string().min(1).max(255),
@@ -9,7 +7,6 @@ export const createCategorySchema = z.object({
 
 // UPDATE
 export const updateCategorySchema = z.object({
-  id: uuid,
   name: z.string().min(1).max(255),
 });
 

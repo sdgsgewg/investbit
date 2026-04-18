@@ -3,9 +3,9 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "../globals.css";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
-import { Navbar } from "@/components/shared/Navbar";
-import { Footer } from "@/components/shared/Footer";
+import { Footer } from "@/components/layout/Footer";
 import Providers from "./providers";
+import { Navbar } from "@/components/layout/Navbar";
 // import { AIAdvisor } from "@/components/shared/AIAdvisor";
 
 const geistSans = Geist({

@@ -1,15 +1,15 @@
 "use client";
 
 import React, { useState } from "react";
-import { usePerformanceData } from "@/hooks/usePerformanceData";
-import TopPerformers from "@/components/reksadana/recap/performance/top-performers/TopPerformers";
-import PerformanceSectionWrapper from "@/components/reksadana/recap/performance/PerformanceSectionWrapper";
-import PerformanceAnalyticsSection from "@/components/reksadana/recap/performance/analytics/PerformanceAnalyticsSection";
-import { SortOrderType } from "@/types/reksadana/recap/performance/SortOrderType";
-import { TimeFrameType } from "@/types/reksadana/recap/performance/TimeFrameType";
+import { SortOrderType } from "@/features/reksadana/recap/performance/types/SortOrderType";
+import { TimeFrameType } from "@/features/reksadana/recap/performance/types/TimeFrameType";
 import { getPerformanceKey } from "@/lib/utils/reksadana/recap/performance";
-import FilterPerformanceSection from "@/components/reksadana/recap/performance/filter/FilterPerformanceSection";
-import TopProgressBar from "@/components/shared/TopProgressBar";
+import TopProgressBar from "@/components/feedback/TopProgressBar";
+import { usePerformanceData } from "@/features/reksadana/recap/performance/hooks/usePerformanceData";
+import FilterPerformanceSection from "@/features/reksadana/recap/performance/components/filter/FilterPerformanceSection";
+import PerformanceSectionWrapper from "@/features/reksadana/recap/performance/components/PerformanceSectionWrapper";
+import TopPerformers from "@/features/reksadana/recap/performance/components/top-performers/TopPerformers";
+import PerformanceAnalyticsSection from "@/features/reksadana/recap/performance/components/analytics/PerformanceAnalyticsSection";
 
 export default function PerformancePage() {
   const [viewMode, setViewMode] = useState<TimeFrameType>("weekly");
@@ -38,7 +38,7 @@ export default function PerformancePage() {
         setForm={setForm}
       />
 
-        {fetching && <TopProgressBar />}
+      {fetching && <TopProgressBar />}
 
       {/* TOP PERFORMERS SECTION */}
       <PerformanceSectionWrapper>

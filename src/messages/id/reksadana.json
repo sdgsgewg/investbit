@@ -115,8 +115,35 @@
     "title": "Kelola Item",
     "subtitle": "Tambah, edit, atau hapus item reksa dana.",
     "form": {
-      "namePlaceholder": "Nama Item",
-      "categoryPlaceholder": "Pilih Kategori"
+      "labels": {
+        "name": "Nama item",
+        "category": "Pilih Kategori"
+      },
+      "placeholder": {
+        "name": "Input nama",
+        "category": "Pilih kategori"
+      },
+      "confirm": {
+        "delete": "Apakah kamu yakin ingin menghapus item ini?"
+      },
+      "success": {
+        "add": "Berhasil menambahkan item baru: ",
+        "edit": "Berhasil memperbarui item: ",
+        "delete": "Berhasil menghapus item: "
+      },
+      "errors": {
+        "add": {
+          "empty": "Silakan masukkan nama untuk item baru.",
+          "failed": "Gagal menambahkan item."
+        },
+        "edit": {
+          "empty": "Silakan masukkan nama untuk item.",
+          "failed": "Gagal memperbarui item."
+        },
+        "delete": {
+          "failed": "Gagal menghapus item."
+        }
+      }
     },
     "columns": {
       "name": "Nama",
@@ -131,7 +158,35 @@
     "title": "Kelola Kategori",
     "subtitle": "Tambah, edit, atau hapus kategori reksa dana.",
     "form": {
-      "namePlaceholder": "Nama Kategori"
+      "labels": {
+        "name": "Nama Kategori"
+      },
+      "placeholder": {
+        "name": "Input nama"
+      },
+      "confirm": {
+        "delete": "Apakah kamu yakin ingin menghapus kategori ini?"
+      },
+      "success": {
+        "add": "Berhasil menambahkan kategori baru: ",
+        "edit": "Berhasil memperbarui kategori: ",
+        "delete": "Berhasil menghapus kategori: "
+      },
+      "errors": {
+        "add": {
+          "empty": "Silakan masukkan nama untuk kategori baru.",
+          "duplicate": "Kategori dengan nama ini sudah ada.",
+          "failed": "Gagal menambahkan kategori."
+        },
+        "edit": {
+          "empty": "Silakan masukkan nama untuk kategori.",
+          "duplicate": "Kategori dengan nama ini sudah ada.",
+          "failed": "Gagal memperbarui kategori."
+        },
+        "delete": {
+          "failed": "Gagal menghapus kategori."
+        }
+      }
     },
     "columns": {
       "name": "Nama"

@@ -1,7 +1,7 @@
 import { createClient } from "@/utils/supabase/server";
 import { cookies } from "next/headers";
 import { format, startOfMonth, getWeekOfMonth } from "date-fns";
-import { TimeFrameType } from "@/types/reksadana/recap/performance/TimeFrameType";
+import { TimeFrameType } from "@/features/reksadana/recap/performance/types/TimeFrameType";
 import { getPerformanceKey } from "@/lib/utils/reksadana/recap/performance";
 import { RecordData } from "@/types/reksadana/records/RecordData";
 

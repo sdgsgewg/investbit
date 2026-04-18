@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 // UUID validation
-const uuid = z.string().uuid();
+const uuid = z.string();
 
 // CREATE
 export const createItemSchema = z.object({
@@ -11,7 +11,6 @@ export const createItemSchema = z.object({
 
 // UPDATE
 export const updateItemSchema = z.object({
-  id: uuid,
   category_id: uuid,
   name: z.string().min(1).max(255),
 });

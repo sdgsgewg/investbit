@@ -22,7 +22,8 @@
   },
 
   "table": {
-    "actions": "Actions"
+    "actions": "Actions",
+    "noData": "No records found."
   },
 
   "filter": {

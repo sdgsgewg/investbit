@@ -1,4 +1,4 @@
-import { TipsData } from "@/types/learn/TipsData";
+import { TipsData } from "@/features/learn/types/TipsData";
 
 export function mapTips(tips: any): TipsData {
   const mappedTips: TipsData = {

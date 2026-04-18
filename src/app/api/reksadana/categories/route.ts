@@ -1,5 +1,5 @@
 import {
-  createCategoriesService,
+  createCategoryService,
   getCategoriesService,
 } from "@/lib/services/reksadana/categories.service";
 import { NextResponse } from "next/server";
@@ -27,7 +27,7 @@ export async function POST(request: Request) {
   try {
     const body = await request.json();
 
-    const data = await createCategoriesService(body);
+    const data = await createCategoryService(body);
 
     return NextResponse.json({ success: true, data });
   } catch (error: any) {

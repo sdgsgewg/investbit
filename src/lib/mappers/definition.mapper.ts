@@ -1,4 +1,4 @@
-import { DefinitionData } from "@/types/learn/DefinitionData";
+import { DefinitionData } from "@/features/learn/types/DefinitionData";
 
 export function mapDefinitionWithImages(
   definition: any,

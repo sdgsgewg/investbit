@@ -1,5 +1,5 @@
 import {
-  createItemsService,
+  createItemService,
   getItemsGroupedService,
   getItemsService,
 } from "@/lib/services/reksadana/items.service";
@@ -35,7 +35,7 @@ export async function POST(request: Request) {
   try {
     const body = await request.json();
 
-    const data = await createItemsService(body);
+    const data = await createItemService(body);
 
     return NextResponse.json({ success: true, data });
   } catch (error: any) {

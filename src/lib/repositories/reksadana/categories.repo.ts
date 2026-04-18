@@ -1,6 +1,6 @@
 import { createClient } from "@/utils/supabase/server";
 import { cookies } from "next/headers";
-import { CategoryData } from "@/types/reksadana/categories/CategoryData";
+import { CategoryData } from "@/features/reksadana/categories/types/CategoryData";
 import { Database } from "@/types/database.types";
 
 type CategoryInsert = Database["public"]["Tables"]["rd_categories"]["Insert"];
@@ -40,10 +40,8 @@ export async function getCategoriesRepo(params: {
   return mappedData;
 }
 
-export async function createCategoriesRepo(categories: CategoryInsert[]) {
+export async function createCategoryRepo(category: CategoryInsert) {
   const supabase = createClient(await cookies());
-
-  const category = categories[0]; // Karena kita hanya insert 1 category
 
   // cek apakah name sudah dipakai category lain
   const { data: existing } = await supabase
@@ -59,7 +57,7 @@ export async function createCategoriesRepo(categories: CategoryInsert[]) {
   // create
   const { data: result, error } = await supabase
     .from("rd_categories")
-    .insert(categories);
+    .insert(category);
 
   if (error) throw error;
   return result;

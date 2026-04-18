@@ -1,15 +1,15 @@
 "use client";
 
-import InputTable from "@/components/reksadana/recap/input/InputTable";
-import InputHeader from "@/components/reksadana/recap/input/InputHeader";
-import SkeletonTable from "@/components/reksadana/recap/input/SkeletonTable";
-import TopProgressBar from "@/components/shared/TopProgressBar";
-import TableOverlay from "@/components/shared/TableOverlay";
-import { useRecapInputData } from "@/hooks/useRecapInputData";
+import TopProgressBar from "@/components/feedback/TopProgressBar";
+import TableOverlay from "@/components/feedback/TableOverlay";
+import { useRecapInputData } from "@/features/reksadana/recap/input/hooks/useRecapInputData";
+import InputHeader from "@/features/reksadana/recap/input/components/InputHeader";
+import SkeletonTable from "@/features/reksadana/recap/input/components/SkeletonTable";
+import InputTable from "@/features/reksadana/recap/input/components/InputTable";
 
 export default function InputPage() {
   const {
-    categories,
+    categoriesWithItems,
     inputs,
     draftDate,
     setDraftDate,
@@ -18,6 +18,7 @@ export default function InputPage() {
     handleSave,
     loading,
     fetching,
+    canApplyDateChange,
     saving,
     canSave,
   } = useRecapInputData();
@@ -29,6 +30,7 @@ export default function InputPage() {
         onDraftDateChange={setDraftDate}
         onSelectedDateChange={setSelectedDate}
         onSave={handleSave}
+        canApplyDateChange={canApplyDateChange}
         saving={saving}
         canSave={canSave}
       />
@@ -43,7 +45,7 @@ export default function InputPage() {
             {fetching && <TableOverlay />}
 
             <InputTable
-              categories={categories}
+              categoriesWithItems={categoriesWithItems}
               inputs={inputs}
               onInputChange={handleInputChange}
             />

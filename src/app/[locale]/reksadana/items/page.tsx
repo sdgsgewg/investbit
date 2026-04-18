@@ -1,9 +1,9 @@
 "use client";
 
-import { useItemData } from "@/hooks/useItemData";
-import { useCategoryData } from "@/hooks/useCategoryData";
-import Loading from "@/components/shared/Loading";
-import { CrudPage } from "@/components/shared/CrudPage";
+import Loading from "@/components/feedback/Loading";
+import { CrudPage } from "@/components/templates/CrudPage";
+import { useCategoryData } from "@/features/reksadana/categories/hooks/useCategoryData";
+import { useItemData } from "@/features/reksadana/items/hooks/useItemData";
 import { useTranslations } from "next-intl";
 
 export default function ItemsManagementPage() {
@@ -15,7 +15,7 @@ export default function ItemsManagementPage() {
     isEditing,
     buttonText,
     isSubmitting,
-    isFormEmpty,
+    canSubmit,
     form,
     setForm,
     handleSubmit,
@@ -31,10 +31,16 @@ export default function ItemsManagementPage() {
     <CrudPage
       title={t("title")}
       formFields={[
-        { name: "name", label: t("form.namePlaceholder"), type: "text" },
+        {
+          name: "name",
+          label: t("form.labels.name"),
+          placeholder: t("form.placeholder.name"),
+          type: "text",
+        },
         {
           name: "category_id",
-          label: t("form.categoryPlaceholder"),
+          label: t("form.labels.category"),
+          placeholder: t("form.placeholder.category"),
           type: "select",
           options: categories,
         },
@@ -46,12 +52,12 @@ export default function ItemsManagementPage() {
       data={items}
       form={form}
       setForm={setForm}
+      canSubmit={canSubmit}
       onSubmit={handleSubmit}
       onEdit={handleEdit}
       onDelete={handleDelete}
       isEditing={isEditing}
       isSubmitting={isSubmitting}
-      isFormEmpty={isFormEmpty}
       buttonText={buttonText}
       resetForm={resetForm}
     />

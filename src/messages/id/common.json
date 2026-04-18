@@ -22,7 +22,8 @@
   },
 
   "table": {
-    "actions": "Aksi"
+    "actions": "Aksi",
+    "noData": "Tidak ada data yang ditemukan."
   },
 
   "filter": {

@@ -2,11 +2,11 @@
 
 import { useTranslations } from "next-intl";
 import { CHAPTER_DATA } from "@/data/chapters";
-import TopicRenderer from "@/components/content/TopicRenderer";
 import { useParams, useRouter } from "next/navigation";
-import LessonRenderer from "@/components/content/LessonRenderer";
+import LessonRenderer from "@/features/learn/components/LessonRenderer";
 import { motion } from "framer-motion";
 import { ArrowLeft, BookOpen, ExternalLink, Layers } from "lucide-react";
+import TopicRenderer from "@/features/learn/components/TopicRenderer";
 
 export default function Page() {
   const params = useParams();
