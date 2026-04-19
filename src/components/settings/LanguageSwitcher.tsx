@@ -1,6 +1,6 @@
 "use client";
 
-import { usePathname, useRouter } from "@/navigation";
+import { usePathname } from "@/navigation";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -11,11 +11,10 @@ import {
 import { Languages } from "lucide-react";
 
 export function LanguageSwitcher() {
-  const router = useRouter();
   const pathname = usePathname();
 
   const switchLocale = (newLocale: string) => {
-    router.replace(pathname, { locale: newLocale });
+    window.location.href = `/${newLocale}${pathname}`;
   };
 
   return (
