@@ -1,4 +1,5 @@
 import InputNumber from "@/components/ui/InputNumber";
+import TableWrapper from "@/components/ui/TableWrapper";
 import { CategoryWithItems } from "@/features/reksadana/recap/input/types/CategoryWithItems";
 import { YieldInputByItemId } from "@/features/reksadana/recap/input/types/YieldInputByItemId";
 import { useTranslations } from "next-intl";
@@ -22,22 +23,23 @@ const InputTable = ({
   const tRecapInput = useTranslations("reksadana.recap.input");
 
   return (
-    <div className="overflow-x-auto">
-      <table className="min-w-full text-left bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800">
-        <thead className="bg-zinc-100 dark:bg-zinc-800 border-b border-zinc-200 dark:border-zinc-700">
-          <tr>
-            <th className="py-3 px-4 font-semibold">
-              {tRecapInput("table.mutualFund")}
-            </th>
-            <th className="py-3 px-4 font-semibold w-40 text-center">
-              {tRecapInput("table.yield1d")}
-            </th>
-            <th className="py-3 px-4 font-semibold w-40 text-center">
-              {tRecapInput("table.yieldYtd")}
-            </th>
-          </tr>
-        </thead>
-        <tbody>
+    <TableWrapper
+      headerChildren={
+        <>
+          {" "}
+          <th className="py-3 px-4 font-semibold">
+            {tRecapInput("table.mutualFund")}
+          </th>
+          <th className="py-3 px-4 font-semibold w-40 text-center">
+            {tRecapInput("table.yield1d")}
+          </th>
+          <th className="py-3 px-4 font-semibold w-40 text-center">
+            {tRecapInput("table.yieldYtd")}
+          </th>
+        </>
+      }
+      bodyChildren={
+        <>
           {categoriesWithItems.map((category) => (
             <React.Fragment key={category.id}>
               {/* Category Header */}
@@ -76,9 +78,9 @@ const InputTable = ({
               })}
             </React.Fragment>
           ))}
-        </tbody>
-      </table>
-    </div>
+        </>
+      }
+    />
   );
 };
 

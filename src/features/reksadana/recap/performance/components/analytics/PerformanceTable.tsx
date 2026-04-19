@@ -1,6 +1,7 @@
 import React from "react";
 import { useTranslations } from "next-intl";
 import { PerformanceKey } from "@/features/reksadana/recap/performance/types/PerformanceKey";
+import TableWrapper from "@/components/ui/TableWrapper";
 
 interface ColumnHeader {
   key: string;
@@ -50,32 +51,32 @@ const PerformanceTable: React.FC<PerformanceTableProps> = ({
   );
 
   return (
-    <div className="overflow-auto max-h-[65vh] border border-zinc-200 dark:border-zinc-800 rounded-md">
-      <table className="min-w-full text-left bg-white dark:bg-zinc-900 border-collapse">
-        <thead className="sticky top-0 z-20 bg-zinc-100 dark:bg-zinc-800 border-b border-zinc-200 dark:border-zinc-700 shadow-sm">
-          <tr>
-            <th className="py-3 px-4 font-semibold w-64 sticky left-0 z-30 bg-zinc-100 dark:bg-zinc-800 border-r border-zinc-200 dark:border-zinc-700">
-              {tPerformanceAnalytics("table.mutualFund")}
+    <TableWrapper
+      headerChildren={
+        <>
+          <th className="py-3 px-4 font-semibold w-64 sticky left-0 z-30 bg-zinc-100 dark:bg-zinc-800 border-r border-zinc-200 dark:border-zinc-700">
+            {tPerformanceAnalytics("table.mutualFund")}
+          </th>
+          {columns.map((col) => (
+            <th
+              key={col.key}
+              className="py-3 px-4 font-semibold text-center whitespace-nowrap min-w-32"
+            >
+              {col.label}
+              {col.subLabel && (
+                <>
+                  <br />
+                  <span className="text-sm font-normal text-zinc-600 dark:text-zinc-400">
+                    {col.subLabel}
+                  </span>
+                </>
+              )}
             </th>
-            {columns.map((col) => (
-              <th
-                key={col.key}
-                className="py-3 px-4 font-semibold text-center whitespace-nowrap min-w-32"
-              >
-                {col.label}
-                {col.subLabel && (
-                  <>
-                    <br />
-                    <span className="text-sm font-normal text-zinc-600 dark:text-zinc-400">
-                      {col.subLabel}
-                    </span>
-                  </>
-                )}
-              </th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
+          ))}
+        </>
+      }
+      bodyChildren={
+        <>
           {data.map((category) => (
             <React.Fragment key={category.categoryName}>
               {/* Category Header */}
@@ -135,9 +136,9 @@ const PerformanceTable: React.FC<PerformanceTableProps> = ({
               </td>
             </tr>
           )}
-        </tbody>
-      </table>
-    </div>
+        </>
+      }
+    />
   );
 };
 
