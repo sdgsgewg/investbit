@@ -6,10 +6,18 @@ export const parseNumber = (
 
   let normalized = val.trim();
 
+  const localeOptions = ["en-US", "id-ID"];
+
+  if (!localeOptions.includes(locale)) {
+    throw new Error(
+      `Unsupported locale: ${locale}. Supported locales are: ${localeOptions.join(", ")}`,
+    );
+  }
+
   // detect jika pakai titik sebagai decimal (case: 0.29)
   const isDotDecimal = /^\d+\.\d+$/.test(normalized);
 
-  if (locale === "id-ID" && !isDotDecimal) {
+  if (localeOptions.includes(locale) && !isDotDecimal) {
     normalized = normalized
       .replace(/\./g, "") // thousand
       .replace(",", "."); // decimal
