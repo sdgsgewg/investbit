@@ -6,27 +6,42 @@ export const parseNumber = (
 
   let normalized = val.trim();
 
-  const localeOptions = ["en-US", "id-ID"];
+  const supportedLocales = ["id-ID", "en-US"];
 
-  if (!localeOptions.includes(locale)) {
+  if (!supportedLocales.includes(locale)) {
     throw new Error(
-      `Unsupported locale: ${locale}. Supported locales are: ${localeOptions.join(", ")}`,
+      `Unsupported locale: ${locale}. Supported locales: ${supportedLocales.join(", ")}`,
     );
   }
 
-  // detect jika pakai titik sebagai decimal (case: 0.29)
-  const isDotDecimal = /^\d+\.\d+$/.test(normalized);
+  // handle negative
+  const isNegative = normalized.startsWith("-");
+  if (isNegative) normalized = normalized.slice(1);
 
-  if (localeOptions.includes(locale) && !isDotDecimal) {
-    normalized = normalized
-      .replace(/\./g, "") // thousand
-      .replace(",", "."); // decimal
+  if (locale === "id-ID") {
+    // detect dot decimal (misalnya: 0.29)
+    const isDotDecimal = /^\d+\.\d+$/.test(normalized);
+
+    if (!isDotDecimal) {
+      // format normal id-ID
+      // 1.234,56 → 1234.56
+      // 0,98 → 0.98
+      normalized = normalized
+        .replace(/\./g, "") // remove thousand
+        .replace(",", "."); // decimal → dot
+    }
+    // kalau dot decimal → skip (biarin 0.29 tetap 0.29)
   } else {
+    // en-US
+    // 1,234.56 → 1234.56
     normalized = normalized.replace(/,/g, "");
   }
 
   const parsed = Number(normalized);
-  return isNaN(parsed) ? null : parsed;
+
+  if (isNaN(parsed)) return null;
+
+  return isNegative ? -parsed : parsed;
 };
 
 export const formatNumber = (
