@@ -177,9 +177,9 @@ const CrudPageTable = ({
   return (
     <div className="lg:col-span-8">
       <div className="bg-card border border-border/50 shadow-sm rounded-2xl overflow-hidden">
-        <div className="overflow-x-auto">
+        <div className="overflow-auto max-h-[65vh]">
           <table className="w-full text-sm text-left">
-            <thead className="text-xs text-muted-foreground uppercase bg-muted/30 border-b border-border/50">
+            <thead className="sticky top-0 z-20 text-xs text-muted-foreground uppercase bg-muted border-b border-border/50">
               <tr>
                 {columns.map((col) => (
                   <th
