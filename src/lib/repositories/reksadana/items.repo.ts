@@ -1,10 +1,23 @@
 import { createClient } from "@/utils/supabase/server";
 import { cookies } from "next/headers";
 import { ItemData } from "@/features/reksadana/items/types/ItemData";
-import { Database } from "@/types/database.types";
 
-type ItemInsert = Database["public"]["Tables"]["rd_items"]["Insert"];
-type ItemUpdate = Database["public"]["Tables"]["rd_items"]["Update"];
+type ItemMutationInput = {
+  name: string;
+  category_id: string;
+};
+
+type RawCategory = {
+  id: string | null;
+  name: string | null;
+} | null;
+
+type RawItemRow = {
+  id: string;
+  name: string | null;
+  category_id: string | null;
+  category: RawCategory | RawCategory[];
+};
 
 export async function getItemsRepo(params: {
   name?: string;
@@ -40,24 +53,24 @@ export async function getItemsRepo(params: {
 
   if (error) throw error;
 
-  const normalizeCategory = (cat: any) => {
+  const normalizeCategory = (cat: RawItemRow["category"]): RawCategory => {
     if (!cat) return null;
     if (Array.isArray(cat)) return cat[0] ?? null;
     return cat;
   };
 
-  const formattedData: ItemData[] = (data || []).map((item: any) => {
+  const formattedData: ItemData[] = ((data ?? []) as RawItemRow[]).map((item) => {
     const category = normalizeCategory(item.category);
 
     return {
       id: item.id,
-      name: item.name,
-      category_id: item.category_id,
+      name: item.name ?? "",
+      category_id: item.category_id ?? "",
       created_at: "",
       updated_at: "",
       category: {
-        id: category?.id,
-        name: category?.name,
+        id: category?.id ?? "",
+        name: category?.name ?? "",
       },
     };
   });
@@ -65,7 +78,7 @@ export async function getItemsRepo(params: {
   return formattedData;
 }
 
-export async function createItemRepo(item: ItemInsert) {
+export async function createItemRepo(item: ItemMutationInput) {
   const supabase = createClient(await cookies());
 
   // cek apakah name sudah dipakai item lain
@@ -86,7 +99,7 @@ export async function createItemRepo(item: ItemInsert) {
   return result;
 }
 
-export async function updateItemRepo(id: string, data: ItemUpdate) {
+export async function updateItemRepo(id: string, data: ItemMutationInput) {
   const supabase = createClient(await cookies());
 
   // cek apakah name sudah dipakai item lain
