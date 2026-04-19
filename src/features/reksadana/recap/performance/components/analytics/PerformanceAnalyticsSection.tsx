@@ -2,7 +2,6 @@ import { SortOrderType } from "@/features/reksadana/recap/performance/types/Sort
 import { useTranslations } from "next-intl";
 import PerformanceTable from "./PerformanceTable";
 import PerformanceInformationSection from "../PerformanceInformationSection";
-import { format } from "date-fns";
 import { TimeFrameType } from "@/features/reksadana/recap/performance/types/TimeFrameType";
 import { PerformanceKey } from "@/features/reksadana/recap/performance/types/PerformanceKey";
 import PerformanceTableSkeleton from "./PerformanceTableSkeleton";
@@ -53,14 +52,16 @@ const PerformanceAnalyticsSection = ({
     .filter((p): p is string => Boolean(p))
     .map((period) => {
       if (viewMode === "weekly") {
-        const [yearMonth, weekStr] = period.split("-W");
+        const [yearMonth, weekPart] = period.split("-W");
+        const [weekStr, rangeStr] = weekPart.split("|");
         const [year, month] = yearMonth.split("-");
         const dateObj = new Date(Number(year), Number(month) - 1);
+        const monthName = safeFormatDate(dateObj, "MMM");
 
         return {
           key: period,
-          label: `${tPerformanceTfWeekly("week")} ${weekStr}`,
-          subLabel: format(dateObj, "MMM ''yy"),
+          label: `${tPerformanceTfWeekly("week")} ${weekStr} ${monthName}`,
+          subLabel: rangeStr,
         };
       }
 

@@ -1,6 +1,6 @@
 import { createClient } from "@/utils/supabase/server";
 import { cookies } from "next/headers";
-import { format, startOfMonth, getWeekOfMonth } from "date-fns";
+import { format, startOfMonth } from "date-fns";
 import { TimeFrameType } from "@/features/reksadana/recap/performance/types/TimeFrameType";
 import { getPerformanceKey } from "@/lib/utils/reksadana/recap/performance";
 import { RecordData } from "@/types/reksadana/records/RecordData";
@@ -69,11 +69,82 @@ export async function getPerformanceRepo(params: {
   const records = queryData as unknown as RecordData[];
 
   // helper
+  const getWeekInfo = (dateStr: string) => {
+    const d = new Date(dateStr);
+    const year = d.getFullYear();
+    const month = d.getMonth();
+
+    const isWeekend = (date: Date) => {
+      const day = date.getDay();
+      return day === 0 || day === 6;
+    };
+
+    let current = new Date(year, month, 1);
+    const lastDay = new Date(year, month + 1, 0);
+
+    let week = 1;
+    let currentWeekStart: Date | null = null;
+    let currentWeekEnd: Date | null = null;
+    
+    const weeks: Record<number, {start: Date, end: Date}> = {};
+
+    while (current <= lastDay) {
+      if (!isWeekend(current)) {
+        const day = current.getDay();
+
+        if (day === 1 && current.getDate() !== 1) {
+          if (!currentWeekStart) {
+             currentWeekStart = new Date(current);
+          } else {
+             week++;
+             currentWeekStart = new Date(current);
+          }
+        } else if (!currentWeekStart) {
+          currentWeekStart = new Date(current);
+        }
+
+        currentWeekEnd = new Date(current);
+        weeks[week] = { start: currentWeekStart, end: currentWeekEnd };
+      }
+
+      current.setDate(current.getDate() + 1);
+    }
+
+    current = new Date(year, month, 1);
+    let targetWeek = 1;
+    let seenValidDay = false;
+    
+    while (current <= d) {
+       if (!isWeekend(current)) {
+           const day = current.getDay();
+           if (day === 1 && current.getDate() !== 1) {
+               if (seenValidDay) {
+                   targetWeek++;
+               }
+           }
+           seenValidDay = true;
+       }
+       current.setDate(current.getDate() + 1);
+    }
+
+    return {
+      week: targetWeek,
+      start: weeks[targetWeek]?.start,
+      end: weeks[targetWeek]?.end,
+    };
+  };
+
   const getWeekKey = (dateStr: string) => {
     const d = new Date(dateStr);
-    const week = getWeekOfMonth(d, { weekStartsOn: 1 });
     const month = format(d, "yyyy-MM");
-    return `${month}-W${week}`;
+
+    const { week, start, end } = getWeekInfo(dateStr);
+
+    if (!start || !end) return "";
+
+    const range = `${format(start, "d")}–${format(end, "d MMM")}`;
+
+    return `${month}-W${week}|${range}`;
   };
 
   const grouped: GroupedType = {};
@@ -139,10 +210,12 @@ export async function getPerformanceRepo(params: {
   // stats
   const categoryStats: CategoryStats = {};
 
-  const data = Object.values(grouped).map((cat) => {
-    const items = Object.values(cat.items).sort((a, b) =>
-      a.itemName.localeCompare(b.itemName),
-    );
+  const data = Object.values(grouped)
+    .sort((a, b) => a.categoryName.localeCompare(b.categoryName))
+    .map((cat) => {
+      const items = Object.values(cat.items).sort((a, b) =>
+        a.itemName.localeCompare(b.itemName),
+      );
 
     categoryStats[cat.categoryName] = {};
 

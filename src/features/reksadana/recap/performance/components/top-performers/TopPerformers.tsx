@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { useTranslations } from "next-intl";
 import { TimeFrameType } from "@/features/reksadana/recap/performance/types/TimeFrameType";
 import TopPerformersSkeleton from "./TopPerformersSkeleton";
+import { safeFormatDate } from "@/lib/utils/date";
 
 interface PerformanceItem {
   itemId: string;
@@ -154,8 +155,12 @@ const TopPerformers: React.FC<TopPerformersProps> = ({
 
       if (viewMode === "weekly") {
         if (latestPeriod.includes("-W")) {
-          const [ym, w] = latestPeriod.split("-W");
-          return `${tRecapPerformanceTfWeekly("week")} ${w}, ${ym}`;
+          const [ym, weekPart] = latestPeriod.split("-W");
+          const [w, range] = weekPart.split("|");
+          const [year, month] = ym.split("-");
+          const dateObj = new Date(Number(year), Number(month) - 1);
+          const monthName = safeFormatDate(dateObj, "MMM");
+          return `${tRecapPerformanceTfWeekly("week")} ${w} ${monthName} (${range}), ${year}`;
         }
         return latestPeriod;
       }
