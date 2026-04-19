@@ -12,7 +12,9 @@
   "states": {
     "creating": "Membuat...",
     "updating": "Memperbarui...",
-    "emptyData": "No data available. Use the daily input tab to add records."
+    "emptyData": "No data available. Use the daily input tab to add records.",
+    "loadOlderData": "Muat Data Lama...",
+    "loading": "Memuat..."
   },
 
   "ui": {

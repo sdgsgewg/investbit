@@ -27,6 +27,8 @@ interface UsePerformanceDataReturn {
     catName: string,
     timeKey: string,
   ) => string;
+  periodLimit: number;
+  loadMorePeriods: () => void;
 }
 
 export const usePerformanceData = ({
@@ -34,16 +36,19 @@ export const usePerformanceData = ({
   initialForm = { category_id: "" },
 }: UsePerformanceDataProps): UsePerformanceDataReturn => {
   const [form, setForm] = useState<FilterPerformance>(initialForm);
+  const [periodLimit, setPeriodLimit] = useState(10);
 
   const { data, isLoading, isFetching } = useQuery<PerformanceResponse>({
     queryKey: queryKeys.performance({
       timeFrame,
       categoryId: form.category_id,
+      periodLimit,
     }),
     queryFn: () =>
       fetchPerformance({
         timeFrame,
         categoryId: form.category_id,
+        periodLimit,
       }),
     placeholderData: (prev) => prev ?? undefined,
     ...queryConfig,
@@ -79,5 +84,11 @@ export const usePerformanceData = ({
     form,
     setForm,
     getCellColor,
+    periodLimit,
+    loadMorePeriods: () => {
+      if (!isFetching) {
+        setPeriodLimit((prev) => prev + 10);
+      }
+    },
   };
 };

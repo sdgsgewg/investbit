@@ -8,6 +8,7 @@ export async function GET(request: Request) {
     const query = {
       timeFrame: searchParams.get("timeFrame") || "weekly",
       categoryId: searchParams.get("categoryId") || undefined,
+      periodLimit: searchParams.get("periodLimit") || undefined,
     };
 
     const data = await getPerformanceService(query);

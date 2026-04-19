@@ -174,6 +174,13 @@ const CrudPageTable = ({
     return path.split(".").reduce((acc, key) => acc?.[key], obj);
   };
 
+  const unableDeleteCategories = [
+    "campuran",
+    "obligasi",
+    "pasar uang",
+    "saham",
+  ];
+
   return (
     <div className="lg:col-span-8">
       <div className="bg-card border border-border/50 shadow-sm rounded-2xl overflow-hidden">
@@ -239,13 +246,17 @@ const CrudPageTable = ({
                         >
                           <Edit2 className="w-4 h-4" />
                         </button>
-                        <button
-                          onClick={() => onDelete(item)}
-                          className="p-2 text-red-500 hover:bg-red-500/10 rounded-lg transition-colors"
-                          title={tCommonActions("delete")}
-                        >
-                          <Trash2 className="w-4 h-4" />
-                        </button>
+                        {!unableDeleteCategories.includes(
+                          item.name.toLowerCase(),
+                        ) && (
+                          <button
+                            onClick={() => onDelete(item)}
+                            className="p-2 text-red-500 hover:bg-red-500/10 rounded-lg transition-colors"
+                            title={tCommonActions("delete")}
+                          >
+                            <Trash2 className="w-4 h-4" />
+                          </button>
+                        )}
                       </div>
                       <div className="flex md:hidden items-center justify-end gap-2">
                         <button
@@ -312,7 +323,9 @@ export function CrudPage(props: CrudPageProps) {
 
         {/* TABLE SECTION */}
         {loading ? (
-          <TableSkeleton columnCount={columns.length} rowCount={5} />
+          <div className="lg:col-span-8">
+            <TableSkeleton columnCount={columns.length} rowCount={5} />
+          </div>
         ) : (
           <CrudPageTable
             data={data}

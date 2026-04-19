@@ -1,6 +1,14 @@
 import { createClient } from "@/utils/supabase/server";
 import { cookies } from "next/headers";
-import { format, startOfMonth } from "date-fns";
+import {
+  format,
+  startOfMonth,
+  subDays,
+  subWeeks,
+  subMonths,
+  subYears,
+  formatISO,
+} from "date-fns";
 import { TimeFrameType } from "@/features/reksadana/recap/performance/types/TimeFrameType";
 import { getPerformanceKey } from "@/lib/utils/reksadana/recap/performance";
 import { RecordData } from "@/types/reksadana/records/RecordData";
@@ -33,40 +41,87 @@ type CategoryStats = Record<
 export async function getPerformanceRepo(params: {
   timeFrame: TimeFrameType;
   categoryId?: string;
+  periodLimit?: number;
 }) {
   const supabase = createClient(await cookies());
 
-  let query = supabase
-    .from("rd_records")
-    .select(
-      `
-      id,
-      item_id,
-      date,
-      yield_1d,
-      yield_ytd,
-      rd_items (
-        id,
-        name,
-        category_id,
-        rd_categories (
-          id,
-          name
-        )
-      )
-    `,
-    )
-    .order("date");
+  let startDate: Date | null = null;
+  const now = new Date();
 
-  if (params.categoryId) {
-    query = query.eq("rd_items.category_id", params.categoryId);
+  if (params.periodLimit && params.periodLimit > 0) {
+    switch (params.timeFrame) {
+      case "daily":
+        startDate = subDays(now, Math.ceil(params.periodLimit * 1.5));
+        break;
+      case "weekly":
+        startDate = subWeeks(now, Math.ceil(params.periodLimit * 1.5));
+        break;
+      case "monthly":
+        startDate = subMonths(now, params.periodLimit + 1);
+        break;
+      case "ytd":
+        startDate = new Date(now.getFullYear() - params.periodLimit, 0, 1);
+        break;
+      case "yearly":
+        startDate = subYears(now, params.periodLimit + 1);
+        break;
+    }
   }
 
-  const { data: queryData, error } = await query;
+  const records: RecordData[] = [];
+  let hasMore = true;
+  let offset = 0;
+  const PAGE_SIZE = 1000;
 
-  if (error) throw error;
+  while (hasMore) {
+    let query = supabase
+      .from("rd_records")
+      .select(
+        `
+        id,
+        item_id,
+        date,
+        yield_1d,
+        yield_ytd,
+        rd_items (
+          id,
+          name,
+          category_id,
+          rd_categories (
+            id,
+            name
+          )
+        )
+      `,
+      )
+      .order("date")
+      .range(offset, offset + PAGE_SIZE - 1);
 
-  const records = queryData as unknown as RecordData[];
+    if (params.categoryId) {
+      query = query.eq("rd_items.category_id", params.categoryId);
+    }
+
+    if (startDate) {
+      query = query
+        .gte("date", formatISO(startDate, { representation: "date" }))
+        .lte("date", formatISO(now, { representation: "date" })); // 🔥 penting
+    }
+
+    const { data: queryData, error } = await query;
+
+    if (error) throw error;
+
+    if (queryData && queryData.length > 0) {
+      records.push(...(queryData as unknown as RecordData[]));
+      if (queryData.length < PAGE_SIZE) {
+        hasMore = false;
+      } else {
+        offset += PAGE_SIZE;
+      }
+    } else {
+      hasMore = false;
+    }
+  }
 
   // helper
   const getWeekInfo = (dateStr: string) => {
@@ -85,8 +140,8 @@ export async function getPerformanceRepo(params: {
     let week = 1;
     let currentWeekStart: Date | null = null;
     let currentWeekEnd: Date | null = null;
-    
-    const weeks: Record<number, {start: Date, end: Date}> = {};
+
+    const weeks: Record<number, { start: Date; end: Date }> = {};
 
     while (current <= lastDay) {
       if (!isWeekend(current)) {
@@ -94,10 +149,10 @@ export async function getPerformanceRepo(params: {
 
         if (day === 1 && current.getDate() !== 1) {
           if (!currentWeekStart) {
-             currentWeekStart = new Date(current);
+            currentWeekStart = new Date(current);
           } else {
-             week++;
-             currentWeekStart = new Date(current);
+            week++;
+            currentWeekStart = new Date(current);
           }
         } else if (!currentWeekStart) {
           currentWeekStart = new Date(current);
@@ -113,18 +168,18 @@ export async function getPerformanceRepo(params: {
     current = new Date(year, month, 1);
     let targetWeek = 1;
     let seenValidDay = false;
-    
+
     while (current <= d) {
-       if (!isWeekend(current)) {
-           const day = current.getDay();
-           if (day === 1 && current.getDate() !== 1) {
-               if (seenValidDay) {
-                   targetWeek++;
-               }
-           }
-           seenValidDay = true;
-       }
-       current.setDate(current.getDate() + 1);
+      if (!isWeekend(current)) {
+        const day = current.getDay();
+        if (day === 1 && current.getDate() !== 1) {
+          if (seenValidDay) {
+            targetWeek++;
+          }
+        }
+        seenValidDay = true;
+      }
+      current.setDate(current.getDate() + 1);
     }
 
     return {
@@ -205,7 +260,23 @@ export async function getPerformanceRepo(params: {
     container[key] = params.timeFrame === "daily" ? val : existing + val;
   });
 
-  const timePeriods = Array.from(timeSet).sort();
+  const parseKeyDate = (key: string) => {
+    if (params.timeFrame === "weekly") {
+      const [yearMonth, weekPart] = key.split("-W");
+      const [weekStr] = weekPart.split("|");
+      return new Date(`${yearMonth}-01`).getTime() + Number(weekStr) * 1000;
+    }
+
+    return new Date(key).getTime();
+  };
+
+  let timePeriods = Array.from(timeSet).sort(
+    (a, b) => parseKeyDate(a) - parseKeyDate(b),
+  );
+
+  if (params.periodLimit && params.periodLimit > 0) {
+    timePeriods = timePeriods.slice(-params.periodLimit);
+  }
 
   // stats
   const categoryStats: CategoryStats = {};
@@ -217,26 +288,47 @@ export async function getPerformanceRepo(params: {
         a.itemName.localeCompare(b.itemName),
       );
 
-    categoryStats[cat.categoryName] = {};
+      categoryStats[cat.categoryName] = {};
 
-    timePeriods.forEach((t) => {
-      const vals = items
-        .map((i) => i[keyName]?.[t])
-        .filter((v) => v !== undefined);
+      timePeriods.forEach((t) => {
+        const vals = items
+          .map((i) => i[keyName as keyof typeof i]?.[t])
+          .filter((v) => v !== undefined) as number[];
 
-      if (vals.length > 0) {
-        categoryStats[cat.categoryName][t] = {
-          min: Math.min(...vals),
-          max: Math.max(...vals),
+        if (vals.length > 0) {
+          categoryStats[cat.categoryName][t] = {
+            min: Math.min(...vals),
+            max: Math.max(...vals),
+          };
+        }
+      });
+
+      // Clean up items dictionary to save bandwidth by removing stripped dates
+      const cleanedItems = items.map((i) => {
+        const yieldRecord = i[keyName as keyof typeof i] as Record<
+          string,
+          number
+        >;
+        const filteredYields: Record<string, number> = {};
+
+        if (yieldRecord) {
+          timePeriods.forEach((t) => {
+            if (yieldRecord[t] !== undefined)
+              filteredYields[t] = yieldRecord[t];
+          });
+        }
+
+        return {
+          ...i,
+          [keyName]: filteredYields,
         };
-      }
-    });
+      });
 
-    return {
-      categoryName: cat.categoryName,
-      items,
-    };
-  });
+      return {
+        categoryName: cat.categoryName,
+        items: cleanedItems,
+      };
+    });
 
   return {
     data,

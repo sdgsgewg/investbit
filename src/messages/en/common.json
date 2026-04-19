@@ -12,7 +12,9 @@
   "states": {
     "creating": "Creating...",
     "updating": "Updating...",
-    "emptyData": "No data available. Use the daily input tab to add records."
+    "emptyData": "No data available. Use the daily input tab to add records.",
+    "loadOlderData": "Load Older Data...",
+    "loading": "Loading..."
   },
 
   "ui": {

@@ -14,9 +14,17 @@ import PerformanceAnalyticsSection from "@/features/reksadana/recap/performance/
 export default function PerformancePage() {
   const [viewMode, setViewMode] = useState<TimeFrameType>("weekly");
   const [sortOrder, setSortOrder] = useState<SortOrderType>("desc");
-
-  const { data, timePeriods, loading, fetching, form, setForm, getCellColor } =
-    usePerformanceData({ timeFrame: viewMode });
+  const performanceData = usePerformanceData({ timeFrame: viewMode });
+  const {
+    data,
+    timePeriods,
+    loading,
+    fetching,
+    form,
+    setForm,
+    getCellColor,
+    loadMorePeriods,
+  } = performanceData;
 
   const handleChangeViewMode = (viewMode: TimeFrameType) => {
     setViewMode(viewMode);
@@ -55,6 +63,7 @@ export default function PerformancePage() {
       {/* DETAILED DATA SECTION */}
       <PerformanceSectionWrapper>
         <PerformanceAnalyticsSection
+          key={viewMode}
           data={data}
           timePeriods={timePeriods}
           loading={loading}
@@ -64,6 +73,7 @@ export default function PerformancePage() {
           columnKey={columnKey}
           onChangeSortOrder={handleChangeSortOrder}
           getCellColor={getCellColor}
+          loadMorePeriods={loadMorePeriods}
         />
       </PerformanceSectionWrapper>
     </div>
