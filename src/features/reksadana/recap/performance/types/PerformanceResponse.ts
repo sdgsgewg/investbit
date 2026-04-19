@@ -5,4 +5,5 @@ export type PerformanceResponse = {
   data: PerformanceData;
   timePeriods: string[];
   categoryStats: CategoryStats;
+  hasMoreOlder: boolean;
 };

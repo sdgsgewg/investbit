@@ -24,9 +24,13 @@ export default function PerformancePage() {
     setForm,
     getCellColor,
     loadMorePeriods,
+    hasMoreOlder,
+    hasLoadedOlder,
+    resetToLatestPeriods,
   } = performanceData;
 
   const handleChangeViewMode = (viewMode: TimeFrameType) => {
+    resetToLatestPeriods();
     setViewMode(viewMode);
   };
 
@@ -74,6 +78,9 @@ export default function PerformancePage() {
           onChangeSortOrder={handleChangeSortOrder}
           getCellColor={getCellColor}
           loadMorePeriods={loadMorePeriods}
+          hasMoreOlder={hasMoreOlder}
+          hasLoadedOlder={hasLoadedOlder}
+          resetToLatestPeriods={resetToLatestPeriods}
         />
       </PerformanceSectionWrapper>
     </div>

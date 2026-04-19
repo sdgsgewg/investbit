@@ -28,15 +28,20 @@ interface UsePerformanceDataReturn {
     timeKey: string,
   ) => string;
   periodLimit: number;
+  hasMoreOlder: boolean;
+  hasLoadedOlder: boolean;
   loadMorePeriods: () => void;
+  resetToLatestPeriods: () => void;
 }
+
+const DEFAULT_PERIOD_LIMIT = 10;
 
 export const usePerformanceData = ({
   timeFrame,
   initialForm = { category_id: "" },
 }: UsePerformanceDataProps): UsePerformanceDataReturn => {
-  const [form, setForm] = useState<FilterPerformance>(initialForm);
-  const [periodLimit, setPeriodLimit] = useState(10);
+  const [form, setRawForm] = useState<FilterPerformance>(initialForm);
+  const [periodLimit, setPeriodLimit] = useState(DEFAULT_PERIOD_LIMIT);
 
   const { data, isLoading, isFetching } = useQuery<PerformanceResponse>({
     queryKey: queryKeys.performance({
@@ -75,6 +80,17 @@ export const usePerformanceData = ({
     }
   };
 
+  const resetToLatestPeriods = () => {
+    setPeriodLimit(DEFAULT_PERIOD_LIMIT);
+  };
+
+  const setForm: React.Dispatch<React.SetStateAction<FilterPerformance>> = (
+    value,
+  ) => {
+    resetToLatestPeriods();
+    setRawForm(value);
+  };
+
   return {
     data: data?.data ?? [],
     timePeriods: data?.timePeriods ?? [],
@@ -85,10 +101,13 @@ export const usePerformanceData = ({
     setForm,
     getCellColor,
     periodLimit,
+    hasMoreOlder: data?.hasMoreOlder ?? false,
+    hasLoadedOlder: periodLimit > DEFAULT_PERIOD_LIMIT,
     loadMorePeriods: () => {
       if (!isFetching) {
         setPeriodLimit((prev) => prev + 10);
       }
     },
+    resetToLatestPeriods,
   };
 };

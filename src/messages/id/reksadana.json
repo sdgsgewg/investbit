@@ -99,6 +99,12 @@
           "oldestToLatest": "Terlama hingga Terbaru",
           "latestToOldest": "Terbaru hingga Terlama"
         },
+        "actions": {
+          "showLatestTen": "Tampilkan 10 Terbaru"
+        },
+        "states": {
+          "allAvailableDataShown": "Semua data yang tersedia sudah ditampilkan."
+        },
         "table": {
           "mutualFund": "Reksa Dana"
         },

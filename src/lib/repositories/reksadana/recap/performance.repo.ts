@@ -104,7 +104,7 @@ export async function getPerformanceRepo(params: {
     if (startDate) {
       query = query
         .gte("date", formatISO(startDate, { representation: "date" }))
-        .lte("date", formatISO(now, { representation: "date" })); // 🔥 penting
+        .lte("date", formatISO(now, { representation: "date" }));
     }
 
     const { data: queryData, error } = await query;
@@ -124,17 +124,13 @@ export async function getPerformanceRepo(params: {
   }
 
   // helper
-  const getWeekInfo = (dateStr: string) => {
-    const d = new Date(dateStr);
-    const year = d.getFullYear();
-    const month = d.getMonth();
+  const isWeekend = (date: Date) => {
+    const day = date.getDay();
+    return day === 0 || day === 6;
+  };
 
-    const isWeekend = (date: Date) => {
-      const day = date.getDay();
-      return day === 0 || day === 6;
-    };
-
-    let current = new Date(year, month, 1);
+  const getMonthWeeks = (year: number, month: number) => {
+    const current = new Date(year, month, 1);
     const lastDay = new Date(year, month + 1, 0);
 
     let week = 1;
@@ -165,7 +161,16 @@ export async function getPerformanceRepo(params: {
       current.setDate(current.getDate() + 1);
     }
 
-    current = new Date(year, month, 1);
+    return weeks;
+  };
+
+  const getWeekInfo = (dateStr: string) => {
+    const d = new Date(dateStr);
+    const year = d.getFullYear();
+    const month = d.getMonth();
+    const weeks = getMonthWeeks(year, month);
+
+    const current = new Date(year, month, 1);
     let targetWeek = 1;
     let seenValidDay = false;
 
@@ -270,12 +275,75 @@ export async function getPerformanceRepo(params: {
     return new Date(key).getTime();
   };
 
+  const getPeriodStartDate = (period: string) => {
+    if (params.timeFrame === "daily") {
+      const date = new Date(period);
+      return isNaN(date.getTime()) ? null : date;
+    }
+
+    if (params.timeFrame === "weekly") {
+      const [yearMonth, weekPart] = period.split("-W");
+      const [weekStr] = weekPart.split("|");
+      const [year, month] = yearMonth.split("-");
+      const weeks = getMonthWeeks(Number(year), Number(month) - 1);
+
+      return weeks[Number(weekStr)]?.start ?? null;
+    }
+
+    if (params.timeFrame === "monthly") {
+      const date = startOfMonth(new Date(period));
+      return isNaN(date.getTime()) ? null : date;
+    }
+
+    if (params.timeFrame === "ytd" || params.timeFrame === "yearly") {
+      const year = Number(period);
+      if (isNaN(year)) return null;
+
+      return new Date(year, 0, 1);
+    }
+
+    return null;
+  };
+
   let timePeriods = Array.from(timeSet).sort(
     (a, b) => parseKeyDate(a) - parseKeyDate(b),
   );
 
   if (params.periodLimit && params.periodLimit > 0) {
     timePeriods = timePeriods.slice(-params.periodLimit);
+  }
+
+  let hasMoreOlder = false;
+  const oldestVisiblePeriod = timePeriods[0];
+  const oldestVisiblePeriodStart = oldestVisiblePeriod
+    ? getPeriodStartDate(oldestVisiblePeriod)
+    : null;
+
+  if (oldestVisiblePeriodStart) {
+    let olderDataQuery = supabase
+      .from("rd_records")
+      .select(
+        `
+        id,
+        date,
+        rd_items (
+          category_id
+        )
+      `,
+      )
+      .lt("date", formatISO(oldestVisiblePeriodStart, { representation: "date" }))
+      .order("date", { ascending: false })
+      .limit(1);
+
+    if (params.categoryId) {
+      olderDataQuery = olderDataQuery.eq("rd_items.category_id", params.categoryId);
+    }
+
+    const { data: olderData, error: olderDataError } = await olderDataQuery;
+
+    if (olderDataError) throw olderDataError;
+
+    hasMoreOlder = (olderData?.length ?? 0) > 0;
   }
 
   // stats
@@ -334,5 +402,6 @@ export async function getPerformanceRepo(params: {
     data,
     timePeriods,
     categoryStats,
+    hasMoreOlder,
   };
 }

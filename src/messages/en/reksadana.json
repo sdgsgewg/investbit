@@ -98,6 +98,12 @@
           "oldestToLatest": "Oldest to Latest",
           "latestToOldest": "Latest to Oldest"
         },
+        "actions": {
+          "showLatestTen": "Show Latest 10"
+        },
+        "states": {
+          "allAvailableDataShown": "All available data is currently shown."
+        },
         "table": {
           "mutualFund": "Mutual Fund"
         },
