@@ -1,6 +1,5 @@
 "use client";
 
-import Loading from "@/components/feedback/Loading";
 import { CrudPage } from "@/components/templates/CrudPage";
 import { useCategoryData } from "@/features/reksadana/categories/hooks/useCategoryData";
 import { useItemData } from "@/features/reksadana/items/hooks/useItemData";
@@ -24,8 +23,6 @@ export default function ItemsManagementPage() {
     resetForm,
   } = useItemData();
   const { categories } = useCategoryData();
-
-  if (loading) return <Loading />;
 
   return (
     <CrudPage
@@ -60,6 +57,7 @@ export default function ItemsManagementPage() {
       isSubmitting={isSubmitting}
       buttonText={buttonText}
       resetForm={resetForm}
+      loading={loading}
     />
   );
 }

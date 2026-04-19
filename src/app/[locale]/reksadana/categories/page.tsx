@@ -1,6 +1,5 @@
 "use client";
 
-import Loading from "@/components/feedback/Loading";
 import { CrudPage } from "@/components/templates/CrudPage";
 import { useCategoryData } from "@/features/reksadana/categories/hooks/useCategoryData";
 import { useTranslations } from "next-intl";
@@ -22,8 +21,6 @@ export default function CategoriesManagementPage() {
     handleDelete,
     resetForm,
   } = useCategoryData();
-
-  if (loading) return <Loading />;
 
   return (
     <CrudPage
@@ -48,6 +45,7 @@ export default function CategoriesManagementPage() {
       isSubmitting={isSubmitting}
       buttonText={buttonText}
       resetForm={resetForm}
+      loading={loading}
     />
   );
 }
