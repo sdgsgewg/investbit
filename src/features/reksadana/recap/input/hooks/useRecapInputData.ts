@@ -78,6 +78,8 @@ export const useRecapInputData = (): UseRecapInputDataReturn => {
   });
 
   // 3. Sync records → inputs
+  const { formatDecimal } = useNumberFormatter();
+
   const mappedInputs = useMemo(() => {
     if (!recordsData) return {};
 
@@ -85,13 +87,15 @@ export const useRecapInputData = (): UseRecapInputDataReturn => {
 
     recordsData.forEach((record) => {
       result[record.item_id] = {
-        yield_1d: record.yield_1d !== null ? String(record.yield_1d) : "",
-        yield_ytd: record.yield_ytd !== null ? String(record.yield_ytd) : "",
+        yield_1d:
+          record.yield_1d !== null ? formatDecimal(record.yield_1d) : "",
+        yield_ytd:
+          record.yield_ytd !== null ? formatDecimal(record.yield_ytd) : "",
       };
     });
 
     return result;
-  }, [recordsData]);
+  }, [recordsData, formatDecimal]);
 
   const inputs = useMemo(() => {
     const result: YieldInputByItemId = { ...mappedInputs };

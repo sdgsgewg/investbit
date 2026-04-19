@@ -4,20 +4,20 @@ export const parseNumber = (
 ): number | null => {
   if (!val) return null;
 
-  let normalized = val;
+  let normalized = val.trim();
 
-  if (locale === "id-ID") {
-    normalized = val
+  // detect jika pakai titik sebagai decimal (case: 0.29)
+  const isDotDecimal = /^\d+\.\d+$/.test(normalized);
+
+  if (locale === "id-ID" && !isDotDecimal) {
+    normalized = normalized
       .replace(/\./g, "") // thousand
       .replace(",", "."); // decimal
   } else {
-    // en-US
-    normalized = val.replace(/,/g, ""); // thousand
-    // dot stays decimal
+    normalized = normalized.replace(/,/g, "");
   }
 
   const parsed = Number(normalized);
-
   return isNaN(parsed) ? null : parsed;
 };
 
