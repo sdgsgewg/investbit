@@ -56,6 +56,7 @@ export const DatePicker: React.FC<DatePickerProps> = ({
         <Calendar
           mode="single"
           selected={value}
+          defaultMonth={value ?? new Date()}
           onSelect={(date) => {
             onChange?.(date);
 
