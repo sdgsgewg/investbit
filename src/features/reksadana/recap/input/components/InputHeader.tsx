@@ -4,6 +4,7 @@ import { cn } from "@/lib/utils";
 import { useTranslations } from "next-intl";
 import { DatePicker } from "@/components/ui/DatePicker";
 import { safeFormatDate } from "@/lib/utils/date";
+import { Button } from "@/components/ui/button";
 
 interface InputHeaderProps {
   draftDate: string;
@@ -57,18 +58,14 @@ const InputHeader = ({
 
       {/* Save */}
       <div className="flex items-start md:items-end">
-        <button
+        <Button
+          variant="default"
+          size="lg"
           onClick={onSave}
           disabled={saving || !canSave}
-          className={cn(
-            "font-semibold py-2 px-6 rounded transition text-white",
-            saving || !canSave
-              ? "bg-green-400 dark:bg-green-800 cursor-not-allowed opacity-50"
-              : "bg-green-600 hover:bg-green-700 active:scale-95",
-          )}
         >
           {saving ? tRecapInput("form.saving") : tRecapInput("form.save")}
-        </button>
+        </Button>
       </div>
     </div>
   );

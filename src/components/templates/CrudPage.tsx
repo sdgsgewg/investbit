@@ -4,6 +4,7 @@ import { cn } from "@/lib/utils";
 import InputDropdown from "../ui/InputDropdown";
 import InputText from "../ui/InputText";
 import TableSkeleton from "../ui/TableSkeleton";
+import { Button } from "../ui/button";
 
 type FieldType = "text" | "select";
 
@@ -132,23 +133,26 @@ const CrudPageForm = ({
           })}
 
           <div className="flex gap-3 pt-4 border-t border-border/50">
-            <button
+            <Button
+              variant="default"
+              size="lg"
               onClick={onSubmit}
               disabled={isSubmitting || !canSubmit()}
-              className="flex-1 flex items-center justify-center gap-2 bg-primary hover:bg-primary/90 text-primary-foreground font-semibold h-10 px-4 rounded-xl transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-sm cursor-pointer"
+              className="flex-1"
             >
               <Save className="w-4 h-4" />
               {buttonText}
-            </button>
+            </Button>
 
             {isEditing && (
-              <button
+              <Button
+                variant="muted"
+                size="lg"
                 onClick={resetForm}
-                className="flex items-center justify-center gap-2 bg-muted hover:bg-muted/80 text-foreground font-medium h-10 px-4 rounded-xl transition-all cursor-pointer"
                 title={tCommonActions("cancel")}
               >
                 <X className="w-4 h-4" />
-              </button>
+              </Button>
             )}
           </div>
         </div>
