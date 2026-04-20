@@ -257,10 +257,17 @@ export async function getPerformanceRepo(params: {
 
     timeSet.add(key);
 
-    const val = r.yield_1d || 0;
-
     const container = grouped[cat].items[item.id][keyName];
-    const existing = container[key] || 0;
+
+    if (params.timeFrame === "ytd") {
+      // Records are sorted ascending by date, so the last assignment per year
+      // becomes the latest available YTD value for that item.
+      container[key] = r.yield_ytd ?? 0;
+      return;
+    }
+
+    const val = r.yield_1d ?? 0;
+    const existing = container[key] ?? 0;
 
     container[key] = params.timeFrame === "daily" ? val : existing + val;
   });

@@ -31,7 +31,7 @@ export type YtdPerformanceAggregatedData = {
   items: {
     itemId: string;
     itemName: string;
-    ytdYields: Record<string, number>; // year: sum yield_ytd
+    ytdYields: Record<string, number>; // year: latest yield_ytd
   }[];
 };
 
