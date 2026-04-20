@@ -39,7 +39,8 @@
     "connectionIssue": {
       "title": "Your internet connection looks unstable",
       "description": "We couldn't load the data. Please check your connection and try again.",
-      "saveFailed": "We couldn't save the data because the internet connection looks unstable. Please try again once it recovers."
+      "saveFailed": "We couldn't save the data because the internet connection looks unstable. Please try again once it recovers.",
+      "actionFailed": "We couldn't complete the action because the internet connection looks unstable. Please try again once it recovers."
     }
   }
 }

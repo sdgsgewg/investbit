@@ -1,3 +1,4 @@
+import type { Dispatch, ReactNode, SetStateAction } from "react";
 import { useTranslations } from "next-intl";
 import { Edit2, Trash2, Plus, Save, X, Database } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -21,22 +22,31 @@ type Column = {
   label: string;
 };
 
-type CrudPageProps = {
+type CrudRow = {
+  id: string;
+  name?: string;
+  [key: string]: unknown;
+};
+
+type CrudForm = Record<string, string>;
+
+type CrudPageProps<TData extends CrudRow, TForm extends CrudForm> = {
   title: string;
   formFields: FormField[];
   columns: Column[];
-  data: any[];
-  form: any;
-  setForm: (val: any) => void;
+  data: TData[];
+  form: TForm;
+  setForm: Dispatch<SetStateAction<TForm>>;
   canSubmit: () => boolean;
   onSubmit: () => void;
-  onEdit: (item: any) => void;
-  onDelete: (item: any) => void;
+  onEdit: (item: TData) => void;
+  onDelete: (item: TData) => void;
   isEditing: boolean;
   isSubmitting: boolean;
   buttonText: string;
   resetForm: () => void;
   loading?: boolean;
+  headerContent?: ReactNode;
 };
 
 const CrudPageHeader = ({ title }: { title: string }) => {
@@ -63,7 +73,7 @@ const CrudPageForm = ({
   canSubmit,
   onSubmit,
 }: Pick<
-  CrudPageProps,
+  CrudPageProps<CrudRow, CrudForm>,
   | "formFields"
   | "form"
   | "setForm"
@@ -166,12 +176,33 @@ const CrudPageTable = ({
   data,
   onEdit,
   onDelete,
-}: Pick<CrudPageProps, "columns" | "data" | "onEdit" | "onDelete">) => {
+}: Pick<
+  CrudPageProps<CrudRow, CrudForm>,
+  "columns" | "data" | "onEdit" | "onDelete"
+>) => {
   const tCommonTable = useTranslations("common.table");
   const tCommonActions = useTranslations("common.actions");
 
-  const getValue = (obj: any, path: string) => {
-    return path.split(".").reduce((acc, key) => acc?.[key], obj);
+  const getValue = (obj: CrudRow, path: string): ReactNode | null => {
+    const value = path.split(".").reduce<unknown>((acc, key) => {
+      if (!acc || typeof acc !== "object") return undefined;
+
+      return (acc as Record<string, unknown>)[key];
+    }, obj);
+
+    if (value === null || value === undefined || value === "") {
+      return null;
+    }
+
+    if (
+      typeof value === "string" ||
+      typeof value === "number" ||
+      typeof value === "boolean"
+    ) {
+      return String(value);
+    }
+
+    return null;
   };
 
   const unableDeleteCategories = [
@@ -229,7 +260,7 @@ const CrudPageTable = ({
                           index === 0 && "font-medium text-foreground",
                         )}
                       >
-                        {getValue(item, col.key) || (
+                        {getValue(item, col.key) ?? (
                           <span className="text-muted-foreground italic">
                             -
                           </span>
@@ -246,8 +277,9 @@ const CrudPageTable = ({
                         >
                           <Edit2 className="w-4 h-4" />
                         </button>
-                        {!unableDeleteCategories.includes(
-                          item.name.toLowerCase(),
+                        {!(
+                          typeof item.name === "string" &&
+                          unableDeleteCategories.includes(item.name.toLowerCase())
                         ) && (
                           <button
                             onClick={() => onDelete(item)}
@@ -284,7 +316,9 @@ const CrudPageTable = ({
   );
 };
 
-export function CrudPage(props: CrudPageProps) {
+export function CrudPage<TData extends CrudRow, TForm extends CrudForm>(
+  props: CrudPageProps<TData, TForm>,
+) {
   const {
     title,
     formFields,
@@ -301,18 +335,20 @@ export function CrudPage(props: CrudPageProps) {
     buttonText,
     resetForm,
     loading,
+    headerContent,
   } = props;
 
   return (
     <div className="space-y-8">
       <CrudPageHeader title={title} />
+      {headerContent}
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
         {/* FORM SECTION */}
         <CrudPageForm
           formFields={formFields}
-          form={form}
-          setForm={setForm}
+          form={form as CrudForm}
+          setForm={setForm as Dispatch<SetStateAction<CrudForm>>}
           isEditing={isEditing}
           isSubmitting={isSubmitting}
           buttonText={buttonText}
@@ -328,10 +364,10 @@ export function CrudPage(props: CrudPageProps) {
           </div>
         ) : (
           <CrudPageTable
-            data={data}
+            data={data as CrudRow[]}
             columns={columns}
-            onEdit={onEdit}
-            onDelete={onDelete}
+            onEdit={onEdit as (item: CrudRow) => void}
+            onDelete={onDelete as (item: CrudRow) => void}
           />
         )}
       </div>

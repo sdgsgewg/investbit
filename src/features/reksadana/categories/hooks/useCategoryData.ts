@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import axios from "axios";
 import { queryKeys } from "@/lib/react-query/queryKeys";
 import {
   createCategory,
@@ -11,10 +12,12 @@ import {
 import { queryConfig } from "@/lib/react-query/queryConfig";
 import { CategoryData } from "@/features/reksadana/categories/types/CategoryData";
 import { UpsertCategory } from "@/features/reksadana/categories/types/UpsertCategory";
+import { isLikelyConnectionError } from "@/lib/utils/error";
 
 interface UseCategoryDataReturn {
   categories: CategoryData[];
   loading: boolean;
+  retrying: boolean;
   isEditing: boolean;
   buttonText: string;
   isSubmitting: boolean;
@@ -25,16 +28,28 @@ interface UseCategoryDataReturn {
   handleEdit: (item: CategoryData) => void;
   handleDelete: (item: CategoryData) => Promise<void>;
   resetForm: () => void;
+  loadError: unknown | null;
+  retryLoad: () => void;
 }
 
 export const useCategoryData = (): UseCategoryDataReturn => {
   const tCategories = useTranslations("reksadana.categories");
   const tCommonActions = useTranslations("common.actions");
   const tCommonStates = useTranslations("common.states");
+  const tCommon = useTranslations("common");
 
   const queryClient = useQueryClient();
+  const hasDuplicateError = (error: unknown) =>
+    axios.isAxiosError<{ error?: string }>(error) &&
+    error.response?.data?.error?.includes("exists");
 
-  const { data: categories = [], isLoading: isLoadingCategories } = useQuery({
+  const {
+    data: categories = [],
+    isLoading: isLoadingCategories,
+    isRefetching,
+    error,
+    refetch,
+  } = useQuery({
     queryKey: queryKeys.categories(),
     queryFn: fetchCategories,
     ...queryConfig,
@@ -67,8 +82,10 @@ export const useCategoryData = (): UseCategoryDataReturn => {
       alert(`${tCategories("form.success.add")} ${form.name}`);
       resetForm();
     },
-    onError: (error: any) => {
-      if (error.response?.data?.error?.includes("exists")) {
+    onError: (error: unknown) => {
+      if (isLikelyConnectionError(error)) {
+        alert(tCommon("feedback.connectionIssue.actionFailed"));
+      } else if (hasDuplicateError(error)) {
         alert(`${tCategories("form.errors.add.duplicate")}`);
       } else {
         alert(`${tCategories("form.errors.add.failed")}`);
@@ -84,8 +101,10 @@ export const useCategoryData = (): UseCategoryDataReturn => {
       alert(`${tCategories("form.success.edit")} ${form.name}`);
       resetForm();
     },
-    onError: (error: any) => {
-      if (error.response?.data?.error?.includes("exists")) {
+    onError: (error: unknown) => {
+      if (isLikelyConnectionError(error)) {
+        alert(tCommon("feedback.connectionIssue.actionFailed"));
+      } else if (hasDuplicateError(error)) {
         alert(`${tCategories("form.errors.edit.duplicate")}`);
       } else {
         alert(`${tCategories("form.errors.edit.failed")}`);
@@ -99,8 +118,12 @@ export const useCategoryData = (): UseCategoryDataReturn => {
       queryClient.invalidateQueries({ queryKey: queryKeys.categories() });
       alert(`${tCategories("form.success.delete")} ${variables.name}`);
     },
-    onError: () => {
-      alert(`${tCategories("form.errors.delete.failed")}`);
+    onError: (error) => {
+      alert(
+        isLikelyConnectionError(error)
+          ? tCommon("feedback.connectionIssue.actionFailed")
+          : `${tCategories("form.errors.delete.failed")}`,
+      );
     },
   });
 
@@ -161,6 +184,7 @@ export const useCategoryData = (): UseCategoryDataReturn => {
   return {
     categories,
     loading: isLoadingCategories,
+    retrying: isRefetching,
     isEditing,
     buttonText,
     isSubmitting,
@@ -171,5 +195,9 @@ export const useCategoryData = (): UseCategoryDataReturn => {
     handleEdit,
     handleDelete,
     resetForm,
+    loadError: error ?? null,
+    retryLoad: () => {
+      void refetch();
+    },
   };
 };

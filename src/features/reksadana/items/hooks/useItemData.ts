@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import axios from "axios";
 import { queryKeys } from "@/lib/react-query/queryKeys";
 import { queryConfig } from "@/lib/react-query/queryConfig";
 import {
@@ -11,10 +12,12 @@ import {
 } from "@/lib/api/reksadana";
 import { ItemData } from "@/features/reksadana/items/types/ItemData";
 import { UpsertItem } from "@/features/reksadana/items/types/UpsertItem";
+import { isLikelyConnectionError } from "@/lib/utils/error";
 
 interface UseItemDataReturn {
   items: ItemData[];
   loading: boolean;
+  retrying: boolean;
   isEditing: boolean;
   buttonText: string;
   isSubmitting: boolean;
@@ -26,16 +29,28 @@ interface UseItemDataReturn {
   handleEdit: (item: ItemData) => void;
   handleDelete: (item: ItemData) => Promise<void>;
   resetForm: () => void;
+  loadError: unknown | null;
+  retryLoad: () => void;
 }
 
 export const useItemData = (): UseItemDataReturn => {
   const tItems = useTranslations("reksadana.items");
   const tCommonActions = useTranslations("common.actions");
   const tCommonStates = useTranslations("common.states");
+  const tCommon = useTranslations("common");
 
   const queryClient = useQueryClient();
+  const hasDuplicateError = (error: unknown) =>
+    axios.isAxiosError<{ error?: string }>(error) &&
+    error.response?.data?.error?.includes("exists");
 
-  const { data: items = [], isLoading: isLoadingItems } = useQuery({
+  const {
+    data: items = [],
+    isLoading: isLoadingItems,
+    isRefetching,
+    error,
+    refetch,
+  } = useQuery({
     queryKey: queryKeys.items(),
     queryFn: fetchItems,
     ...queryConfig,
@@ -72,8 +87,10 @@ export const useItemData = (): UseItemDataReturn => {
       alert(`${tItems("form.success.add")} ${form.name}`);
       resetForm();
     },
-    onError: (error: any) => {
-      if (error.response?.data?.error?.includes("exists")) {
+    onError: (error: unknown) => {
+      if (isLikelyConnectionError(error)) {
+        alert(tCommon("feedback.connectionIssue.actionFailed"));
+      } else if (hasDuplicateError(error)) {
         alert(`${tItems("form.errors.add.duplicate")}`);
       } else {
         alert(`${tItems("form.errors.add.failed")}`);
@@ -89,8 +106,10 @@ export const useItemData = (): UseItemDataReturn => {
       alert(`${tItems("form.success.edit")} ${form.name}`);
       resetForm();
     },
-    onError: (error: any) => {
-      if (error.response?.data?.error?.includes("exists")) {
+    onError: (error: unknown) => {
+      if (isLikelyConnectionError(error)) {
+        alert(tCommon("feedback.connectionIssue.actionFailed"));
+      } else if (hasDuplicateError(error)) {
         alert(`${tItems("form.errors.edit.duplicate")}`);
       } else {
         alert(`${tItems("form.errors.edit.failed")}`);
@@ -104,8 +123,12 @@ export const useItemData = (): UseItemDataReturn => {
       queryClient.invalidateQueries({ queryKey: queryKeys.items() });
       alert(`${tItems("form.success.delete")} ${variables.name}`);
     },
-    onError: () => {
-      alert(`${tItems("form.errors.delete.failed")}`);
+    onError: (error) => {
+      alert(
+        isLikelyConnectionError(error)
+          ? tCommon("feedback.connectionIssue.actionFailed")
+          : `${tItems("form.errors.delete.failed")}`,
+      );
     },
   });
 
@@ -168,6 +191,7 @@ export const useItemData = (): UseItemDataReturn => {
   return {
     items,
     loading: isLoadingItems,
+    retrying: isRefetching,
     isEditing,
     buttonText,
     isSubmitting,
@@ -179,5 +203,9 @@ export const useItemData = (): UseItemDataReturn => {
     handleEdit,
     handleDelete,
     resetForm,
+    loadError: error ?? null,
+    retryLoad: () => {
+      void refetch();
+    },
   };
 };

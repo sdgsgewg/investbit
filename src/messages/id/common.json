@@ -40,7 +40,8 @@
     "connectionIssue": {
       "title": "Koneksi internet tidak stabil",
       "description": "Data gagal dimuat. Periksa koneksi internet Anda lalu coba lagi.",
-      "saveFailed": "Gagal menyimpan data karena koneksi internet tidak stabil. Coba lagi setelah koneksi membaik."
+      "saveFailed": "Gagal menyimpan data karena koneksi internet tidak stabil. Coba lagi setelah koneksi membaik.",
+      "actionFailed": "Operasi gagal karena koneksi internet tidak stabil. Coba lagi setelah koneksi membaik."
     }
   }
 }

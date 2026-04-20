@@ -1,8 +1,10 @@
 "use client";
 
 import { CrudPage } from "@/components/templates/CrudPage";
+import ConnectionErrorAlert from "@/components/feedback/ConnectionErrorAlert";
 import { useCategoryData } from "@/features/reksadana/categories/hooks/useCategoryData";
 import { useItemData } from "@/features/reksadana/items/hooks/useItemData";
+import { isLikelyConnectionError } from "@/lib/utils/error";
 import { useTranslations } from "next-intl";
 
 export default function ItemsManagementPage() {
@@ -11,6 +13,7 @@ export default function ItemsManagementPage() {
   const {
     items,
     loading,
+    retrying,
     isEditing,
     buttonText,
     isSubmitting,
@@ -21,8 +24,18 @@ export default function ItemsManagementPage() {
     handleEdit,
     handleDelete,
     resetForm,
+    loadError,
+    retryLoad,
   } = useItemData();
-  const { categories } = useCategoryData();
+  const {
+    categories,
+    retrying: retryingCategories,
+    loadError: categoriesLoadError,
+    retryLoad: retryCategoriesLoad,
+  } = useCategoryData();
+
+  const combinedLoadError = loadError ?? categoriesLoadError;
+  const combinedRetrying = retrying || retryingCategories;
 
   return (
     <CrudPage
@@ -58,6 +71,17 @@ export default function ItemsManagementPage() {
       buttonText={buttonText}
       resetForm={resetForm}
       loading={loading}
+      headerContent={
+        isLikelyConnectionError(combinedLoadError) ? (
+          <ConnectionErrorAlert
+            onRetry={() => {
+              retryLoad();
+              retryCategoriesLoad();
+            }}
+            retrying={combinedRetrying}
+          />
+        ) : undefined
+      }
     />
   );
 }

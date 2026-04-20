@@ -1,7 +1,9 @@
 "use client";
 
 import { CrudPage } from "@/components/templates/CrudPage";
+import ConnectionErrorAlert from "@/components/feedback/ConnectionErrorAlert";
 import { useCategoryData } from "@/features/reksadana/categories/hooks/useCategoryData";
+import { isLikelyConnectionError } from "@/lib/utils/error";
 import { useTranslations } from "next-intl";
 
 export default function CategoriesManagementPage() {
@@ -10,6 +12,7 @@ export default function CategoriesManagementPage() {
   const {
     categories,
     loading,
+    retrying,
     isEditing,
     buttonText,
     isSubmitting,
@@ -20,6 +23,8 @@ export default function CategoriesManagementPage() {
     handleEdit,
     handleDelete,
     resetForm,
+    loadError,
+    retryLoad,
   } = useCategoryData();
 
   return (
@@ -46,6 +51,14 @@ export default function CategoriesManagementPage() {
       buttonText={buttonText}
       resetForm={resetForm}
       loading={loading}
+      headerContent={
+        isLikelyConnectionError(loadError) ? (
+          <ConnectionErrorAlert
+            onRetry={retryLoad}
+            retrying={retrying}
+          />
+        ) : undefined
+      }
     />
   );
 }
