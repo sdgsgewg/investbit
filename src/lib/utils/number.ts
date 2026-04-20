@@ -14,27 +14,30 @@ export const parseNumber = (
     );
   }
 
-  // handle negative
   const isNegative = normalized.startsWith("-");
   if (isNegative) normalized = normalized.slice(1);
 
-  if (locale === "id-ID") {
-    // detect dot decimal (misalnya: 0.29)
+  const hasDot = normalized.includes(".");
+  const hasComma = normalized.includes(",");
+
+  if (hasDot && hasComma) {
+    const lastDot = normalized.lastIndexOf(".");
+    const lastComma = normalized.lastIndexOf(",");
+    const decimalSeparator = lastDot > lastComma ? "." : ",";
+    const thousandSeparator = decimalSeparator === "." ? "," : ".";
+
+    normalized = normalized
+      .replace(new RegExp(`\\${thousandSeparator}`, "g"), "")
+      .replace(decimalSeparator, ".");
+  } else if (hasComma) {
+    // Be tolerant with decimal comma input in both locales.
+    normalized = normalized.replace(",", ".");
+  } else if (hasDot && locale === "id-ID") {
     const isDotDecimal = /^\d+\.\d+$/.test(normalized);
 
     if (!isDotDecimal) {
-      // format normal id-ID
-      // 1.234,56 → 1234.56
-      // 0,98 → 0.98
-      normalized = normalized
-        .replace(/\./g, "") // remove thousand
-        .replace(",", "."); // decimal → dot
+      normalized = normalized.replace(/\./g, "");
     }
-    // kalau dot decimal → skip (biarin 0.29 tetap 0.29)
-  } else {
-    // en-US
-    // 1,234.56 → 1234.56
-    normalized = normalized.replace(/,/g, "");
   }
 
   const parsed = Number(normalized);
