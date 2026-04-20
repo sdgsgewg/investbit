@@ -5,11 +5,13 @@ import { SortOrderType } from "@/features/reksadana/recap/performance/types/Sort
 import { TimeFrameType } from "@/features/reksadana/recap/performance/types/TimeFrameType";
 import { getPerformanceKey } from "@/lib/utils/reksadana/recap/performance";
 import TopProgressBar from "@/components/feedback/TopProgressBar";
+import ConnectionErrorAlert from "@/components/feedback/ConnectionErrorAlert";
 import { usePerformanceData } from "@/features/reksadana/recap/performance/hooks/usePerformanceData";
 import FilterPerformanceSection from "@/features/reksadana/recap/performance/components/filter/FilterPerformanceSection";
 import PerformanceSectionWrapper from "@/features/reksadana/recap/performance/components/PerformanceSectionWrapper";
 import TopPerformers from "@/features/reksadana/recap/performance/components/top-performers/TopPerformers";
 import PerformanceAnalyticsSection from "@/features/reksadana/recap/performance/components/analytics/PerformanceAnalyticsSection";
+import { isLikelyConnectionError } from "@/lib/utils/error";
 
 export default function PerformancePage() {
   const [viewMode, setViewMode] = useState<TimeFrameType>("weekly");
@@ -20,6 +22,7 @@ export default function PerformancePage() {
     timePeriods,
     loading,
     fetching,
+    retrying,
     form,
     setForm,
     getCellColor,
@@ -27,6 +30,8 @@ export default function PerformancePage() {
     hasMoreOlder,
     hasLoadedOlder,
     resetToLatestPeriods,
+    loadError,
+    retryLoad,
   } = performanceData;
 
   const handleChangeViewMode = (viewMode: TimeFrameType) => {
@@ -49,6 +54,10 @@ export default function PerformancePage() {
         onChangeViewMode={handleChangeViewMode}
         setForm={setForm}
       />
+
+      {isLikelyConnectionError(loadError) && (
+        <ConnectionErrorAlert onRetry={retryLoad} retrying={retrying} />
+      )}
 
       {fetching && <TopProgressBar />}
 

@@ -6,7 +6,8 @@
     "edit": "Edit",
     "delete": "Hapus",
     "cancel": "Batal",
-    "apply": "Terapkan"
+    "apply": "Terapkan",
+    "retry": "Coba Lagi"
   },
 
   "states": {
@@ -33,5 +34,13 @@
     "selectCategory": "Pilih Kategori:",
     "all": "Semua",
     "apply": "Terapkan"
+  },
+
+  "feedback": {
+    "connectionIssue": {
+      "title": "Koneksi internet tidak stabil",
+      "description": "Data gagal dimuat. Periksa koneksi internet Anda lalu coba lagi.",
+      "saveFailed": "Gagal menyimpan data karena koneksi internet tidak stabil. Coba lagi setelah koneksi membaik."
+    }
   }
 }

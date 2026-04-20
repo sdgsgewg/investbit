@@ -14,6 +14,7 @@ import { useTranslations } from "next-intl";
 import { CategoryWithItems } from "@/features/reksadana/recap/input/types/CategoryWithItems";
 import { useNumberFormatter } from "@/hooks/useNumberFormatter";
 import { getLastWorkingDay, safeFormatDate } from "@/lib/utils/date";
+import { isLikelyConnectionError } from "@/lib/utils/error";
 
 interface UseRecapInputDataReturn {
   categoriesWithItems: CategoryWithItems[];
@@ -37,10 +38,13 @@ interface UseRecapInputDataReturn {
   fetching: boolean;
   saving: boolean;
   canSave: boolean;
+  loadError: unknown | null;
+  retryLoad: () => void;
 }
 
 export const useRecapInputData = (): UseRecapInputDataReturn => {
   const tReksdanaRecapInput = useTranslations("reksadana.recap.input");
+  const tCommon = useTranslations("common");
 
   const queryClient = useQueryClient();
   const { parseNumber } = useNumberFormatter();
@@ -58,7 +62,12 @@ export const useRecapInputData = (): UseRecapInputDataReturn => {
   const [localInputs, setLocalInputs] = useState<YieldInputByItemId>({});
 
   // 1. Grouped by category items
-  const { data: categoriesWithItems = [], isLoading: isLoadingItems } =
+  const {
+    data: categoriesWithItems = [],
+    isLoading: isLoadingItems,
+    error: itemsError,
+    refetch: refetchItems,
+  } =
     useQuery({
       queryKey: queryKeys.categoriesWithItems(),
       queryFn: fetchCategoriesWithItems,
@@ -70,6 +79,8 @@ export const useRecapInputData = (): UseRecapInputDataReturn => {
     data: recordsData,
     isLoading: isLoadingRecords,
     isFetching,
+    error: recordsError,
+    refetch: refetchRecords,
   } = useQuery<RecordData[]>({
     queryKey: queryKeys.records(selectedDate),
     queryFn: () => fetchRecords(selectedDate),
@@ -174,7 +185,11 @@ export const useRecapInputData = (): UseRecapInputDataReturn => {
       });
     },
     onError: (error) => {
-      alert(tReksdanaRecapInput("form.errors.failed"));
+      alert(
+        isLikelyConnectionError(error)
+          ? tCommon("feedback.connectionIssue.saveFailed")
+          : tReksdanaRecapInput("form.errors.failed"),
+      );
     },
   });
 
@@ -245,5 +260,10 @@ export const useRecapInputData = (): UseRecapInputDataReturn => {
     fetching: isFetching,
     saving: mutation.isPending,
     canSave,
+    loadError: itemsError ?? recordsError ?? null,
+    retryLoad: () => {
+      void refetchItems();
+      void refetchRecords();
+    },
   };
 };

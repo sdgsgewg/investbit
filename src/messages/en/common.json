@@ -6,7 +6,8 @@
     "edit": "Edit",
     "delete": "Delete",
     "cancel": "Cancel",
-    "apply": "Apply"
+    "apply": "Apply",
+    "retry": "Retry"
   },
 
   "states": {
@@ -32,5 +33,13 @@
     "allCategory": "All Categories",
     "all": "All",
     "apply": "Apply"
+  },
+
+  "feedback": {
+    "connectionIssue": {
+      "title": "Your internet connection looks unstable",
+      "description": "We couldn't load the data. Please check your connection and try again.",
+      "saveFailed": "We couldn't save the data because the internet connection looks unstable. Please try again once it recovers."
+    }
   }
 }

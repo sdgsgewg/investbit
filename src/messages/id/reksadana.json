@@ -29,7 +29,7 @@
       "title": "Performa",
       "subtitle": "Performa",
       "loading": "Memuat data performa...",
-      "noData": "No data available. Use the daily input tab to add records.",
+      "noData": "Data tidak tersedia. Gunakan tab input harian untuk menambahkan data.",
 
       "timeframe": {
         "daily": {

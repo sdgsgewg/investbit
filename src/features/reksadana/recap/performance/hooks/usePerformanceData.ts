@@ -19,6 +19,7 @@ interface UsePerformanceDataReturn {
   timePeriods: string[];
   loading: boolean;
   fetching: boolean;
+  retrying: boolean;
   form: FilterPerformance;
   setForm: React.Dispatch<React.SetStateAction<FilterPerformance>>;
   categoryStats: CategoryStats;
@@ -32,6 +33,8 @@ interface UsePerformanceDataReturn {
   hasLoadedOlder: boolean;
   loadMorePeriods: () => void;
   resetToLatestPeriods: () => void;
+  loadError: unknown | null;
+  retryLoad: () => void;
 }
 
 const DEFAULT_PERIOD_LIMIT = 10;
@@ -43,7 +46,8 @@ export const usePerformanceData = ({
   const [form, setRawForm] = useState<FilterPerformance>(initialForm);
   const [periodLimit, setPeriodLimit] = useState(DEFAULT_PERIOD_LIMIT);
 
-  const { data, isLoading, isFetching } = useQuery<PerformanceResponse>({
+  const { data, isLoading, isFetching, isRefetching, error, refetch } =
+    useQuery<PerformanceResponse>({
     queryKey: queryKeys.performance({
       timeFrame,
       categoryId: form.category_id,
@@ -57,7 +61,7 @@ export const usePerformanceData = ({
       }),
     placeholderData: (prev) => prev ?? undefined,
     ...queryConfig,
-  });
+    });
 
   const getCellColor = (
     val: number | undefined,
@@ -97,6 +101,7 @@ export const usePerformanceData = ({
     categoryStats: data?.categoryStats ?? {},
     loading: isLoading,
     fetching: isFetching,
+    retrying: isRefetching,
     form,
     setForm,
     getCellColor,
@@ -109,5 +114,9 @@ export const usePerformanceData = ({
       }
     },
     resetToLatestPeriods,
+    loadError: error ?? null,
+    retryLoad: () => {
+      void refetch();
+    },
   };
 };

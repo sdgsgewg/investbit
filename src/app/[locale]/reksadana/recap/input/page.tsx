@@ -6,6 +6,8 @@ import { useRecapInputData } from "@/features/reksadana/recap/input/hooks/useRec
 import InputHeader from "@/features/reksadana/recap/input/components/InputHeader";
 import SkeletonTable from "@/features/reksadana/recap/input/components/SkeletonTable";
 import InputTable from "@/features/reksadana/recap/input/components/InputTable";
+import ConnectionErrorAlert from "@/components/feedback/ConnectionErrorAlert";
+import { isLikelyConnectionError } from "@/lib/utils/error";
 
 export default function InputPage() {
   const {
@@ -20,10 +22,12 @@ export default function InputPage() {
     fetching,
     saving,
     canSave,
+    loadError,
+    retryLoad,
   } = useRecapInputData();
 
   return (
-    <div className="bg-white dark:bg-zinc-900 rounded-lg p-6 shadow-sm">
+    <div className="bg-white dark:bg-zinc-900 rounded-lg p-6 shadow-sm space-y-6">
       <InputHeader
         draftDate={draftDate}
         onDraftDateChange={setDraftDate}
@@ -32,6 +36,12 @@ export default function InputPage() {
         saving={saving}
         canSave={canSave}
       />
+
+      {isLikelyConnectionError(loadError) && (
+        <div className="mt-4">
+          <ConnectionErrorAlert onRetry={retryLoad} retrying={fetching} />
+        </div>
+      )}
 
       {loading ? (
         <SkeletonTable />

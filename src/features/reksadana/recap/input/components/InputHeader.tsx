@@ -28,7 +28,7 @@ const InputHeader = ({
   const selectedDate = draftDate ? new Date(draftDate) : undefined;
 
   return (
-    <div className="flex flex-col md:flex-row justify-between mb-6 gap-4">
+    <div className="flex flex-col md:flex-row justify-between gap-4">
       <div className="flex flex-col gap-4">
         <h2 className="text-xl font-semibold">{tRecapInput("title")}</h2>
 
