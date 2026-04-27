@@ -7,6 +7,19 @@ export const queryKeys = {
 
   records: (date: string) => ["records", date] as const,
 
-  performance: (params: { timeFrame: string; categoryId?: string; periodLimit?: number; }) =>
-    ["performance", params.timeFrame, params.categoryId ?? "all", params.periodLimit?.toString() ?? "10"] as const,
+  performance: (params: {
+    timeFrame: string;
+    categoryId?: string;
+    periodLimit?: number;
+    startPeriod?: string;
+    endPeriod?: string;
+  }) =>
+    [
+      "performance",
+      params.timeFrame,
+      params.categoryId ?? "all",
+      params.periodLimit?.toString() ?? "10",
+      params.startPeriod ?? "",
+      params.endPeriod ?? "",
+    ] as const,
 };

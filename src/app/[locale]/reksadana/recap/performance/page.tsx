@@ -20,6 +20,7 @@ export default function PerformancePage() {
   const {
     data,
     timePeriods,
+    availablePeriods,
     loading,
     fetching,
     retrying,
@@ -29,7 +30,12 @@ export default function PerformancePage() {
     loadMorePeriods,
     hasMoreOlder,
     hasLoadedOlder,
+    isRangeMode,
+    selectedStartPeriod,
+    selectedEndPeriod,
     resetToLatestPeriods,
+    setStartPeriod,
+    setEndPeriod,
     loadError,
     retryLoad,
   } = performanceData;
@@ -79,6 +85,7 @@ export default function PerformancePage() {
           key={viewMode}
           data={data}
           timePeriods={timePeriods}
+          availablePeriods={availablePeriods}
           loading={loading}
           fetching={fetching}
           viewMode={viewMode}
@@ -89,7 +96,12 @@ export default function PerformancePage() {
           loadMorePeriods={loadMorePeriods}
           hasMoreOlder={hasMoreOlder}
           hasLoadedOlder={hasLoadedOlder}
+          isRangeMode={isRangeMode}
+          selectedStartPeriod={selectedStartPeriod}
+          selectedEndPeriod={selectedEndPeriod}
           resetToLatestPeriods={resetToLatestPeriods}
+          setStartPeriod={setStartPeriod}
+          setEndPeriod={setEndPeriod}
         />
       </PerformanceSectionWrapper>
     </div>

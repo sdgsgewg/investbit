@@ -99,7 +99,14 @@
           "latestToOldest": "Latest to Oldest"
         },
         "actions": {
-          "showLatestTen": "Show Latest 10"
+          "showLatestTen": "Show Latest 10",
+          "resetRange": "Reset Range"
+        },
+        "filters": {
+          "startPeriod": "Start Period",
+          "endPeriod": "End Period",
+          "startPlaceholder": "Select start period",
+          "endPlaceholder": "Select end period"
         },
         "states": {
           "allAvailableDataShown": "All available data is currently shown."

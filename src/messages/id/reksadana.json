@@ -100,7 +100,14 @@
           "latestToOldest": "Terbaru hingga Terlama"
         },
         "actions": {
-          "showLatestTen": "Tampilkan 10 Terbaru"
+          "showLatestTen": "Tampilkan 10 Terbaru",
+          "resetRange": "Reset Rentang"
+        },
+        "filters": {
+          "startPeriod": "Periode Awal",
+          "endPeriod": "Periode Akhir",
+          "startPlaceholder": "Pilih periode awal",
+          "endPlaceholder": "Pilih periode akhir"
         },
         "states": {
           "allAvailableDataShown": "Semua data yang tersedia sudah ditampilkan."

@@ -84,6 +84,8 @@ export const fetchPerformance = async (params: {
   timeFrame: string;
   categoryId?: string;
   periodLimit?: number;
+  startPeriod?: string;
+  endPeriod?: string;
 }) => {
   const { data } = await apiClient.get<PerformanceResponse>(
     "/reksadana/recap/performance",
@@ -91,7 +93,10 @@ export const fetchPerformance = async (params: {
       params: {
         timeFrame: params.timeFrame,
         categoryId: params.categoryId || undefined,
-        periodLimit: params.periodLimit,
+        periodLimit:
+          params.startPeriod || params.endPeriod ? undefined : params.periodLimit,
+        startPeriod: params.startPeriod || undefined,
+        endPeriod: params.endPeriod || undefined,
       },
     },
   );

@@ -1,14 +1,6 @@
 import { createClient } from "@/utils/supabase/server";
 import { cookies } from "next/headers";
-import {
-  format,
-  startOfMonth,
-  subDays,
-  subWeeks,
-  subMonths,
-  subYears,
-  formatISO,
-} from "date-fns";
+import { format, startOfMonth } from "date-fns";
 import { TimeFrameType } from "@/features/reksadana/recap/performance/types/TimeFrameType";
 import { getPerformanceKey } from "@/lib/utils/reksadana/recap/performance";
 import { RecordData } from "@/types/reksadana/records/RecordData";
@@ -42,31 +34,10 @@ export async function getPerformanceRepo(params: {
   timeFrame: TimeFrameType;
   categoryId?: string;
   periodLimit?: number;
+  startPeriod?: string;
+  endPeriod?: string;
 }) {
   const supabase = createClient(await cookies());
-
-  let startDate: Date | null = null;
-  const now = new Date();
-
-  if (params.periodLimit && params.periodLimit > 0) {
-    switch (params.timeFrame) {
-      case "daily":
-        startDate = subDays(now, Math.ceil(params.periodLimit * 1.5));
-        break;
-      case "weekly":
-        startDate = subWeeks(now, Math.ceil(params.periodLimit * 1.5));
-        break;
-      case "monthly":
-        startDate = subMonths(now, params.periodLimit + 1);
-        break;
-      case "ytd":
-        startDate = new Date(now.getFullYear() - params.periodLimit, 0, 1);
-        break;
-      case "yearly":
-        startDate = subYears(now, params.periodLimit + 1);
-        break;
-    }
-  }
 
   const records: RecordData[] = [];
   let hasMore = true;
@@ -101,12 +72,6 @@ export async function getPerformanceRepo(params: {
       query = query.eq("rd_items.category_id", params.categoryId);
     }
 
-    if (startDate) {
-      query = query
-        .gte("date", formatISO(startDate, { representation: "date" }))
-        .lte("date", formatISO(now, { representation: "date" }));
-    }
-
     const { data: queryData, error } = await query;
 
     if (error) throw error;
@@ -123,7 +88,6 @@ export async function getPerformanceRepo(params: {
     }
   }
 
-  // helper
   const isWeekend = (date: Date) => {
     const day = date.getDay();
     return day === 0 || day === 6;
@@ -177,10 +141,8 @@ export async function getPerformanceRepo(params: {
     while (current <= d) {
       if (!isWeekend(current)) {
         const day = current.getDay();
-        if (day === 1 && current.getDate() !== 1) {
-          if (seenValidDay) {
-            targetWeek++;
-          }
+        if (day === 1 && current.getDate() !== 1 && seenValidDay) {
+          targetWeek++;
         }
         seenValidDay = true;
       }
@@ -202,20 +164,32 @@ export async function getPerformanceRepo(params: {
 
     if (!start || !end) return "";
 
-    const range = `${format(start, "d")}–${format(end, "d MMM")}`;
+    const range = `${format(start, "d")}-${format(end, "d MMM")}`;
 
     return `${month}-W${week}|${range}`;
   };
 
+  const parseKeyDate = (key: string) => {
+    if (params.timeFrame === "weekly") {
+      const [yearMonth, weekPart] = key.split("-W");
+      const [weekStr] = weekPart.split("|");
+      return new Date(`${yearMonth}-01`).getTime() + Number(weekStr) * 1000;
+    }
+
+    if (params.timeFrame === "ytd" || params.timeFrame === "yearly") {
+      return new Date(Number(key), 0, 1).getTime();
+    }
+
+    return new Date(key).getTime();
+  };
+
   const grouped: GroupedType = {};
-
   const timeSet = new Set<string>();
-
   const keyName = getPerformanceKey(params.timeFrame);
 
   records.forEach((r) => {
     const item = r.rd_items;
-    if (!item || !item.rd_categories) return;
+    if (!item || !item.rd_categories || !r.date) return;
 
     const cat = item.rd_categories.name;
 
@@ -235,7 +209,6 @@ export async function getPerformanceRepo(params: {
     }
 
     let key = "";
-    if (!r.date) return;
 
     switch (params.timeFrame) {
       case "daily":
@@ -249,7 +222,7 @@ export async function getPerformanceRepo(params: {
         break;
       case "ytd":
       case "yearly":
-        key = r.date ? r.date.substring(0, 4) : "";
+        key = r.date.substring(0, 4);
         break;
     }
 
@@ -272,88 +245,36 @@ export async function getPerformanceRepo(params: {
     container[key] = params.timeFrame === "daily" ? val : existing + val;
   });
 
-  const parseKeyDate = (key: string) => {
-    if (params.timeFrame === "weekly") {
-      const [yearMonth, weekPart] = key.split("-W");
-      const [weekStr] = weekPart.split("|");
-      return new Date(`${yearMonth}-01`).getTime() + Number(weekStr) * 1000;
-    }
-
-    return new Date(key).getTime();
-  };
-
-  const getPeriodStartDate = (period: string) => {
-    if (params.timeFrame === "daily") {
-      const date = new Date(period);
-      return isNaN(date.getTime()) ? null : date;
-    }
-
-    if (params.timeFrame === "weekly") {
-      const [yearMonth, weekPart] = period.split("-W");
-      const [weekStr] = weekPart.split("|");
-      const [year, month] = yearMonth.split("-");
-      const weeks = getMonthWeeks(Number(year), Number(month) - 1);
-
-      return weeks[Number(weekStr)]?.start ?? null;
-    }
-
-    if (params.timeFrame === "monthly") {
-      const date = startOfMonth(new Date(period));
-      return isNaN(date.getTime()) ? null : date;
-    }
-
-    if (params.timeFrame === "ytd" || params.timeFrame === "yearly") {
-      const year = Number(period);
-      if (isNaN(year)) return null;
-
-      return new Date(year, 0, 1);
-    }
-
-    return null;
-  };
-
-  let timePeriods = Array.from(timeSet).sort(
+  const availablePeriods = Array.from(timeSet).sort(
     (a, b) => parseKeyDate(a) - parseKeyDate(b),
   );
 
-  if (params.periodLimit && params.periodLimit > 0) {
-    timePeriods = timePeriods.slice(-params.periodLimit);
+  const isRangeMode = Boolean(params.startPeriod || params.endPeriod);
+  const effectiveStartPeriod = params.startPeriod || availablePeriods[0] || "";
+  const effectiveEndPeriod =
+    params.endPeriod || availablePeriods[availablePeriods.length - 1] || "";
+
+  let timePeriods = availablePeriods;
+
+  if (isRangeMode && effectiveStartPeriod && effectiveEndPeriod) {
+    const startTimestamp = parseKeyDate(effectiveStartPeriod);
+    const endTimestamp = parseKeyDate(effectiveEndPeriod);
+    const rangeStart = Math.min(startTimestamp, endTimestamp);
+    const rangeEnd = Math.max(startTimestamp, endTimestamp);
+
+    timePeriods = availablePeriods.filter((period) => {
+      const periodTimestamp = parseKeyDate(period);
+      return periodTimestamp >= rangeStart && periodTimestamp <= rangeEnd;
+    });
+  } else if (params.periodLimit && params.periodLimit > 0) {
+    timePeriods = availablePeriods.slice(-params.periodLimit);
   }
 
-  let hasMoreOlder = false;
-  const oldestVisiblePeriod = timePeriods[0];
-  const oldestVisiblePeriodStart = oldestVisiblePeriod
-    ? getPeriodStartDate(oldestVisiblePeriod)
-    : null;
+  const hasMoreOlder =
+    !isRangeMode &&
+    availablePeriods.length > 0 &&
+    timePeriods.length < availablePeriods.length;
 
-  if (oldestVisiblePeriodStart) {
-    let olderDataQuery = supabase
-      .from("rd_records")
-      .select(
-        `
-        id,
-        date,
-        rd_items (
-          category_id
-        )
-      `,
-      )
-      .lt("date", formatISO(oldestVisiblePeriodStart, { representation: "date" }))
-      .order("date", { ascending: false })
-      .limit(1);
-
-    if (params.categoryId) {
-      olderDataQuery = olderDataQuery.eq("rd_items.category_id", params.categoryId);
-    }
-
-    const { data: olderData, error: olderDataError } = await olderDataQuery;
-
-    if (olderDataError) throw olderDataError;
-
-    hasMoreOlder = (olderData?.length ?? 0) > 0;
-  }
-
-  // stats
   const categoryStats: CategoryStats = {};
 
   const data = Object.values(grouped)
@@ -378,7 +299,6 @@ export async function getPerformanceRepo(params: {
         }
       });
 
-      // Clean up items dictionary to save bandwidth by removing stripped dates
       const cleanedItems = items.map((i) => {
         const yieldRecord = i[keyName as keyof typeof i] as Record<
           string,
@@ -388,8 +308,9 @@ export async function getPerformanceRepo(params: {
 
         if (yieldRecord) {
           timePeriods.forEach((t) => {
-            if (yieldRecord[t] !== undefined)
+            if (yieldRecord[t] !== undefined) {
               filteredYields[t] = yieldRecord[t];
+            }
           });
         }
 
@@ -408,6 +329,7 @@ export async function getPerformanceRepo(params: {
   return {
     data,
     timePeriods,
+    availablePeriods,
     categoryStats,
     hasMoreOlder,
   };

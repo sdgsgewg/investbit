@@ -17,6 +17,7 @@ interface UsePerformanceDataProps {
 interface UsePerformanceDataReturn {
   data: PerformanceData;
   timePeriods: string[];
+  availablePeriods: string[];
   loading: boolean;
   fetching: boolean;
   retrying: boolean;
@@ -31,8 +32,13 @@ interface UsePerformanceDataReturn {
   periodLimit: number;
   hasMoreOlder: boolean;
   hasLoadedOlder: boolean;
+  isRangeMode: boolean;
+  selectedStartPeriod: string;
+  selectedEndPeriod: string;
   loadMorePeriods: () => void;
   resetToLatestPeriods: () => void;
+  setStartPeriod: (period: string) => void;
+  setEndPeriod: (period: string) => void;
   loadError: unknown | null;
   retryLoad: () => void;
 }
@@ -45,22 +51,30 @@ export const usePerformanceData = ({
 }: UsePerformanceDataProps): UsePerformanceDataReturn => {
   const [form, setRawForm] = useState<FilterPerformance>(initialForm);
   const [periodLimit, setPeriodLimit] = useState(DEFAULT_PERIOD_LIMIT);
+  const [selectedStartPeriod, setSelectedStartPeriod] = useState("");
+  const [selectedEndPeriod, setSelectedEndPeriod] = useState("");
+
+  const isRangeMode = Boolean(selectedStartPeriod || selectedEndPeriod);
 
   const { data, isLoading, isFetching, isRefetching, error, refetch } =
     useQuery<PerformanceResponse>({
-    queryKey: queryKeys.performance({
-      timeFrame,
-      categoryId: form.category_id,
-      periodLimit,
-    }),
-    queryFn: () =>
-      fetchPerformance({
+      queryKey: queryKeys.performance({
         timeFrame,
         categoryId: form.category_id,
-        periodLimit,
+        periodLimit: isRangeMode ? undefined : periodLimit,
+        startPeriod: isRangeMode ? selectedStartPeriod || undefined : undefined,
+        endPeriod: isRangeMode ? selectedEndPeriod || undefined : undefined,
       }),
-    placeholderData: (prev) => prev ?? undefined,
-    ...queryConfig,
+      queryFn: () =>
+        fetchPerformance({
+          timeFrame,
+          categoryId: form.category_id,
+          periodLimit: isRangeMode ? undefined : periodLimit,
+          startPeriod: isRangeMode ? selectedStartPeriod || undefined : undefined,
+          endPeriod: isRangeMode ? selectedEndPeriod || undefined : undefined,
+        }),
+      placeholderData: (prev) => prev ?? undefined,
+      ...queryConfig,
     });
 
   const getCellColor = (
@@ -86,6 +100,8 @@ export const usePerformanceData = ({
 
   const resetToLatestPeriods = () => {
     setPeriodLimit(DEFAULT_PERIOD_LIMIT);
+    setSelectedStartPeriod("");
+    setSelectedEndPeriod("");
   };
 
   const setForm: React.Dispatch<React.SetStateAction<FilterPerformance>> = (
@@ -98,6 +114,7 @@ export const usePerformanceData = ({
   return {
     data: data?.data ?? [],
     timePeriods: data?.timePeriods ?? [],
+    availablePeriods: data?.availablePeriods ?? [],
     categoryStats: data?.categoryStats ?? {},
     loading: isLoading,
     fetching: isFetching,
@@ -107,13 +124,22 @@ export const usePerformanceData = ({
     getCellColor,
     periodLimit,
     hasMoreOlder: data?.hasMoreOlder ?? false,
-    hasLoadedOlder: periodLimit > DEFAULT_PERIOD_LIMIT,
+    hasLoadedOlder: !isRangeMode && periodLimit > DEFAULT_PERIOD_LIMIT,
+    isRangeMode,
+    selectedStartPeriod,
+    selectedEndPeriod,
     loadMorePeriods: () => {
-      if (!isFetching) {
+      if (!isFetching && !isRangeMode) {
         setPeriodLimit((prev) => prev + 10);
       }
     },
     resetToLatestPeriods,
+    setStartPeriod: (period: string) => {
+      setSelectedStartPeriod(period);
+    },
+    setEndPeriod: (period: string) => {
+      setSelectedEndPeriod(period);
+    },
     loadError: error ?? null,
     retryLoad: () => {
       void refetch();
