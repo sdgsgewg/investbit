@@ -3,6 +3,7 @@ import { useTranslations } from "next-intl";
 import { safeFormatDate } from "@/lib/utils/date";
 import { TimeFrameType } from "@/features/reksadana/recap/performance/types/TimeFrameType";
 import CategoryLeaderboardSkeleton from "./CategoryLeaderboardSkeleton";
+import { useNumberFormatter } from "@/hooks/useNumberFormatter";
 
 interface PerformanceItem {
   itemId: string;
@@ -55,6 +56,8 @@ const CategoryLeaderboard = ({
   const tWeekly = useTranslations(
     "reksadana.recap.performance.timeframe.weekly",
   );
+
+  const { formatPercent } = useNumberFormatter();
 
   const latestPeriod = timePeriods[timePeriods.length - 1];
 
@@ -134,7 +137,8 @@ const CategoryLeaderboard = ({
 
     if (rank === 1) return `${tone} ring-1 ring-amber-300 dark:ring-amber-700`;
     if (rank === 2) return `${tone} ring-1 ring-slate-300 dark:ring-slate-600`;
-    if (rank === 3) return `${tone} ring-1 ring-orange-300 dark:ring-orange-700`;
+    if (rank === 3)
+      return `${tone} ring-1 ring-orange-300 dark:ring-orange-700`;
     return tone;
   };
 
@@ -167,10 +171,6 @@ const CategoryLeaderboard = ({
     if (rank === 2) return <Medal className="h-4 w-4" />;
     if (rank === 3) return <Award className="h-4 w-4" />;
     return null;
-  };
-
-  const formatYield = (yieldVal: number) => {
-    return yieldVal >= 0 ? `+${yieldVal.toFixed(2)}%` : `${yieldVal.toFixed(2)}%`;
   };
 
   if (loading || fetching) {
@@ -220,7 +220,7 @@ const CategoryLeaderboard = ({
               </div>
             </div>
 
-            <div className="space-y-3">
+            <div className="max-h-60 overflow-y-auto space-y-2 sm:space-y-3">
               {category.rankedItems.map((item) => (
                 <div
                   key={item.itemId}
@@ -234,7 +234,7 @@ const CategoryLeaderboard = ({
                     </div>
 
                     <div className="min-w-0">
-                      <p className="truncate font-semibold text-zinc-900 dark:text-zinc-100">
+                      <p className="text-sm sm:text-base font-semibold text-zinc-900 dark:text-zinc-100">
                         {item.itemName}
                       </p>
                       <p className="text-xs uppercase tracking-wide text-zinc-500 dark:text-zinc-400">
@@ -246,7 +246,7 @@ const CategoryLeaderboard = ({
                   <span
                     className={`shrink-0 rounded-full px-3 py-1 text-sm font-bold ${getYieldClassName(item.yieldVal, item.rank)}`}
                   >
-                    {formatYield(item.yieldVal)}
+                    {formatPercent(item.yieldVal)}
                   </span>
                 </div>
               ))}

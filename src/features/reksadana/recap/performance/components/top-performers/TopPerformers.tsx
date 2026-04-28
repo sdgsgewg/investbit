@@ -239,7 +239,7 @@ const TopPerformers: React.FC<TopPerformersProps> = ({
                 {getPeriodDisplay()}
               </p>
 
-              <h4 className="text-2xl font-black text-gray-900 dark:text-white mb-1 leading-tight">
+              <h4 className="text-xl sm:text-2xl font-black text-gray-900 dark:text-white mb-1 leading-tight">
                 {overallBest.name}
               </h4>
               <p className="text-sm font-medium text-amber-700 dark:text-amber-400 bg-amber-200/50 dark:bg-amber-900/40 inline-block px-2 py-0.5 rounded-md">
@@ -248,7 +248,7 @@ const TopPerformers: React.FC<TopPerformersProps> = ({
             </div>
 
             <div className="mt-6 flex items-baseline gap-1">
-              <span className="text-3xl font-black text-green-600 dark:text-green-400">
+              <span className="text-2xl sm:text-3xl font-black text-green-600 dark:text-green-400">
                 {getModifiedBestYield(overallBest.yieldVal.toFixed(2))}
               </span>
               <span className="text-green-600 dark:text-green-500 font-semibold">
