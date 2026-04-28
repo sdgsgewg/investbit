@@ -54,7 +54,7 @@ const PerformanceTable: React.FC<PerformanceTableProps> = ({
     <TableWrapper
       headerChildren={
         <>
-          <th className="py-3 px-4 font-semibold w-64 sticky left-0 z-30 bg-zinc-100 dark:bg-zinc-800 border-r border-zinc-200 dark:border-zinc-700">
+          <th className="py-3 px-4 font-semibold min-w-40 lg:min-w-72 sticky left-0 z-30 bg-zinc-100 dark:bg-zinc-800 border-r border-zinc-200 dark:border-zinc-700">
             {tPerformanceAnalytics("table.mutualFund")}
           </th>
           {columns.map((col) => (
@@ -99,7 +99,7 @@ const PerformanceTable: React.FC<PerformanceTableProps> = ({
               {category.items.map((item) => (
                 <tr
                   key={item.itemId}
-                  className="border-b border-zinc-100 dark:border-zinc-800 hover:bg-zinc-50 dark:hover:bg-zinc-800/50 group"
+                  className="border-b border-zinc-100 dark:border-zinc-800 hover:bg-zinc-50 dark:hover:bg-zinc-800/50 group h-16"
                 >
                   <td className="py-3 px-4 font-medium sticky left-0 z-10 bg-white dark:bg-zinc-900 group-hover:bg-zinc-50 dark:group-hover:bg-zinc-800 border-r border-zinc-200 dark:border-zinc-700">
                     {item.itemName}
