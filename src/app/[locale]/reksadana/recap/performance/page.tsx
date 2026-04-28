@@ -10,6 +10,7 @@ import { usePerformanceData } from "@/features/reksadana/recap/performance/hooks
 import FilterPerformanceSection from "@/features/reksadana/recap/performance/components/filter/FilterPerformanceSection";
 import PerformanceSectionWrapper from "@/features/reksadana/recap/performance/components/PerformanceSectionWrapper";
 import TopPerformers from "@/features/reksadana/recap/performance/components/top-performers/TopPerformers";
+import CategoryLeaderboard from "@/features/reksadana/recap/performance/components/leaderboard/CategoryLeaderboard";
 import PerformanceAnalyticsSection from "@/features/reksadana/recap/performance/components/analytics/PerformanceAnalyticsSection";
 import { isLikelyConnectionError } from "@/lib/utils/error";
 
@@ -79,7 +80,19 @@ export default function PerformancePage() {
         />
       </PerformanceSectionWrapper>
 
-      {/* DETAILED DATA SECTION */}
+      {/* CATEGORY LEADERBOARD SECTION */}
+      <PerformanceSectionWrapper>
+        <CategoryLeaderboard
+          data={data}
+          timePeriods={timePeriods}
+          loading={loading}
+          fetching={fetching}
+          columnKey={columnKey}
+          viewMode={viewMode}
+        />
+      </PerformanceSectionWrapper>
+
+      {/* DETAILED ANALYTICS SECTION */}
       <PerformanceSectionWrapper>
         <PerformanceAnalyticsSection
           key={viewMode}

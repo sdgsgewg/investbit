@@ -92,6 +92,15 @@
         }
       },
 
+      "leaderboard": {
+        "title": "Leaderboards",
+        "subtitle": "Ranked by the latest available period: {period}",
+        "noData": "No leaderboard data is available yet",
+        "labels": {
+          "funds": "{count} mutual funds"
+        }
+      },
+
       "analytics": {
         "title": "Detailed Analytics",
         "sort": {

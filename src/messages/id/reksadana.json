@@ -93,6 +93,15 @@
         }
       },
 
+      "leaderboard": {
+        "title": "Papan Peringkat",
+        "subtitle": "Peringkat berdasarkan periode terbaru: {period}",
+        "noData": "Belum ada data peringkat yang bisa ditampilkan",
+        "labels": {
+          "funds": "{count} reksa dana"
+        }
+      },
+
       "analytics": {
         "title": "Analisis Terperinci",
         "sort": {

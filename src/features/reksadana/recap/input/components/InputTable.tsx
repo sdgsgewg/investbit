@@ -26,7 +26,6 @@ const InputTable = ({
     <TableWrapper
       headerChildren={
         <>
-          {" "}
           <th className="py-3 px-4 font-semibold">
             {tRecapInput("table.mutualFund")}
           </th>

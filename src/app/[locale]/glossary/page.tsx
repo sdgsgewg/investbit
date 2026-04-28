@@ -62,8 +62,8 @@ export default function GlossaryPage() {
               <p className="text-xs text-muted-foreground bg-muted p-2 rounded-md">
                 <span className="font-semibold text-primary">
                   {t("fields.implication")}
-                </span>{" "}
-                {item.implication}
+                </span>
+                <span className="ml-1">{item.implication}</span>
               </p>
             </CardContent>
           </Card>
