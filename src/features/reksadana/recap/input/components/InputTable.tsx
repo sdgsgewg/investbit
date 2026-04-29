@@ -26,13 +26,13 @@ const InputTable = ({
     <TableWrapper
       headerChildren={
         <>
-          <th className="py-3 px-4 font-semibold">
+          <th className="py-3 px-4 text-sm sm:text-base font-semibold min-w-36">
             {tRecapInput("table.mutualFund")}
           </th>
-          <th className="py-3 px-4 font-semibold w-40 text-center">
+          <th className="py-3 px-4 text-sm sm:text-base font-semibold w-40 text-center">
             {tRecapInput("table.yield1d")}
           </th>
-          <th className="py-3 px-4 font-semibold w-40 text-center">
+          <th className="py-3 px-4 text-sm sm:text-base font-semibold w-40 text-center">
             {tRecapInput("table.yieldYtd")}
           </th>
         </>
@@ -43,7 +43,7 @@ const InputTable = ({
             <React.Fragment key={category.id}>
               {/* Category Header */}
               <tr className="bg-zinc-50 dark:bg-zinc-950 border-t border-b border-zinc-200 dark:border-zinc-800">
-                <td colSpan={3} className="py-2 px-4 font-bold">
+                <td colSpan={3} className="py-2 px-4 text-sm sm:text-base font-bold">
                   {category.name}
                 </td>
               </tr>
@@ -55,8 +55,8 @@ const InputTable = ({
                     key={item.id}
                     className="border-b border-zinc-100 dark:border-zinc-800 last:border-0 hover:bg-zinc-50 dark:hover:bg-zinc-800/50"
                   >
-                    <td className="py-3 px-4">{item.name}</td>
-                    <td className="py-2 px-2">
+                    <td className="py-3 px-4 text-sm sm:text-base">{item.name}</td>
+                    <td className="py-2 px-2 text-sm sm:text-base">
                       <InputNumber
                         value={inputs[item.id]?.yield_1d}
                         onChange={(val) =>
@@ -64,7 +64,7 @@ const InputTable = ({
                         }
                       />
                     </td>
-                    <td className="py-2 px-2">
+                    <td className="py-2 px-2 text-sm sm:text-base">
                       <InputNumber
                         value={inputs[item.id]?.yield_ytd}
                         onChange={(val) =>
