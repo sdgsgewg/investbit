@@ -1,10 +1,8 @@
 import { ROUTES } from "@/constants/routes";
 import { Link } from "@/navigation";
 import { useAuth } from "@/providers/auth-provider";
-import { LayoutDashboard, LogIn, LogOut, User } from "lucide-react";
-import { useLocale, useTranslations } from "next-intl";
-import { useRouter } from "next/navigation";
-import React from "react";
+import { LogIn, LogOut, User } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 interface NavbarMobileAuthProps {
   onClose: () => void;
@@ -14,14 +12,6 @@ const NavbarMobileAuth = ({ onClose }: NavbarMobileAuthProps) => {
   const { user, signOut } = useAuth();
 
   const tAuth = useTranslations("auth");
-  const tNav = useTranslations("navigation");
-
-  const router = useRouter();
-  const locale = useLocale();
-
-  const handleNavigateToDashboard = () => {
-    router.push(`/${locale}/${ROUTES.DASHBOARD.HOME}`);
-  };
 
   return (
     <div className="pt-6 border-t border-border/50">
@@ -33,18 +23,6 @@ const NavbarMobileAuth = ({ onClose }: NavbarMobileAuthProps) => {
               {user.email}
             </span>
           </div>
-
-          {/* Dashboard Button */}
-          <button
-            onClick={() => {
-              onClose();
-              handleNavigateToDashboard();
-            }}
-            className="w-full flex items-center justify-center gap-2 px-4 py-2.5 text-sm font-semibold rounded-lg bg-primary/10 text-pribg-primary hover:bg-primary/20 transition-all cursor-pointer"
-          >
-            <LayoutDashboard className="w-4 h-4" />
-            <span>{tNav("dashboard.base")}</span>
-          </button>
 
           {/* Log Out Button */}
           <button

@@ -9,7 +9,7 @@ import {
   deleteItem,
   fetchItems,
   updateItem,
-} from "@/lib/api/reksadana";
+} from "@/lib/api/reksadana/items";
 import { ItemListItem, UpsertItemInput } from "@/types/reksadana/item";
 import { isLikelyConnectionError } from "@/lib/utils/error";
 

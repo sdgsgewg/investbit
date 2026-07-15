@@ -6,7 +6,7 @@ import {
   fetchCategoriesWithItems,
   fetchRecords,
   saveRecords,
-} from "@/lib/api/reksadana";
+} from "@/lib/api/reksadana/records";
 import { queryConfig } from "@/lib/react-query/queryConfig";
 import { RecordsInput } from "@/lib/validations/reksadana/records.schema";
 import { useTranslations } from "next-intl";

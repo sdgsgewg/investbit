@@ -5,7 +5,7 @@ import { HOME_FEATURES } from "@/lib/home-data";
 import { Button } from "@/components/ui/button";
 import { Link } from "@/navigation";
 import { ArrowRight, BarChart2, BookOpen, BrainCircuit } from "lucide-react";
-import { ROUTES } from "../../constants/routes";
+import { ROUTES } from "@/constants/routes";
 
 const ICON_MAP = {
   feature1: BookOpen,

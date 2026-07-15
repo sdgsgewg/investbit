@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { queryKeys } from "@/lib/react-query/queryKeys";
-import { fetchPerformance } from "@/lib/api/reksadana";
+import { fetchPerformance } from "@/lib/api/reksadana/performance";
 import { queryConfig } from "@/lib/react-query/queryConfig";
 import { TimeFrameType } from "@/types/reksadana/performance/TimeFrameType";
 import { FilterPerformance } from "@/types/reksadana/performance/FilterPerformance";

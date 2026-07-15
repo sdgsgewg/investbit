@@ -8,7 +8,7 @@ import {
   deleteCategory,
   fetchCategories,
   updateCategory,
-} from "@/lib/api/reksadana";
+} from "@/lib/api/reksadana/categories";
 import { queryConfig } from "@/lib/react-query/queryConfig";
 import {
   CategoryListItem,
