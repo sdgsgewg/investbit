@@ -1,0 +1,33 @@
+export class HttpError extends Error {
+  constructor(
+    message: string,
+    public status: number,
+  ) {
+    super(message);
+    this.name = this.constructor.name;
+  }
+}
+
+export class UnauthorizedError extends HttpError {
+  constructor(message = "Unauthorized") {
+    super(message, 401);
+  }
+}
+
+export class ForbiddenError extends HttpError {
+  constructor(message = "Forbidden") {
+    super(message, 403);
+  }
+}
+
+export class NotFoundError extends HttpError {
+  constructor(message = "Not Found") {
+    super(message, 404);
+  }
+}
+
+export class ConflictError extends HttpError {
+  constructor(message = "Conflict") {
+    super(message, 409);
+  }
+}

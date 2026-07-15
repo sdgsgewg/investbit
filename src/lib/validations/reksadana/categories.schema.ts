@@ -1,18 +1,22 @@
 import { z } from "zod";
 
-// CREATE
-export const createCategorySchema = z.object({
+export const categoryIdSchema = z.string().uuid();
+
+export const categoryMutationSchema = z.object({
   name: z.string().min(1).max(255),
 });
+
+// CREATE
+export const createCategorySchema = categoryMutationSchema;
 
 // UPDATE
-export const updateCategorySchema = z.object({
-  name: z.string().min(1).max(255),
-});
+export const updateCategorySchema = categoryMutationSchema;
 
-// Single record category
-export const categorySchema = z.object({
-  name: z.string().min(1).max(255),
+// Single reco category
+export const categorySchema = categoryMutationSchema.extend({
+  id: categoryIdSchema,
+  created_at: z.string(),
+  updated_at: z.string().nullable(),
 });
 
 // ARRAY schema

@@ -1,30 +1,33 @@
 import { createClient } from "@/utils/supabase/server";
-import { cookies } from "next/headers";
-import { CategoryData } from "@/features/reksadana/categories/types/CategoryData";
+import { ENTITY_CONFIG } from "@/config/entities";
+import {
+  CategoryCreateInput,
+  CategoryDetailResponse,
+  CategoryListItem,
+  CategoryUpdateInput,
+  GetCategoriesParams,
+} from "@/types/reksadana/category";
+import { ensureUniqueRecord } from "../helpers/uniqueness";
+import { requireEntity } from "../helpers/require-entity";
 
-type CategoryMutationInput = {
-  name: string;
+async function getSupabase() {
+  return createClient();
+}
+
+const getLabel = () => {
+  return ENTITY_CONFIG["rdCategory"]["label"];
 };
 
-type RawCategoryRow = {
-  id: string;
-  name: string | null;
+const getTable = () => {
+  return ENTITY_CONFIG["rdCategory"]["table"];
 };
 
-export async function getCategoriesRepo(params: {
-  name?: string;
-}): Promise<CategoryData[]> {
-  const supabase = createClient(await cookies());
+export async function getCategoriesRepo(
+  params: GetCategoriesParams,
+): Promise<CategoryListItem[]> {
+  const supabase = await getSupabase();
 
-  let query = supabase
-    .from("rd_categories")
-    .select(
-      `
-      id,
-      name
-    `,
-    )
-    .order("name");
+  let query = supabase.from(getTable()).select("*").order("name");
 
   if (params.name) {
     query = query.ilike("name", `%${params.name}%`);
@@ -34,69 +37,82 @@ export async function getCategoriesRepo(params: {
 
   if (error) throw error;
 
-  const mappedData: CategoryData[] =
-    ((data ?? []) as RawCategoryRow[]).map((category) => ({
-      id: category.id,
-      name: category.name ?? "",
-      created_at: "",
-      updated_at: "",
-    }));
-
-  return mappedData;
+  return data ?? [];
 }
 
-export async function createCategoryRepo(category: CategoryMutationInput) {
-  const supabase = createClient(await cookies());
+export async function getCategoryByIdRepo(
+  id: string,
+): Promise<CategoryDetailResponse | null> {
+  const supabase = await getSupabase();
 
-  // cek apakah name sudah dipakai category lain
-  const { data: existing } = await supabase
-    .from("rd_categories")
-    .select("id")
-    .eq("name", category.name)
+  const { data, error } = await supabase
+    .from(getTable())
+    .select("*")
+    .eq("id", id)
     .maybeSingle();
 
-  if (existing) {
-    throw new Error("Category name already exists");
-  }
+  if (error) throw error;
+
+  return data;
+}
+
+export async function createCategoryRepo(
+  category: CategoryCreateInput,
+): Promise<CategoryDetailResponse> {
+  const supabase = await getSupabase();
+
+  await ensureUniqueRecord({
+    table: getTable(),
+    name: category.name,
+  });
 
   // create
-  const { data: result, error } = await supabase
-    .from("rd_categories")
-    .insert(category);
+  const { data, error } = await supabase
+    .from(getTable())
+    .insert({ ...category })
+    .select("*")
+    .single();
 
   if (error) throw error;
-  return result;
+
+  return data;
 }
 
-export async function updateCategoryRepo(id: string, data: CategoryMutationInput) {
-  const supabase = createClient(await cookies());
+export async function updateCategoryRepo(
+  id: string,
+  category: CategoryUpdateInput,
+): Promise<CategoryDetailResponse> {
+  const supabase = await getSupabase();
 
-  // cek apakah name sudah dipakai category lain
-  const { data: existing } = await supabase
-    .from("rd_categories")
-    .select("id")
-    .eq("name", data.name)
-    .neq("id", id)
-    .maybeSingle();
+  await requireEntity(getCategoryByIdRepo, id, getLabel());
 
-  if (existing) {
-    throw new Error("Category name already exists");
-  }
+  await ensureUniqueRecord({
+    table: getTable(),
+    name: category.name,
+    ignoreId: id,
+  });
 
-  // update
-  const { data: result, error } = await supabase
-    .from("rd_categories")
-    .update({ name: data.name })
-    .eq("id", id);
+  const { data, error } = await supabase
+    .from(getTable())
+    .update({
+      name: category.name,
+      updated_at: new Date().toISOString(),
+    })
+    .eq("id", id)
+    .select("*")
+    .single();
 
   if (error) throw error;
-  return result;
+
+  return data;
 }
 
 export async function deleteCategoryRepo(id: string) {
-  const supabase = createClient(await cookies());
+  const supabase = await getSupabase();
 
-  const { error } = await supabase.from("rd_categories").delete().eq("id", id);
+  await requireEntity(getCategoryByIdRepo, id, getLabel());
+
+  const { error } = await supabase.from(getTable()).delete().eq("id", id);
 
   if (error) throw error;
 }

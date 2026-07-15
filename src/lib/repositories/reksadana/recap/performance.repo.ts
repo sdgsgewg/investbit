@@ -1,9 +1,12 @@
 import { createClient } from "@/utils/supabase/server";
-import { cookies } from "next/headers";
 import { format, startOfMonth } from "date-fns";
-import { TimeFrameType } from "@/features/reksadana/recap/performance/types/TimeFrameType";
-import { getPerformanceKey } from "@/lib/utils/reksadana/recap/performance";
+import { getPerformanceKey } from "@/lib/utils/reksadana/performance";
 import { RecordData } from "@/types/reksadana/records/RecordData";
+import { TimeFrameType } from "@/types/reksadana/performance/TimeFrameType";
+
+async function getSupabase() {
+  return createClient();
+}
 
 type GroupedType = Record<
   string,
@@ -37,7 +40,7 @@ export async function getPerformanceRepo(params: {
   startPeriod?: string;
   endPeriod?: string;
 }) {
-  const supabase = createClient(await cookies());
+  const supabase = await getSupabase();
 
   const records: RecordData[] = [];
   let hasMore = true;

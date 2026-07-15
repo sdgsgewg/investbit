@@ -12,11 +12,18 @@ export const ROUTES = {
   LEARN: "/learn",
   GLOSSARY: "/glossary",
   REKSADANA: {
-    RECAP: {
-      INPUT: "/reksadana/recap/input",
-      PERFORMANCE: "/reksadana/recap/performance",
+    PERFORMANCE: "/reksadana/performance",
+  },
+  DASHBOARD: {
+    HOME: "/dashboard",
+    REKSADANA: {
+      CATEGORIES: "/dashboard/reksadana/categories",
+      ITEMS: "/dashboard/reksadana/items",
+      RECORDS: "/dashboard/reksadana/records",
     },
-    ITEMS: "/reksadana/items",
-    CATEGORIES: "/reksadana/categories",
+    SYSTEM: {
+      USERS: "/dashboard/system/users",
+      ROLES: "/dashboard/systems/roles",
+    },
   },
 };

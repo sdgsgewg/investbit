@@ -3,9 +3,10 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "../globals.css";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
-import { Footer } from "@/components/layout/Footer";
+import { Footer } from "@/components/layout/footer/Footer";
 import Providers from "./providers";
-import { Navbar } from "@/components/layout/Navbar";
+import { Navbar } from "@/components/layout/navbar/Navbar";
+import { getCurrentAuth } from "@/lib/auth/current-auth";
 // import { AIAdvisor } from "@/components/shared/AIAdvisor";
 
 const geistSans = Geist({
@@ -33,13 +34,15 @@ export default async function RootLayout({
   const { locale } = await params;
   const messages = await getMessages();
 
+  const { user, profile } = await getCurrentAuth();
+
   return (
     <html lang={locale} suppressHydrationWarning>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <NextIntlClientProvider messages={messages}>
-          <Providers>
+          <Providers initialUser={user} initialProfile={profile}>
             <Navbar />
             <main className="min-h-screen">{children}</main>
             <Footer />

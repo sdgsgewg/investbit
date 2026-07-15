@@ -3,6 +3,7 @@ import { routing } from "./navigation";
 
 async function getMessages(locale: string) {
   const messages = {
+    auth: (await import(`./messages/${locale}/auth.json`)).default,
     home: (await import(`./messages/${locale}/home.json`)).default,
     learn: (await import(`./messages/${locale}/learn.json`)).default,
     glossary: (await import(`./messages/${locale}/glossary.json`)).default,

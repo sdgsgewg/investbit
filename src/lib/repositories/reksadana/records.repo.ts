@@ -1,18 +1,20 @@
-import { Database } from "@/types/database.types";
+import { ENTITY_CONFIG } from "@/config/entities";
+import { GetRecordsParams, ItemUpsertInput } from "@/types/reksadana/record";
 import { createClient } from "@/utils/supabase/server";
-import { cookies } from "next/headers";
 
-type RecordInsert = Database["public"]["Tables"]["rd_records"]["Insert"];
+async function getSupabase() {
+  return createClient();
+}
 
-export async function getRecordsRepo(params: {
-  startDate?: string;
-  endDate?: string;
-  categoryId?: string | undefined;
-}) {
-  const supabase = createClient(await cookies());
+const getTable = () => {
+  return ENTITY_CONFIG["rdRecord"]["table"];
+};
+
+export async function getRecordsRepo(params: GetRecordsParams) {
+  const supabase = await getSupabase();
 
   let query = supabase
-    .from("rd_records")
+    .from(getTable())
     .select(
       `
       id,
@@ -20,11 +22,11 @@ export async function getRecordsRepo(params: {
       date,
       yield_1d,
       yield_ytd,
-      rd_items (
+      items: rd_items(
         id,
         name,
         category_id,
-        rd_categories (
+        category: rd_categories(
           id,
           name
         )
@@ -48,16 +50,18 @@ export async function getRecordsRepo(params: {
   const { data, error } = await query;
 
   if (error) throw error;
+
   return data;
 }
 
-export async function upsertRecordsRepo(records: RecordInsert[]) {
-  const supabase = createClient(await cookies());
+export async function upsertRecordsRepo(records: ItemUpsertInput) {
+  const supabase = await getSupabase();
 
   const { data, error } = await supabase
-    .from("rd_records")
+    .from(getTable())
     .upsert(records, { onConflict: "item_id, date" });
 
   if (error) throw error;
+
   return data;
 }

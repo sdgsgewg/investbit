@@ -1,45 +1,56 @@
-import { updateCategoryService } from "@/lib/services/reksadana/categories.service";
-import { createClient } from "@/utils/supabase/server";
-import { cookies } from "next/headers";
-import { NextResponse } from "next/server";
+import {
+  errorResponse,
+  noContentResponse,
+  successResponse,
+} from "@/lib/api/response";
+import { authorizeManageContent } from "@/lib/auth/api-authorization";
+import { NotFoundError } from "@/lib/errors/http-error";
+import {
+  deleteCategoryService,
+  getCategoryByIdService,
+  updateCategoryService,
+} from "@/lib/services/reksadana/categories.service";
+type CategoryRouteContext = {
+  params: Promise<{ id: string }>;
+};
 
-export async function PUT(
-  request: Request,
-  context: { params: Promise<{ id: string }> },
-) {
+export async function PUT(request: Request, context: CategoryRouteContext) {
   try {
-    const { id } = await context.params;
-    const body = await request.json();
+    await authorizeManageContent();
 
+    const { id } = await context.params;
+
+    const currentCategory = await getCategoryByIdService(id);
+
+    if (!currentCategory) {
+      return errorResponse(new NotFoundError("Category not found"));
+    }
+
+    const body = await request.json();
     const data = await updateCategoryService(id, body);
 
-    return NextResponse.json({ success: true, data });
-  } catch (error: any) {
-    return NextResponse.json(
-      { error: error.message || "Internal Server Error" },
-      { status: 400 },
-    );
+    return successResponse(data);
+  } catch (error: unknown) {
+    return errorResponse(error);
   }
 }
 
-export async function DELETE(
-  request: Request,
-  context: { params: Promise<{ id: string }> },
-) {
+export async function DELETE(request: Request, context: CategoryRouteContext) {
   try {
-    const { id } = await context.params; // WAJIB await
+    await authorizeManageContent();
 
-    const supabase = createClient(await cookies());
+    const { id } = await context.params;
 
-    const { error } = await supabase
-      .from("rd_categories")
-      .delete()
-      .eq("id", id);
+    const category = await getCategoryByIdService(id);
 
-    if (error) throw error;
+    if (!category) {
+      return errorResponse(new NotFoundError("Category not found"));
+    }
 
-    return NextResponse.json({ success: true });
-  } catch (error: any) {
-    return NextResponse.json({ error: error.message }, { status: 400 });
+    await deleteCategoryService(id);
+
+    return noContentResponse();
+  } catch (error: unknown) {
+    return errorResponse(error);
   }
 }

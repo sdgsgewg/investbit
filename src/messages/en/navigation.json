@@ -3,11 +3,20 @@
   "learn": "Learn",
   "analyze": "Analyze",
   "glossary": "Glossary",
-  "reksadana": {
-    "base": "Mutual Fund",
-    "recap": "Mutual Fund Recap",
-    "items": "Manage Items",
-    "categories": "Manage Categories"
+  "rdnPerformance": "RDN Performance",
+  "dashboard": {
+    "base": "Dashboard",
+    "reksadana": {
+      "base": "Mutual Fund",
+      "categories": "Categories",
+      "items": "Items",
+      "records": "Records"
+    },
+    "system": {
+      "base": "System",
+      "users": "Users",
+      "roles": "Roles"
+    }
   },
   "about": "About"
 }

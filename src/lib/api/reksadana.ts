@@ -1,9 +1,8 @@
 import { apiClient } from "./client";
 import { RecordData } from "@/types/reksadana/records/RecordData";
 import { recordsSchema } from "../validations/reksadana/records.schema";
-import { CategoryData } from "@/features/reksadana/categories/types/CategoryData";
-import { ItemData } from "@/features/reksadana/items/types/ItemData";
-import { CategoryWithItems } from "@/features/reksadana/recap/input/types/CategoryWithItems";
+import { CategoryListItem } from "@/types/reksadana/category";
+import { ItemListItem } from "@/types/reksadana/item";
 import {
   createCategorySchema,
   updateCategorySchema,
@@ -12,11 +11,14 @@ import {
   createItemSchema,
   updateItemSchema,
 } from "../validations/reksadana/items.schema";
-import { PerformanceResponse } from "@/features/reksadana/recap/performance/types/PerformanceResponse";
+import { CategoryWithItems } from "@/types/reksadana/records/CategoryWithItems";
+import { PerformanceResponse } from "@/types/reksadana/performance/PerformanceResponse";
 
 // categories
 export const fetchCategories = async () => {
-  const { data } = await apiClient.get<CategoryData[]>("/reksadana/categories");
+  const { data } = await apiClient.get<CategoryListItem[]>(
+    "/reksadana/categories",
+  );
   return data;
 };
 
@@ -38,7 +40,7 @@ export const deleteCategory = async (id: string) => {
 
 // items
 export const fetchItems = async () => {
-  const { data } = await apiClient.get<ItemData[]>("/reksadana/items");
+  const { data } = await apiClient.get<ItemListItem[]>("/reksadana/items");
   return data;
 };
 
@@ -94,7 +96,9 @@ export const fetchPerformance = async (params: {
         timeFrame: params.timeFrame,
         categoryId: params.categoryId || undefined,
         periodLimit:
-          params.startPeriod || params.endPeriod ? undefined : params.periodLimit,
+          params.startPeriod || params.endPeriod
+            ? undefined
+            : params.periodLimit,
         startPeriod: params.startPeriod || undefined,
         endPeriod: params.endPeriod || undefined,
       },

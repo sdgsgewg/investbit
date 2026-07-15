@@ -1,37 +1,37 @@
 import { createClient } from "@/utils/supabase/server";
-import { cookies } from "next/headers";
-import { ItemData } from "@/features/reksadana/items/types/ItemData";
+import { ENTITY_CONFIG } from "@/config/entities";
+import {
+  GetItemsParams,
+  ItemCreateInput,
+  ItemDetailResponse,
+  ItemListItem,
+  ItemUpdateInput,
+} from "@/types/reksadana/item";
+import { ensureUniqueRecord } from "../helpers/uniqueness";
+import { requireEntity } from "../helpers/require-entity";
 
-type ItemMutationInput = {
-  name: string;
-  category_id: string;
+async function getSupabase() {
+  return createClient();
+}
+
+const getLabel = () => {
+  return ENTITY_CONFIG["rdItem"]["label"];
 };
 
-type RawCategory = {
-  id: string | null;
-  name: string | null;
-} | null;
-
-type RawItemRow = {
-  id: string;
-  name: string | null;
-  category_id: string | null;
-  category: RawCategory | RawCategory[];
+const getTable = () => {
+  return ENTITY_CONFIG["rdItem"]["table"];
 };
 
-export async function getItemsRepo(params: {
-  name?: string;
-  category_id?: string;
-}): Promise<ItemData[]> {
-  const supabase = createClient(await cookies());
+export async function getItemsRepo(
+  params: GetItemsParams,
+): Promise<ItemListItem[]> {
+  const supabase = await getSupabase();
 
   let query = supabase
-    .from("rd_items")
+    .from(getTable())
     .select(
       `
-        id,
-        name,
-        category_id,
+        *,
         category:rd_categories (
           id,
           name
@@ -53,81 +53,95 @@ export async function getItemsRepo(params: {
 
   if (error) throw error;
 
-  const normalizeCategory = (cat: RawItemRow["category"]): RawCategory => {
-    if (!cat) return null;
-    if (Array.isArray(cat)) return cat[0] ?? null;
-    return cat;
-  };
+  return (data ?? []).map((item) => ({
+    ...item,
+  }));
+}
 
-  const formattedData: ItemData[] = ((data ?? []) as RawItemRow[]).map((item) => {
-    const category = normalizeCategory(item.category);
+export async function getItemByIdRepo(
+  id: string,
+): Promise<ItemDetailResponse | null> {
+  const supabase = await getSupabase();
 
-    return {
-      id: item.id,
-      name: item.name ?? "",
-      category_id: item.category_id ?? "",
-      created_at: "",
-      updated_at: "",
-      category: {
-        id: category?.id ?? "",
-        name: category?.name ?? "",
-      },
-    };
+  const { data, error } = await supabase
+    .from(getTable())
+    .select(
+      `
+      *,
+      category:rd_categories!rd_items_category_id_fkey(
+        id,
+        name
+      )
+    `,
+    )
+    .eq("id", id)
+    .maybeSingle();
+
+  if (error) throw error;
+
+  return data;
+}
+
+export async function createItemRepo(
+  item: ItemCreateInput,
+): Promise<ItemDetailResponse> {
+  const supabase = await getSupabase();
+
+  await ensureUniqueRecord({
+    table: getTable(),
+    name: item.name,
   });
 
-  return formattedData;
-}
-
-export async function createItemRepo(item: ItemMutationInput) {
-  const supabase = createClient(await cookies());
-
-  // cek apakah name sudah dipakai item lain
-  const { data: existing } = await supabase
-    .from("rd_items")
-    .select("id")
-    .eq("name", item.name)
-    .maybeSingle();
-
-  if (existing) {
-    throw new Error("Item name already exists");
-  }
-
   // create
-  const { data: result, error } = await supabase.from("rd_items").insert(item);
+  const { data, error } = await supabase
+    .from(getTable())
+    .insert({ ...item })
+    .select("*")
+    .single();
 
   if (error) throw error;
-  return result;
+
+  return data;
 }
 
-export async function updateItemRepo(id: string, data: ItemMutationInput) {
-  const supabase = createClient(await cookies());
+export async function updateItemRepo(
+  id: string,
+  item: ItemUpdateInput,
+): Promise<ItemDetailResponse> {
+  const supabase = await getSupabase();
+
+  await requireEntity(getItemByIdRepo, id, getLabel());
 
   // cek apakah name sudah dipakai item lain
-  const { data: existing } = await supabase
-    .from("rd_items")
-    .select("id")
-    .eq("name", data.name)
-    .neq("id", id)
-    .maybeSingle();
-
-  if (existing) {
-    throw new Error("Item name already exists");
-  }
+  await ensureUniqueRecord({
+    table: getTable(),
+    name: item.name,
+    ignoreId: id,
+  });
 
   // update
-  const { data: result, error } = await supabase
-    .from("rd_items")
-    .update({ name: data.name, category_id: data.category_id })
-    .eq("id", id);
+  const { data, error } = await supabase
+    .from(getTable())
+    .update({
+      name: item.name,
+      category_id: item.category_id,
+      updated_at: new Date().toISOString(),
+    })
+    .eq("id", id)
+    .select("*")
+    .single();
 
   if (error) throw error;
-  return result;
+
+  return data;
 }
 
 export async function deleteItemRepo(id: string) {
-  const supabase = createClient(await cookies());
+  const supabase = await getSupabase();
 
-  const { error } = await supabase.from("rd_items").delete().eq("id", id);
+  await requireEntity(getItemByIdRepo, id, getLabel());
+
+  const { error } = await supabase.from(getTable()).delete().eq("id", id);
 
   if (error) throw error;
 }

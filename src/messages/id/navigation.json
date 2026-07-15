@@ -3,11 +3,20 @@
   "learn": "Belajar",
   "analyze": "Analisis",
   "glossary": "Glosarium",
-  "reksadana": {
-    "base": "Reksa Dana",
-    "recap": "Rekap Reksa Dana",
-    "items": "Kelola Item",
-    "categories": "Kelola Kategori"
+  "rdnPerformance": "Performa RDN",
+  "dashboard": {
+    "base": "Dasbor",
+    "reksadana": {
+      "base": "Reksa Dana",
+      "categories": "Kategori",
+      "items": "Item",
+      "records": "Rekap Data"
+    },
+    "system": {
+      "base": "Sistem",
+      "users": "Pengguna",
+      "roles": "Peran"
+    }
   },
   "about": "Tentang"
 }

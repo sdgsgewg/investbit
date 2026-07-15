@@ -1,5 +1,5 @@
+import { errorResponse, successResponse } from "@/lib/api/response";
 import { getPerformanceService } from "@/lib/services/reksadana/recap/performance.service";
-import { NextResponse } from "next/server";
 
 export async function GET(request: Request) {
   try {
@@ -15,13 +15,8 @@ export async function GET(request: Request) {
 
     const data = await getPerformanceService(query);
 
-    return NextResponse.json(data);
-  } catch (error: any) {
-    console.error("GET /performance error:", error);
-
-    return NextResponse.json(
-      { error: error.message || "Internal Server Error" },
-      { status: 400 },
-    );
+    return successResponse(data);
+  } catch (error: unknown) {
+    return errorResponse(error);
   }
 }

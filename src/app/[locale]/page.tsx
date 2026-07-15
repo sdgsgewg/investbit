@@ -35,7 +35,7 @@ export default function LandingPage() {
             <div className="flex flex-col sm:flex-row justify-center gap-4 animate-in fade-in slide-in-from-bottom-12 duration-1000 delay-400">
               <Button size="lg" asChild className="text-lg px-8">
                 <Link
-                  href={ROUTES.REKSADANA.RECAP.INPUT}
+                  href={ROUTES.GLOSSARY}
                   className="flex items-center gap-1"
                 >
                   <p>{t("actions.getStarted")}</p>

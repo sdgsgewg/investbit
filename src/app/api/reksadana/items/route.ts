@@ -1,9 +1,14 @@
 import {
+  createdResponse,
+  errorResponse,
+  successResponse,
+} from "@/lib/api/response";
+import { authorizeManageContent } from "@/lib/auth/api-authorization";
+import {
   createItemService,
   getItemsGroupedService,
   getItemsService,
 } from "@/lib/services/reksadana/items.service";
-import { NextResponse } from "next/server";
 
 export async function GET(request: Request) {
   try {
@@ -20,28 +25,21 @@ export async function GET(request: Request) {
       ? await getItemsGroupedService(query)
       : await getItemsService(query);
 
-    return NextResponse.json(data);
-  } catch (error: any) {
-    console.error("GET /items error:", error);
-
-    return NextResponse.json(
-      { error: error.message || "Internal Server Error" },
-      { status: 400 },
-    );
+    return successResponse(data);
+  } catch (error: unknown) {
+    return errorResponse(error);
   }
 }
 
 export async function POST(request: Request) {
   try {
-    const body = await request.json();
+    await authorizeManageContent();
 
+    const body = await request.json();
     const data = await createItemService(body);
 
-    return NextResponse.json({ success: true, data });
-  } catch (error: any) {
-    return NextResponse.json(
-      { error: error.message || "Internal Server Error" },
-      { status: 400 },
-    );
+    return createdResponse(data);
+  } catch (error: unknown) {
+    return errorResponse(error);
   }
 }

@@ -1,4 +1,7 @@
 export const IMAGES = {
+  COMMON: {
+    LOGO: "https://glzgwbbiaqnwvtblertt.supabase.co/storage/v1/object/public/common/logo.png",
+  },
   CHART_PATTERN: {
     BULLISH: {
       ASCENDING_TRIANGLE: {
