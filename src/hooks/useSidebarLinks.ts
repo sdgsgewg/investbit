@@ -4,6 +4,7 @@ import {
   Boxes,
   Database,
   FolderTree,
+  KeyRound,
   LayoutDashboard,
   User,
 } from "lucide-react";
@@ -48,7 +49,7 @@ export function useSidebarLinks() {
     {
       name: tNav("dashboard.system.roles"),
       path: ROUTES.DASHBOARD.SYSTEM.ROLES,
-      icon: User,
+      icon: KeyRound,
     },
   ];
 
