@@ -8,8 +8,12 @@ import SkeletonTable from "@/components/reksadana/records/SkeletonTable";
 import InputTable from "@/components/reksadana/records/InputTable";
 import ConnectionErrorAlert from "@/components/feedback/ConnectionErrorAlert";
 import { isLikelyConnectionError } from "@/lib/utils/error";
+import { CrudPageHeader } from "@/components/templates/CrudPageHeader";
+import { useTranslations } from "next-intl";
 
-export default function InputPage() {
+export default function RecordPage() {
+  const t = useTranslations("reksadana.records");
+
   const {
     categoriesWithItems,
     inputs,
@@ -27,39 +31,43 @@ export default function InputPage() {
   } = useRecordData();
 
   return (
-    <div className="bg-white dark:bg-zinc-900 rounded-lg p-6 shadow-sm space-y-6">
-      <InputHeader
-        draftDate={draftDate}
-        onDraftDateChange={setDraftDate}
-        onSelectedDateChange={setSelectedDate}
-        onSave={handleSave}
-        saving={saving}
-        canSave={canSave}
-      />
+    <>
+      <CrudPageHeader title={t("title")} />
 
-      {isLikelyConnectionError(loadError) && (
-        <div className="mt-4">
-          <ConnectionErrorAlert onRetry={retryLoad} retrying={fetching} />
-        </div>
-      )}
+      <div className="bg-white dark:bg-zinc-900 rounded-lg p-6 shadow-sm space-y-6">
+        <InputHeader
+          draftDate={draftDate}
+          onDraftDateChange={setDraftDate}
+          onSelectedDateChange={setSelectedDate}
+          onSave={handleSave}
+          saving={saving}
+          canSave={canSave}
+        />
 
-      {loading ? (
-        <SkeletonTable />
-      ) : (
-        <div className="flex flex-col gap-4">
-          {fetching && <TopProgressBar />}
-
-          <div className="relative">
-            {fetching && <TableOverlay />}
-
-            <InputTable
-              categoriesWithItems={categoriesWithItems}
-              inputs={inputs}
-              onInputChange={handleInputChange}
-            />
+        {isLikelyConnectionError(loadError) && (
+          <div className="mt-4">
+            <ConnectionErrorAlert onRetry={retryLoad} retrying={fetching} />
           </div>
-        </div>
-      )}
-    </div>
+        )}
+
+        {loading ? (
+          <SkeletonTable />
+        ) : (
+          <div className="flex flex-col gap-4">
+            {fetching && <TopProgressBar />}
+
+            <div className="relative">
+              {fetching && <TableOverlay />}
+
+              <InputTable
+                categoriesWithItems={categoriesWithItems}
+                inputs={inputs}
+                onInputChange={handleInputChange}
+              />
+            </div>
+          </div>
+        )}
+      </div>
+    </>
   );
 }

@@ -34,7 +34,7 @@ export function LanguageSwitcher() {
           {tLangOptions("english")}
         </DropdownMenuItem>
         <DropdownMenuItem onClick={() => switchLocale("id")}>
-          {tLangOptions("indonesian")}
+          {tLangOptions("indonesia")}
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

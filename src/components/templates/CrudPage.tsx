@@ -28,7 +28,7 @@ export function CrudPage<TData extends CrudRow, TForm extends CrudForm>(
   } = props;
 
   return (
-    <div className="space-y-8">
+    <>
       <CrudPageHeader title={title} />
       {headerContent}
 
@@ -56,6 +56,6 @@ export function CrudPage<TData extends CrudRow, TForm extends CrudForm>(
           onDelete={onDelete as (item: CrudRow) => void}
         />
       </div>
-    </div>
+    </>
   );
 }

@@ -215,5 +215,28 @@
     "actions": {
       "addNew": "Add New Category"
     }
+  },
+
+  "records": {
+    "title": "Manage Records",
+    "subtitle": "Add or edit daily and YTD yields",
+    "nav": "Daily Input",
+    "contentTitle": "Input Daily Yield",
+    "loading": "Loading mutual funds list...",
+    "form": {
+      "selectDate": "Select Date",
+      "save": "Save Daily Data",
+      "saving": "Saving...",
+      "success": "Successfully saved data for: ",
+      "errors": {
+        "empty": "Please enter at least one yield value before saving.",
+        "failed": "Failed to save data.."
+      }
+    },
+    "table": {
+      "mutualFund": "Mutual Fund",
+      "yield1d": "1 Day (%)",
+      "yieldYtd": "YTD (%)"
+    }
   }
 }

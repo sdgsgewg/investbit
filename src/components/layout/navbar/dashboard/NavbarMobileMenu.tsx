@@ -40,14 +40,14 @@ const NavbarMobileMenu = ({
         />
       )}
 
-      {isSystemManager && (
+      {/* {isSystemManager && (
         <MobileDropdownMenu
           label={tNav("dashboard.system.base")}
           links={systemManageLinks}
           pathname={pathname}
           onLinkClick={onClose}
         />
-      )}
+      )} */}
     </NavbarMobileSheet>
   );
 };

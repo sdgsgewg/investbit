@@ -101,7 +101,7 @@ export const useItemData = (): UseItemDataReturn => {
     mutationFn: ({ id, data }: { id: string; data: unknown }) =>
       updateItem(id, data),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: queryKeys.categories() });
+      queryClient.invalidateQueries({ queryKey: queryKeys.items() });
       alert(`${tItems("form.success.edit")} ${form.name}`);
       resetForm();
     },
