@@ -1,56 +1,55 @@
 import { useState } from "react";
 import { useTranslations } from "next-intl";
-import {
-  CategoryListItem,
-  UpsertCategoryInput,
-} from "@/types/reksadana/category";
-import { useCreateCategory } from "./categories/useCreateCategory";
-import { useUpdateCategory } from "./categories/useUpdateCategory";
-import { useDeleteCategory } from "./categories/useDeleteCategory";
+import { ItemListItem, UpsertItemInput } from "@/types/reksadana/item";
+import { useCreateItem } from "./useCreateItem";
+import { useUpdateItem } from "./useUpdateItem";
+import { useDeleteItem } from "./useDeleteItem";
 
-interface UseCategoryDataReturn {
+interface UseItemDataReturn {
   isEditing: boolean;
   buttonText: string;
   isSubmitting: boolean;
-  form: UpsertCategoryInput;
-  setForm: React.Dispatch<React.SetStateAction<UpsertCategoryInput>>;
+  initialForm: UpsertItemInput | null;
+  form: UpsertItemInput;
+  setForm: React.Dispatch<React.SetStateAction<UpsertItemInput>>;
   canSubmit: () => boolean;
   handleSubmit: () => Promise<void>;
-  handleEdit: (item: CategoryListItem) => void;
-  handleDelete: (item: CategoryListItem) => Promise<void>;
+  handleEdit: (item: ItemListItem) => void;
+  handleDelete: (item: ItemListItem) => Promise<void>;
   resetForm: () => void;
 }
 
-export const useCategoryData = (): UseCategoryDataReturn => {
+export const useItemData = (): UseItemDataReturn => {
   const t = useTranslations("");
   const tCommonActions = useTranslations("common.actions");
   const tCommonStates = useTranslations("common.states");
 
   const [isEditing, setIsEditing] = useState(false);
 
-  const emptyCategoryForm: UpsertCategoryInput = {
+  const emptyItemForm: UpsertItemInput = {
     id: "",
     name: "",
+    category_id: "",
   };
   const [initialForm, setInitialForm] =
-    useState<UpsertCategoryInput>(emptyCategoryForm);
-  const [form, setForm] = useState<UpsertCategoryInput>(emptyCategoryForm);
+    useState<UpsertItemInput>(emptyItemForm);
+  const [form, setForm] = useState<UpsertItemInput>(emptyItemForm);
 
   const resetForm = () => {
-    setForm(emptyCategoryForm);
-    setInitialForm(emptyCategoryForm);
+    setForm(emptyItemForm);
+    setInitialForm(emptyItemForm);
     setIsEditing(false);
   };
 
-  const createMutation = useCreateCategory(() => {
+  const createMutation = useCreateItem(() => {
     resetForm();
   });
 
-  const updateMutation = useUpdateCategory(() => {
+  const updateMutation = useUpdateItem(() => {
     resetForm();
   });
 
-  const deleteMutation = useDeleteCategory();
+  const deleteMutation = useDeleteItem();
 
   const isSubmitting =
     createMutation.isPending ||
@@ -65,10 +64,11 @@ export const useCategoryData = (): UseCategoryDataReturn => {
       ? tCommonActions("update")
       : tCommonActions("create");
 
-  const handleEdit = (item: CategoryListItem) => {
+  const handleEdit = (item: ItemListItem) => {
     const mapped = {
       id: item.id,
       name: item.name,
+      category_id: item.category.id,
     };
 
     setForm(mapped);
@@ -76,11 +76,11 @@ export const useCategoryData = (): UseCategoryDataReturn => {
     setIsEditing(true);
   };
 
-  const handleDelete = async (item: CategoryListItem) => {
+  const handleDelete = async (item: ItemListItem) => {
     if (
       !confirm(
         `${t(`common.crud.confirm.delete`, {
-          entity: t(`entities.rdCategory`),
+          entity: t(`entities.rdItem`),
         })}`,
       )
     )
@@ -93,7 +93,8 @@ export const useCategoryData = (): UseCategoryDataReturn => {
   };
 
   const canSubmit = (): boolean => {
-    const isFilled = form.name.trim().length > 0;
+    const isFilled =
+      form.name.trim().length > 0 && form.category_id.trim().length > 0;
 
     if (!isFilled) return false;
 
@@ -101,14 +102,17 @@ export const useCategoryData = (): UseCategoryDataReturn => {
 
     if (!initialForm) return false;
 
-    const isChanged = form.name !== initialForm.name;
+    const isChanged =
+      form.name !== initialForm.name ||
+      form.category_id !== initialForm.category_id;
 
     return isChanged;
   };
 
   const handleSubmit = async () => {
-    const payload: UpsertCategoryInput = {
+    const payload: UpsertItemInput = {
       name: form.name,
+      category_id: form.category_id,
     };
 
     if (isEditing) {
@@ -125,9 +129,10 @@ export const useCategoryData = (): UseCategoryDataReturn => {
     isEditing,
     buttonText,
     isSubmitting,
-    canSubmit,
+    initialForm,
     form,
     setForm,
+    canSubmit,
     handleSubmit,
     handleEdit,
     handleDelete,

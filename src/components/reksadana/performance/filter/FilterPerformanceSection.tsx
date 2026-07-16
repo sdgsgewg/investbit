@@ -3,7 +3,7 @@ import React from "react";
 import Dropdown from "@/components/ui/Dropdown";
 import { TimeFrameType } from "@/types/reksadana/performance/TimeFrameType";
 import { FilterPerformance } from "@/types/reksadana/performance/FilterPerformance";
-import { useCategories } from "@/hooks/dashboard/reksadana/categories/useCategories";
+import { useCategories } from "@/hooks/dashboard/reksadana/categories";
 
 interface FilterPerformanceSectionProps {
   viewMode: TimeFrameType;

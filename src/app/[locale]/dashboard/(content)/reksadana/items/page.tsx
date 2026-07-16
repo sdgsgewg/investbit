@@ -2,18 +2,17 @@
 
 import { CrudPage } from "@/components/templates/CrudPage";
 import ConnectionErrorAlert from "@/components/feedback/ConnectionErrorAlert";
-import { useItemData } from "@/hooks/dashboard/reksadana/useItemData";
 import { isLikelyConnectionError } from "@/lib/utils/connection-error";
 import { useTranslations } from "next-intl";
-import { useCategories } from "@/hooks/dashboard/reksadana/categories/useCategories";
+import { useCategories } from "@/hooks/dashboard/reksadana/categories";
+import { useItemData, useItems } from "@/hooks/dashboard/reksadana/items";
 
 export default function ItemsManagementPage() {
   const t = useTranslations("reksadana.items");
 
+  const { items, loading, retrying, loadError, retryLoad } = useItems();
+
   const {
-    items,
-    loading,
-    retrying,
     isEditing,
     buttonText,
     isSubmitting,
@@ -24,9 +23,8 @@ export default function ItemsManagementPage() {
     handleEdit,
     handleDelete,
     resetForm,
-    loadError,
-    retryLoad,
   } = useItemData();
+
   const {
     categories,
     retrying: retryingCategories,
