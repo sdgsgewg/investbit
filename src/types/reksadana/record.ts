@@ -13,7 +13,7 @@ export type RecordUpdate = TablesUpdate<"rd_records">;
 
 // Repo Request (from zod)
 export type GetRecordsParams = z.infer<typeof recordsQuerySchema>;
-export type ItemUpsertInput = z.infer<typeof upsertRecordSchema>;
+export type RecordsUpsertInput = z.infer<typeof upsertRecordSchema>;
 
 // DTO helper
 type CategorySummary = Pick<Tables<"rd_categories">, "id" | "name">;

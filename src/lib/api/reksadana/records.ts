@@ -1,7 +1,7 @@
 import { CategoryWithItems } from "@/types/reksadana/records/CategoryWithItems";
 import { apiClient } from "../client";
 import { RecordData } from "@/types/reksadana/records/RecordData";
-import { recordsSchema } from "@/lib/validations/reksadana/records.schema";
+import { upsertRecordSchema } from "@/lib/validations/reksadana/records.schema";
 
 export const fetchCategoriesWithItems = async (): Promise<
   CategoryWithItems[]
@@ -24,7 +24,7 @@ export const fetchRecords = async (date: string): Promise<RecordData[]> => {
 };
 
 export const saveRecords = async (payload: unknown) => {
-  const parsed = recordsSchema.parse(payload); // validation
+  const parsed = upsertRecordSchema.parse(payload); // validation
 
   await apiClient.post("/reksadana/records", parsed);
 };

@@ -4,12 +4,12 @@ import {
 } from "@/lib/repositories/reksadana/records.repo";
 import {
   recordsQuerySchema,
-  recordsSchema,
+  upsertRecordSchema,
 } from "../../validations/reksadana/records.schema";
 
 export async function upsertRecordsService(input: unknown) {
   // Validate
-  const parsed = recordsSchema.parse(input);
+  const parsed = upsertRecordSchema.parse(input);
 
   // Business rule example (optional)
   // e.g. prevent future date

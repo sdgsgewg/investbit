@@ -1,5 +1,5 @@
 import { ENTITY_CONFIG } from "@/config/entities";
-import { GetRecordsParams, ItemUpsertInput } from "@/types/reksadana/record";
+import { GetRecordsParams, RecordsUpsertInput } from "@/types/reksadana/record";
 import { createClient } from "@/utils/supabase/server";
 
 async function getSupabase() {
@@ -54,7 +54,7 @@ export async function getRecordsRepo(params: GetRecordsParams) {
   return data;
 }
 
-export async function upsertRecordsRepo(records: ItemUpsertInput) {
+export async function upsertRecordsRepo(records: RecordsUpsertInput) {
   const supabase = await getSupabase();
 
   const { data, error } = await supabase
