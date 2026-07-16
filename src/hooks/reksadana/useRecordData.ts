@@ -43,7 +43,7 @@ interface UseRecordDataReturn {
 }
 
 export const useRecordData = (): UseRecordDataReturn => {
-  const tReksdanaRecapInput = useTranslations("reksadana.recap.input");
+  const tReksdanaRecords = useTranslations("reksadana.records");
   const tCommon = useTranslations("common");
 
   const queryClient = useQueryClient();
@@ -171,14 +171,14 @@ export const useRecordData = (): UseRecordDataReturn => {
         .filter((doc) => doc.yield_1d !== null || doc.yield_ytd !== null);
 
       if (payload.length === 0) {
-        alert(tReksdanaRecapInput("form.errors.empty"));
+        alert(tReksdanaRecords("form.errors.empty"));
         throw new Error("EMPTY");
       }
 
       await saveRecords(payload);
     },
     onSuccess: () => {
-      alert(`${tReksdanaRecapInput("form.success")} ${selectedDate}`);
+      alert(`${tReksdanaRecords("form.success")} ${selectedDate}`);
       queryClient.invalidateQueries({
         queryKey: queryKeys.records(selectedDate),
       });
@@ -187,7 +187,7 @@ export const useRecordData = (): UseRecordDataReturn => {
       alert(
         isLikelyConnectionError(error)
           ? tCommon("feedback.connectionIssue.saveFailed")
-          : tReksdanaRecapInput("form.errors.failed"),
+          : tReksdanaRecords("form.errors.failed"),
       );
     },
   });

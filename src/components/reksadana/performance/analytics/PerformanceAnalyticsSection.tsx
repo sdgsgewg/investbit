@@ -57,12 +57,12 @@ const PerformanceAnalyticsSection = ({
   setStartPeriod,
   setEndPeriod,
 }: PerformanceAnalyticsSectionProps) => {
-  const tRecapPerformance = useTranslations("reksadana.recap.performance");
+  const tPerformance = useTranslations("reksadana.performance");
   const tPerformanceAnalytics = useTranslations(
-    "reksadana.recap.performance.analytics",
+    "reksadana.performance.analytics",
   );
   const tPerformanceTfWeekly = useTranslations(
-    "reksadana.recap.performance.timeframe.weekly",
+    "reksadana.performance.timeframe.weekly",
   );
   const tCommon = useTranslations("common");
 
@@ -303,7 +303,7 @@ const PerformanceAnalyticsSection = ({
               columns={columns}
               columnKey={columnKey}
               getCellColor={getCellColor}
-              noDataMessage={tRecapPerformance("noData")}
+              noDataMessage={tPerformance("noData")}
             />
           </div>
 

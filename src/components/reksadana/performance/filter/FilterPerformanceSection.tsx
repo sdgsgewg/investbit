@@ -19,21 +19,21 @@ const FilterPerformanceSection = ({
   setForm,
 }: FilterPerformanceSectionProps) => {
   const tCommonFilter = useTranslations("common.filter");
-  const tTf = useTranslations("reksadana.recap.performance.filter.timeframe");
+  const tTf = useTranslations("reksadana.performance.filter.timeframe");
   const tPerformanceTfDaily = useTranslations(
-    "reksadana.recap.performance.timeframe.daily",
+    "reksadana.performance.timeframe.daily",
   );
   const tPerformanceTfWeekly = useTranslations(
-    "reksadana.recap.performance.timeframe.weekly",
+    "reksadana.performance.timeframe.weekly",
   );
   const tPerformanceTfMonthly = useTranslations(
-    "reksadana.recap.performance.timeframe.monthly",
+    "reksadana.performance.timeframe.monthly",
   );
   const tPerformanceTfYtd = useTranslations(
-    "reksadana.recap.performance.timeframe.ytd",
+    "reksadana.performance.timeframe.ytd",
   );
   const tPerformanceTfYearly = useTranslations(
-    "reksadana.recap.performance.timeframe.yearly",
+    "reksadana.performance.timeframe.yearly",
   );
 
   const { categories } = useCategoryData();

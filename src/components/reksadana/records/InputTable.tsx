@@ -20,20 +20,20 @@ const InputTable = ({
   inputs,
   onInputChange,
 }: InputTableProps) => {
-  const tRecapInput = useTranslations("reksadana.recap.input");
+  const tRecords = useTranslations("reksadana.records");
 
   return (
     <TableWrapper
       headerChildren={
         <>
           <th className="py-3 px-4 text-sm sm:text-base font-semibold min-w-36">
-            {tRecapInput("table.mutualFund")}
+            {tRecords("table.mutualFund")}
           </th>
           <th className="py-3 px-4 text-sm sm:text-base font-semibold w-40 text-center">
-            {tRecapInput("table.yield1d")}
+            {tRecords("table.yield1d")}
           </th>
           <th className="py-3 px-4 text-sm sm:text-base font-semibold w-40 text-center">
-            {tRecapInput("table.yieldYtd")}
+            {tRecords("table.yieldYtd")}
           </th>
         </>
       }

@@ -22,19 +22,19 @@ const InputHeader = ({
   saving,
   canSave,
 }: InputHeaderProps) => {
-  const tRecapInput = useTranslations("reksadana.recap.input");
+  const tRecords = useTranslations("reksadana.records");
 
   const selectedDate = draftDate ? new Date(draftDate) : undefined;
 
   return (
     <div className="flex flex-col md:flex-row justify-between gap-4">
       <div className="flex flex-col gap-4">
-        <h2 className="text-xl font-semibold">{tRecapInput("title")}</h2>
+        <h2 className="text-xl font-semibold">{tRecords("title")}</h2>
 
         {/* Date Picker */}
         <div className="flex flex-row items-center gap-2">
           <label className="text-sm font-medium">
-            {tRecapInput("form.selectDate")}:
+            {tRecords("form.selectDate")}:
           </label>
 
           <DatePicker
@@ -63,7 +63,7 @@ const InputHeader = ({
           onClick={onSave}
           disabled={saving || !canSave}
         >
-          {saving ? tRecapInput("form.saving") : tRecapInput("form.save")}
+          {saving ? tRecords("form.saving") : tRecords("form.save")}
         </Button>
       </div>
     </div>

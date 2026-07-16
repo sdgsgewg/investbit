@@ -1,134 +1,108 @@
 {
-  "recap": {
-    "title": "Rekap Reksa Dana",
+  "performance": {
+    "nav": "Performa",
+    "title": "Performa",
+    "subtitle": "Performa",
+    "loading": "Memuat data performa...",
+    "noData": "Data tidak tersedia. Gunakan tab input harian untuk menambahkan data.",
 
-    "input": {
-      "nav": "Input Harian",
-      "title": "Input Hasil Harian",
-      "subtitle": "Performa Harian",
-      "form": {
-        "selectDate": "Pilih Tanggal",
-        "save": "Simpan Data Harian",
-        "saving": "Menyimpan...",
-        "success": "Berhasil menyimpan data untuk ",
-        "errors": {
-          "empty": "Silakan masukkan setidaknya satu nilai hasil sebelum menyimpan.",
-          "failed": "Gagal menyimpan data. Silakan periksa konsol."
-        }
+    "timeframe": {
+      "daily": {
+        "nav": "Performa Harian",
+        "title": "Performa Harian",
+        "subtitle": "Performa Harian",
+        "loading": "Memuat data performa harian..."
       },
-      "table": {
-        "mutualFund": "Reksa Dana",
-        "yield1d": "1 Hari (%)",
-        "yieldYtd": "YTD (%)"
+
+      "weekly": {
+        "nav": "Performa Mingguan",
+        "title": "Performa Mingguan",
+        "subtitle": "Performa Mingguan",
+        "loading": "Memuat data performa mingguan...",
+        "week": "Minggu"
       },
-      "loading": "Memuat daftar reksa dana..."
+
+      "monthly": {
+        "nav": "Performa Bulanan",
+        "title": "Performa Bulanan",
+        "subtitle": "Performa Bulanan",
+        "loading": "Memuat data performa bulanan..."
+      },
+
+      "yearly": {
+        "nav": "Performa Tahunan",
+        "title": "Performa Tahunan",
+        "subtitle": "Performa Tahunan",
+        "loading": "Memuat data performa tahunan..."
+      },
+
+      "ytd": {
+        "title": "Performa Tahun Berjalan (YTD)",
+        "loading": "Memuat data performa YTD..."
+      }
     },
 
-    "performance": {
-      "nav": "Performa",
-      "title": "Performa",
-      "subtitle": "Performa",
-      "loading": "Memuat data performa...",
-      "noData": "Data tidak tersedia. Gunakan tab input harian untuk menambahkan data.",
-
+    "filter": {
       "timeframe": {
-        "daily": {
-          "nav": "Performa Harian",
-          "title": "Performa Harian",
-          "subtitle": "Performa Harian",
-          "loading": "Memuat data performa harian..."
-        },
-
-        "weekly": {
-          "nav": "Performa Mingguan",
-          "title": "Performa Mingguan",
-          "subtitle": "Performa Mingguan",
-          "loading": "Memuat data performa mingguan...",
-          "week": "Minggu"
-        },
-
-        "monthly": {
-          "nav": "Performa Bulanan",
-          "title": "Performa Bulanan",
-          "subtitle": "Performa Bulanan",
-          "loading": "Memuat data performa bulanan..."
-        },
-
-        "yearly": {
-          "nav": "Performa Tahunan",
-          "title": "Performa Tahunan",
-          "subtitle": "Performa Tahunan",
-          "loading": "Memuat data performa tahunan..."
-        },
-
-        "ytd": {
-          "title": "Performa Tahun Berjalan (YTD)",
-          "loading": "Memuat data performa YTD..."
+        "label": "Kurun Waktu",
+        "options": {
+          "daily": "Harian",
+          "weekly": "Mingguan",
+          "monthly": "Bulanan",
+          "ytd": "YTD",
+          "yearly": "Tahunan"
         }
+      }
+    },
+
+    "topPerformers": {
+      "title": "Ikhtisar Kinerja Terbaik",
+      "noData": "Data performa tidak tersedia",
+      "labels": {
+        "daily": "Reksa Dana Terbaik Hari Ini",
+        "weekly": "Reksa Dana Terbaik Minggu Ini",
+        "monthly": "Reksa Dana Terbaik Bulan Ini",
+        "ytd": "Reksa Dana Terbaik YTD",
+        "yearly": "Reksa Dana Terbaik Tahun Ini",
+        "topIn": "Teratas Di"
+      }
+    },
+
+    "leaderboard": {
+      "title": "Papan Peringkat",
+      "subtitle": "Peringkat berdasarkan periode terbaru: {period}",
+      "noData": "Belum ada data peringkat yang bisa ditampilkan",
+      "labels": {
+        "funds": "{count} reksa dana"
+      }
+    },
+
+    "analytics": {
+      "title": "Analisis Terperinci",
+      "sort": {
+        "oldestToLatest": "Terlama hingga Terbaru",
+        "latestToOldest": "Terbaru hingga Terlama"
       },
-
-      "filter": {
-        "timeframe": {
-          "label": "Kurun Waktu",
-          "options": {
-            "daily": "Harian",
-            "weekly": "Mingguan",
-            "monthly": "Bulanan",
-            "ytd": "YTD",
-            "yearly": "Tahunan"
-          }
-        }
+      "actions": {
+        "showLatestTen": "Tampilkan 10 Terbaru",
+        "resetRange": "Reset Rentang"
       },
-
-      "topPerformers": {
-        "title": "Ikhtisar Kinerja Terbaik",
-        "noData": "Data performa tidak tersedia",
-        "labels": {
-          "daily": "Reksa Dana Terbaik Hari Ini",
-          "weekly": "Reksa Dana Terbaik Minggu Ini",
-          "monthly": "Reksa Dana Terbaik Bulan Ini",
-          "ytd": "Reksa Dana Terbaik YTD",
-          "yearly": "Reksa Dana Terbaik Tahun Ini",
-          "topIn": "Teratas Di"
-        }
+      "filters": {
+        "startPeriod": "Periode Awal",
+        "endPeriod": "Periode Akhir",
+        "startPlaceholder": "Pilih periode awal",
+        "endPlaceholder": "Pilih periode akhir"
       },
-
-      "leaderboard": {
-        "title": "Papan Peringkat",
-        "subtitle": "Peringkat berdasarkan periode terbaru: {period}",
-        "noData": "Belum ada data peringkat yang bisa ditampilkan",
-        "labels": {
-          "funds": "{count} reksa dana"
-        }
+      "states": {
+        "allAvailableDataShown": "Semua data yang tersedia sudah ditampilkan."
       },
-
-      "analytics": {
-        "title": "Analisis Terperinci",
-        "sort": {
-          "oldestToLatest": "Terlama hingga Terbaru",
-          "latestToOldest": "Terbaru hingga Terlama"
-        },
-        "actions": {
-          "showLatestTen": "Tampilkan 10 Terbaru",
-          "resetRange": "Reset Rentang"
-        },
-        "filters": {
-          "startPeriod": "Periode Awal",
-          "endPeriod": "Periode Akhir",
-          "startPlaceholder": "Pilih periode awal",
-          "endPlaceholder": "Pilih periode akhir"
-        },
-        "states": {
-          "allAvailableDataShown": "Semua data yang tersedia sudah ditampilkan."
-        },
-        "table": {
-          "mutualFund": "Reksa Dana"
-        },
-        "legend": {
-          "title": "Keterangan",
-          "highestYield": "Paling Cuan",
-          "lowestYield": "Paling Tidak Cuan"
-        }
+      "table": {
+        "mutualFund": "Reksa Dana"
+      },
+      "legend": {
+        "title": "Keterangan",
+        "highestYield": "Paling Cuan",
+        "lowestYield": "Paling Tidak Cuan"
       }
     }
   },
@@ -216,5 +190,27 @@
     "actions": {
       "addNew": "Tambah Kategori Baru"
     }
+  },
+
+  "records": {
+    "title": "Kelola Rekap Data",
+    "subtitle": "Tambah atau ubah rekap data harian dan YTD",
+    "form": {
+      "title": "Input Hasil Harian",
+      "selectDate": "Pilih Tanggal",
+      "save": "Simpan Data Harian",
+      "saving": "Menyimpan...",
+      "success": "Berhasil menyimpan data untuk ",
+      "errors": {
+        "empty": "Silakan masukkan setidaknya satu nilai hasil sebelum menyimpan.",
+        "failed": "Gagal menyimpan data. Silakan periksa konsol."
+      }
+    },
+    "table": {
+      "mutualFund": "Reksa Dana",
+      "yield1d": "1 Hari (%)",
+      "yieldYtd": "YTD (%)"
+    },
+    "loading": "Memuat daftar reksa dana..."
   }
 }
