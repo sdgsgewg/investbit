@@ -1,4 +1,5 @@
 import { cn } from "@/lib/utils";
+import { isActivePath } from "@/lib/utils/navigation";
 import { Link } from "@/navigation";
 import { NavLink } from "@/types/NavLink";
 import React from "react";
@@ -16,9 +17,6 @@ const MobileDropdownMenu = ({
   pathname,
   onLinkClick,
 }: NavbarDropdownMenuProps) => {
-  const isActive = (path: string) =>
-    pathname === path || pathname.startsWith(`${path}/`);
-
   return (
     <div className="border-t pt-6">
       <h3 className="text-sm font-semibold text-muted-foreground mb-4 uppercase tracking-wider px-2">
@@ -32,7 +30,7 @@ const MobileDropdownMenu = ({
             onClick={onLinkClick}
             className={cn(
               "text-lg font-medium transition-colors p-2 rounded-md hover:bg-accent",
-              isActive(link.path)
+              isActivePath(pathname, link.path, link.exact)
                 ? "text-primary bg-primary/5"
                 : "text-muted-foreground",
             )}

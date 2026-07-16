@@ -1,6 +1,7 @@
 import { useSidebarLinks } from "@/hooks/useSidebarLinks";
 import NavItem from "./NavItem";
 import { useTranslations } from "next-intl";
+import { isActivePath } from "@/lib/utils/navigation";
 
 interface SidebarProps {
   pathname: string;
@@ -10,14 +11,6 @@ const Sidebar = ({ pathname }: SidebarProps) => {
   const tNav = useTranslations("navigation");
 
   const { navLinks, contentManageLinks } = useSidebarLinks();
-
-  const isActive = (path: string, exact = false) => {
-    if (exact) {
-      return pathname === path;
-    }
-
-    return pathname === path || pathname.startsWith(`${path}/`);
-  };
 
   return (
     <div className="hidden lg:flex lg:flex-col w-64 shrink-0 bg-sidebar border-r border-sidebar-border">
@@ -30,7 +23,7 @@ const Sidebar = ({ pathname }: SidebarProps) => {
               path={link.path}
               name={link.name}
               icon={link.icon}
-              isActive={(path) => isActive(path, link.exact)}
+              isActive={(path) => isActivePath(pathname, path, link.exact)}
             />
           ))}
         </div>
@@ -50,7 +43,7 @@ const Sidebar = ({ pathname }: SidebarProps) => {
                 path={link.path}
                 name={link.name}
                 icon={link.icon}
-                isActive={(path) => isActive(path, link.exact)}
+                isActive={(path) => isActivePath(pathname, path, link.exact)}
               />
             ))}
           </div>
