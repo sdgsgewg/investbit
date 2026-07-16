@@ -1,6 +1,8 @@
 export const IMAGES = {
   COMMON: {
     LOGO: "https://glzgwbbiaqnwvtblertt.supabase.co/storage/v1/object/public/common/logo.png",
+    DEFAULT_PROFILE:
+      "https://glzgwbbiaqnwvtblertt.supabase.co/storage/v1/object/public/common/default-profile.png",
   },
   CHART_PATTERN: {
     BULLISH: {

@@ -3,7 +3,7 @@ import { Link } from "@/navigation";
 import { AnimatePresence, motion } from "framer-motion";
 import { X } from "lucide-react";
 import { cn } from "@/lib/utils";
-import NavbarMobileAuth from "./NavbarMobileAuth";
+import NavbarMobileAuth from "../mobile/NavbarMobileAuth";
 
 interface NavbarMobileMenuProps {
   open: boolean;
@@ -23,8 +23,8 @@ const NavbarMobileMenu = ({
 
   return (
     <>
-      {open && (
-        <AnimatePresence>
+      <AnimatePresence>
+        {open && (
           <motion.div
             initial={{ opacity: 0, x: "100%" }}
             animate={{ opacity: 1, x: 0 }}
@@ -68,8 +68,8 @@ const NavbarMobileMenu = ({
               <NavbarMobileAuth onClose={onClose} />
             </div>
           </motion.div>
-        </AnimatePresence>
-      )}
+        )}
+      </AnimatePresence>
     </>
   );
 };

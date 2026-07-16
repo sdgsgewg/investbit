@@ -1,6 +1,6 @@
 "use client";
 
-import Navbar from "@/components/layout/dashboard/navbar/Navbar";
+import Navbar from "@/components/layout/dashboard/Navbar";
 import Sidebar from "@/components/layout/dashboard/sidebar/Sidebar";
 import { usePathname } from "@/navigation";
 

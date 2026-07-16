@@ -6,8 +6,7 @@ import { useState } from "react";
 import { LanguageSwitcher } from "../../settings/LanguageSwitcher";
 import { ModeToggle } from "../../settings/ModeToggle";
 import NavbarLogo from "../navbar/NavbarLogo";
-import NavbarDesktopAuth from "../navbar/NavbarDesktopAuth";
-import NavbarMobileMenu from "../navbar/NavbarMobileMenu";
+import NavbarMobileMenu from "../navbar/root/NavbarMobileMenu";
 
 export function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -27,9 +26,6 @@ export function Navbar() {
           <div className="flex items-center space-x-2 md:space-x-4">
             <LanguageSwitcher />
             <ModeToggle />
-
-            {/* Desktop Auth Section */}
-            <NavbarDesktopAuth />
 
             {/* Mobile Menu Toggle */}
             <button

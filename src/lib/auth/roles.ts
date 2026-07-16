@@ -1,6 +1,11 @@
 import { Role } from "@/enums/Role";
 import { Profile } from "@/types/profile";
 
+// khusus guest
+export function isGuest(profile: Pick<Profile, "role"> | null | undefined) {
+  return profile === null || profile === undefined;
+}
+
 // rdn categories, items, records.
 export function canManageContent(
   profile: Pick<Profile, "role"> | null | undefined,

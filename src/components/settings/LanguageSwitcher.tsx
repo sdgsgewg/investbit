@@ -9,8 +9,12 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Languages } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 export function LanguageSwitcher() {
+  const tLang = useTranslations("lang");
+  const tLangOptions = useTranslations("lang.options");
+
   const pathname = usePathname();
 
   const switchLocale = (newLocale: string) => {
@@ -22,15 +26,15 @@ export function LanguageSwitcher() {
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" size="icon">
           <Languages className="h-[1.2rem] w-[1.2rem]" />
-          <span className="sr-only">Switch language</span>
+          <span className="sr-only">{tLang("title")}</span>
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
         <DropdownMenuItem onClick={() => switchLocale("en")}>
-          English
+          {tLangOptions("english")}
         </DropdownMenuItem>
         <DropdownMenuItem onClick={() => switchLocale("id")}>
-          Bahasa Indonesia
+          {tLangOptions("indonesian")}
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

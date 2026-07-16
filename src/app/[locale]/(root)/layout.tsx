@@ -1,5 +1,5 @@
 import React from "react";
-import { Navbar } from "@/components/layout/navbar/Navbar";
+import { Navbar } from "@/components/layout/root/Navbar";
 import { Footer } from "@/components/layout/footer/Footer";
 
 export default function RootLayout({
