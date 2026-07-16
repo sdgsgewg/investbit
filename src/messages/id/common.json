@@ -1,4 +1,27 @@
 {
+  "crud": {
+    "success": {
+      "create": "Berhasil menambahkan {entity}.",
+      "update": "Berhasil memperbarui {entity}.",
+      "delete": "Berhasil menghapus {entity}."
+    },
+
+    "error": {
+      "create": "Gagal menambahkan {entity}.",
+      "update": "Gagal memperbarui {entity}.",
+      "delete": "Gagal menghapus {entity}.",
+      "duplicate": "{entity} dengan nama ini sudah ada."
+    },
+
+    "confirm": {
+      "delete": "Apakah kamu yakin ingin menghapus {entity} ini?"
+    }
+  },
+
+  "validation": {
+    "required": "{field} is required."
+  },
+
   "actions": {
     "add": "Tambah",
     "create": "Buat",

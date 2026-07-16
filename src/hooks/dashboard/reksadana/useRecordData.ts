@@ -12,7 +12,7 @@ import { RecordsInput } from "@/lib/validations/reksadana/records.schema";
 import { useTranslations } from "next-intl";
 import { useNumberFormatter } from "@/hooks/useNumberFormatter";
 import { getLastWorkingDay, safeFormatDate } from "@/lib/utils/date";
-import { isLikelyConnectionError } from "@/lib/utils/error";
+import { isLikelyConnectionError } from "@/lib/utils/connection-error";
 import { CategoryWithItems } from "@/types/reksadana/records/CategoryWithItems";
 import { YieldInputByItemId } from "@/types/reksadana/records/YieldInputByItemId";
 

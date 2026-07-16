@@ -2,17 +2,17 @@
 
 import { CrudPage } from "@/components/templates/CrudPage";
 import ConnectionErrorAlert from "@/components/feedback/ConnectionErrorAlert";
-import { useCategoryData } from "@/hooks/reksadana/useCategoryData";
-import { isLikelyConnectionError } from "@/lib/utils/error";
+import { useCategoryData } from "@/hooks/dashboard/reksadana/useCategoryData";
+import { isLikelyConnectionError } from "@/lib/utils/connection-error";
 import { useTranslations } from "next-intl";
+import { useCategories } from "@/hooks/dashboard/reksadana/categories/useCategories";
 
 export default function CategoriesManagementPage() {
   const t = useTranslations("reksadana.categories");
 
+  const { categories, loading, retrying, loadError, retryLoad } =
+    useCategories();
   const {
-    categories,
-    loading,
-    retrying,
     isEditing,
     buttonText,
     isSubmitting,
@@ -23,8 +23,6 @@ export default function CategoriesManagementPage() {
     handleEdit,
     handleDelete,
     resetForm,
-    loadError,
-    retryLoad,
   } = useCategoryData();
 
   return (

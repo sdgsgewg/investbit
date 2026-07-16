@@ -1,9 +1,9 @@
 import { useTranslations } from "next-intl";
 import React from "react";
 import Dropdown from "@/components/ui/Dropdown";
-import { useCategoryData } from "@/hooks/reksadana/useCategoryData";
 import { TimeFrameType } from "@/types/reksadana/performance/TimeFrameType";
 import { FilterPerformance } from "@/types/reksadana/performance/FilterPerformance";
+import { useCategories } from "@/hooks/dashboard/reksadana/categories/useCategories";
 
 interface FilterPerformanceSectionProps {
   viewMode: TimeFrameType;
@@ -36,7 +36,7 @@ const FilterPerformanceSection = ({
     "reksadana.performance.timeframe.yearly",
   );
 
-  const { categories } = useCategoryData();
+  const { categories } = useCategories();
 
   const title =
     viewMode === "daily"

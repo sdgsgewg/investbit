@@ -22,9 +22,9 @@ export const createCategory = async (payload: unknown) => {
 export const updateCategory = async (id: string, payload: unknown) => {
   const parsed = updateCategorySchema.parse(payload); // validation
 
-  await apiClient.put(`${baseRoute}}/${id}`, parsed);
+  await apiClient.put(`${baseRoute}/${id}`, parsed);
 };
 
 export const deleteCategory = async (id: string) => {
-  await apiClient.delete(`${baseRoute}}/${id}`);
+  await apiClient.delete(`${baseRoute}/${id}`);
 };

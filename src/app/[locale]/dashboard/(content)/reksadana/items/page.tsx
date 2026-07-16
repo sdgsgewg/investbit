@@ -2,10 +2,10 @@
 
 import { CrudPage } from "@/components/templates/CrudPage";
 import ConnectionErrorAlert from "@/components/feedback/ConnectionErrorAlert";
-import { useCategoryData } from "@/hooks/reksadana/useCategoryData";
-import { useItemData } from "@/hooks/reksadana/useItemData";
-import { isLikelyConnectionError } from "@/lib/utils/error";
+import { useItemData } from "@/hooks/dashboard/reksadana/useItemData";
+import { isLikelyConnectionError } from "@/lib/utils/connection-error";
 import { useTranslations } from "next-intl";
+import { useCategories } from "@/hooks/dashboard/reksadana/categories/useCategories";
 
 export default function ItemsManagementPage() {
   const t = useTranslations("reksadana.items");
@@ -32,7 +32,7 @@ export default function ItemsManagementPage() {
     retrying: retryingCategories,
     loadError: categoriesLoadError,
     retryLoad: retryCategoriesLoad,
-  } = useCategoryData();
+  } = useCategories();
 
   const combinedLoadError = loadError ?? categoriesLoadError;
   const combinedRetrying = retrying || retryingCategories;

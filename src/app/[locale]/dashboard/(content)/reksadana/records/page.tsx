@@ -2,12 +2,12 @@
 
 import TopProgressBar from "@/components/feedback/TopProgressBar";
 import TableOverlay from "@/components/feedback/TableOverlay";
-import { useRecordData } from "@/hooks/reksadana/useRecordData";
+import { useRecordData } from "@/hooks/dashboard/reksadana/useRecordData";
 import InputHeader from "@/components/reksadana/records/InputHeader";
 import SkeletonTable from "@/components/reksadana/records/SkeletonTable";
 import InputTable from "@/components/reksadana/records/InputTable";
 import ConnectionErrorAlert from "@/components/feedback/ConnectionErrorAlert";
-import { isLikelyConnectionError } from "@/lib/utils/error";
+import { isLikelyConnectionError } from "@/lib/utils/connection-error";
 import { CrudPageHeader } from "@/components/templates/CrudPageHeader";
 import { useTranslations } from "next-intl";
 

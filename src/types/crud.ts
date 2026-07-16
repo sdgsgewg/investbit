@@ -42,3 +42,17 @@ export type CrudPageProps<TData extends CrudRow, TForm extends CrudForm> = {
   loading?: boolean;
   headerContent?: ReactNode;
 };
+
+export type CrudAction = "create" | "update" | "delete";
+
+export interface CrudMutationOptions<TVariables> {
+  mutationFn: (variables: TVariables) => Promise<unknown>;
+
+  queryKey: readonly unknown[];
+
+  entityKey: string;
+
+  successKey: string;
+
+  redirectTo: string;
+}

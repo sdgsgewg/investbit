@@ -11,7 +11,7 @@ import {
   updateItem,
 } from "@/lib/api/reksadana/items";
 import { ItemListItem, UpsertItemInput } from "@/types/reksadana/item";
-import { isLikelyConnectionError } from "@/lib/utils/error";
+import { isLikelyConnectionError } from "@/lib/utils/connection-error";
 
 interface UseItemDataReturn {
   items: ItemListItem[];

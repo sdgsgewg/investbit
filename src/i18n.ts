@@ -13,6 +13,7 @@ async function getMessages(locale: string) {
     theme: (await import(`./messages/${locale}/theme.json`)).default,
     lang: (await import(`./messages/${locale}/lang.json`)).default,
     common: (await import(`./messages/${locale}/common.json`)).default,
+    entities: (await import(`./messages/${locale}/entities.json`)).default,
   };
 
   return messages;
