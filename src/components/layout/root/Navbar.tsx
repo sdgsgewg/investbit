@@ -16,7 +16,7 @@ export function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const pathname = usePathname();
 
-  const { profile } = useAuth();
+  const { isGuest, isContentManager, isSystemManager } = useAuth();
 
   const closeMobileMenu = () => setMobileMenuOpen(false);
 
@@ -33,13 +33,15 @@ export function Navbar() {
           </div>
 
           <div className="flex items-center space-x-2 md:space-x-4">
-            <div className="hidden md:flex items-center gap-4">
-              <ModeToggle />
-              <LanguageSwitcher />
-            </div>
+            {isGuest && (
+              <div className="hidden md:flex items-center gap-4">
+                <ModeToggle />
+                <LanguageSwitcher />
+              </div>
+            )}
 
             {/* Dashboard Navigation Button */}
-            {profile && (
+            {(isContentManager || isSystemManager) && (
               <div className="hidden md:flex">
                 <DashboardButton />
               </div>

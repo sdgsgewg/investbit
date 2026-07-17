@@ -11,6 +11,7 @@ interface AuthContextType {
   user: User | null;
   profile: Profile | null;
 
+  isGuest: boolean;
   isAuthenticated: boolean;
 
   isContentManager: boolean;
@@ -37,6 +38,8 @@ export function AuthProvider({
 
   const [user, setUser] = useState<User | null>(initialUser);
   const [profile, setProfile] = useState<Profile | null>(initialProfile);
+
+  const isGuest = !user;
 
   const isAuthenticated = !!user;
 
@@ -82,6 +85,7 @@ export function AuthProvider({
       value={{
         user,
         profile,
+        isGuest,
         isAuthenticated,
         isContentManager,
         isSystemManager,
