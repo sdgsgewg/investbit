@@ -29,7 +29,7 @@ const InputHeader = ({
   return (
     <div className="flex flex-col md:flex-row justify-between gap-4">
       <div className="flex flex-col gap-4">
-        <h2 className="text-xl font-semibold">{tRecords("title")}</h2>
+        <h2 className="text-xl font-semibold">{tRecords("form.title")}</h2>
 
         {/* Date Picker */}
         <div className="flex flex-row items-center gap-2">

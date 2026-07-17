@@ -23,7 +23,7 @@ export default function DashboardLayout({
 
         {/* Scrollable Content */}
         <main className="flex-1 overflow-auto">
-          <div className="w-full space-y-8 p-6">{children}</div>
+          <div className="w-full space-y-6 p-6">{children}</div>
         </main>
       </div>
     </div>

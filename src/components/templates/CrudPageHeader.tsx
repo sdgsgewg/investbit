@@ -28,7 +28,7 @@ export const CrudPageHeader = ({
   };
 
   return (
-    <div className="flex items-center gap-4 pb-6 border-b border-border/40">
+    <div className="flex items-center gap-4 pb-4 border-b border-border/40">
       {hasBackButton && (
         <button
           className="bg-primary flex items-center gap-1 text-primary-foreground px-4 py-1 rounded-lg hover:bg-primary/80 cursor-pointer"
