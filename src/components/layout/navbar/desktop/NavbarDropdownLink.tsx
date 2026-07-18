@@ -12,22 +12,20 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { NavbarDropdownChild, NavLink } from "@/types/NavLink";
+import { NavLink } from "@/types/NavLink";
 
 interface NavbarDropdownLinkProps {
-  link: NavLink;
+  label: string;
+  links: NavLink[];
   pathname: string;
-  items: NavbarDropdownChild[];
 }
 
 const NavbarDropdownLink = ({
-  link,
+  label,
+  links,
   pathname,
-  items,
 }: NavbarDropdownLinkProps) => {
-  const active =
-    isActivePath(pathname, link.path) ||
-    items.some((item) => isActivePath(pathname, item.path));
+  const active = links.some((link) => isActivePath(pathname, link.path));
 
   return (
     <DropdownMenu>
@@ -37,22 +35,22 @@ const NavbarDropdownLink = ({
           active ? "text-primary" : "text-muted-foreground",
         )}
       >
-        <span>{link.name}</span>
+        <span>{label}</span>
 
         <ChevronDown className="h-4 w-4" />
       </DropdownMenuTrigger>
 
       <DropdownMenuContent align="center">
-        {items.map((child) => (
-          <DropdownMenuItem key={child.path} asChild>
+        {links.map((link) => (
+          <DropdownMenuItem key={link.path} asChild>
             <Link
-              href={child.path}
+              href={link.path}
               className={cn(
                 "w-full cursor-pointer",
-                isActivePath(pathname, child.path) && "font-semibold",
+                isActivePath(pathname, link.path) && "font-semibold",
               )}
             >
-              {child.name}
+              {link.name}
             </Link>
           </DropdownMenuItem>
         ))}

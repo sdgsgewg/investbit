@@ -1,9 +1,10 @@
 import { useNavLinks } from "@/hooks/useNavLinks";
-import { Link } from "@/navigation";
 import { AnimatePresence, motion } from "framer-motion";
 import { X } from "lucide-react";
-import { cn } from "@/lib/utils";
 import NavbarMobileAuth from "../mobile/NavbarMobileAuth";
+import MobileDropdownMenu from "../mobile/MobileDrodpdownMenu";
+import { useTranslations } from "next-intl";
+import NavbarMobileLink from "../mobile/NavbarMobileLink";
 
 interface NavbarMobileMenuProps {
   open: boolean;
@@ -16,10 +17,9 @@ const NavbarMobileMenu = ({
   pathname,
   onClose,
 }: NavbarMobileMenuProps) => {
-  const { navLinks } = useNavLinks();
+  const { navLinks, mutualFundLinks } = useNavLinks();
 
-  const isActive = (path: string) =>
-    pathname === path || pathname.startsWith(`${path}/`);
+  const tNav = useTranslations("navigation");
 
   return (
     <>
@@ -48,21 +48,21 @@ const NavbarMobileMenu = ({
             <div className="flex-1 overflow-y-auto py-6 px-4 flex flex-col space-y-6">
               <div className="flex flex-col space-y-2">
                 {navLinks.map((link) => (
-                  <Link
+                  <NavbarMobileLink
                     key={link.path}
-                    href={link.path}
-                    onClick={onClose}
-                    className={cn(
-                      "text-lg font-medium transition-colors p-2 rounded-md hover:bg-accent",
-                      isActive(link.path)
-                        ? "text-primary bg-primary/5"
-                        : "text-muted-foreground",
-                    )}
-                  >
-                    {link.name}
-                  </Link>
+                    link={link}
+                    pathname={pathname}
+                    onClose={onClose}
+                  />
                 ))}
               </div>
+
+              <MobileDropdownMenu
+                label={tNav("mutualFund.base")}
+                links={mutualFundLinks}
+                pathname={pathname}
+                onLinkClick={onClose}
+              />
 
               {/* Mobile Auth section */}
               <NavbarMobileAuth onClose={onClose} />
