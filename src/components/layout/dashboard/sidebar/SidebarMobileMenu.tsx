@@ -1,10 +1,10 @@
 import { useSidebarLinks } from "@/hooks/useSidebarLinks";
-import MobileDropdownMenu from "../mobile/MobileDrodpdownMenu";
+import MobileDropdownMenu from "../../navbar/mobile/MobileDrodpdownMenu";
 import { useTranslations } from "next-intl";
-import NavbarMobileSheet from "../mobile/NavbarMobileSheet";
-import MobileNavLinks from "../mobile/MobileNavLinks";
+import MobileMenuSheet from "../../navbar/mobile/MobileMenuSheet";
+import MobileNavLinks from "../../navbar/mobile/MobileNavLinks";
 
-interface NavbarMobileMenuProps {
+interface SidebarMobileMenuProps {
   open: boolean;
   pathname: string;
   isContentManager: boolean;
@@ -12,19 +12,19 @@ interface NavbarMobileMenuProps {
   onClose: () => void;
 }
 
-const NavbarMobileMenu = ({
+const SidebarMobileMenu = ({
   open,
   pathname,
   isContentManager,
   isSystemManager,
   onClose,
-}: NavbarMobileMenuProps) => {
+}: SidebarMobileMenuProps) => {
   const tNav = useTranslations("navigation");
 
   const { navLinks, contentManageLinks, systemManageLinks } = useSidebarLinks();
 
   return (
-    <NavbarMobileSheet open={open} onClose={onClose}>
+    <MobileMenuSheet open={open} onClose={onClose}>
       <MobileNavLinks
         links={navLinks}
         pathname={pathname}
@@ -33,7 +33,7 @@ const NavbarMobileMenu = ({
 
       {isContentManager && (
         <MobileDropdownMenu
-          label={tNav("dashboard.reksadana.base")}
+          label={tNav("dashboard.mutualFund.base")}
           links={contentManageLinks}
           pathname={pathname}
           onLinkClick={onClose}
@@ -48,8 +48,8 @@ const NavbarMobileMenu = ({
           onLinkClick={onClose}
         />
       )} */}
-    </NavbarMobileSheet>
+    </MobileMenuSheet>
   );
 };
 
-export default NavbarMobileMenu;
+export default SidebarMobileMenu;

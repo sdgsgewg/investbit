@@ -4,7 +4,7 @@ import { Menu } from "lucide-react";
 import { useAuth } from "@/providers/auth-provider";
 import NavbarLogo from "../navbar/NavbarLogo";
 import NavbarDesktopAuth from "../navbar/desktop/NavbarDesktopAuth";
-import NavbarMobileMenu from "../navbar/dashboard/NavbarMobileMenu";
+import NavbarMobileMenu from "./sidebar/SidebarMobileMenu";
 
 const Navbar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);

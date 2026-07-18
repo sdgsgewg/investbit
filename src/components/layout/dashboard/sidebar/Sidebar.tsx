@@ -1,7 +1,6 @@
 import { useSidebarLinks } from "@/hooks/useSidebarLinks";
-import NavItem from "./NavItem";
+import SidebarLink from "./SidebarLink";
 import { useTranslations } from "next-intl";
-import { isActivePath } from "@/lib/utils/navigation";
 
 interface SidebarProps {
   pathname: string;
@@ -18,13 +17,7 @@ const Sidebar = ({ pathname }: SidebarProps) => {
         {/* Home */}
         <div className="space-y-1">
           {navLinks.map((link) => (
-            <NavItem
-              key={link.path}
-              path={link.path}
-              name={link.name}
-              icon={link.icon}
-              isActive={(path) => isActivePath(pathname, path, link.exact)}
-            />
+            <SidebarLink key={link.path} link={link} pathname={pathname} />
           ))}
         </div>
 
@@ -32,19 +25,13 @@ const Sidebar = ({ pathname }: SidebarProps) => {
 
         <div>
           <p className="mb-2 px-3 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-            {tNav("dashboard.reksadana.base")}
+            {tNav("dashboard.mutualFund.base")}
           </p>
 
           {/* RDN menu */}
           <div className="space-y-1">
             {contentManageLinks.map((link) => (
-              <NavItem
-                key={link.path}
-                path={link.path}
-                name={link.name}
-                icon={link.icon}
-                isActive={(path) => isActivePath(pathname, path, link.exact)}
-              />
+              <SidebarLink key={link.path} link={link} pathname={pathname} />
             ))}
           </div>
         </div>

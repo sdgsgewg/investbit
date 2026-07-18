@@ -8,7 +8,7 @@ interface Props {
   children: React.ReactNode;
 }
 
-const NavbarMobileSheet = ({ open, onClose, children }: Props) => {
+const MobileMenuSheet = ({ open, onClose, children }: Props) => {
   return (
     <>
       <AnimatePresence>
@@ -46,4 +46,4 @@ const NavbarMobileSheet = ({ open, onClose, children }: Props) => {
   );
 };
 
-export default NavbarMobileSheet;
+export default MobileMenuSheet;

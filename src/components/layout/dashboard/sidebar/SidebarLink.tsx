@@ -1,16 +1,18 @@
 import { cn } from "@/lib/utils";
+import { isActivePath } from "@/lib/utils/navigation";
 import { Link } from "@/navigation";
+import { NavLink } from "@/types/NavLink";
 import { ChevronRight } from "lucide-react";
 
 interface Props {
-  path: string;
-  name: string;
-  icon?: React.ElementType;
-  isActive: (path: string) => boolean;
+  link: NavLink;
+  pathname: string;
 }
 
-const NavItem = ({ path, name, icon: Icon, isActive }: Props) => {
-  const active = isActive(path);
+const SidebarLink = ({ link, pathname }: Props) => {
+  const { name, path, icon: Icon } = link;
+
+  const active = isActivePath(pathname, path, link.exact);
 
   return (
     <Link
@@ -38,4 +40,4 @@ const NavItem = ({ path, name, icon: Icon, isActive }: Props) => {
   );
 };
 
-export default NavItem;
+export default SidebarLink;
