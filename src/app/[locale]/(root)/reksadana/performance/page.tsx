@@ -13,8 +13,12 @@ import PerformanceSectionWrapper from "@/components/reksadana/performance/Perfor
 import TopPerformers from "@/components/reksadana/performance/top-performers/TopPerformers";
 import CategoryLeaderboard from "@/components/reksadana/performance/leaderboard/CategoryLeaderboard";
 import PerformanceAnalyticsSection from "@/components/reksadana/performance/analytics/PerformanceAnalyticsSection";
+import PageHeader from "@/components/templates/PageHeader";
+import { useTranslations } from "next-intl";
 
 export default function PerformancePage() {
+  const t = useTranslations("reksadana.performance");
+
   const [viewMode, setViewMode] = useState<TimeFrameType>("weekly");
   const [sortOrder, setSortOrder] = useState<SortOrderType>("desc");
   const performanceData = usePerformanceData({ timeFrame: viewMode });
@@ -53,7 +57,9 @@ export default function PerformancePage() {
   const columnKey = getPerformanceKey(viewMode);
 
   return (
-    <div className="flex flex-col gap-6">
+    <>
+      <PageHeader title={t("title")} />
+
       {/* GLOBAL CONTROLS SECTION */}
       <FilterPerformanceSection
         viewMode={viewMode}
@@ -117,6 +123,6 @@ export default function PerformancePage() {
           setEndPeriod={setEndPeriod}
         />
       </PerformanceSectionWrapper>
-    </div>
+    </>
   );
 }

@@ -1,7 +1,7 @@
 {
   "performance": {
     "nav": "Performa",
-    "title": "Performa",
+    "title": "Performa Reksa Dana",
     "subtitle": "Performa",
     "loading": "Memuat data performa...",
     "noData": "Data tidak tersedia. Gunakan tab input harian untuk menambahkan data.",

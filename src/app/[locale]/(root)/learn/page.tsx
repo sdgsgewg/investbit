@@ -13,6 +13,7 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
+import PageHeader from "@/components/templates/PageHeader";
 
 export default function LearnPage() {
   const router = useRouter();
@@ -22,8 +23,8 @@ export default function LearnPage() {
   const data = LEARN_DATA[locale as keyof typeof LEARN_DATA] || LEARN_DATA.en;
 
   return (
-    <div className="container mx-auto py-12 px-4">
-      <h1 className="text-4xl font-bold mb-8">{tNav("learn")}</h1>
+    <>
+      <PageHeader title={tNav("learn")} />
 
       <Tabs defaultValue="basics" className="w-full">
         <TabsList className="grid w-full grid-cols-3 mb-8">
@@ -63,6 +64,6 @@ export default function LearnPage() {
           </TabsContent>
         ))}
       </Tabs>
-    </div>
+    </>
   );
 }

@@ -1,7 +1,7 @@
 {
   "performance": {
     "nav": "Performance",
-    "title": "Performance",
+    "title": "Mutual Fund Performance",
     "subtitle": "Performance",
     "loading": "Loading performance data...",
     "noData": "No data available. Use the daily input tab to add records.",
