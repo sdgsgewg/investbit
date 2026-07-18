@@ -4,10 +4,13 @@ import { CrudPage } from "@/components/templates/CrudPage";
 import ConnectionErrorAlert from "@/components/feedback/ConnectionErrorAlert";
 import { isLikelyConnectionError } from "@/lib/utils/connection-error";
 import { useTranslations } from "next-intl";
-import { useCategories, useCategoryData } from "@/hooks/dashboard/reksadana/categories";
+import {
+  useCategories,
+  useCategoryData,
+} from "@/hooks/dashboard/reksadana/categories";
 
 export default function CategoriesManagementPage() {
-  const t = useTranslations("reksadana.categories");
+  const t = useTranslations("dashboard.mutualFund.categories");
 
   const { categories, loading, retrying, loadError, retryLoad } =
     useCategories();

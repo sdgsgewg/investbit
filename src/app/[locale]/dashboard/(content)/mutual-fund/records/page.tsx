@@ -12,7 +12,7 @@ import { CrudPageHeader } from "@/components/templates/CrudPageHeader";
 import { useTranslations } from "next-intl";
 
 export default function RecordPage() {
-  const t = useTranslations("reksadana.records");
+  const t = useTranslations("dashboard.mutualFund.records");
 
   const {
     categoriesWithItems,

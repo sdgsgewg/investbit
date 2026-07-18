@@ -19,21 +19,21 @@ const FilterPerformanceSection = ({
   setForm,
 }: FilterPerformanceSectionProps) => {
   const tCommonFilter = useTranslations("common.filter");
-  const tTf = useTranslations("reksadana.performance.filter.timeframe");
+  const tTf = useTranslations("public.mutualFund.performance.filter.timeframe");
   const tPerformanceTfDaily = useTranslations(
-    "reksadana.performance.timeframe.daily",
+    "public.mutualFund.performance.timeframe.daily",
   );
   const tPerformanceTfWeekly = useTranslations(
-    "reksadana.performance.timeframe.weekly",
+    "public.mutualFund.performance.timeframe.weekly",
   );
   const tPerformanceTfMonthly = useTranslations(
-    "reksadana.performance.timeframe.monthly",
+    "public.mutualFund.performance.timeframe.monthly",
   );
   const tPerformanceTfYtd = useTranslations(
-    "reksadana.performance.timeframe.ytd",
+    "public.mutualFund.performance.timeframe.ytd",
   );
   const tPerformanceTfYearly = useTranslations(
-    "reksadana.performance.timeframe.yearly",
+    "public.mutualFund.performance.timeframe.yearly",
   );
 
   const { categories } = useCategories();

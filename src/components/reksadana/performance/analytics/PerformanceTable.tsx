@@ -45,9 +45,9 @@ const PerformanceTable: React.FC<PerformanceTableProps> = ({
   getCellColor,
   noDataMessage,
 }) => {
-  const tPerformance = useTranslations("reksadana.performance");
+  const tPerformance = useTranslations("public.mutualFund.performance");
   const tPerformanceAnalytics = useTranslations(
-    "reksadana.performance.analytics",
+    "public.mutualFund.performance.analytics",
   );
 
   return (

@@ -8,7 +8,7 @@ import { useCategories } from "@/hooks/dashboard/reksadana/categories";
 import { useItemData, useItems } from "@/hooks/dashboard/reksadana/items";
 
 export default function ItemsManagementPage() {
-  const t = useTranslations("reksadana.items");
+  const t = useTranslations("dashboard.mutualFund.items");
 
   const { items, loading, retrying, loadError, retryLoad } = useItems();
 

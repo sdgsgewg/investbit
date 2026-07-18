@@ -1,0 +1,41 @@
+{
+  "title": "Kelola Kategori",
+  "subtitle": "Tambah, edit, atau hapus kategori reksa dana.",
+  "form": {
+    "labels": {
+      "name": "Nama Kategori"
+    },
+    "placeholder": {
+      "name": "Input nama"
+    },
+    "confirm": {
+      "delete": "Apakah kamu yakin ingin menghapus kategori ini?"
+    },
+    "success": {
+      "add": "Berhasil menambahkan kategori baru: ",
+      "edit": "Berhasil memperbarui kategori: ",
+      "delete": "Berhasil menghapus kategori: "
+    },
+    "errors": {
+      "add": {
+        "empty": "Silakan masukkan nama untuk kategori baru.",
+        "duplicate": "Kategori dengan nama ini sudah ada.",
+        "failed": "Gagal menambahkan kategori."
+      },
+      "edit": {
+        "empty": "Silakan masukkan nama untuk kategori.",
+        "duplicate": "Kategori dengan nama ini sudah ada.",
+        "failed": "Gagal memperbarui kategori."
+      },
+      "delete": {
+        "failed": "Gagal menghapus kategori."
+      }
+    }
+  },
+  "columns": {
+    "name": "Nama"
+  },
+  "actions": {
+    "addNew": "Tambah Kategori Baru"
+  }
+}

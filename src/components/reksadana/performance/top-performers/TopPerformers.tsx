@@ -45,9 +45,11 @@ const TopPerformers: React.FC<TopPerformersProps> = ({
   columnKey,
   viewMode,
 }) => {
-  const tTopPerformers = useTranslations("reksadana.performance.topPerformers");
+  const tTopPerformers = useTranslations(
+    "public.mutualFund.performance.topPerformers",
+  );
   const tRecapPerformanceTfWeekly = useTranslations(
-    "reksadana.performance.timeframe.weekly",
+    "public.mutualFund.performance.timeframe.weekly",
   );
 
   // Compute winners

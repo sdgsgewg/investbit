@@ -3,10 +3,13 @@
   "learn": "Belajar",
   "analyze": "Analisis",
   "glossary": "Glosarium",
-  "rdnPerformance": "Performa RDN",
+  "mutualFund": {
+    "base": "Reksa Dana",
+    "performance": "Performa"
+  },
   "dashboard": {
     "base": "Dasbor",
-    "reksadana": {
+    "mutualFund": {
       "base": "Reksa Dana",
       "categories": "Kategori",
       "items": "Item",

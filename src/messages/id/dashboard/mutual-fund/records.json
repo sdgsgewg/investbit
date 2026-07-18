@@ -1,0 +1,21 @@
+{
+  "title": "Kelola Rekap Data",
+  "subtitle": "Tambah atau ubah rekap data harian dan YTD",
+  "form": {
+    "title": "Input Hasil Harian",
+    "selectDate": "Pilih Tanggal",
+    "save": "Simpan Data Harian",
+    "saving": "Menyimpan...",
+    "success": "Berhasil menyimpan data untuk ",
+    "errors": {
+      "empty": "Silakan masukkan setidaknya satu nilai hasil sebelum menyimpan.",
+      "failed": "Gagal menyimpan data. Silakan periksa konsol."
+    }
+  },
+  "table": {
+    "mutualFund": "Reksa Dana",
+    "yield1d": "1 Hari (%)",
+    "yieldYtd": "YTD (%)"
+  },
+  "loading": "Memuat daftar reksa dana..."
+}

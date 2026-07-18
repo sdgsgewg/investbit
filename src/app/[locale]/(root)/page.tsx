@@ -14,7 +14,7 @@ const ICON_MAP = {
 };
 
 export default function LandingPage() {
-  const t = useTranslations("home");
+  const t = useTranslations("public.home");
   const locale = useLocale();
 
   const features =

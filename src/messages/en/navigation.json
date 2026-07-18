@@ -3,10 +3,13 @@
   "learn": "Learn",
   "analyze": "Analyze",
   "glossary": "Glossary",
-  "rdnPerformance": "RDN Performance",
+  "mutualFund": {
+    "base":"Mutual Fund",
+    "performance": "Performance"
+  },
   "dashboard": {
     "base": "Dashboard",
-    "reksadana": {
+    "mutualFund": {
       "base": "Mutual Fund",
       "categories": "Categories",
       "items": "Items",

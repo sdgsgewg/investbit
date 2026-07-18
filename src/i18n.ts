@@ -2,21 +2,54 @@ import { getRequestConfig } from "next-intl/server";
 import { routing } from "./navigation";
 
 async function getMessages(locale: string) {
-  const messages = {
-    auth: (await import(`./messages/${locale}/auth.json`)).default,
-    home: (await import(`./messages/${locale}/home.json`)).default,
-    learn: (await import(`./messages/${locale}/learn.json`)).default,
-    glossary: (await import(`./messages/${locale}/glossary.json`)).default,
-    reksadana: (await import(`./messages/${locale}/reksadana.json`)).default,
-    navigation: (await import(`./messages/${locale}/navigation.json`)).default,
-    footer: (await import(`./messages/${locale}/footer.json`)).default,
-    theme: (await import(`./messages/${locale}/theme.json`)).default,
-    lang: (await import(`./messages/${locale}/lang.json`)).default,
-    common: (await import(`./messages/${locale}/common.json`)).default,
-    entities: (await import(`./messages/${locale}/entities.json`)).default,
+  const theme = (await import(`./messages/${locale}/theme.json`)).default;
+  const lang = (await import(`./messages/${locale}/lang.json`)).default;
+  const navigation = (await import(`./messages/${locale}/navigation.json`))
+    .default;
+  const footer = (await import(`./messages/${locale}/footer.json`)).default;
+  const common = (await import(`./messages/${locale}/common.json`)).default;
+  const auth = (await import(`./messages/${locale}/auth.json`)).default;
+  const entities = (await import(`./messages/${locale}/entities.json`)).default;
+
+  const publicMessages = {
+    home: (await import(`./messages/${locale}/public/home.json`)).default,
+    learn: (await import(`./messages/${locale}/public/learn.json`)).default,
+    glossary: (await import(`./messages/${locale}/public/glossary.json`))
+      .default,
+    mutualFund: {
+      performance: (
+        await import(`./messages/${locale}/public/mutual-fund/performance.json`)
+      ).default,
+    },
   };
 
-  return messages;
+  const dashboardMessages = {
+    mutualFund: {
+      categories: (
+        await import(
+          `./messages/${locale}/dashboard/mutual-fund/categories.json`
+        )
+      ).default,
+      items: (
+        await import(`./messages/${locale}/dashboard/mutual-fund/items.json`)
+      ).default,
+      records: (
+        await import(`./messages/${locale}/dashboard/mutual-fund/records.json`)
+      ).default,
+    },
+  };
+
+  return {
+    theme,
+    lang,
+    navigation,
+    footer,
+    common,
+    auth,
+    public: publicMessages,
+    dashboard: dashboardMessages,
+    entities,
+  };
 }
 
 export default getRequestConfig(async ({ requestLocale }) => {

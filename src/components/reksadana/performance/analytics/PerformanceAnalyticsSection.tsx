@@ -57,12 +57,12 @@ const PerformanceAnalyticsSection = ({
   setStartPeriod,
   setEndPeriod,
 }: PerformanceAnalyticsSectionProps) => {
-  const tPerformance = useTranslations("reksadana.performance");
+  const tPerformance = useTranslations("public.mutualFund.performance");
   const tPerformanceAnalytics = useTranslations(
-    "reksadana.performance.analytics",
+    "public.mutualFund.performance.analytics",
   );
   const tPerformanceTfWeekly = useTranslations(
-    "reksadana.performance.timeframe.weekly",
+    "public.mutualFund.performance.timeframe.weekly",
   );
   const tCommon = useTranslations("common");
 

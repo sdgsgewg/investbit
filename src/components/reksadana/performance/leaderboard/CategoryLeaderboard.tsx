@@ -50,8 +50,12 @@ const CategoryLeaderboard = ({
   columnKey,
   viewMode,
 }: CategoryLeaderboardProps) => {
-  const tLeaderboard = useTranslations("reksadana.performance.leaderboard");
-  const tWeekly = useTranslations("reksadana.performance.timeframe.weekly");
+  const tLeaderboard = useTranslations(
+    "public.mutualFund.performance.leaderboard",
+  );
+  const tWeekly = useTranslations(
+    "public.mutualFund.performance.timeframe.weekly",
+  );
 
   const { formatPercent } = useNumberFormatter();
 

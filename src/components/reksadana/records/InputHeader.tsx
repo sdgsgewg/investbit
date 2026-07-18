@@ -22,7 +22,7 @@ const InputHeader = ({
   saving,
   canSave,
 }: InputHeaderProps) => {
-  const tRecords = useTranslations("reksadana.records");
+  const tRecords = useTranslations("dashboard.mutualFund.records");
 
   const selectedDate = draftDate ? new Date(draftDate) : undefined;
 

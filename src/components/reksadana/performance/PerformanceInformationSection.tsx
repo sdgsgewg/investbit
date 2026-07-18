@@ -1,7 +1,7 @@
 import { useTranslations } from "next-intl";
 
 const PerformanceInformationSection = () => {
-  const t = useTranslations("reksadana.performance.analytics.legend");
+  const t = useTranslations("public.mutualFund.performance.analytics.legend");
 
   return (
     <div className="">

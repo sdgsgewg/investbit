@@ -1,0 +1,106 @@
+{
+  "title": "Performa Reksa Dana",
+  "subtitle": "Lihat performa reksa dana",
+  "loading": "Memuat data performa...",
+  "noData": "Data tidak tersedia. Gunakan tab input harian untuk menambahkan data.",
+
+  "timeframe": {
+    "daily": {
+      "nav": "Performa Harian",
+      "title": "Performa Harian",
+      "subtitle": "Performa Harian",
+      "loading": "Memuat data performa harian..."
+    },
+
+    "weekly": {
+      "nav": "Performa Mingguan",
+      "title": "Performa Mingguan",
+      "subtitle": "Performa Mingguan",
+      "loading": "Memuat data performa mingguan...",
+      "week": "Minggu"
+    },
+
+    "monthly": {
+      "nav": "Performa Bulanan",
+      "title": "Performa Bulanan",
+      "subtitle": "Performa Bulanan",
+      "loading": "Memuat data performa bulanan..."
+    },
+
+    "yearly": {
+      "nav": "Performa Tahunan",
+      "title": "Performa Tahunan",
+      "subtitle": "Performa Tahunan",
+      "loading": "Memuat data performa tahunan..."
+    },
+
+    "ytd": {
+      "title": "Performa Tahun Berjalan (YTD)",
+      "loading": "Memuat data performa YTD..."
+    }
+  },
+
+  "filter": {
+    "timeframe": {
+      "label": "Kurun Waktu",
+      "options": {
+        "daily": "Harian",
+        "weekly": "Mingguan",
+        "monthly": "Bulanan",
+        "ytd": "YTD",
+        "yearly": "Tahunan"
+      }
+    }
+  },
+
+  "topPerformers": {
+    "title": "Ikhtisar Kinerja Terbaik",
+    "noData": "Data performa tidak tersedia",
+    "labels": {
+      "daily": "Reksa Dana Terbaik Hari Ini",
+      "weekly": "Reksa Dana Terbaik Minggu Ini",
+      "monthly": "Reksa Dana Terbaik Bulan Ini",
+      "ytd": "Reksa Dana Terbaik YTD",
+      "yearly": "Reksa Dana Terbaik Tahun Ini",
+      "topIn": "Teratas Di"
+    }
+  },
+
+  "leaderboard": {
+    "title": "Papan Peringkat",
+    "subtitle": "Peringkat berdasarkan periode terbaru: {period}",
+    "noData": "Belum ada data peringkat yang bisa ditampilkan",
+    "labels": {
+      "funds": "{count} reksa dana"
+    }
+  },
+
+  "analytics": {
+    "title": "Analisis Terperinci",
+    "sort": {
+      "oldestToLatest": "Terlama hingga Terbaru",
+      "latestToOldest": "Terbaru hingga Terlama"
+    },
+    "actions": {
+      "showLatestTen": "Tampilkan 10 Terbaru",
+      "resetRange": "Reset Rentang"
+    },
+    "filters": {
+      "startPeriod": "Periode Awal",
+      "endPeriod": "Periode Akhir",
+      "startPlaceholder": "Pilih periode awal",
+      "endPlaceholder": "Pilih periode akhir"
+    },
+    "states": {
+      "allAvailableDataShown": "Semua data yang tersedia sudah ditampilkan."
+    },
+    "table": {
+      "mutualFund": "Reksa Dana"
+    },
+    "legend": {
+      "title": "Keterangan",
+      "highestYield": "Paling Cuan",
+      "lowestYield": "Paling Tidak Cuan"
+    }
+  }
+}

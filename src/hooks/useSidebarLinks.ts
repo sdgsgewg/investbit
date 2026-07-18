@@ -24,18 +24,18 @@ export function useSidebarLinks() {
 
   const contentManageLinks: NavLink[] = [
     {
-      name: tNav("dashboard.reksadana.categories"),
-      path: ROUTES.DASHBOARD.REKSADANA.CATEGORIES,
+      name: tNav("dashboard.mutualFund.categories"),
+      path: ROUTES.DASHBOARD.MUTUAL_FUND.CATEGORIES,
       icon: FolderTree,
     },
     {
-      name: tNav("dashboard.reksadana.items"),
-      path: ROUTES.DASHBOARD.REKSADANA.ITEMS,
+      name: tNav("dashboard.mutualFund.items"),
+      path: ROUTES.DASHBOARD.MUTUAL_FUND.ITEMS,
       icon: Boxes,
     },
     {
-      name: tNav("dashboard.reksadana.records"),
-      path: ROUTES.DASHBOARD.REKSADANA.RECORDS,
+      name: tNav("dashboard.mutualFund.records"),
+      path: ROUTES.DASHBOARD.MUTUAL_FUND.RECORDS,
       icon: Database,
     },
   ];

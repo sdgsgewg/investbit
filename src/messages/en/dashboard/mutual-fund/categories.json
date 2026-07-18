@@ -1,0 +1,41 @@
+{
+  "title": "Manage Categories",
+  "subtitle": "Add, edit, or delete mutual fund categories",
+  "form": {
+    "labels": {
+      "name": "Category Name"
+    },
+    "placeholder": {
+      "name": "Input name"
+    },
+    "confirm": {
+      "delete": "Are you sure you want to delete this category?"
+    },
+    "success": {
+      "add": "Successfully added new category: ",
+      "edit": "Successfully updated category: ",
+      "delete": "Successfully deleted category: "
+    },
+    "errors": {
+      "add": {
+        "empty": "Please enter a name for the new category.",
+        "duplicate": "A category with this name already exists.",
+        "failed": "Failed to add category."
+      },
+      "edit": {
+        "empty": "Please enter a name for the category.",
+        "duplicate": "A category with this name already exists.",
+        "failed": "Failed to update category."
+      },
+      "delete": {
+        "failed": "Failed to delete category."
+      }
+    }
+  },
+  "columns": {
+    "name": "Name"
+  },
+  "actions": {
+    "addNew": "Add New Category"
+  }
+}

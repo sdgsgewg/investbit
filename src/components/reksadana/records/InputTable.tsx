@@ -20,7 +20,7 @@ const InputTable = ({
   inputs,
   onInputChange,
 }: InputTableProps) => {
-  const tRecords = useTranslations("reksadana.records");
+  const tRecords = useTranslations("dashboard.mutualFund.records");
 
   return (
     <TableWrapper

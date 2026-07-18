@@ -9,7 +9,7 @@ import { useState } from "react";
 import { Search, BookOpen } from "lucide-react";
 
 export default function GlossaryPage() {
-  const t = useTranslations("glossary");
+  const t = useTranslations("public.glossary");
   const [searchTerm, setSearchTerm] = useState("");
   const locale = useLocale();
   const terms =

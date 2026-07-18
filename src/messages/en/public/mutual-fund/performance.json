@@ -1,0 +1,106 @@
+{
+  "title": "Mutual Fund Performance",
+  "subtitle": "View mutual fund performance",
+  "loading": "Loading performance data...",
+  "noData": "No data available. Use the daily input tab to add records.",
+
+  "timeframe": {
+    "daily": {
+      "nav": "Daily Performance",
+      "title": "Daily Performance",
+      "subtitle": "Daily Performance",
+      "loading": "Loading daily performance data..."
+    },
+
+    "weekly": {
+      "nav": "Weekly Performance",
+      "title": "Weekly Performance",
+      "subtitle": "Weekly Performance",
+      "loading": "Loading weekly performance data...",
+      "week": "Week"
+    },
+
+    "monthly": {
+      "nav": "Monthly Performance",
+      "title": "Monthly Performance",
+      "subtitle": "Monthly Performance",
+      "loading": "Loading monthly performance data..."
+    },
+
+    "yearly": {
+      "nav": "Yearly Performance",
+      "title": "Yearly Performance",
+      "subtitle": "Yearly Performance",
+      "loading": "Loading yearly performance data..."
+    },
+
+    "ytd": {
+      "title": "Year-To-Date Performance",
+      "loading": "Loading YTD performance data..."
+    }
+  },
+
+  "filter": {
+    "timeframe": {
+      "label": "Time Frame",
+      "options": {
+        "daily": "Daily",
+        "weekly": "Weekly",
+        "monthly": "Monthly",
+        "ytd": "YTD",
+        "yearly": "Yearly"
+      }
+    }
+  },
+
+  "topPerformers": {
+    "title": "Top Performers Overview",
+    "noData": "No performance data available",
+    "labels": {
+      "daily": "Mutual Fund of the Day",
+      "weekly": "Mutual Fund of the Week",
+      "monthly": "Mutual Fund of the Month",
+      "ytd": "Mutual Fund of YTD",
+      "yearly": "Mutual Fund of the Year",
+      "topIn": "Top In"
+    }
+  },
+
+  "leaderboard": {
+    "title": "Leaderboards",
+    "subtitle": "Ranked by the latest available period: {period}",
+    "noData": "No leaderboard data is available yet",
+    "labels": {
+      "funds": "{count} mutual funds"
+    }
+  },
+
+  "analytics": {
+    "title": "Detailed Analytics",
+    "sort": {
+      "oldestToLatest": "Oldest to Latest",
+      "latestToOldest": "Latest to Oldest"
+    },
+    "actions": {
+      "showLatestTen": "Show Latest 10",
+      "resetRange": "Reset Range"
+    },
+    "filters": {
+      "startPeriod": "Start Period",
+      "endPeriod": "End Period",
+      "startPlaceholder": "Select start period",
+      "endPlaceholder": "Select end period"
+    },
+    "states": {
+      "allAvailableDataShown": "All available data is currently shown."
+    },
+    "table": {
+      "mutualFund": "Mutual Fund"
+    },
+    "legend": {
+      "title": "Information",
+      "highestYield": "Highest Yield",
+      "lowestYield": "Lowest Yield"
+    }
+  }
+}

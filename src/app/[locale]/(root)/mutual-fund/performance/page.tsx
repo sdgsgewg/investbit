@@ -17,7 +17,7 @@ import PageHeader from "@/components/templates/PageHeader";
 import { useTranslations } from "next-intl";
 
 export default function PerformancePage() {
-  const t = useTranslations("reksadana.performance");
+  const t = useTranslations("public.mutualFund.performance");
 
   const [viewMode, setViewMode] = useState<TimeFrameType>("weekly");
   const [sortOrder, setSortOrder] = useState<SortOrderType>("desc");
