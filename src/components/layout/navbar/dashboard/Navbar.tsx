@@ -1,31 +1,31 @@
-"use client";
-
+import React, { useState } from "react";
 import { usePathname } from "@/navigation";
 import { Menu } from "lucide-react";
-import { useState } from "react";
-import { LanguageSwitcher } from "../../settings/LanguageSwitcher";
-import { ModeToggle } from "../../settings/ModeToggle";
-import NavbarLogo from "../navbar/NavbarLogo";
-import NavbarMobileMenu from "../navbar/root/NavbarMobileMenu";
+import { useAuth } from "@/providers/auth-provider";
+import NavbarLogo from "../NavbarLogo";
+import NavbarDesktopAuth from "../desktop/NavbarDesktopAuth";
+import SidebarMobileMenu from "../../sidebar/SidebarMobileMenu";
 
-export function Navbar() {
+const Navbar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const pathname = usePathname();
+
+  const { isContentManager, isSystemManager } = useAuth();
 
   const closeMobileMenu = () => setMobileMenuOpen(false);
 
   return (
-    <header>
-      <nav className="border-b bg-background/95 backdrop-blur supports-backdrop-filter:bg-background/60 sticky top-0 z-50">
-        <div className="flex h-16 items-center px-4 container mx-auto justify-between">
+    <header className="h-16 shrink-0">
+      <nav className="fixed top-0 left-0 right-0 z-50 h-16 border-b bg-background/95 backdrop-blur supports-backdrop-filter:bg-background/60">
+        <div className="flex h-full items-center justify-between px-4 lg:px-6">
           <div className="flex items-center">
             {/* Logo and Website Name */}
             <NavbarLogo />
           </div>
 
           <div className="flex items-center space-x-2 md:space-x-4">
-            <LanguageSwitcher />
-            <ModeToggle />
+            {/* Desktop Auth Section */}
+            <NavbarDesktopAuth />
 
             {/* Mobile Menu Toggle */}
             <button
@@ -40,11 +40,15 @@ export function Navbar() {
       </nav>
 
       {/* Mobile Menu Overlay */}
-      <NavbarMobileMenu
+      <SidebarMobileMenu
         open={mobileMenuOpen}
         pathname={pathname}
+        isContentManager={isContentManager}
+        isSystemManager={isSystemManager}
         onClose={closeMobileMenu}
       />
     </header>
   );
-}
+};
+
+export default Navbar;

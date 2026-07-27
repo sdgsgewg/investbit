@@ -1,4 +1,4 @@
-import { Navbar } from "@/components/layout/auth/Navbar";
+import { Navbar } from "@/components/layout/navbar/auth/Navbar";
 import React from "react";
 
 export default function AuthLayout({

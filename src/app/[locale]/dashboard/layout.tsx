@@ -1,7 +1,7 @@
 "use client";
 
-import Navbar from "@/components/layout/dashboard/Navbar";
-import Sidebar from "@/components/layout/dashboard/sidebar/Sidebar";
+import Navbar from "@/components/layout/navbar/dashboard/Navbar";
+import Sidebar from "@/components/layout/sidebar/Sidebar";
 import { usePathname } from "@/navigation";
 
 export default function DashboardLayout({

@@ -1,8 +1,8 @@
 import { useSidebarLinks } from "@/hooks/useSidebarLinks";
-import MobileDropdownMenu from "../../navbar/mobile/MobileDrodpdownMenu";
+import MobileDropdownMenu from "../navbar/mobile/MobileDrodpdownMenu";
 import { useTranslations } from "next-intl";
-import MobileMenuSheet from "../../navbar/mobile/MobileMenuSheet";
-import MobileNavLinks from "../../navbar/mobile/MobileNavLinks";
+import MobileMenuSheet from "../navbar/mobile/MobileMenuSheet";
+import MobileNavLinks from "../navbar/mobile/MobileNavLinks";
 
 interface SidebarMobileMenuProps {
   open: boolean;

@@ -3,20 +3,14 @@
 import { usePathname } from "@/navigation";
 import { Menu } from "lucide-react";
 import { useState } from "react";
-import NavbarLogo from "../navbar/NavbarLogo";
-import NavbarDesktopLinks from "../navbar/desktop/NavbarDesktopLinks";
-import NavbarDesktopAuth from "../navbar/desktop/NavbarDesktopAuth";
-import NavbarMobileMenu from "../navbar/root/NavbarMobileMenu";
-import DashboardButton from "@/components/layout/buttons/DashboardButton";
-import { useAuth } from "@/providers/auth-provider";
-import { ModeToggle } from "@/components/settings/ModeToggle";
+import NavbarLogo from "../NavbarLogo";
 import { LanguageSwitcher } from "@/components/settings/LanguageSwitcher";
+import { ModeToggle } from "@/components/settings/ModeToggle";
+import NavbarMobileMenu from "../root/NavbarMobileMenu";
 
 export function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const pathname = usePathname();
-
-  const { isGuest, isContentManager, isSystemManager } = useAuth();
 
   const closeMobileMenu = () => setMobileMenuOpen(false);
 
@@ -27,28 +21,11 @@ export function Navbar() {
           <div className="flex items-center">
             {/* Logo and Website Name */}
             <NavbarLogo />
-
-            {/* Desktop Navigation */}
-            <NavbarDesktopLinks pathname={pathname} />
           </div>
 
           <div className="flex items-center space-x-2 md:space-x-4">
-            {isGuest && (
-              <div className="hidden md:flex items-center gap-4">
-                <ModeToggle />
-                <LanguageSwitcher />
-              </div>
-            )}
-
-            {/* Dashboard Navigation Button */}
-            {(isContentManager || isSystemManager) && (
-              <div className="hidden md:flex">
-                <DashboardButton />
-              </div>
-            )}
-
-            {/* Desktop Auth Section */}
-            <NavbarDesktopAuth />
+            <LanguageSwitcher />
+            <ModeToggle />
 
             {/* Mobile Menu Toggle */}
             <button
