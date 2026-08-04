@@ -1,8 +1,15 @@
 import { createClient } from "@/utils/supabase/server";
 import { format, startOfMonth } from "date-fns";
-import { getPerformanceKey } from "@/lib/utils/reksadana/performance";
 import { RecordData } from "@/types/reksadana/records/RecordData";
-import { TimeFrameType } from "@/types/reksadana/performance/TimeFrameType";
+import {
+  PerformanceFilter,
+  PerformanceResponse,
+} from "@/types/reksadana/performance";
+import {
+  PerformanceData,
+  PerformanceItem,
+} from "@/types/reksadana/performance/DataType";
+import { TimeFrameType } from "@/enums/TimeFrameType";
 
 async function getSupabase() {
   return createClient();
@@ -12,13 +19,7 @@ type GroupedType = Record<
   string,
   {
     categoryName: string;
-    items: Record<
-      string,
-      {
-        itemId: string;
-        itemName: string;
-      } & Record<string, Record<string, number>>
-    >;
+    items: Record<string, PerformanceItem>;
   }
 >;
 
@@ -33,13 +34,9 @@ type CategoryStats = Record<
   >
 >;
 
-export async function getPerformanceRepo(params: {
-  timeFrame: TimeFrameType;
-  categoryId?: string;
-  periodLimit?: number;
-  startPeriod?: string;
-  endPeriod?: string;
-}) {
+export async function getPerformanceRepo(
+  params: PerformanceFilter,
+): Promise<PerformanceResponse> {
   const supabase = await getSupabase();
 
   const records: RecordData[] = [];
@@ -173,13 +170,16 @@ export async function getPerformanceRepo(params: {
   };
 
   const parseKeyDate = (key: string) => {
-    if (params.timeFrame === "weekly") {
+    if (params.timeFrame === TimeFrameType.WEEKLY) {
       const [yearMonth, weekPart] = key.split("-W");
       const [weekStr] = weekPart.split("|");
       return new Date(`${yearMonth}-01`).getTime() + Number(weekStr) * 1000;
     }
 
-    if (params.timeFrame === "ytd" || params.timeFrame === "yearly") {
+    if (
+      params.timeFrame === TimeFrameType.YTD ||
+      params.timeFrame === TimeFrameType.YEARLY
+    ) {
       return new Date(Number(key), 0, 1).getTime();
     }
 
@@ -188,64 +188,62 @@ export async function getPerformanceRepo(params: {
 
   const grouped: GroupedType = {};
   const timeSet = new Set<string>();
-  const keyName = getPerformanceKey(params.timeFrame);
 
-  records.forEach((r) => {
-    const item = r.rd_items;
-    if (!item || !item.rd_categories || !r.date) return;
+  records.forEach((record) => {
+    const item = record.rd_items;
 
-    const cat = item.rd_categories.name;
+    if (!item || !item.rd_categories || !record.date) return;
 
-    if (!grouped[cat]) {
-      grouped[cat] = { categoryName: cat, items: {} };
+    const categoryName = item.rd_categories.name;
+
+    if (!grouped[categoryName]) {
+      grouped[categoryName] = { categoryName, items: {} };
     }
 
-    if (!grouped[cat].items[item.id]) {
-      grouped[cat].items[item.id] = {
+    if (!grouped[categoryName].items[item.id]) {
+      grouped[categoryName].items[item.id] = {
         itemId: item.id,
         itemName: item.name,
-        [keyName]: {} as Record<string, number>,
-      } as { itemId: string; itemName: string } & Record<
-        string,
-        Record<string, number>
-      >;
+        yields: {},
+      };
     }
 
-    let key = "";
+    let periodKey = "";
 
     switch (params.timeFrame) {
-      case "daily":
-        key = r.date;
+      case TimeFrameType.DAILY:
+        periodKey = record.date;
         break;
-      case "weekly":
-        key = getWeekKey(r.date);
+      case TimeFrameType.WEEKLY:
+        periodKey = getWeekKey(record.date);
         break;
-      case "monthly":
-        key = format(startOfMonth(new Date(r.date)), "yyyy-MM-dd");
+      case TimeFrameType.MONTHLY:
+        periodKey = format(startOfMonth(new Date(record.date)), "yyyy-MM-dd");
         break;
-      case "ytd":
-      case "yearly":
-        key = r.date.substring(0, 4);
+      case TimeFrameType.YTD:
+      case TimeFrameType.YEARLY:
+        periodKey = record.date.substring(0, 4);
         break;
     }
 
-    if (!key || key === "Invalid Date") return;
+    if (!periodKey || periodKey === "Invalid Date") return;
 
-    timeSet.add(key);
+    timeSet.add(periodKey);
 
-    const container = grouped[cat].items[item.id][keyName];
+    const yields = grouped[categoryName].items[item.id].yields;
 
-    if (params.timeFrame === "ytd") {
+    if (params.timeFrame === TimeFrameType.YTD) {
       // Records are sorted ascending by date, so the last assignment per year
       // becomes the latest available YTD value for that item.
-      container[key] = r.yield_ytd ?? 0;
+      yields[periodKey] = record.yield_ytd ?? 0;
       return;
     }
 
-    const val = r.yield_1d ?? 0;
-    const existing = container[key] ?? 0;
+    const value = record.yield_1d ?? 0;
+    const existingValue = yields[periodKey] ?? 0;
 
-    container[key] = params.timeFrame === "daily" ? val : existing + val;
+    yields[periodKey] =
+      params.timeFrame === TimeFrameType.DAILY ? value : existingValue + value;
   });
 
   const availablePeriods = Array.from(timeSet).sort(
@@ -253,7 +251,9 @@ export async function getPerformanceRepo(params: {
   );
 
   const isRangeMode = Boolean(params.startPeriod || params.endPeriod);
+
   const effectiveStartPeriod = params.startPeriod || availablePeriods[0] || "";
+
   const effectiveEndPeriod =
     params.endPeriod || availablePeriods[availablePeriods.length - 1] || "";
 
@@ -266,8 +266,8 @@ export async function getPerformanceRepo(params: {
     const rangeEnd = Math.max(startTimestamp, endTimestamp);
 
     timePeriods = availablePeriods.filter((period) => {
-      const periodTimestamp = parseKeyDate(period);
-      return periodTimestamp >= rangeStart && periodTimestamp <= rangeEnd;
+      const timestamp = parseKeyDate(period);
+      return timestamp >= rangeStart && timestamp <= rangeEnd;
     });
   } else if (params.periodLimit && params.periodLimit > 0) {
     timePeriods = availablePeriods.slice(-params.periodLimit);
@@ -280,51 +280,48 @@ export async function getPerformanceRepo(params: {
 
   const categoryStats: CategoryStats = {};
 
-  const data = Object.values(grouped)
+  const data: PerformanceData = Object.values(grouped)
     .sort((a, b) => a.categoryName.localeCompare(b.categoryName))
-    .map((cat) => {
-      const items = Object.values(cat.items).sort((a, b) =>
+    .map((category) => {
+      const items = Object.values(category.items).sort((a, b) =>
         a.itemName.localeCompare(b.itemName),
       );
 
-      categoryStats[cat.categoryName] = {};
+      categoryStats[category.categoryName] = {};
 
-      timePeriods.forEach((t) => {
-        const vals = items
-          .map((i) => i[keyName as keyof typeof i]?.[t])
-          .filter((v) => v !== undefined) as number[];
+      timePeriods.forEach((period) => {
+        const values = items
+          .map((item) => item.yields[period])
+          .filter((value): value is number => value !== undefined);
 
-        if (vals.length > 0) {
-          categoryStats[cat.categoryName][t] = {
-            min: Math.min(...vals),
-            max: Math.max(...vals),
+        if (values.length > 0) {
+          categoryStats[category.categoryName][period] = {
+            min: Math.min(...values),
+            max: Math.max(...values),
           };
         }
       });
 
-      const cleanedItems = items.map((i) => {
-        const yieldRecord = i[keyName as keyof typeof i] as Record<
-          string,
-          number
-        >;
+      const cleanedItems = items.map((item) => {
         const filteredYields: Record<string, number> = {};
 
-        if (yieldRecord) {
-          timePeriods.forEach((t) => {
-            if (yieldRecord[t] !== undefined) {
-              filteredYields[t] = yieldRecord[t];
-            }
-          });
-        }
+        timePeriods.forEach((period) => {
+          const value = item.yields[period];
+
+          if (value !== undefined) {
+            filteredYields[period] = value;
+          }
+        });
 
         return {
-          ...i,
-          [keyName]: filteredYields,
+          itemId: item.itemId,
+          itemName: item.itemName,
+          yields: filteredYields,
         };
       });
 
       return {
-        categoryName: cat.categoryName,
+        categoryName: category.categoryName,
         items: cleanedItems,
       };
     });

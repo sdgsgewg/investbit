@@ -6,50 +6,34 @@
 
   "timeframe": {
     "daily": {
-      "nav": "Daily Performance",
+      "label": "Daily",
       "title": "Daily Performance",
-      "subtitle": "Daily Performance",
       "loading": "Loading daily performance data..."
     },
 
     "weekly": {
-      "nav": "Weekly Performance",
+      "label": "Weekly",
       "title": "Weekly Performance",
-      "subtitle": "Weekly Performance",
       "loading": "Loading weekly performance data...",
       "week": "Week"
     },
 
     "monthly": {
-      "nav": "Monthly Performance",
+      "label": "Monthly",
       "title": "Monthly Performance",
-      "subtitle": "Monthly Performance",
       "loading": "Loading monthly performance data..."
     },
 
-    "yearly": {
-      "nav": "Yearly Performance",
-      "title": "Yearly Performance",
-      "subtitle": "Yearly Performance",
-      "loading": "Loading yearly performance data..."
-    },
-
     "ytd": {
+      "label": "YTD",
       "title": "Year-To-Date Performance",
       "loading": "Loading YTD performance data..."
-    }
-  },
+    },
 
-  "filter": {
-    "timeframe": {
-      "label": "Time Frame",
-      "options": {
-        "daily": "Daily",
-        "weekly": "Weekly",
-        "monthly": "Monthly",
-        "ytd": "YTD",
-        "yearly": "Yearly"
-      }
+    "yearly": {
+      "label": "Yearly",
+      "title": "Yearly Performance",
+      "loading": "Loading yearly performance data..."
     }
   },
 

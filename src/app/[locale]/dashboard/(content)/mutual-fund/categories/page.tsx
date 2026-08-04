@@ -7,7 +7,7 @@ import { useTranslations } from "next-intl";
 import {
   useCategories,
   useCategoryData,
-} from "@/hooks/dashboard/reksadana/categories";
+} from "@/hooks/dashboard/mutual-fund/categories";
 
 export default function CategoriesManagementPage() {
   const t = useTranslations("dashboard.mutualFund.categories");

@@ -1,25 +1,13 @@
 import { Award, Medal, Trophy } from "lucide-react";
 import { useTranslations } from "next-intl";
+
 import { safeFormatDate } from "@/lib/utils/date";
-import CategoryLeaderboardSkeleton from "./CategoryLeaderboardSkeleton";
 import { useNumberFormatter } from "@/hooks/useNumberFormatter";
-import { TimeFrameType } from "@/types/reksadana/performance/TimeFrameType";
 
-interface PerformanceItem {
-  itemId: string;
-  itemName: string;
-  dailyYields?: Record<string, number>;
-  weeklyYields?: Record<string, number>;
-  monthlyYields?: Record<string, number>;
-  ytdYields?: Record<string, number>;
-  yearlyYields?: Record<string, number>;
-  [key: string]: string | Record<string, number> | undefined;
-}
+import { PerformanceData } from "@/types/reksadana/performance/DataType";
 
-interface PerformanceCategory {
-  categoryName: string;
-  items: PerformanceItem[];
-}
+import CategoryLeaderboardSkeleton from "./CategoryLeaderboardSkeleton";
+import { TimeFrameType } from "@/enums/TimeFrameType";
 
 interface RankedItem {
   itemId: string;
@@ -34,11 +22,10 @@ interface RankedCategory {
 }
 
 interface CategoryLeaderboardProps {
-  data: PerformanceCategory[];
+  data: PerformanceData;
   timePeriods: string[];
   loading: boolean;
   fetching: boolean;
-  columnKey: string;
   viewMode: TimeFrameType;
 }
 
@@ -47,7 +34,6 @@ const CategoryLeaderboard = ({
   timePeriods,
   loading,
   fetching,
-  columnKey,
   viewMode,
 }: CategoryLeaderboardProps) => {
   const tLeaderboard = useTranslations(
@@ -61,23 +47,14 @@ const CategoryLeaderboard = ({
 
   const latestPeriod = timePeriods[timePeriods.length - 1];
 
-  const getYieldForPeriod = (
-    item: PerformanceItem,
-    period: string,
-  ): number | undefined => {
-    const candidate = item[columnKey];
-    if (!candidate || typeof candidate !== "object") return undefined;
-
-    return (candidate as Record<string, number>)[period];
-  };
-
   const rankedCategories: RankedCategory[] =
     latestPeriod && data.length > 0
       ? data
           .map((category) => {
             const rankedItems = category.items
               .map((item) => {
-                const yieldVal = getYieldForPeriod(item, latestPeriod);
+                const yieldVal = item.yields[latestPeriod];
+
                 return yieldVal !== undefined && !Number.isNaN(yieldVal)
                   ? {
                       itemId: item.itemId,
@@ -104,11 +81,11 @@ const CategoryLeaderboard = ({
   const getPeriodDisplay = () => {
     if (!latestPeriod) return "";
 
-    if (viewMode === "daily") {
+    if (viewMode === TimeFrameType.DAILY) {
       return safeFormatDate(latestPeriod, "dd MMMM yyyy");
     }
 
-    if (viewMode === "weekly" && latestPeriod.includes("-W")) {
+    if (viewMode === TimeFrameType.WEEKLY && latestPeriod.includes("-W")) {
       const [yearMonth, weekPart] = latestPeriod.split("-W");
       const [weekStr, rangeStr] = weekPart.split("|");
       const [year, month] = yearMonth.split("-");
@@ -118,11 +95,11 @@ const CategoryLeaderboard = ({
       return `${tWeekly("week")} ${weekStr} ${monthName} (${rangeStr}), ${year}`;
     }
 
-    if (viewMode === "monthly") {
+    if (viewMode === TimeFrameType.MONTHLY) {
       return safeFormatDate(latestPeriod, "MMMM yyyy");
     }
 
-    if (viewMode === "ytd") {
+    if (viewMode === TimeFrameType.YTD) {
       return `YTD ${latestPeriod}`;
     }
 

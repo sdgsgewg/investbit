@@ -4,30 +4,14 @@ import { motion } from "framer-motion";
 import { useTranslations } from "next-intl";
 import TopPerformersSkeleton from "./TopPerformersSkeleton";
 import { safeFormatDate } from "@/lib/utils/date";
-import { TimeFrameType } from "@/types/reksadana/performance/TimeFrameType";
-
-interface PerformanceItem {
-  itemId: string;
-  itemName: string;
-  dailyYields?: Record<string, number>;
-  weeklyYields?: Record<string, number>;
-  monthlyYields?: Record<string, number>;
-  ytdYields?: Record<string, number>;
-  yearlyYields?: Record<string, number>;
-  [key: string]: any;
-}
-
-interface PerformanceCategory {
-  categoryName: string;
-  items: PerformanceItem[];
-}
+import { PerformanceData } from "@/types/reksadana/performance/DataType";
+import { TimeFrameType } from "@/enums/TimeFrameType";
 
 interface TopPerformersProps {
-  data: PerformanceCategory[];
+  data: PerformanceData;
   timePeriods: string[];
   loading: boolean;
   fetching: boolean;
-  columnKey: string;
   viewMode: TimeFrameType;
 }
 
@@ -42,7 +26,6 @@ const TopPerformers: React.FC<TopPerformersProps> = ({
   timePeriods,
   loading,
   fetching,
-  columnKey,
   viewMode,
 }) => {
   const tTopPerformers = useTranslations(
@@ -68,7 +51,7 @@ const TopPerformers: React.FC<TopPerformersProps> = ({
       let bestInCategory: { name: string; yieldVal: number } | null = null;
 
       for (const item of category.items) {
-        const yieldVal = item[columnKey]?.[latestPeriod];
+        const yieldVal = item.yields[latestPeriod];
 
         if (
           yieldVal !== undefined &&
@@ -99,7 +82,7 @@ const TopPerformers: React.FC<TopPerformersProps> = ({
     }
 
     return { latestPeriod, overallBest, categoryBests };
-  }, [data, timePeriods, columnKey]);
+  }, [data, timePeriods]);
 
   // 1. First load → full skeleton
   if (loading) {
@@ -125,16 +108,18 @@ const TopPerformers: React.FC<TopPerformersProps> = ({
   const { overallBest, categoryBests, latestPeriod } = winners;
 
   const getLabel = () => {
-    if (viewMode === "daily") return tTopPerformers("labels.daily");
-    if (viewMode === "weekly") return tTopPerformers("labels.weekly");
-    if (viewMode === "monthly") return tTopPerformers("labels.monthly");
-    if (viewMode === "ytd") return tTopPerformers("labels.ytd");
+    if (viewMode === TimeFrameType.DAILY) return tTopPerformers("labels.daily");
+    if (viewMode === TimeFrameType.WEEKLY)
+      return tTopPerformers("labels.weekly");
+    if (viewMode === TimeFrameType.MONTHLY)
+      return tTopPerformers("labels.monthly");
+    if (viewMode === TimeFrameType.YTD) return tTopPerformers("labels.ytd");
     return tTopPerformers("labels.yearly");
   };
 
   const getPeriodDisplay = () => {
     try {
-      if (viewMode === "daily") {
+      if (viewMode === TimeFrameType.DAILY) {
         try {
           const safeDateStr = latestPeriod.split("T")[0];
           const d = new Date(safeDateStr + "T00:00:00");
@@ -153,7 +138,7 @@ const TopPerformers: React.FC<TopPerformersProps> = ({
         }
       }
 
-      if (viewMode === "weekly") {
+      if (viewMode === TimeFrameType.WEEKLY) {
         if (latestPeriod.includes("-W")) {
           const [ym, weekPart] = latestPeriod.split("-W");
           const [w, range] = weekPart.split("|");
@@ -165,7 +150,7 @@ const TopPerformers: React.FC<TopPerformersProps> = ({
         return latestPeriod;
       }
 
-      if (viewMode === "monthly") {
+      if (viewMode === TimeFrameType.MONTHLY) {
         const d = new Date(latestPeriod);
         if (!isNaN(d.getTime())) {
           return d.toLocaleDateString("en-US", {
@@ -176,11 +161,11 @@ const TopPerformers: React.FC<TopPerformersProps> = ({
         return latestPeriod;
       }
 
-      if (viewMode === "ytd") {
+      if (viewMode === TimeFrameType.YTD) {
         return `YTD ${latestPeriod}`;
       }
 
-      if (viewMode === "yearly") {
+      if (viewMode === TimeFrameType.YEARLY) {
         return latestPeriod;
       }
 

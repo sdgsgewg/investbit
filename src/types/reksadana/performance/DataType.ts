@@ -1,53 +1,12 @@
-export type DailyPerformanceAggregatedData = {
+export interface PerformanceItem {
+  itemId: string;
+  itemName: string;
+  yields: Record<string, number>;
+}
+
+export interface PerformanceAggregatedData {
   categoryName: string;
-  items: {
-    itemId: string;
-    itemName: string;
-    dailyYields: Record<string, number>; // date: yield_1d
-  }[];
-};
+  items: PerformanceItem[];
+}
 
-export type WeeklyPerformanceAggregatedData = {
-  categoryName: string;
-  items: {
-    itemId: string;
-    itemName: string;
-    weeklyYields: { [weekStart: string]: number };
-  }[];
-};
-
-
-export type MonthlyPerformanceAggregatedData = {
-  categoryName: string;
-  items: {
-    itemId: string;
-    itemName: string;
-    monthlyYields: { [monthStart: string]: number };
-  }[];
-};
-
-export type YtdPerformanceAggregatedData = {
-  categoryName: string;
-  items: {
-    itemId: string;
-    itemName: string;
-    ytdYields: Record<string, number>; // year: latest yield_ytd
-  }[];
-};
-
-export type YearlyPerformanceAggregatedData = {
-  categoryName: string;
-  items: {
-    itemId: string;
-    itemName: string;
-    yearlyYields: { [year: string]: number };
-  }[];
-};
-
-
-export type PerformanceData =
-  | DailyPerformanceAggregatedData[]
-  | WeeklyPerformanceAggregatedData[]
-  | MonthlyPerformanceAggregatedData[]
-  | YtdPerformanceAggregatedData[]
-  | YearlyPerformanceAggregatedData[];
+export type PerformanceData = PerformanceAggregatedData[];

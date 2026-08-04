@@ -4,8 +4,8 @@ import { CrudPage } from "@/components/templates/CrudPage";
 import ConnectionErrorAlert from "@/components/feedback/ConnectionErrorAlert";
 import { isLikelyConnectionError } from "@/lib/utils/connection-error";
 import { useTranslations } from "next-intl";
-import { useCategories } from "@/hooks/dashboard/reksadana/categories";
-import { useItemData, useItems } from "@/hooks/dashboard/reksadana/items";
+import { useCategories } from "@/hooks/dashboard/mutual-fund/categories";
+import { useItemData, useItems } from "@/hooks/dashboard/mutual-fund/items";
 
 export default function ItemsManagementPage() {
   const t = useTranslations("dashboard.mutualFund.items");

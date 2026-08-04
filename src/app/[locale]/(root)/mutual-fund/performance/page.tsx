@@ -1,13 +1,9 @@
 "use client";
 
 import React, { useState } from "react";
-import { getPerformanceKey } from "@/lib/utils/reksadana/performance";
 import TopProgressBar from "@/components/feedback/TopProgressBar";
 import ConnectionErrorAlert from "@/components/feedback/ConnectionErrorAlert";
 import { isLikelyConnectionError } from "@/lib/utils/connection-error";
-import { TimeFrameType } from "@/types/reksadana/performance/TimeFrameType";
-import { SortOrderType } from "@/types/reksadana/performance/SortOrderType";
-import { usePerformanceData } from "@/hooks/dashboard/reksadana/usePerformanceData";
 import FilterPerformanceSection from "@/components/reksadana/performance/filter/FilterPerformanceSection";
 import PerformanceSectionWrapper from "@/components/reksadana/performance/PerformanceSectionWrapper";
 import TopPerformers from "@/components/reksadana/performance/top-performers/TopPerformers";
@@ -15,12 +11,15 @@ import CategoryLeaderboard from "@/components/reksadana/performance/leaderboard/
 import PerformanceAnalyticsSection from "@/components/reksadana/performance/analytics/PerformanceAnalyticsSection";
 import PageHeader from "@/components/templates/PageHeader";
 import { useTranslations } from "next-intl";
+import { usePerformanceData } from "@/hooks/mutual-fund/performance";
+import { SortOrder } from "@/types/sort";
+import { TimeFrameType } from "@/enums/TimeFrameType";
 
 export default function PerformancePage() {
   const t = useTranslations("public.mutualFund.performance");
 
-  const [viewMode, setViewMode] = useState<TimeFrameType>("weekly");
-  const [sortOrder, setSortOrder] = useState<SortOrderType>("desc");
+  const [viewMode, setViewMode] = useState<TimeFrameType>(TimeFrameType.WEEKLY);
+  const [sortOrder, setSortOrder] = useState<SortOrder>("desc");
   const performanceData = usePerformanceData({ timeFrame: viewMode });
   const {
     data,
@@ -50,11 +49,9 @@ export default function PerformancePage() {
     setViewMode(viewMode);
   };
 
-  const handleChangeSortOrder = (sortOrder: SortOrderType) => {
+  const handleChangeSortOrder = (sortOrder: SortOrder) => {
     setSortOrder(sortOrder);
   };
-
-  const columnKey = getPerformanceKey(viewMode);
 
   return (
     <>
@@ -81,7 +78,6 @@ export default function PerformancePage() {
           timePeriods={timePeriods}
           loading={loading}
           fetching={fetching}
-          columnKey={columnKey}
           viewMode={viewMode}
         />
       </PerformanceSectionWrapper>
@@ -93,7 +89,6 @@ export default function PerformancePage() {
           timePeriods={timePeriods}
           loading={loading}
           fetching={fetching}
-          columnKey={columnKey}
           viewMode={viewMode}
         />
       </PerformanceSectionWrapper>
@@ -109,7 +104,6 @@ export default function PerformancePage() {
           fetching={fetching}
           viewMode={viewMode}
           sortOrder={sortOrder}
-          columnKey={columnKey}
           onChangeSortOrder={handleChangeSortOrder}
           getCellColor={getCellColor}
           loadMorePeriods={loadMorePeriods}

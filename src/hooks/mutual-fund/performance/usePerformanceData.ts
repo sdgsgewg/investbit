@@ -3,15 +3,17 @@ import { useQuery } from "@tanstack/react-query";
 import { queryKeys } from "@/lib/react-query/queryKeys";
 import { fetchPerformance } from "@/lib/api/reksadana/performance";
 import { queryConfig } from "@/lib/react-query/queryConfig";
-import { TimeFrameType } from "@/types/reksadana/performance/TimeFrameType";
-import { FilterPerformance } from "@/types/reksadana/performance/FilterPerformance";
 import { PerformanceData } from "@/types/reksadana/performance/DataType";
 import { CategoryStats } from "@/types/reksadana/performance/CategoryStats";
-import { PerformanceResponse } from "@/types/reksadana/performance/PerformanceResponse";
+import {
+  PerformanceFilter,
+  PerformanceResponse,
+} from "@/types/reksadana/performance";
+import { TimeFrameType } from "@/enums/TimeFrameType";
 
 interface UsePerformanceDataProps {
   timeFrame: TimeFrameType;
-  initialForm?: FilterPerformance;
+  initialForm?: PerformanceFilter;
 }
 
 interface UsePerformanceDataReturn {
@@ -21,8 +23,8 @@ interface UsePerformanceDataReturn {
   loading: boolean;
   fetching: boolean;
   retrying: boolean;
-  form: FilterPerformance;
-  setForm: React.Dispatch<React.SetStateAction<FilterPerformance>>;
+  form: PerformanceFilter;
+  setForm: React.Dispatch<React.SetStateAction<PerformanceFilter>>;
   categoryStats: CategoryStats;
   getCellColor: (
     val: number | undefined,
@@ -47,9 +49,9 @@ const DEFAULT_PERIOD_LIMIT = 10;
 
 export const usePerformanceData = ({
   timeFrame,
-  initialForm = { category_id: "" },
+  initialForm = { categoryId: "" },
 }: UsePerformanceDataProps): UsePerformanceDataReturn => {
-  const [form, setRawForm] = useState<FilterPerformance>(initialForm);
+  const [form, setRawForm] = useState<PerformanceFilter>(initialForm);
   const [periodLimit, setPeriodLimit] = useState(DEFAULT_PERIOD_LIMIT);
   const [selectedStartPeriod, setSelectedStartPeriod] = useState("");
   const [selectedEndPeriod, setSelectedEndPeriod] = useState("");
@@ -60,7 +62,7 @@ export const usePerformanceData = ({
     useQuery<PerformanceResponse>({
       queryKey: queryKeys.performance({
         timeFrame,
-        categoryId: form.category_id,
+        categoryId: form.categoryId,
         periodLimit: isRangeMode ? undefined : periodLimit,
         startPeriod: isRangeMode ? selectedStartPeriod || undefined : undefined,
         endPeriod: isRangeMode ? selectedEndPeriod || undefined : undefined,
@@ -68,7 +70,7 @@ export const usePerformanceData = ({
       queryFn: () =>
         fetchPerformance({
           timeFrame,
-          categoryId: form.category_id,
+          categoryId: form.categoryId,
           periodLimit: isRangeMode ? undefined : periodLimit,
           startPeriod: isRangeMode
             ? selectedStartPeriod || undefined
@@ -106,7 +108,7 @@ export const usePerformanceData = ({
     setSelectedEndPeriod("");
   };
 
-  const setForm: React.Dispatch<React.SetStateAction<FilterPerformance>> = (
+  const setForm: React.Dispatch<React.SetStateAction<PerformanceFilter>> = (
     value,
   ) => {
     resetToLatestPeriods();

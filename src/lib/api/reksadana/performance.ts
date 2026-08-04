@@ -1,26 +1,24 @@
-import { PerformanceResponse } from "@/types/reksadana/performance/PerformanceResponse";
+import {
+  PerformanceQuery,
+  PerformanceResponse,
+} from "@/types/reksadana/performance";
 import { apiClient } from "../client";
+import { ApiResponse } from "@/types/api";
 
-export const fetchPerformance = async (params: {
-  timeFrame: string;
-  categoryId?: string;
-  periodLimit?: number;
-  startPeriod?: string;
-  endPeriod?: string;
-}): Promise<PerformanceResponse> => {
-  const { data } = await apiClient.get<{
-    success: boolean;
-    data: PerformanceResponse;
-  }>("/reksadana/recap/performance", {
-    params: {
-      timeFrame: params.timeFrame,
-      categoryId: params.categoryId || undefined,
-      periodLimit:
-        params.startPeriod || params.endPeriod ? undefined : params.periodLimit,
-      startPeriod: params.startPeriod || undefined,
-      endPeriod: params.endPeriod || undefined,
+/**
+ *
+ * @param params
+ * @returns PerformanceResponse
+ */
+export const fetchPerformance = async (
+  params?: PerformanceQuery,
+): Promise<PerformanceResponse> => {
+  const { data } = await apiClient.get<ApiResponse<PerformanceResponse>>(
+    "/reksadana/recap/performance",
+    {
+      params,
     },
-  });
+  );
 
   return data.data;
 };

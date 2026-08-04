@@ -1,7 +1,7 @@
 import React from "react";
 import { useTranslations } from "next-intl";
 import TableWrapper from "@/components/ui/TableWrapper";
-import { PerformanceKey } from "@/types/reksadana/performance/PerformanceKey";
+import { PerformanceData } from "@/types/reksadana/performance/DataType";
 
 interface ColumnHeader {
   key: string;
@@ -9,27 +9,9 @@ interface ColumnHeader {
   subLabel?: string;
 }
 
-type YieldMap = Record<string, number>;
-
-interface PerformanceItem {
-  itemId: string;
-  itemName: string;
-  dailyYields?: YieldMap;
-  weeklyYields?: YieldMap;
-  monthlyYields?: YieldMap;
-  yearlyYields?: YieldMap;
-  ytdYields?: YieldMap;
-}
-
-interface PerformanceCategory {
-  categoryName: string;
-  items: PerformanceItem[];
-}
-
 interface PerformanceTableProps {
-  data: PerformanceCategory[];
+  data: PerformanceData;
   columns: ColumnHeader[];
-  columnKey: PerformanceKey;
   getCellColor: (
     val: number | undefined,
     catName: string,
@@ -41,7 +23,6 @@ interface PerformanceTableProps {
 const PerformanceTable: React.FC<PerformanceTableProps> = ({
   data,
   columns,
-  columnKey,
   getCellColor,
   noDataMessage,
 }) => {
@@ -105,7 +86,7 @@ const PerformanceTable: React.FC<PerformanceTableProps> = ({
                     {item.itemName}
                   </td>
                   {columns.map((col) => {
-                    const yieldVal = item[columnKey]?.[col.key];
+                    const yieldVal = item.yields[col.key];
                     const bgColor = getCellColor(
                       yieldVal,
                       category.categoryName,

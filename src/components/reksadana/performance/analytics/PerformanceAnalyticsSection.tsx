@@ -6,9 +6,8 @@ import TableOverlay from "@/components/feedback/TableOverlay";
 import { safeFormatDate } from "@/lib/utils/date";
 import Dropdown from "@/components/ui/Dropdown";
 import { PerformanceData } from "@/types/reksadana/performance/DataType";
-import { TimeFrameType } from "@/types/reksadana/performance/TimeFrameType";
-import { SortOrderType } from "@/types/reksadana/performance/SortOrderType";
-import { PerformanceKey } from "@/types/reksadana/performance/PerformanceKey";
+import { SortOrder } from "@/types/sort";
+import { TimeFrameType } from "@/enums/TimeFrameType";
 
 interface PerformanceAnalyticsSectionProps {
   data: PerformanceData;
@@ -17,9 +16,8 @@ interface PerformanceAnalyticsSectionProps {
   loading: boolean;
   fetching: boolean;
   viewMode: TimeFrameType;
-  sortOrder: SortOrderType;
-  columnKey: PerformanceKey;
-  onChangeSortOrder: (sortOrder: SortOrderType) => void;
+  sortOrder: SortOrder;
+  onChangeSortOrder: (sortOrder: SortOrder) => void;
   getCellColor: (
     val: number | undefined,
     catName: string,
@@ -44,7 +42,6 @@ const PerformanceAnalyticsSection = ({
   fetching,
   viewMode,
   sortOrder,
-  columnKey,
   onChangeSortOrder,
   getCellColor,
   hasMoreOlder,
@@ -67,13 +64,13 @@ const PerformanceAnalyticsSection = ({
   const tCommon = useTranslations("common");
 
   const getPeriodTimestamp = (period: string) => {
-    if (viewMode === "weekly") {
+    if (viewMode === TimeFrameType.WEEKLY) {
       const [yearMonth, weekPart] = period.split("-W");
       const [weekStr] = weekPart.split("|");
       return new Date(`${yearMonth}-01`).getTime() + Number(weekStr) * 1000;
     }
 
-    if (viewMode === "ytd" || viewMode === "yearly") {
+    if (viewMode === TimeFrameType.YTD || viewMode === TimeFrameType.YEARLY) {
       return new Date(Number(period), 0, 1).getTime();
     }
 
@@ -81,7 +78,7 @@ const PerformanceAnalyticsSection = ({
   };
 
   const getPeriodOptionLabel = (period: string) => {
-    if (viewMode === "weekly") {
+    if (viewMode === TimeFrameType.WEEKLY) {
       const [yearMonth, weekPart] = period.split("-W");
       const [weekStr, rangeStr] = weekPart.split("|");
       const [year, month] = yearMonth.split("-");
@@ -91,15 +88,15 @@ const PerformanceAnalyticsSection = ({
       return `${tPerformanceTfWeekly("week")} ${weekStr} ${monthName} (${rangeStr})`;
     }
 
-    if (viewMode === "daily") {
+    if (viewMode === TimeFrameType.DAILY) {
       return safeFormatDate(period, "dd MMM yyyy");
     }
 
-    if (viewMode === "monthly") {
+    if (viewMode === TimeFrameType.MONTHLY) {
       return safeFormatDate(period, "MMMM yyyy");
     }
 
-    if (viewMode === "ytd") {
+    if (viewMode === TimeFrameType.YTD) {
       return `YTD ${period}`;
     }
 
@@ -138,7 +135,7 @@ const PerformanceAnalyticsSection = ({
   const columns = sortedTimePeriods
     .filter((p): p is string => Boolean(p))
     .map((period) => {
-      if (viewMode === "weekly") {
+      if (viewMode === TimeFrameType.WEEKLY) {
         const [yearMonth, weekPart] = period.split("-W");
         const [weekStr, rangeStr] = weekPart.split("|");
         const [year, month] = yearMonth.split("-");
@@ -152,7 +149,7 @@ const PerformanceAnalyticsSection = ({
         };
       }
 
-      if (viewMode === "daily") {
+      if (viewMode === TimeFrameType.DAILY) {
         return {
           key: period,
           label: safeFormatDate(period, "dd MMM"),
@@ -160,14 +157,14 @@ const PerformanceAnalyticsSection = ({
         };
       }
 
-      if (viewMode === "monthly") {
+      if (viewMode === TimeFrameType.MONTHLY) {
         return {
           key: period,
           label: safeFormatDate(period, "MMMM yyyy"),
         };
       }
 
-      if (viewMode === "ytd") {
+      if (viewMode === TimeFrameType.YTD) {
         return {
           key: period,
           label: `YTD ${period}`,
@@ -301,7 +298,6 @@ const PerformanceAnalyticsSection = ({
             <PerformanceTable
               data={data}
               columns={columns}
-              columnKey={columnKey}
               getCellColor={getCellColor}
               noDataMessage={tPerformance("noData")}
             />

@@ -6,50 +6,34 @@
 
   "timeframe": {
     "daily": {
-      "nav": "Performa Harian",
+      "label": "Harian",
       "title": "Performa Harian",
-      "subtitle": "Performa Harian",
       "loading": "Memuat data performa harian..."
     },
 
     "weekly": {
-      "nav": "Performa Mingguan",
+      "label": "Mingguan",
       "title": "Performa Mingguan",
-      "subtitle": "Performa Mingguan",
       "loading": "Memuat data performa mingguan...",
       "week": "Minggu"
     },
 
     "monthly": {
-      "nav": "Performa Bulanan",
+      "label": "Bulanan",
       "title": "Performa Bulanan",
-      "subtitle": "Performa Bulanan",
       "loading": "Memuat data performa bulanan..."
     },
 
-    "yearly": {
-      "nav": "Performa Tahunan",
-      "title": "Performa Tahunan",
-      "subtitle": "Performa Tahunan",
-      "loading": "Memuat data performa tahunan..."
-    },
-
     "ytd": {
+      "label": "YTD",
       "title": "Performa Tahun Berjalan (YTD)",
       "loading": "Memuat data performa YTD..."
-    }
-  },
+    },
 
-  "filter": {
-    "timeframe": {
-      "label": "Kurun Waktu",
-      "options": {
-        "daily": "Harian",
-        "weekly": "Mingguan",
-        "monthly": "Bulanan",
-        "ytd": "YTD",
-        "yearly": "Tahunan"
-      }
+    "yearly": {
+      "label": "Tahunan",
+      "title": "Performa Tahunan",
+      "loading": "Memuat data performa tahunan..."
     }
   },
 

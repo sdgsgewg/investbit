@@ -1,15 +1,15 @@
 import { useTranslations } from "next-intl";
 import React from "react";
 import Dropdown from "@/components/ui/Dropdown";
-import { TimeFrameType } from "@/types/reksadana/performance/TimeFrameType";
-import { FilterPerformance } from "@/types/reksadana/performance/FilterPerformance";
-import { useCategories } from "@/hooks/dashboard/reksadana/categories";
+import { useCategories } from "@/hooks/dashboard/mutual-fund/categories";
+import { TimeFrameType } from "@/enums/TimeFrameType";
+import { PerformanceFilter } from "@/types/reksadana/performance";
 
 interface FilterPerformanceSectionProps {
   viewMode: TimeFrameType;
-  form: FilterPerformance;
+  form: PerformanceFilter;
   onChangeViewMode: (viewMode: TimeFrameType) => void;
-  setForm: React.Dispatch<React.SetStateAction<FilterPerformance>>;
+  setForm: React.Dispatch<React.SetStateAction<PerformanceFilter>>;
 }
 
 const FilterPerformanceSection = ({
@@ -19,51 +19,64 @@ const FilterPerformanceSection = ({
   setForm,
 }: FilterPerformanceSectionProps) => {
   const tCommonFilter = useTranslations("common.filter");
-  const tTf = useTranslations("public.mutualFund.performance.filter.timeframe");
-  const tPerformanceTfDaily = useTranslations(
-    "public.mutualFund.performance.timeframe.daily",
-  );
-  const tPerformanceTfWeekly = useTranslations(
-    "public.mutualFund.performance.timeframe.weekly",
-  );
-  const tPerformanceTfMonthly = useTranslations(
-    "public.mutualFund.performance.timeframe.monthly",
-  );
-  const tPerformanceTfYtd = useTranslations(
-    "public.mutualFund.performance.timeframe.ytd",
-  );
-  const tPerformanceTfYearly = useTranslations(
-    "public.mutualFund.performance.timeframe.yearly",
-  );
+  const tTimeframe = useTranslations("public.mutualFund.performance.timeframe");
 
   const { categories } = useCategories();
 
-  const title =
-    viewMode === "daily"
-      ? tPerformanceTfDaily("title")
-      : viewMode === "weekly"
-        ? tPerformanceTfWeekly("title")
-        : viewMode === "monthly"
-          ? tPerformanceTfMonthly("title")
-          : viewMode === "ytd"
-            ? tPerformanceTfYtd("title")
-            : tPerformanceTfYearly("title");
-
-  const timeFrameOptions: { label: string; value: TimeFrameType }[] = [
-    { value: "daily", label: tTf("options.daily") },
-    { value: "weekly", label: tTf("options.weekly") },
-    { value: "monthly", label: tTf("options.monthly") },
-    { value: "ytd", label: tTf("options.ytd") },
-    { value: "yearly", label: tTf("options.yearly") },
+  const timeFrameOptions: {
+    label: string;
+    value: TimeFrameType;
+  }[] = [
+    {
+      value: TimeFrameType.DAILY,
+      label: tTimeframe("daily.label"),
+    },
+    {
+      value: TimeFrameType.WEEKLY,
+      label: tTimeframe("weekly.label"),
+    },
+    {
+      value: TimeFrameType.MONTHLY,
+      label: tTimeframe("monthly.label"),
+    },
+    {
+      value: TimeFrameType.YTD,
+      label: tTimeframe("ytd.label"),
+    },
+    {
+      value: TimeFrameType.YEARLY,
+      label: tTimeframe("yearly.label"),
+    },
   ];
 
   const categoryOptions = [
-    { label: tCommonFilter("allCategory"), value: "" },
-    ...categories.map((c) => ({
-      label: c.name,
-      value: c.id,
+    {
+      label: tCommonFilter("allCategory"),
+      value: "",
+    },
+    ...categories.map((category) => ({
+      label: category.name,
+      value: category.id,
     })),
   ];
+
+  const title = tTimeframe(`${viewMode}.title`);
+
+  const handleTimeFrameChange = (value: TimeFrameType) => {
+    setForm((currentForm) => ({
+      ...currentForm,
+      timeframe: value,
+    }));
+
+    onChangeViewMode(value);
+  };
+
+  const handleCategoryChange = (categoryId: string) => {
+    setForm((currentForm) => ({
+      ...currentForm,
+      category_id: categoryId,
+    }));
+  };
 
   return (
     <div className="bg-white dark:bg-zinc-900 rounded-xl p-6 shadow-sm border border-zinc-100 dark:border-zinc-800/50">
@@ -72,24 +85,16 @@ const FilterPerformanceSection = ({
           <h2 className="text-xl font-semibold">{title}</h2>
 
           <Dropdown
-            value={form.timeframe || "weekly"}
-            onChange={(val: TimeFrameType) => {
-              setForm({ ...form, timeframe: val });
-              onChangeViewMode(val);
-            }}
+            value={form.timeFrame || TimeFrameType.WEEKLY}
+            onChange={handleTimeFrameChange}
             options={timeFrameOptions}
             className="sm:w-48"
           />
         </div>
 
         <Dropdown
-          value={form.category_id}
-          onChange={(val) =>
-            setForm({
-              ...form,
-              category_id: val,
-            })
-          }
+          value={form.categoryId || ""}
+          onChange={handleCategoryChange}
           options={categoryOptions}
           placeholder={tCommonFilter("allCategory")}
           className="sm:w-48"
