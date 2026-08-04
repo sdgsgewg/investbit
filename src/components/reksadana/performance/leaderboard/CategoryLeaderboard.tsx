@@ -1,25 +1,15 @@
 import { Award, Medal, Trophy } from "lucide-react";
 import { useTranslations } from "next-intl";
 
-import { safeFormatDate } from "@/lib/utils/date";
 import { useNumberFormatter } from "@/hooks/useNumberFormatter";
 
 import { PerformanceData } from "@/types/reksadana/performance/DataType";
 
 import CategoryLeaderboardSkeleton from "./CategoryLeaderboardSkeleton";
 import { TimeFrameType } from "@/enums/TimeFrameType";
-
-interface RankedItem {
-  itemId: string;
-  itemName: string;
-  yieldVal: number;
-  rank: number;
-}
-
-interface RankedCategory {
-  categoryName: string;
-  rankedItems: RankedItem[];
-}
+import { useMemo } from "react";
+import { getCategoryLeaderboard } from "@/lib/mutual-fund/performance/selector";
+import { formatPerformancePeriod } from "@/lib/mutual-fund/performance/period";
 
 interface CategoryLeaderboardProps {
   data: PerformanceData;
@@ -47,64 +37,18 @@ const CategoryLeaderboard = ({
 
   const latestPeriod = timePeriods[timePeriods.length - 1];
 
-  const rankedCategories: RankedCategory[] =
-    latestPeriod && data.length > 0
-      ? data
-          .map((category) => {
-            const rankedItems = category.items
-              .map((item) => {
-                const yieldVal = item.yields[latestPeriod];
+  const rankedCategories = useMemo(
+    () => getCategoryLeaderboard(data, timePeriods),
+    [data, timePeriods],
+  );
 
-                return yieldVal !== undefined && !Number.isNaN(yieldVal)
-                  ? {
-                      itemId: item.itemId,
-                      itemName: item.itemName,
-                      yieldVal,
-                    }
-                  : null;
-              })
-              .filter((item): item is Omit<RankedItem, "rank"> => item !== null)
-              .sort((a, b) => b.yieldVal - a.yieldVal)
-              .map((item, index) => ({
-                ...item,
-                rank: index + 1,
-              }));
-
-            return {
-              categoryName: category.categoryName,
-              rankedItems,
-            };
-          })
-          .filter((category) => category.rankedItems.length > 0)
-      : [];
-
-  const getPeriodDisplay = () => {
-    if (!latestPeriod) return "";
-
-    if (viewMode === TimeFrameType.DAILY) {
-      return safeFormatDate(latestPeriod, "dd MMMM yyyy");
-    }
-
-    if (viewMode === TimeFrameType.WEEKLY && latestPeriod.includes("-W")) {
-      const [yearMonth, weekPart] = latestPeriod.split("-W");
-      const [weekStr, rangeStr] = weekPart.split("|");
-      const [year, month] = yearMonth.split("-");
-      const dateObj = new Date(Number(year), Number(month) - 1);
-      const monthName = safeFormatDate(dateObj, "MMM");
-
-      return `${tWeekly("week")} ${weekStr} ${monthName} (${rangeStr}), ${year}`;
-    }
-
-    if (viewMode === TimeFrameType.MONTHLY) {
-      return safeFormatDate(latestPeriod, "MMMM yyyy");
-    }
-
-    if (viewMode === TimeFrameType.YTD) {
-      return `YTD ${latestPeriod}`;
-    }
-
-    return latestPeriod;
-  };
+  const periodDisplay = latestPeriod
+    ? formatPerformancePeriod({
+        period: latestPeriod,
+        timeFrame: viewMode,
+        weekLabel: tWeekly("week"),
+      })
+    : "";
 
   const getYieldClassName = (yieldVal: number, rank: number) => {
     const tone =
@@ -173,7 +117,7 @@ const CategoryLeaderboard = ({
             </h3>
           </div>
           <p className="mt-1 text-sm text-zinc-600 dark:text-zinc-400">
-            {tLeaderboard("subtitle", { period: getPeriodDisplay() })}
+            {tLeaderboard("subtitle", { period: periodDisplay })}
           </p>
         </div>
       </div>
@@ -221,9 +165,9 @@ const CategoryLeaderboard = ({
                   </div>
 
                   <span
-                    className={`shrink-0 rounded-full px-3 py-1 text-sm font-bold ${getYieldClassName(item.yieldVal, item.rank)}`}
+                    className={`shrink-0 rounded-full px-3 py-1 text-sm font-bold ${getYieldClassName(item.yieldValue, item.rank)}`}
                   >
-                    {formatPercent(item.yieldVal)}
+                    {formatPercent(item.yieldValue)}
                   </span>
                 </div>
               ))}

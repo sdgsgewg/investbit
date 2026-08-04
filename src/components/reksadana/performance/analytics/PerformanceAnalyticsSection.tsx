@@ -3,11 +3,14 @@ import PerformanceTable from "./PerformanceTable";
 import PerformanceInformationSection from "../PerformanceInformationSection";
 import PerformanceTableSkeleton from "./PerformanceTableSkeleton";
 import TableOverlay from "@/components/feedback/TableOverlay";
-import { safeFormatDate } from "@/lib/utils/date";
 import Dropdown from "@/components/ui/Dropdown";
 import { PerformanceData } from "@/types/reksadana/performance/DataType";
 import { SortOrder } from "@/types/sort";
 import { TimeFrameType } from "@/enums/TimeFrameType";
+import {
+  getPerformancePeriodColumns,
+  getPeriodRangeOptions,
+} from "@/lib/mutual-fund/performance/period";
 
 interface PerformanceAnalyticsSectionProps {
   data: PerformanceData;
@@ -63,119 +66,24 @@ const PerformanceAnalyticsSection = ({
   );
   const tCommon = useTranslations("common");
 
-  const getPeriodTimestamp = (period: string) => {
-    if (viewMode === TimeFrameType.WEEKLY) {
-      const [yearMonth, weekPart] = period.split("-W");
-      const [weekStr] = weekPart.split("|");
-      return new Date(`${yearMonth}-01`).getTime() + Number(weekStr) * 1000;
-    }
-
-    if (viewMode === TimeFrameType.YTD || viewMode === TimeFrameType.YEARLY) {
-      return new Date(Number(period), 0, 1).getTime();
-    }
-
-    return new Date(period).getTime();
+  const periodTranslations = {
+    week: tPerformanceTfWeekly("week"),
   };
 
-  const getPeriodOptionLabel = (period: string) => {
-    if (viewMode === TimeFrameType.WEEKLY) {
-      const [yearMonth, weekPart] = period.split("-W");
-      const [weekStr, rangeStr] = weekPart.split("|");
-      const [year, month] = yearMonth.split("-");
-      const dateObj = new Date(Number(year), Number(month) - 1);
-      const monthName = safeFormatDate(dateObj, "MMM");
+  const { startOptions, endOptions } = getPeriodRangeOptions(
+    availablePeriods,
+    viewMode,
+    selectedStartPeriod,
+    selectedEndPeriod,
+    periodTranslations,
+  );
 
-      return `${tPerformanceTfWeekly("week")} ${weekStr} ${monthName} (${rangeStr})`;
-    }
-
-    if (viewMode === TimeFrameType.DAILY) {
-      return safeFormatDate(period, "dd MMM yyyy");
-    }
-
-    if (viewMode === TimeFrameType.MONTHLY) {
-      return safeFormatDate(period, "MMMM yyyy");
-    }
-
-    if (viewMode === TimeFrameType.YTD) {
-      return `YTD ${period}`;
-    }
-
-    return period;
-  };
-
-  const effectiveStartPeriod = selectedStartPeriod || availablePeriods[0] || "";
-  const effectiveEndPeriod =
-    selectedEndPeriod || availablePeriods[availablePeriods.length - 1] || "";
-
-  const sortedTimePeriods =
-    sortOrder === "desc" ? [...timePeriods].reverse() : timePeriods;
-
-  const startOptions = availablePeriods
-    .filter(
-      (period) =>
-        !effectiveEndPeriod ||
-        getPeriodTimestamp(period) <= getPeriodTimestamp(effectiveEndPeriod),
-    )
-    .map((period) => ({
-      value: period,
-      label: getPeriodOptionLabel(period),
-    }));
-
-  const endOptions = availablePeriods
-    .filter(
-      (period) =>
-        !effectiveStartPeriod ||
-        getPeriodTimestamp(period) >= getPeriodTimestamp(effectiveStartPeriod),
-    )
-    .map((period) => ({
-      value: period,
-      label: getPeriodOptionLabel(period),
-    }));
-
-  const columns = sortedTimePeriods
-    .filter((p): p is string => Boolean(p))
-    .map((period) => {
-      if (viewMode === TimeFrameType.WEEKLY) {
-        const [yearMonth, weekPart] = period.split("-W");
-        const [weekStr, rangeStr] = weekPart.split("|");
-        const [year, month] = yearMonth.split("-");
-        const dateObj = new Date(Number(year), Number(month) - 1);
-        const monthName = safeFormatDate(dateObj, "MMM");
-
-        return {
-          key: period,
-          label: `${tPerformanceTfWeekly("week")} ${weekStr} ${monthName}`,
-          subLabel: rangeStr,
-        };
-      }
-
-      if (viewMode === TimeFrameType.DAILY) {
-        return {
-          key: period,
-          label: safeFormatDate(period, "dd MMM"),
-          subLabel: safeFormatDate(period, "yyyy"),
-        };
-      }
-
-      if (viewMode === TimeFrameType.MONTHLY) {
-        return {
-          key: period,
-          label: safeFormatDate(period, "MMMM yyyy"),
-        };
-      }
-
-      if (viewMode === TimeFrameType.YTD) {
-        return {
-          key: period,
-          label: `YTD ${period}`,
-        };
-      }
-
-      return {
-        key: period,
-        label: period,
-      };
-    });
+  const columns = getPerformancePeriodColumns(
+    timePeriods,
+    viewMode,
+    sortOrder,
+    periodTranslations,
+  );
 
   return (
     <div className="flex flex-col gap-4">
