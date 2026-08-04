@@ -2,7 +2,7 @@ import { useTranslations } from "next-intl";
 import React from "react";
 
 const FooterLogo = () => {
-  const tHome = useTranslations("public.home");
+  const tHome = useTranslations("public.home.hero");
 
   return (
     <div className="flex flex-col gap-4">

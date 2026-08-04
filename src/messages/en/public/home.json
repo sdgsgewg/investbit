@@ -1,8 +1,30 @@
 {
-  "title": "Investbit - Investment Buddy",
-  "subtitle": "Your Investment Buddy",
-  "actions": {
-    "getStarted": "Get Started",
-    "learnMore": "Learn More"
+  "hero": {
+    "title": "Investbit - Investment Buddy",
+    "subtitle": "Your Investment Buddy",
+    "actions": {
+      "getStarted": "Get Started",
+      "learnMore": "Learn More"
+    }
+  },
+
+  "explore": {
+    "title": "Explore Investbit",
+    "subtitle": "Learn investment concepts, understand market terminology, and explore mutual fund performance.",
+    
+    "features": {
+      "learn": {
+        "title": "Learn Investing",
+        "description": "Explore concise learning modules covering investment fundamentals and technical analysis."
+      },
+      "glossary": {
+        "title": "Investment Glossary",
+        "description": "Understand common investment terms such as PBV, PER, ROE, and other market concepts."
+      },
+      "performance": {
+        "title": "Mutual Fund Performance",
+        "description": "Compare mutual fund returns across 1 day, 1 month, 3 months, YTD, and 1 year."
+      }
+    }
   }
 }

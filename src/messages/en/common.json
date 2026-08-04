@@ -30,7 +30,8 @@
     "delete": "Delete",
     "cancel": "Cancel",
     "apply": "Apply",
-    "retry": "Retry"
+    "retry": "Retry",
+    "explore": "Explore"
   },
 
   "states": {

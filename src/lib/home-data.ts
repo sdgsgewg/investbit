@@ -1,7 +1,12 @@
+import { ROUTES } from "@/constants/routes";
+
+export type HomeFeatureKey = "learn" | "glossary" | "performance";
+
 export type HomeFeature = {
-  key: "feature1" | "feature2" | "feature3";
+  key: HomeFeatureKey;
   title: string;
   description: string;
+  href: string;
 };
 
 export type HomeData = Record<"en" | "id", HomeFeature[]>;
@@ -9,42 +14,49 @@ export type HomeData = Record<"en" | "id", HomeFeature[]>;
 export const HOME_FEATURES: HomeData = {
   en: [
     {
-      key: "feature1",
-      title: "Learn the Basics",
+      key: "learn",
+      title: "Learn Investing",
       description:
-        "Comprehensive guides and tutorials to help you understand the Indonesian stock market from scratch.",
+        "Explore concise learning modules covering investment fundamentals and technical analysis.",
+      href: ROUTES.LEARN,
     },
     {
-      key: "feature2",
-      title: "Mutual Fund Recap",
+      key: "glossary",
+      title: "Investment Glossary",
       description:
-        "Easily log and manage your daily mutual fund yields. Groups your items securely by category entirely online.",
+        "Understand common investment terms such as PBV, PER, ROE, and other market concepts.",
+      href: ROUTES.GLOSSARY,
     },
     {
-      key: "feature3",
-      title: "Dynamic Reporting",
+      key: "performance",
+      title: "Mutual Fund Performance",
       description:
-        "Automatically generate gorgeous Weekly and Monthly conditional heatmaps tracking your best and worst performers.",
+        "Compare mutual fund returns across 1 day, 1 month, 3 months, YTD, and 1 year.",
+      href: ROUTES.MUTUAL_FUND.PERFORMANCE,
     },
   ],
+
   id: [
     {
-      key: "feature1",
-      title: "Belajar Dasar",
+      key: "learn",
+      title: "Belajar Investasi",
       description:
-        "Panduan lengkap untuk memahami pasar saham Indonesia dari nol.",
+        "Pelajari dasar-dasar investasi melalui modul singkat, termasuk materi analisis teknikal.",
+      href: ROUTES.LEARN,
     },
     {
-      key: "feature2",
-      title: "Rekap Reksa Dana",
+      key: "glossary",
+      title: "Glosarium Investasi",
       description:
-        "Catat dan kelola hasil Reksa Dana harian dengan mudah dan terorganisir.",
+        "Pahami istilah investasi seperti PBV, PER, ROE, dan berbagai konsep pasar lainnya.",
+      href: ROUTES.GLOSSARY,
     },
     {
-      key: "feature3",
-      title: "Laporan Dinamis",
+      key: "performance",
+      title: "Performa Reksa Dana",
       description:
-        "Buat laporan mingguan dan bulanan secara otomatis dengan visualisasi menarik.",
+        "Lihat dan bandingkan return reksa dana dalam periode 1 hari, 1 bulan, 3 bulan, YTD, dan 1 tahun.",
+      href: ROUTES.MUTUAL_FUND.PERFORMANCE,
     },
   ],
 };

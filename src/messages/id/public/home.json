@@ -1,8 +1,30 @@
 {
-  "title": "Investbit - Teman Investasi",
-  "subtitle": "Teman Investasi Anda",
-  "actions": {
-    "getStarted": "Mulai Sekarang",
-    "learnMore": "Pelajari Lebih Lanjut"
+  "hero": {
+    "title": "Investbit - Teman Investasi",
+    "subtitle": "Teman Investasi Anda",
+    "actions": {
+      "getStarted": "Mulai Sekarang",
+      "learnMore": "Pelajari Lebih Lanjut"
+    }
+  },
+
+  "explore": {
+    "title": "Jelajahi Investbit",
+    "subtitle": "Pelajari konsep investasi, pahami istilah pasar, dan jelajahi kinerja reksa dana.",
+
+    "features": {
+      "learn": {
+        "title": "Belajar Investasi",
+        "description": "Pelajari dasar-dasar investasi melalui modul singkat, termasuk materi analisis teknikal."
+      },
+      "glossary": {
+        "title": "Glosarium Investasi",
+        "description": "Pahami istilah investasi seperti PBV, PER, ROE, dan berbagai konsep pasar lainnya."
+      },
+      "performance": {
+        "title": "Performa Reksa Dana",
+        "description": "Lihat dan bandingkan return reksa dana dalam periode 1 hari, 1 bulan, 3 bulan, YTD, dan 1 tahun."
+      }
+    }
   }
 }
