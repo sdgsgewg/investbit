@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useTranslations } from "next-intl";
-import { ItemListItem, UpsertItemInput } from "@/types/reksadana/item";
+import { ItemListItem, UpsertItemInput } from "@/types/mutual-fund/item";
 import { useCreateItem } from "./useCreateItem";
 import { useUpdateItem } from "./useUpdateItem";
 import { useDeleteItem } from "./useDeleteItem";

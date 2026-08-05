@@ -1,4 +1,4 @@
-import { PerformanceData } from "@/types/reksadana/performance/DataType";
+import { PerformanceData } from "@/types/mutual-fund/performance";
 
 export interface PerformanceWinner {
   name: string;

@@ -1,15 +1,14 @@
 import { createClient } from "@/utils/supabase/server";
 import { format, startOfMonth } from "date-fns";
-import { RecordData } from "@/types/reksadana/records/RecordData";
-import {
-  PerformanceFilter,
-  PerformanceResponse,
-} from "@/types/reksadana/performance";
 import {
   PerformanceData,
+  PerformanceFilter,
   PerformanceItem,
-} from "@/types/reksadana/performance/DataType";
+  PerformanceResponse,
+} from "@/types/mutual-fund/performance";
 import { TimeFrameType } from "@/enums/TimeFrameType";
+import { RecordListItem } from "@/types/mutual-fund/records";
+import { getRecordsBaseQuery, getRecordTable } from "../records.repo";
 
 async function getSupabase() {
   return createClient();
@@ -39,37 +38,20 @@ export async function getPerformanceRepo(
 ): Promise<PerformanceResponse> {
   const supabase = await getSupabase();
 
-  const records: RecordData[] = [];
+  const records: RecordListItem[] = [];
   let hasMore = true;
   let offset = 0;
   const PAGE_SIZE = 1000;
 
   while (hasMore) {
     let query = supabase
-      .from("rd_records")
-      .select(
-        `
-        id,
-        item_id,
-        date,
-        yield_1d,
-        yield_ytd,
-        rd_items (
-          id,
-          name,
-          category_id,
-          rd_categories (
-            id,
-            name
-          )
-        )
-      `,
-      )
+      .from(getRecordTable())
+      .select(getRecordsBaseQuery())
       .order("date")
       .range(offset, offset + PAGE_SIZE - 1);
 
     if (params.categoryId) {
-      query = query.eq("rd_items.category_id", params.categoryId);
+      query = query.eq("item.category_id", params.categoryId);
     }
 
     const { data: queryData, error } = await query;
@@ -77,7 +59,7 @@ export async function getPerformanceRepo(
     if (error) throw error;
 
     if (queryData && queryData.length > 0) {
-      records.push(...(queryData as unknown as RecordData[]));
+      records.push(...(queryData as unknown as RecordListItem[]));
       if (queryData.length < PAGE_SIZE) {
         hasMore = false;
       } else {
@@ -190,11 +172,11 @@ export async function getPerformanceRepo(
   const timeSet = new Set<string>();
 
   records.forEach((record) => {
-    const item = record.rd_items;
+    const item = record.item;
 
-    if (!item || !item.rd_categories || !record.date) return;
+    if (!item || !item.category || !record.date) return;
 
-    const categoryName = item.rd_categories.name;
+    const categoryName = item.category.name;
 
     if (!grouped[categoryName]) {
       grouped[categoryName] = { categoryName, items: {} };
@@ -235,11 +217,11 @@ export async function getPerformanceRepo(
     if (params.timeFrame === TimeFrameType.YTD) {
       // Records are sorted ascending by date, so the last assignment per year
       // becomes the latest available YTD value for that item.
-      yields[periodKey] = record.yield_ytd ?? 0;
+      yields[periodKey] = record.yieldYtd ?? 0;
       return;
     }
 
-    const value = record.yield_1d ?? 0;
+    const value = record.yield1d ?? 0;
     const existingValue = yields[periodKey] ?? 0;
 
     yields[periodKey] =

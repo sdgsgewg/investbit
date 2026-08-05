@@ -1,4 +1,4 @@
-import { createCategory } from "@/lib/api/reksadana/categories";
+import { createCategory } from "@/lib/api/mutual-fund/categories";
 import { useCrudMutation } from "../../useCrudMutation";
 import { queryKeys } from "@/lib/react-query/queryKeys";
 

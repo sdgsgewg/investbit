@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { queryConfig } from "@/lib/react-query/queryConfig";
 import { queryKeys } from "@/lib/react-query/queryKeys";
-import { fetchItems } from "@/lib/api/reksadana/items";
+import { fetchItems } from "@/lib/api/mutual-fund/items";
 
 export function useItems() {
   const {

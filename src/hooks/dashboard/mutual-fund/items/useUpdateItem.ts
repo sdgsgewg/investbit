@@ -1,4 +1,4 @@
-import { updateItem } from "@/lib/api/reksadana/items";
+import { updateItem } from "@/lib/api/mutual-fund/items";
 import { useCrudMutation } from "../../useCrudMutation";
 import { queryKeys } from "@/lib/react-query/queryKeys";
 

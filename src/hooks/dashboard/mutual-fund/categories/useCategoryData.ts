@@ -3,7 +3,7 @@ import { useTranslations } from "next-intl";
 import {
   CategoryListItem,
   UpsertCategoryInput,
-} from "@/types/reksadana/category";
+} from "@/types/mutual-fund/category";
 import { useCreateCategory } from "./useCreateCategory";
 import { useUpdateCategory } from "./useUpdateCategory";
 import { useDeleteCategory } from "./useDeleteCategory";

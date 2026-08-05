@@ -1,39 +1,52 @@
 import { ENTITY_CONFIG } from "@/config/entities";
-import { GetRecordsParams, RecordsUpsertInput } from "@/types/reksadana/record";
+import { mapRecordListItem } from "@/lib/mutual-fund/records/mapper";
+import {
+  DbRecordListRow,
+  RecordFilter,
+  RecordListItem,
+  UpsertRecordsInput,
+} from "@/types/mutual-fund/records";
 import { createClient } from "@/utils/supabase/server";
 
 async function getSupabase() {
   return createClient();
 }
 
-const getTable = () => {
+export const getRecordTable = () => {
   return ENTITY_CONFIG["rdRecord"]["table"];
 };
 
-export async function getRecordsRepo(params: GetRecordsParams) {
+export function getRecordsBaseQuery() {
+  return `
+    id,
+    date,
+    yield_1d,
+    yield_ytd,
+
+    item:rd_items!rd_records_item_id_fkey (
+      id,
+      name,
+      category_id,
+
+      category:rd_categories!rd_items_category_id_fkey (
+        id,
+        name
+      )
+    )
+  `;
+}
+
+export async function getRecordsRepo(
+  params: RecordFilter,
+): Promise<RecordListItem[]> {
   const supabase = await getSupabase();
 
   let query = supabase
-    .from(getTable())
-    .select(
-      `
-      id,
-      item_id,
-      date,
-      yield_1d,
-      yield_ytd,
-      items: rd_items(
-        id,
-        name,
-        category_id,
-        category: rd_categories(
-          id,
-          name
-        )
-      )
-    `,
-    )
+    .from(getRecordTable())
+    .select(getRecordsBaseQuery())
     .order("date");
+
+  // Filter
 
   if (params.startDate) {
     query = query.gte("date", params.startDate);
@@ -47,18 +60,19 @@ export async function getRecordsRepo(params: GetRecordsParams) {
     query = query.eq("rd_items.category_id", params.categoryId);
   }
 
-  const { data, error } = await query;
+  const { data, error } = await query.overrideTypes<DbRecordListRow[]>();
 
   if (error) throw error;
+  if (!data || data.length === 0) return [];
 
-  return data;
+  return data.map(mapRecordListItem);
 }
 
-export async function upsertRecordsRepo(records: RecordsUpsertInput) {
+export async function upsertRecordsRepo(records: UpsertRecordsInput) {
   const supabase = await getSupabase();
 
   const { data, error } = await supabase
-    .from(getTable())
+    .from(getRecordTable())
     .upsert(records, { onConflict: "item_id, date" });
 
   if (error) throw error;

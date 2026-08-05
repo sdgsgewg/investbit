@@ -1,20 +1,16 @@
 import { useState, useMemo } from "react";
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { RecordData } from "@/types/reksadana/records/RecordData";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { queryKeys } from "@/lib/react-query/queryKeys";
-import {
-  fetchCategoriesWithItems,
-  fetchRecords,
-  saveRecords,
-} from "@/lib/api/reksadana/records";
-import { queryConfig } from "@/lib/react-query/queryConfig";
+import { fetchRecords, saveRecords } from "@/lib/api/mutual-fund/records";
 import { RecordsInput } from "@/lib/validations/reksadana/records.schema";
 import { useTranslations } from "next-intl";
 import { useNumberFormatter } from "@/hooks/useNumberFormatter";
 import { getLastWorkingDay, safeFormatDate } from "@/lib/utils/date";
 import { isLikelyConnectionError } from "@/lib/utils/connection-error";
-import { CategoryWithItems } from "@/types/reksadana/records/CategoryWithItems";
-import { YieldInputByItemId } from "@/types/reksadana/records/YieldInputByItemId";
+import { CategoryWithItems } from "@/types/mutual-fund/records/CategoryWithItems";
+import { YieldInputByItemId } from "@/types/mutual-fund/records/YieldInputByItemId";
+import { useRecords } from "./useRecords";
+import { useCategoriesWithItems } from "../items";
 
 interface UseRecordDataReturn {
   categoriesWithItems: CategoryWithItems[];
@@ -63,28 +59,22 @@ export const useRecordData = (): UseRecordDataReturn => {
 
   // 1. Grouped by category items
   const {
-    data: categoriesWithItems = [],
+    categoriesWithItems,
     isLoading: isLoadingItems,
     error: itemsError,
     refetch: refetchItems,
-  } = useQuery({
-    queryKey: queryKeys.categoriesWithItems(),
-    queryFn: fetchCategoriesWithItems,
-    ...queryConfig,
-  });
+  } = useCategoriesWithItems();
 
   // 2. Records
   const {
-    data: recordsData,
+    records: recordsData,
     isLoading: isLoadingRecords,
     isFetching,
     error: recordsError,
     refetch: refetchRecords,
-  } = useQuery<RecordData[]>({
-    queryKey: queryKeys.records(selectedDate),
-    queryFn: () => fetchRecords(selectedDate),
-    enabled: !!selectedDate,
-    ...queryConfig,
+  } = useRecords({
+    startDate: selectedDate,
+    endDate: selectedDate,
   });
 
   // 3. Sync records → inputs
@@ -96,11 +86,10 @@ export const useRecordData = (): UseRecordDataReturn => {
     const result: YieldInputByItemId = {};
 
     recordsData.forEach((record) => {
-      result[record.item_id] = {
-        yield_1d:
-          record.yield_1d !== null ? formatDecimal(record.yield_1d) : "",
+      result[record.item.id] = {
+        yield_1d: record.yield1d !== null ? formatDecimal(record.yield1d) : "",
         yield_ytd:
-          record.yield_ytd !== null ? formatDecimal(record.yield_ytd) : "",
+          record.yieldYtd !== null ? formatDecimal(record.yieldYtd) : "",
       };
     });
 
@@ -180,7 +169,10 @@ export const useRecordData = (): UseRecordDataReturn => {
     onSuccess: () => {
       alert(`${tRecords("form.success")} ${selectedDate}`);
       queryClient.invalidateQueries({
-        queryKey: queryKeys.records(selectedDate),
+        queryKey: queryKeys.records({
+          startDate: selectedDate,
+          endDate: selectedDate,
+        }),
       });
     },
     onError: (error) => {
@@ -218,8 +210,15 @@ export const useRecordData = (): UseRecordDataReturn => {
     nextDate.setDate(nextDate.getDate() + 1);
     const formattedNextDate = nextDate.toISOString().split("T")[0];
     queryClient.prefetchQuery({
-      queryKey: queryKeys.records(formattedNextDate),
-      queryFn: () => fetchRecords(formattedNextDate),
+      queryKey: queryKeys.records({
+        startDate: formattedNextDate,
+        endDate: formattedNextDate,
+      }),
+      queryFn: () =>
+        fetchRecords({
+          startDate: formattedNextDate,
+          endDate: formattedNextDate,
+        }),
     });
 
     // prefetch previous date (misalnya kemarin)
@@ -227,8 +226,15 @@ export const useRecordData = (): UseRecordDataReturn => {
     prevDate.setDate(prevDate.getDate() - 1);
     const formattedPrevDate = prevDate.toISOString().split("T")[0];
     queryClient.prefetchQuery({
-      queryKey: queryKeys.records(formattedPrevDate),
-      queryFn: () => fetchRecords(formattedPrevDate),
+      queryKey: queryKeys.records({
+        startDate: formattedPrevDate,
+        endDate: formattedPrevDate,
+      }),
+      queryFn: () =>
+        fetchRecords({
+          startDate: formattedPrevDate,
+          endDate: formattedPrevDate,
+        }),
     });
   };
 

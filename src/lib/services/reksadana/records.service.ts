@@ -7,6 +7,13 @@ import {
   upsertRecordSchema,
 } from "../../validations/reksadana/records.schema";
 
+export async function getRecordsService(query: unknown) {
+  // Validate query params
+  const parsed = recordsQuerySchema.parse(query);
+
+  return getRecordsRepo(parsed);
+}
+
 export async function upsertRecordsService(input: unknown) {
   // Validate
   const parsed = upsertRecordSchema.parse(input);
@@ -20,13 +27,5 @@ export async function upsertRecordsService(input: unknown) {
     }
   });
 
-  // Call repo
-  return await upsertRecordsRepo(parsed);
-}
-
-export async function getRecordsService(query: unknown) {
-  // Validate query params
-  const parsed = recordsQuerySchema.parse(query);
-
-  return await getRecordsRepo(parsed);
+  return upsertRecordsRepo(parsed);
 }

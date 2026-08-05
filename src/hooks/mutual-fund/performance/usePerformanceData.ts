@@ -1,14 +1,14 @@
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { queryKeys } from "@/lib/react-query/queryKeys";
-import { fetchPerformance } from "@/lib/api/reksadana/performance";
+import { fetchPerformance } from "@/lib/api/mutual-fund/performance";
 import { queryConfig } from "@/lib/react-query/queryConfig";
-import { PerformanceData } from "@/types/reksadana/performance/DataType";
-import { CategoryStats } from "@/types/reksadana/performance/CategoryStats";
 import {
+  CategoryStats,
+  PerformanceData,
   PerformanceFilter,
   PerformanceResponse,
-} from "@/types/reksadana/performance";
+} from "@/types/mutual-fund/performance";
 import { TimeFrameType } from "@/enums/TimeFrameType";
 
 interface UsePerformanceDataProps {

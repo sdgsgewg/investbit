@@ -6,7 +6,7 @@ import {
   ItemDetailResponse,
   ItemListItem,
   ItemUpdateInput,
-} from "@/types/reksadana/item";
+} from "@/types/mutual-fund/item";
 import { ensureUniqueRecord } from "../helpers/uniqueness";
 import { requireEntity } from "../helpers/require-entity";
 

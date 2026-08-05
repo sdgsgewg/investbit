@@ -11,7 +11,7 @@ import {
   itemsQuerySchema,
   updateItemSchema,
 } from "@/lib/validations/reksadana/items.schema";
-import { ItemListItem } from "@/types/reksadana/item";
+import { ItemListItem } from "@/types/mutual-fund/item";
 
 export async function getItemsGroupedService(query: unknown) {
   const parsed = itemsQuerySchema.parse(query);

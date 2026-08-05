@@ -6,7 +6,7 @@ import {
   CategoryListItem,
   CategoryUpdateInput,
   GetCategoriesParams,
-} from "@/types/reksadana/category";
+} from "@/types/mutual-fund/category";
 import { ensureUniqueRecord } from "../helpers/uniqueness";
 import { requireEntity } from "../helpers/require-entity";
 

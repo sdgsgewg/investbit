@@ -2,9 +2,9 @@
 
 import TopProgressBar from "@/components/feedback/TopProgressBar";
 import TableOverlay from "@/components/feedback/TableOverlay";
-import InputHeader from "@/components/reksadana/records/InputHeader";
-import SkeletonTable from "@/components/reksadana/records/SkeletonTable";
-import InputTable from "@/components/reksadana/records/InputTable";
+import InputHeader from "@/components/mutual-fund/records/InputHeader";
+import SkeletonTable from "@/components/mutual-fund/records/SkeletonTable";
+import InputTable from "@/components/mutual-fund/records/InputTable";
 import ConnectionErrorAlert from "@/components/feedback/ConnectionErrorAlert";
 import { isLikelyConnectionError } from "@/lib/utils/connection-error";
 import { CrudPageHeader } from "@/components/templates/CrudPageHeader";

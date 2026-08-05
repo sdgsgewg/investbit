@@ -1,3 +1,6 @@
+import { PerformanceQuery } from "@/types/mutual-fund/performance";
+import { RecordQuery } from "@/types/mutual-fund/records";
+
 export const queryKeys = {
   categories: () => ["categories"] as const,
 
@@ -5,21 +8,7 @@ export const queryKeys = {
 
   categoriesWithItems: () => ["categoriesWithItems"] as const,
 
-  records: (date: string) => ["records", date] as const,
+  records: (params?: RecordQuery) => ["records", params] as const,
 
-  performance: (params: {
-    timeFrame: string;
-    categoryId?: string;
-    periodLimit?: number;
-    startPeriod?: string;
-    endPeriod?: string;
-  }) =>
-    [
-      "performance",
-      params.timeFrame,
-      params.categoryId ?? "all",
-      params.periodLimit?.toString() ?? "10",
-      params.startPeriod ?? "",
-      params.endPeriod ?? "",
-    ] as const,
+  performance: (params?: PerformanceQuery) => ["performance", params] as const,
 };
