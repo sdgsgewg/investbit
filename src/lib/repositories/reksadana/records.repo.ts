@@ -23,11 +23,11 @@ export function getRecordsBaseQuery() {
     yield_1d,
     yield_ytd,
 
-    item:rd_items!rd_records_item_id_fkey (
+    item:rd_items!rd_records_item_id_fkey!inner (
       id,
       name,
 
-      category:rd_categories!rd_items_category_id_fkey (
+      category:rd_categories!rd_items_category_id_fkey!inner (
         id,
         name
       )

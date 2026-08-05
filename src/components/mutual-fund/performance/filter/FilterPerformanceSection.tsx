@@ -65,7 +65,7 @@ const FilterPerformanceSection = ({
   const handleTimeFrameChange = (value: TimeFrameType) => {
     setForm((currentForm) => ({
       ...currentForm,
-      timeframe: value,
+      timeFrame: value,
     }));
 
     onChangeViewMode(value);
@@ -74,7 +74,7 @@ const FilterPerformanceSection = ({
   const handleCategoryChange = (categoryId: string) => {
     setForm((currentForm) => ({
       ...currentForm,
-      category_id: categoryId,
+      categoryId: categoryId,
     }));
   };
 

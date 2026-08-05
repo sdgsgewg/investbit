@@ -4,5 +4,5 @@ import { performanceQuerySchema } from "@/lib/validations/reksadana/performance.
 export async function getPerformanceService(query: unknown) {
   const parsed = performanceQuerySchema.parse(query);
 
-  return await getPerformanceRepo(parsed);
+  return getPerformanceRepo(parsed);
 }

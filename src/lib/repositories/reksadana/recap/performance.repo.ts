@@ -7,8 +7,9 @@ import {
   PerformanceResponse,
 } from "@/types/mutual-fund/performance";
 import { TimeFrameType } from "@/enums/TimeFrameType";
-import { RecordListItem } from "@/types/mutual-fund/records";
+import { DbRecordListRow, RecordListItem } from "@/types/mutual-fund/records";
 import { getRecordsBaseQuery, getRecordTable } from "../records.repo";
+import { mapRecordListItem } from "@/lib/mutual-fund/records/mapper";
 
 async function getSupabase() {
   return createClient();
@@ -51,16 +52,19 @@ export async function getPerformanceRepo(
       .range(offset, offset + PAGE_SIZE - 1);
 
     if (params.categoryId) {
-      query = query.eq("item.category_id", params.categoryId);
+      query = query.eq("item.category.id", params.categoryId);
     }
 
-    const { data: queryData, error } = await query;
+    const { data: queryData, error } =
+      await query.overrideTypes<DbRecordListRow[]>();
 
     if (error) throw error;
 
-    if (queryData && queryData.length > 0) {
-      records.push(...(queryData as unknown as RecordListItem[]));
-      if (queryData.length < PAGE_SIZE) {
+    const mappedQueryData = queryData.map(mapRecordListItem);
+
+    if (mappedQueryData && mappedQueryData.length > 0) {
+      records.push(...(mappedQueryData as unknown as RecordListItem[]));
+      if (mappedQueryData.length < PAGE_SIZE) {
         hasMore = false;
       } else {
         offset += PAGE_SIZE;
