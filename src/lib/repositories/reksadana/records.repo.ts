@@ -26,7 +26,6 @@ export function getRecordsBaseQuery() {
     item:rd_items!rd_records_item_id_fkey (
       id,
       name,
-      category_id,
 
       category:rd_categories!rd_items_category_id_fkey (
         id,

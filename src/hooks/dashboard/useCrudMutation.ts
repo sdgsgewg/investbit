@@ -79,8 +79,6 @@ export function useCrudMutation<TVariables>({
     },
 
     onError: (error) => {
-      console.log("Error: ", JSON.stringify(error, null, 2));
-
       if (isLikelyConnectionError(error)) {
         alert(t("common.feedback.connectionIssue.actionFailed"));
         return;

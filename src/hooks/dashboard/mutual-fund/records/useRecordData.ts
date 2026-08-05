@@ -176,8 +176,6 @@ export const useRecordData = (): UseRecordDataReturn => {
       });
     },
     onError: (error) => {
-      console.error("Error: ", JSON.stringify(error, null, 2));
-
       alert(
         isLikelyConnectionError(error)
           ? tCommon("feedback.connectionIssue.saveFailed")
