@@ -2,13 +2,15 @@ import { useTranslations } from "next-intl";
 import React from "react";
 import Dropdown from "@/components/ui/Dropdown";
 import { useCategories } from "@/hooks/dashboard/mutual-fund/categories";
-import { TimeFrameType } from "@/enums/TimeFrameType";
+import { TimeFrame } from "@/enums/TimeFrame";
 import { PerformanceFilter } from "@/types/mutual-fund/performance";
+import { getCategoryOptions } from "@/lib/mutual-fund/categories/options";
+import { getTimeFrameOptions } from "@/lib/mutual-fund/performance/options";
 
 interface FilterPerformanceSectionProps {
-  viewMode: TimeFrameType;
+  viewMode: TimeFrame;
   form: PerformanceFilter;
-  onChangeViewMode: (viewMode: TimeFrameType) => void;
+  onChangeViewMode: (viewMode: TimeFrame) => void;
   setForm: React.Dispatch<React.SetStateAction<PerformanceFilter>>;
 }
 
@@ -19,56 +21,29 @@ const FilterPerformanceSection = ({
   setForm,
 }: FilterPerformanceSectionProps) => {
   const tCommonFilter = useTranslations("common.filter");
-  const tTimeframe = useTranslations("public.mutualFund.performance.timeframe");
+  const tTimeFrame = useTranslations("public.mutualFund.performance.timeframe");
 
   const { categories } = useCategories();
 
-  const timeFrameOptions: {
-    label: string;
-    value: TimeFrameType;
-  }[] = [
-    {
-      value: TimeFrameType.DAILY,
-      label: tTimeframe("daily.label"),
-    },
-    {
-      value: TimeFrameType.WEEKLY,
-      label: tTimeframe("weekly.label"),
-    },
-    {
-      value: TimeFrameType.MONTHLY,
-      label: tTimeframe("monthly.label"),
-    },
-    {
-      value: TimeFrameType.YTD,
-      label: tTimeframe("ytd.label"),
-    },
-    {
-      value: TimeFrameType.YEARLY,
-      label: tTimeframe("yearly.label"),
-    },
-  ];
+  const timeFrameOptions = getTimeFrameOptions(tTimeFrame);
 
-  const categoryOptions = [
-    {
-      label: tCommonFilter("allCategory"),
-      value: "",
-    },
-    ...categories.map((category) => ({
-      label: category.name,
-      value: category.id,
-    })),
-  ];
+  const categoryOptions = getCategoryOptions({
+    categories,
+    showAllCategoryOption: true,
+    tCommonFilter,
+  });
 
-  const title = tTimeframe(`${viewMode}.title`);
+  const title = tTimeFrame(`${viewMode}.title`);
 
-  const handleTimeFrameChange = (value: TimeFrameType) => {
+  const handleTimeFrameChange = (value: string) => {
+    const timeFrame = value as TimeFrame;
+
     setForm((currentForm) => ({
       ...currentForm,
-      timeFrame: value,
+      timeFrame,
     }));
 
-    onChangeViewMode(value);
+    onChangeViewMode(timeFrame);
   };
 
   const handleCategoryChange = (categoryId: string) => {
@@ -85,7 +60,7 @@ const FilterPerformanceSection = ({
           <h2 className="text-xl font-semibold">{title}</h2>
 
           <Dropdown
-            value={form.timeFrame || TimeFrameType.WEEKLY}
+            value={form.timeFrame || TimeFrame.WEEKLY}
             onChange={handleTimeFrameChange}
             options={timeFrameOptions}
             className="sm:w-48"

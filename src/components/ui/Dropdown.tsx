@@ -4,27 +4,23 @@ import * as React from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Check, ChevronDown } from "lucide-react";
 import { useClickOutside } from "@/hooks/uceClickOutside";
+import { Option } from "@/types/option";
 
-export type DropdownOption<T> = {
-  label: string;
-  value: T;
-};
-
-interface DropdownProps<T> {
-  value: T;
-  onChange: (val: T) => void;
-  options: DropdownOption<T>[];
+interface DropdownProps {
+  value: string;
+  onChange: (val: string) => void;
+  options: Option[];
   placeholder?: string;
   className?: string;
 }
 
-export default function Dropdown<T>({
+export default function Dropdown({
   value,
   onChange,
   options,
   placeholder = "Select...",
   className = "",
-}: DropdownProps<T>) {
+}: DropdownProps) {
   const [open, setOpen] = React.useState(false);
   const ref = React.useRef<HTMLDivElement>(null);
 

@@ -1,10 +1,10 @@
 import { z } from "zod";
-import { timeFrameTypeSchema } from "../enums.schema";
+import { TimeFrameSchema } from "../enums.schema";
 
 const uuid = z.string().uuid();
 
 export const performanceQuerySchema = z.object({
-  timeFrame: timeFrameTypeSchema.optional(),
+  timeFrame: TimeFrameSchema.optional(),
   categoryId: uuid.optional(),
   startPeriod: z.string().min(1).optional(),
   endPeriod: z.string().min(1).optional(),

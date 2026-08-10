@@ -1,14 +1,14 @@
-import { TimeFrameType } from "@/enums/TimeFrameType";
+import { TimeFrame } from "@/enums/TimeFrame";
 import z from "zod";
 
 // Performance
 
-export const timeFrameTypeSchema = z
+export const TimeFrameSchema = z
   .enum([
-    TimeFrameType.DAILY,
-    TimeFrameType.WEEKLY,
-    TimeFrameType.MONTHLY,
-    TimeFrameType.YTD,
-    TimeFrameType.YEARLY,
+    TimeFrame.DAILY,
+    TimeFrame.WEEKLY,
+    TimeFrame.MONTHLY,
+    TimeFrame.YTD,
+    TimeFrame.YEARLY,
   ])
-  .default(TimeFrameType.WEEKLY);
+  .default(TimeFrame.WEEKLY);

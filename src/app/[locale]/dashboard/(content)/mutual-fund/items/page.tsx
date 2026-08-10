@@ -6,6 +6,7 @@ import { isLikelyConnectionError } from "@/lib/utils/connection-error";
 import { useTranslations } from "next-intl";
 import { useCategories } from "@/hooks/dashboard/mutual-fund/categories";
 import { useItemData, useItems } from "@/hooks/dashboard/mutual-fund/items";
+import { getCategoryOptions } from "@/lib/mutual-fund/categories/options";
 
 export default function ItemsManagementPage() {
   const t = useTranslations("dashboard.mutualFund.items");
@@ -35,6 +36,8 @@ export default function ItemsManagementPage() {
   const combinedLoadError = loadError ?? categoriesLoadError;
   const combinedRetrying = retrying || retryingCategories;
 
+  const categoryOptions = getCategoryOptions({ categories });
+
   return (
     <CrudPage
       title={t("title")}
@@ -50,7 +53,7 @@ export default function ItemsManagementPage() {
           label: t("form.labels.category"),
           placeholder: t("form.placeholder.category"),
           type: "select",
-          options: categories,
+          options: categoryOptions,
         },
       ]}
       columns={[

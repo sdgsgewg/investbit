@@ -1,4 +1,5 @@
 import { Dispatch, ReactNode, SetStateAction } from "react";
+import { Option } from "./option";
 
 type FieldType = "text" | "select";
 
@@ -7,7 +8,7 @@ export type CrudFormField = {
   label: string;
   placeholder?: string;
   type: FieldType;
-  options?: { id: string; name: string }[];
+  options?: Option[];
 };
 
 export type CrudColumn = {

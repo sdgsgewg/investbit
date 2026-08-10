@@ -9,10 +9,10 @@ import {
   PerformanceFilter,
   PerformanceResponse,
 } from "@/types/mutual-fund/performance";
-import { TimeFrameType } from "@/enums/TimeFrameType";
+import { TimeFrame } from "@/enums/TimeFrame";
 
 interface UsePerformanceDataProps {
-  timeFrame: TimeFrameType;
+  timeFrame: TimeFrame;
   initialForm?: PerformanceFilter;
 }
 

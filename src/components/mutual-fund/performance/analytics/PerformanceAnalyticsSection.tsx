@@ -5,7 +5,7 @@ import PerformanceTableSkeleton from "./PerformanceTableSkeleton";
 import TableOverlay from "@/components/feedback/TableOverlay";
 import Dropdown from "@/components/ui/Dropdown";
 import { SortOrder } from "@/types/sort";
-import { TimeFrameType } from "@/enums/TimeFrameType";
+import { TimeFrame } from "@/enums/TimeFrame";
 import {
   getPerformancePeriodColumns,
   getPeriodRangeOptions,
@@ -18,7 +18,7 @@ interface PerformanceAnalyticsSectionProps {
   availablePeriods: string[];
   loading: boolean;
   fetching: boolean;
-  viewMode: TimeFrameType;
+  viewMode: TimeFrame;
   sortOrder: SortOrder;
   onChangeSortOrder: (sortOrder: SortOrder) => void;
   getCellColor: (

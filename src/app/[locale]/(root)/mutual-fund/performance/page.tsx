@@ -13,12 +13,12 @@ import PageHeader from "@/components/templates/PageHeader";
 import { useTranslations } from "next-intl";
 import { usePerformanceData } from "@/hooks/mutual-fund/performance";
 import { SortOrder } from "@/types/sort";
-import { TimeFrameType } from "@/enums/TimeFrameType";
+import { TimeFrame } from "@/enums/TimeFrame";
 
 export default function PerformancePage() {
   const t = useTranslations("public.mutualFund.performance");
 
-  const [viewMode, setViewMode] = useState<TimeFrameType>(TimeFrameType.WEEKLY);
+  const [viewMode, setViewMode] = useState<TimeFrame>(TimeFrame.WEEKLY);
   const [sortOrder, setSortOrder] = useState<SortOrder>("desc");
   const performanceData = usePerformanceData({ timeFrame: viewMode });
   const {
@@ -44,7 +44,7 @@ export default function PerformancePage() {
     retryLoad,
   } = performanceData;
 
-  const handleChangeViewMode = (viewMode: TimeFrameType) => {
+  const handleChangeViewMode = (viewMode: TimeFrame) => {
     resetToLatestPeriods();
     setViewMode(viewMode);
   };

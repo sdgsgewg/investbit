@@ -1,12 +1,12 @@
 import { safeFormatDate } from "@/lib/utils/date";
-import { TimeFrameType } from "@/enums/TimeFrameType";
+import { TimeFrame } from "@/enums/TimeFrame";
 import { SortOrder } from "@/types/sort";
 
 // Usage: Top Performers & Category Leaderboard
 
 interface FormatPerformancePeriodOptions {
   period: string;
-  timeFrame: TimeFrameType;
+  timeFrame: TimeFrame;
   weekLabel: string;
 }
 
@@ -19,11 +19,11 @@ export function formatPerformancePeriod({
     return "";
   }
 
-  if (timeFrame === TimeFrameType.DAILY) {
+  if (timeFrame === TimeFrame.DAILY) {
     return safeFormatDate(period, "dd MMMM yyyy");
   }
 
-  if (timeFrame === TimeFrameType.WEEKLY && period.includes("-W")) {
+  if (timeFrame === TimeFrame.WEEKLY && period.includes("-W")) {
     const [yearMonth, weekPart] = period.split("-W");
 
     const [week, range] = weekPart.split("|");
@@ -37,11 +37,11 @@ export function formatPerformancePeriod({
     return `${weekLabel} ${week} ${monthName} (${range}), ${year}`;
   }
 
-  if (timeFrame === TimeFrameType.MONTHLY) {
+  if (timeFrame === TimeFrame.MONTHLY) {
     return safeFormatDate(period, "MMMM yyyy");
   }
 
-  if (timeFrame === TimeFrameType.YTD) {
+  if (timeFrame === TimeFrame.YTD) {
     return `YTD ${period}`;
   }
 
@@ -65,18 +65,15 @@ export interface PerformancePeriodColumn {
   subLabel?: string;
 }
 
-function getPeriodTimestamp(
-  period: string,
-  timeFrame: TimeFrameType,
-): number {
-  if (timeFrame === TimeFrameType.WEEKLY) {
+function getPeriodTimestamp(period: string, timeFrame: TimeFrame): number {
+  if (timeFrame === TimeFrame.WEEKLY) {
     const [yearMonth, weekPart] = period.split("-W");
     const [weekString] = weekPart.split("|");
 
     return new Date(`${yearMonth}-01`).getTime() + Number(weekString) * 1000;
   }
 
-  if (timeFrame === TimeFrameType.YTD || timeFrame === TimeFrameType.YEARLY) {
+  if (timeFrame === TimeFrame.YTD || timeFrame === TimeFrame.YEARLY) {
     return new Date(Number(period), 0, 1).getTime();
   }
 
@@ -85,10 +82,10 @@ function getPeriodTimestamp(
 
 export function getPeriodOptionLabel(
   period: string,
-  timeFrame: TimeFrameType,
+  timeFrame: TimeFrame,
   translations: PeriodTranslations,
 ): string {
-  if (timeFrame === TimeFrameType.WEEKLY) {
+  if (timeFrame === TimeFrame.WEEKLY) {
     const [yearMonth, weekPart] = period.split("-W");
     const [weekString, range] = weekPart.split("|");
     const [year, month] = yearMonth.split("-");
@@ -100,15 +97,15 @@ export function getPeriodOptionLabel(
     return `${translations.week} ${weekString} ${monthName} (${range})`;
   }
 
-  if (timeFrame === TimeFrameType.DAILY) {
+  if (timeFrame === TimeFrame.DAILY) {
     return safeFormatDate(period, "dd MMM yyyy");
   }
 
-  if (timeFrame === TimeFrameType.MONTHLY) {
+  if (timeFrame === TimeFrame.MONTHLY) {
     return safeFormatDate(period, "MMMM yyyy");
   }
 
-  if (timeFrame === TimeFrameType.YTD) {
+  if (timeFrame === TimeFrame.YTD) {
     return `YTD ${period}`;
   }
 
@@ -117,14 +114,14 @@ export function getPeriodOptionLabel(
 
 export function getPerformancePeriodColumns(
   periods: string[],
-  timeFrame: TimeFrameType,
+  timeFrame: TimeFrame,
   sortOrder: SortOrder,
   translations: PeriodTranslations,
 ): PerformancePeriodColumn[] {
   const sortedPeriods = sortOrder === "desc" ? [...periods].reverse() : periods;
 
   return sortedPeriods.filter(Boolean).map((period) => {
-    if (timeFrame === TimeFrameType.WEEKLY) {
+    if (timeFrame === TimeFrame.WEEKLY) {
       const [yearMonth, weekPart] = period.split("-W");
       const [weekString, range] = weekPart.split("|");
       const [year, month] = yearMonth.split("-");
@@ -141,7 +138,7 @@ export function getPerformancePeriodColumns(
       };
     }
 
-    if (timeFrame === TimeFrameType.DAILY) {
+    if (timeFrame === TimeFrame.DAILY) {
       return {
         key: period,
         label: safeFormatDate(period, "dd MMM"),
@@ -149,14 +146,14 @@ export function getPerformancePeriodColumns(
       };
     }
 
-    if (timeFrame === TimeFrameType.MONTHLY) {
+    if (timeFrame === TimeFrame.MONTHLY) {
       return {
         key: period,
         label: safeFormatDate(period, "MMMM yyyy"),
       };
     }
 
-    if (timeFrame === TimeFrameType.YTD) {
+    if (timeFrame === TimeFrame.YTD) {
       return {
         key: period,
         label: `YTD ${period}`,
@@ -172,7 +169,7 @@ export function getPerformancePeriodColumns(
 
 export function getPeriodRangeOptions(
   availablePeriods: string[],
-  timeFrame: TimeFrameType,
+  timeFrame: TimeFrame,
   startPeriod: string,
   endPeriod: string,
   translations: PeriodTranslations,

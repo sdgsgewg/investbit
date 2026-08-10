@@ -1,12 +1,13 @@
 import React from "react";
 import { ChevronDown } from "lucide-react";
+import { Option } from "@/types/option";
 
 interface InputSelectProps {
   label: string;
   name: string;
   placeholder?: string;
   value: string;
-  options: { id: string; name: string }[];
+  options: Option[];
   onChange: (value: string) => void;
   className?: string;
 }
@@ -39,11 +40,11 @@ const InputSelect: React.FC<InputSelectProps> = ({
 
           {options.map((opt) => (
             <option
-              key={opt.id}
-              value={opt.id}
+              key={opt.value}
+              value={opt.value}
               className="bg-background text-foreground"
             >
-              {opt.name}
+              {opt.label}
             </option>
           ))}
         </select>

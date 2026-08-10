@@ -4,7 +4,7 @@ import { useTranslations } from "next-intl";
 import { useNumberFormatter } from "@/hooks/useNumberFormatter";
 
 import CategoryLeaderboardSkeleton from "./CategoryLeaderboardSkeleton";
-import { TimeFrameType } from "@/enums/TimeFrameType";
+import { TimeFrame } from "@/enums/TimeFrame";
 import { useMemo } from "react";
 import { getCategoryLeaderboard } from "@/lib/mutual-fund/performance/selector";
 import { formatPerformancePeriod } from "@/lib/mutual-fund/performance/period";
@@ -15,7 +15,7 @@ interface CategoryLeaderboardProps {
   timePeriods: string[];
   loading: boolean;
   fetching: boolean;
-  viewMode: TimeFrameType;
+  viewMode: TimeFrame;
 }
 
 const CategoryLeaderboard = ({

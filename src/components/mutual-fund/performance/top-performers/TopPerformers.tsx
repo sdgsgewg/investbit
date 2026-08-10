@@ -3,7 +3,7 @@ import { Trophy, Award, TrendingUp } from "lucide-react";
 import { motion } from "framer-motion";
 import { useTranslations } from "next-intl";
 import TopPerformersSkeleton from "./TopPerformersSkeleton";
-import { TimeFrameType } from "@/enums/TimeFrameType";
+import { TimeFrame } from "@/enums/TimeFrame";
 import { getTopPerformers } from "@/lib/mutual-fund/performance/selector";
 import { formatPerformancePeriod } from "@/lib/mutual-fund/performance/period";
 import { PerformanceData } from "@/types/mutual-fund/performance";
@@ -13,7 +13,7 @@ interface TopPerformersProps {
   timePeriods: string[];
   loading: boolean;
   fetching: boolean;
-  viewMode: TimeFrameType;
+  viewMode: TimeFrame;
 }
 
 const TopPerformers: React.FC<TopPerformersProps> = ({
@@ -64,12 +64,10 @@ const TopPerformers: React.FC<TopPerformersProps> = ({
   });
 
   const getLabel = () => {
-    if (viewMode === TimeFrameType.DAILY) return tTopPerformers("labels.daily");
-    if (viewMode === TimeFrameType.WEEKLY)
-      return tTopPerformers("labels.weekly");
-    if (viewMode === TimeFrameType.MONTHLY)
-      return tTopPerformers("labels.monthly");
-    if (viewMode === TimeFrameType.YTD) return tTopPerformers("labels.ytd");
+    if (viewMode === TimeFrame.DAILY) return tTopPerformers("labels.daily");
+    if (viewMode === TimeFrame.WEEKLY) return tTopPerformers("labels.weekly");
+    if (viewMode === TimeFrame.MONTHLY) return tTopPerformers("labels.monthly");
+    if (viewMode === TimeFrame.YTD) return tTopPerformers("labels.ytd");
     return tTopPerformers("labels.yearly");
   };
 

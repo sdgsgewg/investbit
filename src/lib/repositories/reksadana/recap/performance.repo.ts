@@ -6,7 +6,7 @@ import {
   PerformanceItem,
   PerformanceResponse,
 } from "@/types/mutual-fund/performance";
-import { TimeFrameType } from "@/enums/TimeFrameType";
+import { TimeFrame } from "@/enums/TimeFrame";
 import { DbRecordListRow, RecordListItem } from "@/types/mutual-fund/records";
 import { getRecordsBaseQuery, getRecordTable } from "../records.repo";
 import { mapRecordListItem } from "@/lib/mutual-fund/records/mapper";
@@ -156,15 +156,15 @@ export async function getPerformanceRepo(
   };
 
   const parseKeyDate = (key: string) => {
-    if (params.timeFrame === TimeFrameType.WEEKLY) {
+    if (params.timeFrame === TimeFrame.WEEKLY) {
       const [yearMonth, weekPart] = key.split("-W");
       const [weekStr] = weekPart.split("|");
       return new Date(`${yearMonth}-01`).getTime() + Number(weekStr) * 1000;
     }
 
     if (
-      params.timeFrame === TimeFrameType.YTD ||
-      params.timeFrame === TimeFrameType.YEARLY
+      params.timeFrame === TimeFrame.YTD ||
+      params.timeFrame === TimeFrame.YEARLY
     ) {
       return new Date(Number(key), 0, 1).getTime();
     }
@@ -197,17 +197,17 @@ export async function getPerformanceRepo(
     let periodKey = "";
 
     switch (params.timeFrame) {
-      case TimeFrameType.DAILY:
+      case TimeFrame.DAILY:
         periodKey = record.date;
         break;
-      case TimeFrameType.WEEKLY:
+      case TimeFrame.WEEKLY:
         periodKey = getWeekKey(record.date);
         break;
-      case TimeFrameType.MONTHLY:
+      case TimeFrame.MONTHLY:
         periodKey = format(startOfMonth(new Date(record.date)), "yyyy-MM-dd");
         break;
-      case TimeFrameType.YTD:
-      case TimeFrameType.YEARLY:
+      case TimeFrame.YTD:
+      case TimeFrame.YEARLY:
         periodKey = record.date.substring(0, 4);
         break;
     }
@@ -218,7 +218,7 @@ export async function getPerformanceRepo(
 
     const yields = grouped[categoryName].items[item.id].yields;
 
-    if (params.timeFrame === TimeFrameType.YTD) {
+    if (params.timeFrame === TimeFrame.YTD) {
       // Records are sorted ascending by date, so the last assignment per year
       // becomes the latest available YTD value for that item.
       yields[periodKey] = record.yieldYtd ?? 0;
@@ -229,7 +229,7 @@ export async function getPerformanceRepo(
     const existingValue = yields[periodKey] ?? 0;
 
     yields[periodKey] =
-      params.timeFrame === TimeFrameType.DAILY ? value : existingValue + value;
+      params.timeFrame === TimeFrame.DAILY ? value : existingValue + value;
   });
 
   const availablePeriods = Array.from(timeSet).sort(
