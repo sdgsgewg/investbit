@@ -8,7 +8,7 @@ import { ExampleData } from "@/features/learn/types/ExampleData";
 
 export default function SymmetricalTriangle() {
   const t = useTranslations(
-    "learn.technicalAnalysis.chapter1.lessons.sideways.topics.symmetrical_triangle.content",
+    "public.learn.technicalAnalysis.chapter1.lessons.sideways.topics.symmetrical_triangle.content",
   );
 
   const getDefinitionData = (): DefinitionData => {

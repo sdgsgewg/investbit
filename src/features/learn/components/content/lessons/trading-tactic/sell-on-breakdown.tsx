@@ -6,7 +6,7 @@ import { ExampleData } from "@/features/learn/types/ExampleData";
 
 export default function SellOnBreakdown() {
   const t = useTranslations(
-    "learn.technicalAnalysis.chapter5.lessons.sell_on_breakdown.content",
+    "public.learn.technicalAnalysis.chapter5.lessons.sell_on_breakdown.content",
   );
 
   const highlight = t.raw("highlight");

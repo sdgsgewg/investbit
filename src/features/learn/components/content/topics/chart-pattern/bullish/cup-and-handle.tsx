@@ -8,7 +8,7 @@ import { ExampleData } from "@/features/learn/types/ExampleData";
 
 export default function CupAndHandle() {
   const t = useTranslations(
-    "learn.technicalAnalysis.chapter1.lessons.bullish.topics.cup_and_handle.content",
+    "public.learn.technicalAnalysis.chapter1.lessons.bullish.topics.cup_and_handle.content",
   );
 
   const getDefinitionData = (): DefinitionData => {

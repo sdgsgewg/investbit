@@ -7,7 +7,7 @@ import { ListData, PointData } from "@/features/learn/types/ListData";
 
 export default function VolumeOnBreakoutBreakdown() {
   const t = useTranslations(
-    "learn.technicalAnalysis.chapter2.lessons.volume_on_breakout_breakdown.content",
+    "public.learn.technicalAnalysis.chapter2.lessons.volume_on_breakout_breakdown.content",
   );
 
   const paragraphs: string[] = t.raw("paragraphs");

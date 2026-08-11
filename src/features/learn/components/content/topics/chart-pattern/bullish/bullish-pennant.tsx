@@ -8,7 +8,7 @@ import { ExampleData } from "@/features/learn/types/ExampleData";
 
 export default function BullishPennant() {
   const t = useTranslations(
-    "learn.technicalAnalysis.chapter1.lessons.bullish.topics.bullish_pennant.content",
+    "public.learn.technicalAnalysis.chapter1.lessons.bullish.topics.bullish_pennant.content",
   );
 
   const getDefinitionData = (): DefinitionData => {

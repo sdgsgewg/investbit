@@ -3,7 +3,7 @@ import TechAnalysisLessonContent from "../TechAnalysisLessonContent";
 
 export default function DeterminingVolumeSize() {
   const t = useTranslations(
-    "learn.technicalAnalysis.chapter2.lessons.determining_volume_size.content",
+    "public.learn.technicalAnalysis.chapter2.lessons.determining_volume_size.content",
   );
 
   const paragraphs: string[] = t.raw("paragraphs");

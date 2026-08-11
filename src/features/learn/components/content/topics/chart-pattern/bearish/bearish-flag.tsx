@@ -8,7 +8,7 @@ import { ExampleData } from "@/features/learn/types/ExampleData";
 
 export default function BearishFlag() {
   const t = useTranslations(
-    "learn.technicalAnalysis.chapter1.lessons.bearish.topics.bearish_flag.content",
+    "public.learn.technicalAnalysis.chapter1.lessons.bearish.topics.bearish_flag.content",
   );
 
   const getDefinitionData = (): DefinitionData => {

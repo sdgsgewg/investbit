@@ -6,7 +6,7 @@ import { mapDefinitionWithImages } from "@/lib/mappers/definition.mapper";
 
 export default function Harami() {
   const t = useTranslations(
-    "learn.technicalAnalysis.chapter3.lessons.candlestick_pattern.topics.harami.content",
+    "public.learn.technicalAnalysis.chapter3.lessons.candlestick_pattern.topics.harami.content",
   );
 
   const getDefinitionData = (): DefinitionData => {

@@ -8,7 +8,7 @@ import { ExampleData } from "@/features/learn/types/ExampleData";
 
 export default function FallingWedge() {
   const t = useTranslations(
-    "learn.technicalAnalysis.chapter1.lessons.bullish.topics.falling_wedge.content",
+    "public.learn.technicalAnalysis.chapter1.lessons.bullish.topics.falling_wedge.content",
   );
 
   const getDefinitionData = (): DefinitionData => {

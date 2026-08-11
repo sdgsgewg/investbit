@@ -18,7 +18,7 @@ export default function Page() {
   );
 
   // Notice we use the slug as the namespace, but fallback to technicalAnalysis if it is the only one we have for now.
-  const t = useTranslations("learn.technicalAnalysis");
+  const t = useTranslations("public.learn.technicalAnalysis");
 
   if (!chapter) {
     return (
@@ -27,7 +27,7 @@ export default function Page() {
           <h2 className="text-2xl font-bold mb-4">Chapter not found</h2>
           <button
             onClick={() => router.push(`/${locale}/learn/${slug}`)}
-            className="text-primary hover:underline flex items-center justify-center"
+            className="text-primary hover:underline flex items-center justify-center cursor-pointer"
           >
             <ArrowLeft className="mr-2 h-4 w-4" /> Back to Chapters
           </button>
@@ -43,7 +43,7 @@ export default function Page() {
         <div className="max-w-4xl mx-auto py-16 px-4 sm:px-6 lg:px-8">
           <button
             onClick={() => router.push(`/${locale}/learn/${slug}`)}
-            className="inline-flex items-center text-sm font-medium text-muted-foreground hover:text-primary transition-colors mb-8 group"
+            className="inline-flex items-center text-sm font-medium text-muted-foreground hover:text-primary transition-colors mb-8 group cursor-pointer"
           >
             <ArrowLeft className="mr-2 h-4 w-4 group-hover:-translate-x-1 transition-transform" />
             Back to Overview
@@ -140,7 +140,7 @@ export default function Page() {
               className="relative pl-8 md:pl-12"
             >
               <div className="absolute left-0 top-1 h-full w-px bg-border group-last:bg-transparent"></div>
-              <div className="absolute left-[-5px] top-2 h-3 w-3 rounded-full bg-primary ring-4 ring-background"></div>
+              <div className="absolute -left-1.25 top-2 h-3 w-3 rounded-full bg-primary ring-4 ring-background"></div>
 
               <div className="mb-8">
                 <h2 className="text-3xl font-bold flex items-center gap-3 mb-4 text-foreground">

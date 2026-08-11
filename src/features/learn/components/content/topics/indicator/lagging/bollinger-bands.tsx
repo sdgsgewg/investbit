@@ -15,7 +15,7 @@ import { ExampleData } from "@/features/learn/types/ExampleData";
 
 export default function BollingerBands() {
   const t = useTranslations(
-    "learn.technicalAnalysis.chapter4.lessons.lagging_indicator.topics.bollinger_bands.content",
+    "public.learn.technicalAnalysis.chapter4.lessons.lagging_indicator.topics.bollinger_bands.content",
   );
 
   const getListData = (): ListData => {

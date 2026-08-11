@@ -6,7 +6,7 @@ import { ExampleData } from "@/features/learn/types/ExampleData";
 
 export default function BuyOnWeakness() {
   const t = useTranslations(
-    "learn.technicalAnalysis.chapter5.lessons.buy_on_weakness.content",
+    "public.learn.technicalAnalysis.chapter5.lessons.buy_on_weakness.content",
   );
 
   const highlight = t.raw("highlight");

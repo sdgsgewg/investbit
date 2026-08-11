@@ -6,7 +6,7 @@ import { ExampleData } from "@/features/learn/types/ExampleData";
 
 export default function BuyOnBreakout() {
   const t = useTranslations(
-    "learn.technicalAnalysis.chapter5.lessons.buy_on_breakout.content",
+    "public.learn.technicalAnalysis.chapter5.lessons.buy_on_breakout.content",
   );
 
   const highlight = t.raw("highlight");

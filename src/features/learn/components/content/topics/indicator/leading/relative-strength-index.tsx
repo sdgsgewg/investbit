@@ -10,7 +10,7 @@ import { ExampleData } from "@/features/learn/types/ExampleData";
 
 export default function RelativeStrengthIndex() {
   const t = useTranslations(
-    "learn.technicalAnalysis.chapter4.lessons.leading_indicator.topics.relative_strength_index.content",
+    "public.learn.technicalAnalysis.chapter4.lessons.leading_indicator.topics.relative_strength_index.content",
   );
 
   const getDefinitionData = (): DefinitionData => {

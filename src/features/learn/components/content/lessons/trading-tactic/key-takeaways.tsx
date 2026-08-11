@@ -5,7 +5,7 @@ import ContentParagraph from "../../../ContentParagraph";
 
 export default function KeyTakeawaysC5() {
   const t = useTranslations(
-    "learn.technicalAnalysis.chapter5.lessons.key_takeaways_c5.content",
+    "public.learn.technicalAnalysis.chapter5.lessons.key_takeaways_c5.content",
   );
 
   const highlight = t.raw("highlight");

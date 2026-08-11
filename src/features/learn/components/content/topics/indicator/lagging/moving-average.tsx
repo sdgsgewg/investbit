@@ -12,7 +12,7 @@ import { ExampleData } from "@/features/learn/types/ExampleData";
 
 export default function MovingAverage() {
   const t = useTranslations(
-    "learn.technicalAnalysis.chapter4.lessons.lagging_indicator.topics.moving_average.content",
+    "public.learn.technicalAnalysis.chapter4.lessons.lagging_indicator.topics.moving_average.content",
   );
 
   const getDefinitionData = (): DefinitionData => {

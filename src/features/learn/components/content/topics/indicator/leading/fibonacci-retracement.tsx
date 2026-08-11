@@ -8,7 +8,7 @@ import { ExampleData } from "@/features/learn/types/ExampleData";
 
 export default function FibonacciRetracement() {
   const t = useTranslations(
-    "learn.technicalAnalysis.chapter4.lessons.leading_indicator.topics.fibonacci_retracement.content",
+    "public.learn.technicalAnalysis.chapter4.lessons.leading_indicator.topics.fibonacci_retracement.content",
   );
 
   const getDefinitionData = (): DefinitionData => {

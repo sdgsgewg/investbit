@@ -6,7 +6,7 @@ import { mapDefinitionWithImages } from "@/lib/mappers/definition.mapper";
 
 export default function EveningStar() {
   const t = useTranslations(
-    "learn.technicalAnalysis.chapter3.lessons.candlestick_pattern.topics.evening_star.content",
+    "public.learn.technicalAnalysis.chapter3.lessons.candlestick_pattern.topics.evening_star.content",
   );
 
   const getDefinitionData = (): DefinitionData => {

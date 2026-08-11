@@ -10,7 +10,7 @@ import { ExampleData } from "@/features/learn/types/ExampleData";
 
 export default function FalseBreak() {
   const t = useTranslations(
-    "learn.technicalAnalysis.chapter1.lessons.false_break.content",
+    "public.learn.technicalAnalysis.chapter1.lessons.false_break.content",
   );
 
   const getDefinitionData = (): DefinitionData => {

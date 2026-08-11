@@ -8,7 +8,7 @@ import { ExampleData } from "@/features/learn/types/ExampleData";
 
 export default function BullishFlag() {
   const t = useTranslations(
-    "learn.technicalAnalysis.chapter1.lessons.bullish.topics.bullish_flag.content",
+    "public.learn.technicalAnalysis.chapter1.lessons.bullish.topics.bullish_flag.content",
   );
 
   const getDefinitionData = (): DefinitionData => {

@@ -3,7 +3,7 @@ import TradingTacticLessonContent from "../TradingTacticLessonContent";
 
 export default function SellOnStrength() {
   const t = useTranslations(
-    "learn.technicalAnalysis.chapter5.lessons.sell_on_strength.content",
+    "public.learn.technicalAnalysis.chapter5.lessons.sell_on_strength.content",
   );
 
   const highlight = t.raw("highlight");

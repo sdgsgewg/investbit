@@ -16,7 +16,7 @@ import ExampleSection from "../../../sections/ExampleSection";
 
 export default function MovingAverageConvergenceDivergence() {
   const t = useTranslations(
-    "learn.technicalAnalysis.chapter4.lessons.lagging_indicator.topics.moving_average_convergence_divergence.content",
+    "public.learn.technicalAnalysis.chapter4.lessons.lagging_indicator.topics.moving_average_convergence_divergence.content",
   );
 
   const macdDefinitionData: DefinitionData = {

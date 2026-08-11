@@ -18,6 +18,7 @@ import PageHeader from "@/components/templates/PageHeader";
 export default function LearnPage() {
   const router = useRouter();
   const tNav = useTranslations("navigation");
+  const tCommonActions = useTranslations("common.actions");
   const locale = useLocale();
 
   const data = LEARN_DATA[locale as keyof typeof LEARN_DATA] || LEARN_DATA.en;
@@ -55,7 +56,7 @@ export default function LearnPage() {
                         router.push(`/${locale}/learn/${section.slug}`)
                       }
                     >
-                      Explore
+                      {tCommonActions("explore")}
                     </Button>
                   </CardFooter>
                 )}

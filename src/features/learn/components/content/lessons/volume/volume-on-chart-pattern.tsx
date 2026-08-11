@@ -12,7 +12,7 @@ import ContentParagraph from "../../../ContentParagraph";
 
 export default function VolumeOnChartPattern() {
   const t = useTranslations(
-    "learn.technicalAnalysis.chapter2.lessons.volume_on_chart_pattern.content",
+    "public.learn.technicalAnalysis.chapter2.lessons.volume_on_chart_pattern.content",
   );
 
   const getExampleData = (): ExampleData => {
