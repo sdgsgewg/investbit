@@ -2,23 +2,12 @@
 
 import { useLocale, useTranslations } from "next-intl";
 import { LEARN_DATA } from "@/lib/learn-data";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Button } from "@/components/ui/button";
-import { useRouter } from "next/navigation";
+import { Tabs, TabsContent } from "@/components/ui/tabs";
 import PageHeader from "@/components/templates/PageHeader";
+import { LearnCard, LearnTabs } from "@/components/learn";
 
 export default function LearnPage() {
-  const router = useRouter();
   const tNav = useTranslations("navigation");
-  const tCommonActions = useTranslations("common.actions");
   const locale = useLocale();
 
   const data = LEARN_DATA[locale as keyof typeof LEARN_DATA] || LEARN_DATA.en;
@@ -28,39 +17,12 @@ export default function LearnPage() {
       <PageHeader title={tNav("learn")} />
 
       <Tabs defaultValue="basics" className="w-full">
-        <TabsList className="grid w-full grid-cols-3 mb-8">
-          {data.map((tab) => (
-            <TabsTrigger key={tab.key} value={tab.key}>
-              {tab.label}
-            </TabsTrigger>
-          ))}
-        </TabsList>
+        <LearnTabs />
 
         {data.map((tab) => (
           <TabsContent key={tab.key} value={tab.key} className="space-y-6">
             {tab.sections.map((section, idx) => (
-              <Card key={idx}>
-                <CardHeader>
-                  <CardTitle>{section.title}</CardTitle>
-                  <CardDescription>{section.description}</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <p className="leading-7">{section.content}</p>
-                </CardContent>
-                {section.slug && (
-                  <CardFooter>
-                    <Button
-                      variant="outline"
-                      className="cursor-pointer"
-                      onClick={() =>
-                        router.push(`/${locale}/learn/${section.slug}`)
-                      }
-                    >
-                      {tCommonActions("explore")}
-                    </Button>
-                  </CardFooter>
-                )}
-              </Card>
+              <LearnCard key={idx} section={section} />
             ))}
           </TabsContent>
         ))}
