@@ -12,7 +12,7 @@ export default function Page() {
   const chapters = CHAPTER_DATA;
 
   return (
-    <div className="min-h-screen py-16 px-4">
+    <>
       <div className="max-w-5xl mx-auto">
         <SectionHeader sectionSlug={slug} />
 
@@ -27,6 +27,6 @@ export default function Page() {
           ))}
         </div>
       </div>
-    </div>
+    </>
   );
 }

@@ -1,6 +1,6 @@
 import PublicPageWrapper from "@/components/wrappers/PublicPageWrapper";
 
-export default function PerformancePageLayout({
+export default function GlossaryPageLayout({
   children,
 }: {
   children: React.ReactNode;

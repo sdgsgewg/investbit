@@ -33,11 +33,11 @@ export default function Page() {
   }
 
   return (
-    <div className="min-h-screen">
+    <div className="max-w-4xl mx-auto">
       <ChapterHeader chapter={chapter} />
 
       {/* Chapter Content */}
-      <div className="max-w-4xl mx-auto py-16 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-4xl mx-auto py-16 px-4 sm:px-6">
         <div className="space-y-16">
           {chapter.lessons.map((lesson, index) => (
             <ChapterLesson key={index} lesson={lesson} />
