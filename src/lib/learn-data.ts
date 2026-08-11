@@ -5,13 +5,13 @@ export type LearnSection = {
   content: string;
 };
 
-export type LearnTab = {
+export type LearnCategory = {
   key: "basics" | "analysis" | "indonesia";
   label: string;
   sections: LearnSection[];
 };
 
-export type LearnData = Record<"en" | "id", LearnTab[]>;
+export type LearnData = Record<"en" | "id", LearnCategory[]>;
 
 export const LEARN_DATA: LearnData = {
   en: [

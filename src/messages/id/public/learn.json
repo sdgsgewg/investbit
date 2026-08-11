@@ -1,7 +1,14 @@
 {
-  "actions": {
-    "explore": "Jelajahi"
+  "learn": {
+    "chapter": {
+      "referencesAndDisclaimer": {
+        "title": "Referensi dan Penafian",
+        "subtitle": "Lihat sumber yang digunakan dalam bab ini",
+        "contentText": "Materi dan contoh dalam bab ini didasarkan pada data dan sumber daya pendidikan yang tersedia untuk umum."
+      }
+    }
   },
+
   "technicalAnalysis": {
     "title": "Pilih Bab",
     "subtitle": "Kuasai seni membaca grafik, mengenali pola, dan memahami volume untuk membuat keputusan investasi yang tepat.",

@@ -20,7 +20,7 @@ export type Lesson = {
   topics?: Topic[];
 };
 
-type Link = {
+export type Link = {
   label: string;
   url: string;
 };

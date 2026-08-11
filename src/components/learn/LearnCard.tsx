@@ -10,7 +10,8 @@ import {
 import { LearnSection } from "@/lib/learn-data";
 import { Button } from "../ui/button";
 import { useRouter } from "@/navigation";
-import { useLocale, useTranslations } from "next-intl";
+import { useTranslations } from "next-intl";
+import { ROUTES } from "@/constants/routes";
 
 interface Props {
   section: LearnSection;
@@ -18,7 +19,6 @@ interface Props {
 
 const LearnCard = ({ section }: Props) => {
   const router = useRouter();
-  const locale = useLocale();
 
   const tCommonActions = useTranslations("common.actions");
 
@@ -38,7 +38,7 @@ const LearnCard = ({ section }: Props) => {
           <Button
             variant="outline"
             className="cursor-pointer"
-            onClick={() => router.push(`/${locale}/learn/${section.slug}`)}
+            onClick={() => router.push(`${ROUTES.LEARN}/${section.slug}`)}
           >
             {tCommonActions("explore")}
           </Button>
