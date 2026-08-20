@@ -1,4 +1,6 @@
 import { z } from "zod";
+import { baseQuerySchema, sortingQuerySchema } from "../query.schema";
+import { categorySortBySchema } from "../enums.schema";
 
 export const categoryIdSchema = z.string().uuid();
 
@@ -22,6 +24,8 @@ export const categorySchema = categoryMutationSchema.extend({
 // ARRAY schema
 export const categoriesSchema = z.array(categorySchema).min(1);
 
-export const categoriesQuerySchema = z.object({
-  name: z.string().trim().min(1).max(255).optional(),
-});
+export const categoriesQuerySchema = baseQuerySchema
+  .merge(sortingQuerySchema)
+  .extend({
+    sortBy: categorySortBySchema.default("name"),
+  });

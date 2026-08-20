@@ -1,31 +1,29 @@
-import { CategoryListItem } from "@/types/mutual-fund/category";
-import { apiClient } from "../client";
 import {
-  createCategorySchema,
-  updateCategorySchema,
-} from "@/lib/validations/mutual-fund/categories.schema";
+  CategoryListItem,
+  CategoryQuery,
+} from "@/types/mutual-fund/categories";
+import { apiClient } from "../client";
+import { ApiResponse } from "@/types/api";
 
 const baseRoute = "/mutual-fund/categories";
 
-export const fetchCategories = async (): Promise<CategoryListItem[]> => {
-  const { data } = await apiClient.get<{
-    success: boolean;
-    data: CategoryListItem[];
-  }>(baseRoute);
+export const fetchCategories = async (
+  params?: CategoryQuery,
+): Promise<CategoryListItem[]> => {
+  const { data } = await apiClient.get<ApiResponse<CategoryListItem[]>>(
+    baseRoute,
+    { params },
+  );
 
   return data.data;
 };
 
 export const createCategory = async (payload: unknown) => {
-  const parsed = createCategorySchema.parse(payload); // validation
-
-  await apiClient.post(baseRoute, parsed);
+  await apiClient.post(baseRoute, payload);
 };
 
 export const updateCategory = async (id: string, payload: unknown) => {
-  const parsed = updateCategorySchema.parse(payload); // validation
-
-  await apiClient.put(`${baseRoute}/${id}`, parsed);
+  await apiClient.put(`${baseRoute}/${id}`, payload);
 };
 
 export const deleteCategory = async (id: string) => {

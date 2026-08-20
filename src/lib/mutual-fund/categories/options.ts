@@ -1,4 +1,4 @@
-import { CategoryListItem } from "@/types/mutual-fund/category";
+import { CategoryListItem } from "@/types/mutual-fund/categories";
 import { Option } from "@/types/option";
 import { Translate } from "@/types/translate";
 

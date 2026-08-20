@@ -2,7 +2,7 @@ import {
   createCategoryRepo,
   deleteCategoryRepo,
   getCategoriesRepo,
-  getCategoryByIdRepo,
+  getCategoryDetailRepo,
   updateCategoryRepo,
 } from "@/lib/repositories/mutual-fund/categories.repo";
 import {
@@ -18,10 +18,10 @@ export async function getCategoriesService(query: unknown) {
   return getCategoriesRepo(parsed);
 }
 
-export async function getCategoryByIdService(id: string) {
+export async function getCategoryDetailService(id: string) {
   const parsed = categoryIdSchema.parse(id);
 
-  return getCategoryByIdRepo(parsed);
+  return getCategoryDetailRepo(parsed);
 }
 
 export async function createCategoryService(input: unknown) {

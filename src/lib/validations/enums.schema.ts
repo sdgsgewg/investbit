@@ -5,6 +5,10 @@ import z from "zod";
 
 // Item
 
+export const categorySortBySchema = z.enum(["name"]);
+
+// Item
+
 export const itemSortBySchema = z.enum(["name"]);
 
 // Performance

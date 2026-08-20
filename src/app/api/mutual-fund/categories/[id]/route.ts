@@ -7,7 +7,7 @@ import { authorizeManageContent } from "@/lib/auth/api-authorization";
 import { NotFoundError } from "@/lib/errors/http-error";
 import {
   deleteCategoryService,
-  getCategoryByIdService,
+  getCategoryDetailService,
   updateCategoryService,
 } from "@/lib/services/reksadana/categories.service";
 type CategoryRouteContext = {
@@ -20,7 +20,7 @@ export async function PUT(request: Request, context: CategoryRouteContext) {
 
     const { id } = await context.params;
 
-    const currentCategory = await getCategoryByIdService(id);
+    const currentCategory = await getCategoryDetailService(id);
 
     if (!currentCategory) {
       return errorResponse(new NotFoundError("Category not found"));
@@ -41,7 +41,7 @@ export async function DELETE(request: Request, context: CategoryRouteContext) {
 
     const { id } = await context.params;
 
-    const category = await getCategoryByIdService(id);
+    const category = await getCategoryDetailService(id);
 
     if (!category) {
       return errorResponse(new NotFoundError("Category not found"));

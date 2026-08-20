@@ -6,6 +6,7 @@ import { useTranslations } from "next-intl";
 import { useCategories } from "@/hooks/dashboard/mutual-fund/categories";
 import {
   useItemActions,
+  useItemFilter,
   useItemForm,
   useItems,
   useItemSubmit,
@@ -13,7 +14,6 @@ import {
 import { getCategoryOptions } from "@/lib/mutual-fund/categories/options";
 import { CrudFormTablePage } from "@/components/templates/crud/CrudFormTablePage";
 import { useCrudPageTitle } from "@/hooks/crud/useCrudPageTitle";
-import useItemFilter from "@/hooks/dashboard/mutual-fund/items/useItemFilter";
 import { DataColumn } from "@/types/table";
 import { ItemListItem } from "@/types/mutual-fund/items";
 import { createSortHandler } from "@/lib/utils/crud";

@@ -5,7 +5,7 @@ import { ArrowDown, ArrowUp, Database } from "lucide-react";
 import { useTranslations } from "next-intl";
 
 import { cn } from "@/lib/utils";
-import TableSkeleton from "./skeletons/TableSkeleton";
+import TableSkeleton from "../skeletons/TableSkeleton";
 
 import {
   Table,

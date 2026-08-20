@@ -3,12 +3,18 @@ import { ENTITY_CONFIG } from "@/config/entities";
 import {
   CategoryCreateInput,
   CategoryDetailResponse,
+  CategoryFilter,
   CategoryListItem,
   CategoryUpdateInput,
-  GetCategoriesParams,
-} from "@/types/mutual-fund/category";
+  DbCategoryDetailRow,
+  DbCategoryListRow,
+} from "@/types/mutual-fund/categories";
 import { ensureUniqueRecord } from "../helpers/uniqueness";
 import { requireEntity } from "../helpers/require-entity";
+import {
+  mapCategoryDetailResponse,
+  mapCategoryListItem,
+} from "@/lib/mutual-fund/categories/mapper";
 
 async function getSupabase() {
   return createClient();
@@ -22,38 +28,66 @@ const getTable = () => {
   return ENTITY_CONFIG["rdCategory"]["table"];
 };
 
+function getCategoriesBaseQuery() {
+  return `
+    id,
+    name
+  `;
+}
+
 export async function getCategoriesRepo(
-  params: GetCategoriesParams,
+  params: CategoryFilter,
 ): Promise<CategoryListItem[]> {
   const supabase = await getSupabase();
 
-  let query = supabase.from(getTable()).select("*").order("name");
+  let query = supabase
+    .from(getTable())
+    .select(getCategoriesBaseQuery())
+    .order("name");
 
-  if (params.name) {
-    query = query.ilike("name", `%${params.name}%`);
+  // Filter
+
+  if (params.search) {
+    query = query.ilike("name", `%${params.search}%`);
   }
 
-  const { data, error } = await query;
+  // Sort
+
+  query = query.order(params.sortBy, {
+    ascending: params.sortOrder === "asc",
+  });
+
+  // Execute
+
+  const { data, error } = await query.overrideTypes<DbCategoryListRow[]>();
 
   if (error) throw error;
 
-  return data ?? [];
+  return data.map(mapCategoryListItem);
 }
 
-export async function getCategoryByIdRepo(
+function getCategoryDetailBaseQuery() {
+  return `
+    *
+  `;
+}
+
+export async function getCategoryDetailRepo(
   id: string,
 ): Promise<CategoryDetailResponse | null> {
   const supabase = await getSupabase();
 
   const { data, error } = await supabase
     .from(getTable())
-    .select("*")
+    .select(getCategoryDetailBaseQuery())
     .eq("id", id)
-    .maybeSingle();
+    .maybeSingle()
+    .overrideTypes<DbCategoryDetailRow>();
 
   if (error) throw error;
+  if (!data) return null;
 
-  return data;
+  return mapCategoryDetailResponse(data);
 }
 
 export async function createCategoryRepo(
@@ -84,7 +118,7 @@ export async function updateCategoryRepo(
 ): Promise<CategoryDetailResponse> {
   const supabase = await getSupabase();
 
-  await requireEntity(getCategoryByIdRepo, id, getLabel());
+  await requireEntity(getCategoryDetailRepo, id, getLabel());
 
   await ensureUniqueRecord({
     table: getTable(),
@@ -110,7 +144,7 @@ export async function updateCategoryRepo(
 export async function deleteCategoryRepo(id: string) {
   const supabase = await getSupabase();
 
-  await requireEntity(getCategoryByIdRepo, id, getLabel());
+  await requireEntity(getCategoryDetailRepo, id, getLabel());
 
   const { error } = await supabase.from(getTable()).delete().eq("id", id);
 

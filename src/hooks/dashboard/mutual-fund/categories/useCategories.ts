@@ -1,9 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
 import { queryConfig } from "@/lib/react-query/config/queryConfig";
-import { queryKeys } from "@/lib/react-query/queryKeys";
 import { fetchCategories } from "@/lib/api/mutual-fund/categories";
+import { CategoryQuery } from "@/types/mutual-fund/categories";
+import { categoryKeys } from "@/lib/react-query/keys/categoryKeys";
 
-export function useCategories() {
+export function useCategories(params?: CategoryQuery, enabled: boolean = true) {
   const {
     data = [],
     isLoading,
@@ -11,8 +12,9 @@ export function useCategories() {
     error,
     refetch,
   } = useQuery({
-    queryKey: queryKeys.categories(),
-    queryFn: fetchCategories,
+    queryKey: categoryKeys.list(params),
+    queryFn: () => fetchCategories(params),
+    enabled,
     ...queryConfig,
   });
 

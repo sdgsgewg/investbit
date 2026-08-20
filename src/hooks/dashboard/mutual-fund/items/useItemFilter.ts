@@ -13,7 +13,7 @@ const DEFAULT_FILTER: ItemFilter = {
   sortOrder: "asc",
 };
 
-export default function useItemFilter() {
+export function useItemFilter() {
   const crud = useCrudFilters(DEFAULT_FILTER);
 
   const pagination = useCrudPagination(crud.filters, crud.setFilters, {
