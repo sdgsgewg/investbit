@@ -1,11 +1,11 @@
 import {
   upsertRecordsRepo,
   getRecordsRepo,
-} from "@/lib/repositories/reksadana/records.repo";
+} from "@/lib/repositories/mutual-fund/records.repo";
 import {
   recordsQuerySchema,
   upsertRecordSchema,
-} from "../../validations/reksadana/records.schema";
+} from "../../validations/mutual-fund/records.schema";
 
 export async function getRecordsService(query: unknown) {
   // Validate query params

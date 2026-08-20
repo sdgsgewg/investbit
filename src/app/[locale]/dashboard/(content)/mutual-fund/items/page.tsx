@@ -1,88 +1,139 @@
 "use client";
 
-import { CrudPage } from "@/components/templates/CrudPage";
 import ConnectionErrorAlert from "@/components/feedback/ConnectionErrorAlert";
 import { isLikelyConnectionError } from "@/lib/utils/connection-error";
 import { useTranslations } from "next-intl";
 import { useCategories } from "@/hooks/dashboard/mutual-fund/categories";
-import { useItemData, useItems } from "@/hooks/dashboard/mutual-fund/items";
+import {
+  useItemActions,
+  useItemForm,
+  useItems,
+  useItemSubmit,
+} from "@/hooks/dashboard/mutual-fund/items";
 import { getCategoryOptions } from "@/lib/mutual-fund/categories/options";
+import { CrudFormTablePage } from "@/components/templates/crud/CrudFormTablePage";
+import { useCrudPageTitle } from "@/hooks/crud/useCrudPageTitle";
+import useItemFilter from "@/hooks/dashboard/mutual-fund/items/useItemFilter";
+import { DataColumn } from "@/types/table";
+import { ItemListItem } from "@/types/mutual-fund/items";
+import { createSortHandler } from "@/lib/utils/crud";
+import { useCrudFilterSync } from "@/hooks/crud";
 
 export default function ItemsManagementPage() {
   const t = useTranslations("dashboard.mutualFund.items");
+  const tColumn = useTranslations("dashboard.mutualFund.items.columns");
+  const tCommon = useTranslations("common");
 
-  const { items, loading, retrying, loadError, retryLoad } = useItems();
+  const { getTitle } = useCrudPageTitle();
+
+  const { filters, debouncedFilters, setFilter, setFilters, syncUrl } =
+    useItemFilter();
+
+  const { items, loading, retrying, loadError, retryLoad } = useItems({
+    ...debouncedFilters,
+    search: debouncedFilters.search || undefined,
+  });
 
   const {
-    isEditing,
-    buttonText,
-    isSubmitting,
-    canSubmit,
     form,
     setForm,
-    handleSubmit,
+    isEditing,
+    canSubmit,
     handleEdit,
-    handleDelete,
+    buildPayload,
     resetForm,
-  } = useItemData();
+  } = useItemForm();
 
-  const {
-    categories,
-    retrying: retryingCategories,
-    loadError: categoriesLoadError,
-    retryLoad: retryCategoriesLoad,
-  } = useCategories();
+  const { handleDelete } = useItemActions();
 
-  const combinedLoadError = loadError ?? categoriesLoadError;
-  const combinedRetrying = retrying || retryingCategories;
+  const { isSubmitting, getButtonText, submit } = useItemSubmit();
+
+  const { categories } = useCategories();
 
   const categoryOptions = getCategoryOptions({ categories });
 
+  const columns: DataColumn<ItemListItem>[] = [
+    {
+      key: "name",
+      label: tColumn("name"),
+      className: "min-w-[300px]",
+      sortable: true,
+    },
+    {
+      key: "category",
+      label: tColumn("category"),
+      className: "min-w-[300px]",
+      sortable: true,
+    },
+  ];
+
+  const handleSort = createSortHandler({
+    sortBy: filters.sortBy,
+    sortOrder: filters.sortOrder,
+    setFilters,
+  });
+
+  // Sync URL on filter
+  useCrudFilterSync(debouncedFilters, syncUrl);
+
   return (
-    <CrudPage
-      title={t("title")}
-      formFields={[
-        {
-          name: "name",
-          label: t("form.labels.name"),
-          placeholder: t("form.placeholder.name"),
-          type: "text",
-        },
-        {
-          name: "category_id",
-          label: t("form.labels.category"),
-          placeholder: t("form.placeholder.category"),
-          type: "select",
-          options: categoryOptions,
-        },
-      ]}
-      columns={[
-        { key: "name", label: t("columns.name") },
-        { key: "category.name", label: t("columns.category") },
-      ]}
-      data={items}
-      form={form}
-      setForm={setForm}
-      canSubmit={canSubmit}
-      onSubmit={handleSubmit}
-      onEdit={handleEdit}
-      onDelete={handleDelete}
-      isEditing={isEditing}
-      isSubmitting={isSubmitting}
-      buttonText={buttonText}
-      resetForm={resetForm}
+    <CrudFormTablePage
+      title={getTitle("list", "rdItem")}
       loading={loading}
+      data={items}
+      columns={columns}
       headerContent={
-        isLikelyConnectionError(combinedLoadError) ? (
-          <ConnectionErrorAlert
-            onRetry={() => {
-              retryLoad();
-              retryCategoriesLoad();
-            }}
-            retrying={combinedRetrying}
-          />
+        isLikelyConnectionError(loadError) ? (
+          <ConnectionErrorAlert retrying={retrying} onRetry={retryLoad} />
         ) : undefined
       }
+      form={{
+        formFields: [
+          {
+            name: "name",
+            label: t("form.labels.name"),
+            placeholder: t("form.placeholders.name"),
+            type: "text",
+            required: true,
+          },
+          {
+            name: "category",
+            label: t("form.labels.category"),
+            placeholder: t("form.placeholders.category"),
+            type: "select",
+            options: categoryOptions,
+            required: true,
+          },
+        ],
+        form,
+        setForm,
+        canSubmit,
+        onSubmit: () => {
+          submit({
+            id: isEditing ? form.id : undefined,
+            payload: buildPayload(),
+            onSuccess: resetForm,
+          });
+        },
+        isEditing,
+        isSubmitting,
+        buttonText: getButtonText(isEditing),
+        resetForm,
+      }}
+      actions={{
+        onEdit: handleEdit,
+        onDelete: handleDelete,
+      }}
+      toolbar={{
+        searchValue: filters.search,
+        searchPlaceholder: tCommon("search.placeholder"),
+        onSearchChange: (value) => setFilter("search", value),
+      }}
+      sorting={{
+        sortBy: filters.sortBy,
+        sortOrder: filters.sortOrder,
+        onSort: handleSort,
+      }}
     />
   );
 }

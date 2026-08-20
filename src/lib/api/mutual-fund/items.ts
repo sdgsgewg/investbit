@@ -1,31 +1,46 @@
-import { ItemListItem } from "@/types/mutual-fund/item";
-import { apiClient } from "../client";
 import {
-  createItemSchema,
-  updateItemSchema,
-} from "@/lib/validations/reksadana/items.schema";
+  GroupedItemListItem,
+  GroupedItemQuery,
+  ItemListResponse,
+  ItemQuery,
+} from "@/types/mutual-fund/items";
+import { apiClient } from "../client";
+import { ApiResponse } from "@/types/api";
 
-const baseRoute = "/reksadana/items";
+const baseRoute = "/mutual-fund/items";
 
-export const fetchItems = async (): Promise<ItemListItem[]> => {
-  const { data } = await apiClient.get<{
-    success: boolean;
-    data: ItemListItem[];
-  }>(baseRoute);
+export const fetchItems = async (
+  params?: ItemQuery,
+): Promise<ItemListResponse> => {
+  const { data } = await apiClient.get<ApiResponse<ItemListResponse>>(
+    baseRoute,
+    {
+      params,
+    },
+  );
+
+  return data.data;
+};
+
+export const fetchGroupedItems = async (
+  params?: GroupedItemQuery,
+): Promise<GroupedItemListItem[]> => {
+  const { data } = await apiClient.get<ApiResponse<GroupedItemListItem[]>>(
+    `${baseRoute}/grouped`,
+    {
+      params,
+    },
+  );
 
   return data.data;
 };
 
 export const createItem = async (payload: unknown) => {
-  const parsed = createItemSchema.parse(payload); // validation
-
-  await apiClient.post(baseRoute, parsed);
+  await apiClient.post(baseRoute, payload);
 };
 
 export const updateItem = async (id: string, payload: unknown) => {
-  const parsed = updateItemSchema.parse(payload); // validation
-
-  await apiClient.put(`${baseRoute}/${id}`, parsed);
+  await apiClient.put(`${baseRoute}/${id}`, payload);
 };
 
 export const deleteItem = async (id: string) => {

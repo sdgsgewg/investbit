@@ -1,33 +1,16 @@
+"use client";
+
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useLocale, useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
+import { getApiErrorMessage, hasDuplicateError } from "@/lib/crud/error";
 import { getNameFromPayload } from "@/lib/crud/payload";
 import { isLikelyConnectionError } from "@/lib/utils/connection-error";
-import { Entity } from "@/config/entities";
-import { CrudAction } from "@/types/crud";
-import { getApiErrorMessage, hasDuplicateError } from "@/lib/crud/error";
-
-interface CrudMutationOptions<TVariables> {
-  mutationFn: (variables: TVariables) => Promise<unknown>;
-
-  queryKey: readonly unknown[];
-
-  allowRedirect?: boolean;
-
-  redirectTo?: string;
-
-  entityKey: Entity;
-
-  action: CrudAction;
-
-  getPayload?: (variables: TVariables) => unknown;
-
-  onSuccess?: (data: unknown, variables: TVariables) => void;
-}
+import { CrudMutationOptions } from "@/types/crud";
 
 export function useCrudMutation<TVariables>({
   mutationFn,
-  queryKey,
+  invalidateQueries,
   allowRedirect = false,
   redirectTo,
   entityKey,
@@ -47,11 +30,13 @@ export function useCrudMutation<TVariables>({
     mutationFn,
 
     onSuccess: (data, variables) => {
-      queryClient.invalidateQueries({
-        queryKey,
+      invalidateQueries?.forEach((filters) => {
+        queryClient.invalidateQueries(filters);
       });
 
-      if (entityKey === "rdRecord") {
+      if (
+        ["playerClubCareer", "playerNationalTeamCareer"].includes(entityKey)
+      ) {
         alert(
           `${t(`common.crud.success.${action}`, {
             entity: t(`entities.${entityKey}`),
@@ -62,11 +47,19 @@ export function useCrudMutation<TVariables>({
 
         const name = getNameFromPayload(payload);
 
-        alert(
-          `${t(`common.crud.success.${action}`, {
-            entity: t(`entities.${entityKey}`),
-          })}: ${name}`,
-        );
+        if (name) {
+          alert(
+            `${t(`common.crud.success.${action}`, {
+              entity: t(`entities.${entityKey}`),
+            })}: ${name}`,
+          );
+        } else {
+          alert(
+            `${t(`common.crud.success.${action}`, {
+              entity: t(`entities.${entityKey}`),
+            })}.`,
+          );
+        }
       }
 
       onSuccess?.(data, variables);

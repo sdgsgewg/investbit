@@ -1,7 +1,7 @@
 import {
   recordsQuerySchema,
   upsertRecordSchema,
-} from "@/lib/validations/reksadana/records.schema";
+} from "@/lib/validations/mutual-fund/records.schema";
 import z from "zod";
 
 /**

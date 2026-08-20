@@ -7,7 +7,7 @@ import SkeletonTable from "@/components/mutual-fund/records/SkeletonTable";
 import InputTable from "@/components/mutual-fund/records/InputTable";
 import ConnectionErrorAlert from "@/components/feedback/ConnectionErrorAlert";
 import { isLikelyConnectionError } from "@/lib/utils/connection-error";
-import { CrudPageHeader } from "@/components/templates/CrudPageHeader";
+import { CrudPageHeader } from "@/components/templates/crud/CrudPageHeader";
 import { useTranslations } from "next-intl";
 import { useRecordData } from "@/hooks/dashboard/mutual-fund/records";
 
@@ -15,7 +15,7 @@ export default function RecordPage() {
   const t = useTranslations("dashboard.mutualFund.records");
 
   const {
-    categoriesWithItems,
+    groupedItems,
     inputs,
     draftDate,
     setDraftDate,
@@ -60,7 +60,7 @@ export default function RecordPage() {
               {fetching && <TableOverlay />}
 
               <InputTable
-                categoriesWithItems={categoriesWithItems}
+                groupedItems={groupedItems}
                 inputs={inputs}
                 onInputChange={handleInputChange}
               />

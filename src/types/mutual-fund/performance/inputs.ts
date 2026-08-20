@@ -1,4 +1,4 @@
-import { performanceQuerySchema } from "@/lib/validations/reksadana/performance.schema";
+import { performanceQuerySchema } from "@/lib/validations/mutual-fund/performance.schema";
 import z from "zod";
 
 /**

@@ -1,6 +1,6 @@
 import { deleteItem } from "@/lib/api/mutual-fund/items";
 import { useCrudMutation } from "../../useCrudMutation";
-import { queryKeys } from "@/lib/react-query/queryKeys";
+import { itemKeys } from "@/lib/react-query/keys/itemKeys";
 
 interface DeleteItemPayload {
   id: string;
@@ -11,7 +11,7 @@ export function useDeleteItem() {
   return useCrudMutation<DeleteItemPayload>({
     mutationFn: ({ id }) => deleteItem(id),
 
-    queryKey: queryKeys.items(),
+    invalidateQueries: [{ queryKey: itemKeys.lists() }],
 
     entityKey: "rdItem",
 

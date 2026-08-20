@@ -3,9 +3,9 @@ import { apiClient } from "../client";
 import {
   createCategorySchema,
   updateCategorySchema,
-} from "@/lib/validations/reksadana/categories.schema";
+} from "@/lib/validations/mutual-fund/categories.schema";
 
-const baseRoute = "/reksadana/categories";
+const baseRoute = "/mutual-fund/categories";
 
 export const fetchCategories = async (): Promise<CategoryListItem[]> => {
   const { data } = await apiClient.get<{

@@ -1,8 +1,8 @@
 import type { Dispatch, SetStateAction } from "react";
 import { CrudForm, CrudPageProps, CrudRow } from "@/types/crud";
-import { CrudPageHeader } from "./CrudPageHeader";
-import { CrudPageForm } from "./CrudPageForm";
+import { CrudPageHeader } from "./crud/CrudPageHeader";
 import { CrudPageTable } from "./CrudPageTable";
+import { CrudPageForm } from "./crud/CrudPageForm";
 
 export function CrudPage<TData extends CrudRow, TForm extends CrudForm>(
   props: CrudPageProps<TData, TForm>,
@@ -42,7 +42,7 @@ export function CrudPage<TData extends CrudRow, TForm extends CrudForm>(
           isSubmitting={isSubmitting}
           buttonText={buttonText}
           resetForm={resetForm}
-          canSubmit={canSubmit}
+          canSubmit={canSubmit()}
           onSubmit={onSubmit}
         />
 

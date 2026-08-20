@@ -1,6 +1,6 @@
 import { updateItem } from "@/lib/api/mutual-fund/items";
 import { useCrudMutation } from "../../useCrudMutation";
-import { queryKeys } from "@/lib/react-query/queryKeys";
+import { itemKeys } from "@/lib/react-query/keys/itemKeys";
 
 interface UpdateItemPayload {
   id: string;
@@ -11,7 +11,7 @@ export function useUpdateItem(onSuccess?: () => void) {
   return useCrudMutation<UpdateItemPayload>({
     mutationFn: ({ id, data }) => updateItem(id, data),
 
-    queryKey: queryKeys.items(),
+    invalidateQueries: [{ queryKey: itemKeys.lists() }],
 
     entityKey: "rdItem",
 

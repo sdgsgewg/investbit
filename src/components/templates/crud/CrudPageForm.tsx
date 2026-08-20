@@ -1,10 +1,10 @@
+import { SelectField, TextField } from "@/components/forms/fields";
 import { Button } from "@/components/ui/button";
-import { CrudForm, CrudPageProps, CrudRow } from "@/types/crud";
+import { CrudForm, CrudPageFormProps } from "@/types/crud";
 import { Edit2, Plus, Save, X } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { SelectField, TextField } from "../forms/fields";
 
-export const CrudPageForm = ({
+export const CrudPageForm = <TForm extends CrudForm>({
   formFields,
   form,
   setForm,
@@ -14,18 +14,7 @@ export const CrudPageForm = ({
   resetForm,
   canSubmit,
   onSubmit,
-}: Pick<
-  CrudPageProps<CrudRow, CrudForm>,
-  | "formFields"
-  | "form"
-  | "setForm"
-  | "isEditing"
-  | "isSubmitting"
-  | "buttonText"
-  | "resetForm"
-  | "canSubmit"
-  | "onSubmit"
->) => {
+}: CrudPageFormProps<TForm>) => {
   const tCommonActions = useTranslations("common.actions");
   const tCommonUi = useTranslations("common.ui");
 

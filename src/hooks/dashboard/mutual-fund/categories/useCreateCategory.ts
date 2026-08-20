@@ -6,7 +6,7 @@ export function useCreateCategory(onSuccess?: () => void) {
   return useCrudMutation({
     mutationFn: createCategory,
 
-    queryKey: queryKeys.categories(),
+    invalidateQueries: [{ queryKey: queryKeys.categories() }],
 
     entityKey: "rdCategory",
 

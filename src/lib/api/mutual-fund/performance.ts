@@ -5,6 +5,8 @@ import {
 import { apiClient } from "../client";
 import { ApiResponse } from "@/types/api";
 
+const baseRoute = "/mutual-fund/performance";
+
 /**
  *
  * @param params
@@ -14,7 +16,7 @@ export const fetchPerformance = async (
   params?: PerformanceQuery,
 ): Promise<PerformanceResponse> => {
   const { data } = await apiClient.get<ApiResponse<PerformanceResponse>>(
-    "/reksadana/recap/performance",
+    baseRoute,
     {
       params,
     },

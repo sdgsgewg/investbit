@@ -11,7 +11,7 @@ export function useDeleteCategory() {
   return useCrudMutation<DeleteCategoryPayload>({
     mutationFn: ({ id }) => deleteCategory(id),
 
-    queryKey: queryKeys.categories(),
+    invalidateQueries: [{ queryKey: queryKeys.categories() }],
 
     entityKey: "rdCategory",
 

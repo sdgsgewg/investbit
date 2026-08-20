@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { queryKeys } from "@/lib/react-query/queryKeys";
 import { fetchPerformance } from "@/lib/api/mutual-fund/performance";
-import { queryConfig } from "@/lib/react-query/queryConfig";
+import { queryConfig } from "@/lib/react-query/config/queryConfig";
 import {
   CategoryStats,
   PerformanceData,

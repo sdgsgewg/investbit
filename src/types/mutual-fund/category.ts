@@ -5,7 +5,7 @@ import {
   categoriesQuerySchema,
   categoryMutationSchema,
   updateCategorySchema,
-} from "@/lib/validations/reksadana/categories.schema";
+} from "@/lib/validations/mutual-fund/categories.schema";
 
 // Supabase Table
 export type Category = Tables<"rd_categories">;

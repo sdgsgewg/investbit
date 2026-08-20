@@ -4,13 +4,13 @@ import {
   getCategoriesRepo,
   getCategoryByIdRepo,
   updateCategoryRepo,
-} from "@/lib/repositories/reksadana/categories.repo";
+} from "@/lib/repositories/mutual-fund/categories.repo";
 import {
   categoryIdSchema,
   categoriesQuerySchema,
   createCategorySchema,
   updateCategorySchema,
-} from "@/lib/validations/reksadana/categories.schema";
+} from "@/lib/validations/mutual-fund/categories.schema";
 
 export async function getCategoriesService(query: unknown) {
   const parsed = categoriesQuerySchema.parse(query);

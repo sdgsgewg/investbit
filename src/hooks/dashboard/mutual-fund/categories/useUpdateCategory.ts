@@ -11,7 +11,7 @@ export function useUpdateCategory(onSuccess?: () => void) {
   return useCrudMutation<UpdateCategoryPayload>({
     mutationFn: ({ id, data }) => updateCategory(id, data),
 
-    queryKey: queryKeys.categories(),
+    invalidateQueries: [{ queryKey: queryKeys.categories() }],
 
     entityKey: "rdCategory",
 

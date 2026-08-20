@@ -7,7 +7,7 @@ import { authorizeManageContent } from "@/lib/auth/api-authorization";
 import { NotFoundError } from "@/lib/errors/http-error";
 import {
   deleteItemService,
-  getItemByIdService,
+  getItemDetailService,
   updateItemService,
 } from "@/lib/services/reksadana/items.service";
 
@@ -21,7 +21,7 @@ export async function PUT(request: Request, context: ItemRouteContext) {
 
     const { id } = await context.params;
 
-    const currentItem = await getItemByIdService(id);
+    const currentItem = await getItemDetailService(id);
 
     if (!currentItem) {
       return errorResponse(new NotFoundError("Item not found"));
@@ -42,7 +42,7 @@ export async function DELETE(request: Request, context: ItemRouteContext) {
 
     const { id } = await context.params;
 
-    const item = await getItemByIdService(id);
+    const item = await getItemDetailService(id);
 
     if (!item) {
       return errorResponse(new NotFoundError("Item not found"));

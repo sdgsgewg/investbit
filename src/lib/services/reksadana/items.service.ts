@@ -2,56 +2,41 @@ import {
   getItemsRepo,
   updateItemRepo,
   createItemRepo,
-  getItemByIdRepo,
   deleteItemRepo,
-} from "@/lib/repositories/reksadana/items.repo";
+  getGroupedItemsRepo,
+  getItemDetailRepo,
+} from "@/lib/repositories/mutual-fund/items.repo";
 import {
   createItemSchema,
-  itemIdSchema,
   itemsQuerySchema,
   updateItemSchema,
-} from "@/lib/validations/reksadana/items.schema";
-import { ItemListItem } from "@/types/mutual-fund/item";
+} from "@/lib/validations/mutual-fund/items.schema";
+import { idSchema } from "@/lib/validations/primitives.schema";
+import {
+  GroupedItemListItem,
+  ItemListResponse,
+} from "@/types/mutual-fund/items";
 
-export async function getItemsGroupedService(query: unknown) {
-  const parsed = itemsQuerySchema.parse(query);
-
-  const items = await getItemsRepo(parsed);
-
-  // Group by category
-  const map = new Map();
-
-  items.forEach((item: ItemListItem) => {
-    const category = item.category;
-    if (!category) return;
-
-    if (!map.has(category.id)) {
-      map.set(category.id, {
-        id: category.id,
-        name: category.name,
-        rd_items: [],
-      });
-    }
-
-    map.get(category.id).rd_items.push({
-      id: item.id,
-      name: item.name,
-    });
-  });
-
-  return Array.from(map.values());
-}
-
-export async function getItemsService(query: unknown) {
+export async function getItemsService(
+  query: unknown,
+): Promise<ItemListResponse> {
   const parsed = itemsQuerySchema.parse(query);
 
   return getItemsRepo(parsed);
 }
 
-export async function getItemByIdService(id: string) {
-  const parsedId = itemIdSchema.parse(id);
+export async function getGroupedItemsService(
+  query: unknown,
+): Promise<GroupedItemListItem[]> {
+  const parsed = itemsQuerySchema.parse(query);
 
-  return getItemByIdRepo(parsedId);
+  return getGroupedItemsRepo(parsed);
+}
+
+export async function getItemDetailService(id: string) {
+  const parsedId = idSchema.parse(id);
+
+  return getItemDetailRepo(parsedId);
 }
 
 export async function createItemService(input: unknown) {
@@ -63,14 +48,14 @@ export async function createItemService(input: unknown) {
 }
 
 export async function updateItemService(id: string, input: unknown) {
-  const parsedId = itemIdSchema.parse(id);
+  const parsedId = idSchema.parse(id);
   const parsed = updateItemSchema.parse(input);
 
   return updateItemRepo(parsedId, parsed);
 }
 
 export async function deleteItemService(id: string) {
-  const parsedId = itemIdSchema.parse(id);
+  const parsedId = idSchema.parse(id);
 
   await deleteItemRepo(parsedId);
 }

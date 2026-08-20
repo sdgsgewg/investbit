@@ -1,5 +1,5 @@
 import { fetchRecords } from "@/lib/api/mutual-fund/records";
-import { queryConfig } from "@/lib/react-query/queryConfig";
+import { queryConfig } from "@/lib/react-query/config/queryConfig";
 import { queryKeys } from "@/lib/react-query/queryKeys";
 import { RecordQuery } from "@/types/mutual-fund/records";
 import { useQuery } from "@tanstack/react-query";

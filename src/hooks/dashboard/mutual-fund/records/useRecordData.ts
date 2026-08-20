@@ -2,18 +2,18 @@ import { useState, useMemo } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { queryKeys } from "@/lib/react-query/queryKeys";
 import { fetchRecords, saveRecords } from "@/lib/api/mutual-fund/records";
-import { RecordsInput } from "@/lib/validations/reksadana/records.schema";
+import { RecordsInput } from "@/lib/validations/mutual-fund/records.schema";
 import { useTranslations } from "next-intl";
 import { useNumberFormatter } from "@/hooks/useNumberFormatter";
 import { getLastWorkingDay, safeFormatDate } from "@/lib/utils/date";
 import { isLikelyConnectionError } from "@/lib/utils/connection-error";
-import { CategoryWithItems } from "@/types/mutual-fund/records/CategoryWithItems";
 import { YieldInputByItemId } from "@/types/mutual-fund/records/YieldInputByItemId";
 import { useRecords } from "./useRecords";
-import { useCategoriesWithItems } from "../items";
+import { useGroupedItems } from "../items";
+import { GroupedItemListItem } from "@/types/mutual-fund/items";
 
 interface UseRecordDataReturn {
-  categoriesWithItems: CategoryWithItems[];
+  groupedItems: GroupedItemListItem[];
   inputs: YieldInputByItemId;
 
   draftDate: string;
@@ -59,11 +59,11 @@ export const useRecordData = (): UseRecordDataReturn => {
 
   // 1. Grouped by category items
   const {
-    categoriesWithItems,
-    isLoading: isLoadingItems,
+    groupedItems,
+    isLoading: isLoadingGroupedItems,
     error: itemsError,
     refetch: refetchItems,
-  } = useCategoriesWithItems();
+  } = useGroupedItems();
 
   // 2. Records
   const {
@@ -249,7 +249,7 @@ export const useRecordData = (): UseRecordDataReturn => {
   };
 
   return {
-    categoriesWithItems,
+    groupedItems,
     inputs,
 
     draftDate,
@@ -261,7 +261,7 @@ export const useRecordData = (): UseRecordDataReturn => {
     handleInputChange,
     handleSave,
 
-    loading: isLoadingItems || isLoadingRecords,
+    loading: isLoadingGroupedItems || isLoadingRecords,
     fetching: isFetching,
     saving: mutation.isPending,
     canSave,

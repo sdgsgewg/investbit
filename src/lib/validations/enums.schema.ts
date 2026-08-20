@@ -1,6 +1,12 @@
 import { TimeFrame } from "@/enums/TimeFrame";
 import z from "zod";
 
+// Mutual Fund
+
+// Item
+
+export const itemSortBySchema = z.enum(["name", "created_at"]);
+
 // Performance
 
 export const TimeFrameSchema = z
@@ -12,3 +18,6 @@ export const TimeFrameSchema = z
     TimeFrame.YEARLY,
   ])
   .default(TimeFrame.WEEKLY);
+
+// Filter, Sort, Pagination
+export const sortOrderSchema = z.enum(["asc", "desc"]);

@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { queryConfig } from "@/lib/react-query/queryConfig";
+import { queryConfig } from "@/lib/react-query/config/queryConfig";
 import { queryKeys } from "@/lib/react-query/queryKeys";
 import { fetchCategories } from "@/lib/api/mutual-fund/categories";
 

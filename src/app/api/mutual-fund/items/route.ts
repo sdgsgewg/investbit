@@ -1,3 +1,4 @@
+import { getCrudQuery } from "@/lib/api/query";
 import {
   createdResponse,
   errorResponse,
@@ -6,24 +7,15 @@ import {
 import { authorizeManageContent } from "@/lib/auth/api-authorization";
 import {
   createItemService,
-  getItemsGroupedService,
   getItemsService,
 } from "@/lib/services/reksadana/items.service";
+import { ItemFilter } from "@/types/mutual-fund/items";
 
 export async function GET(request: Request) {
   try {
-    const { searchParams } = new URL(request.url);
+    const query = getCrudQuery<ItemFilter>(request, ["categoryId"]);
 
-    const query = {
-      name: searchParams.get("name") || undefined,
-      category_id: searchParams.get("category_id") || undefined,
-    };
-
-    const grouped = searchParams.get("grouped") === "true";
-
-    const data = grouped
-      ? await getItemsGroupedService(query)
-      : await getItemsService(query);
+    const data = await getItemsService(query);
 
     return successResponse(data);
   } catch (error: unknown) {

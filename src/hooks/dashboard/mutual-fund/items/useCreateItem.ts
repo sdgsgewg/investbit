@@ -1,12 +1,12 @@
 import { createItem } from "@/lib/api/mutual-fund/items";
 import { useCrudMutation } from "../../useCrudMutation";
-import { queryKeys } from "@/lib/react-query/queryKeys";
+import { itemKeys } from "@/lib/react-query/keys/itemKeys";
 
 export function useCreateItem(onSuccess?: () => void) {
   return useCrudMutation({
     mutationFn: createItem,
 
-    queryKey: queryKeys.items(),
+    invalidateQueries: [{ queryKey: itemKeys.lists() }],
 
     entityKey: "rdItem",
 
