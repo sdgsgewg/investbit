@@ -19,7 +19,5 @@ export const fetchRecords = async (
 };
 
 export const saveRecords = async (payload: unknown) => {
-  const parsed = upsertRecordSchema.parse(payload); // validation
-
-  await apiClient.post("/reksadana/records", parsed);
+  await apiClient.post(baseRoute, payload);
 };
