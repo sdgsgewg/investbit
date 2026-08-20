@@ -1,5 +1,5 @@
 {
-  "rdCategory": "category",
-  "rdItem": "item",
-  "rdRecord": "record"
+  "rdCategory": "Category",
+  "rdItem": "Item",
+  "rdRecord": "Record"
 }

@@ -1,5 +1,3 @@
-// src/hooks/common/useCrudPageTitle.ts
-
 import { Entity } from "@/config/entities";
 import { CrudAction } from "@/types/crud";
 import { useTranslations } from "next-intl";

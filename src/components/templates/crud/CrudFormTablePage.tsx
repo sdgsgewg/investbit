@@ -5,6 +5,7 @@ import { CrudPageForm } from "./CrudPageForm";
 import { DataRow } from "@/types/table";
 import { DataTable } from "@/components/shared/tables/DataTable";
 import CrudToolbar from "./CrudToolbar";
+import CrudPagination from "./CrudPagination";
 
 export function CrudFormTablePage<
   TData extends DataRow,
@@ -38,6 +39,8 @@ export function CrudFormTablePage<
     toolbar: { searchValue, searchPlaceholder, onSearchChange, onFilter } = {},
 
     sorting: { sortBy, sortOrder, onSort } = {},
+
+    pagination: paginationProps,
   } = props;
 
   return (
@@ -83,6 +86,10 @@ export function CrudFormTablePage<
             sortOrder={sortOrder}
             onSort={onSort}
           />
+
+          {paginationProps && (
+            <CrudPagination {...paginationProps} loading={loading} />
+          )}
         </div>
       </div>
     </div>

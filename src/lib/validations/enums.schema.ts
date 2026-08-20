@@ -5,7 +5,7 @@ import z from "zod";
 
 // Item
 
-export const itemSortBySchema = z.enum(["name", "created_at"]);
+export const itemSortBySchema = z.enum(["name"]);
 
 // Performance
 

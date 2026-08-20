@@ -1,3 +1,4 @@
+import { Entity } from "@/config/entities";
 import { useTranslations } from "next-intl";
 
 interface UseDeleteActionOptions<TItem, TVariables> {
@@ -5,7 +6,7 @@ interface UseDeleteActionOptions<TItem, TVariables> {
     mutate: (variables: TVariables) => void;
   };
 
-  entity: string;
+  entity: Entity;
 
   getVariables: (item: TItem) => TVariables;
 }
@@ -16,12 +17,13 @@ export function useDeleteAction<TItem extends { id: string }, TVariables>({
   getVariables,
 }: UseDeleteActionOptions<TItem, TVariables>) {
   const t = useTranslations("common");
+  const tEntities = useTranslations("entities");
 
   const handleDelete = (item: TItem) => {
     if (
       !confirm(
         t("crud.confirm.delete", {
-          entity: entity.toLowerCase(),
+          entity: tEntities(entity).toLowerCase(),
         }),
       )
     ) {

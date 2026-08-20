@@ -1,4 +1,23 @@
 {
+  "pages": {
+    "list": {
+      "title": "Kelola {entity}",
+      "subtitle": "Tambah, edit, atau hapus {entity}"
+    },
+    "create": {
+      "title": "Buat {entity} {entityName}",
+      "subtitle": "Tambah {entity} baru"
+    },
+    "edit": {
+      "title": "Edit {entity} {entityName}",
+      "subtitle": "Edit {entity}"
+    },
+    "reorder": {
+      "title": "Urutkan {entity}",
+      "subtitle": "Urutkan {entity}"
+    }
+  },
+
   "crud": {
     "success": {
       "create": "Berhasil menambahkan {entity}.",
@@ -42,6 +61,21 @@
     "loading": "Memuat..."
   },
 
+  "pagination": {
+    "showing": "Menampilkan {from}-{to} dari {total} data",
+
+    "previous": "Sebelumnya",
+    "next": "Berikutnya",
+
+    "page": "Halaman",
+    "of": "dari",
+
+    "first": "Pertama",
+    "last": "Terakhir",
+
+    "rowsPerPage": "Jumlah data per halaman"
+  },
+
   "ui": {
     "toggleTheme": "Ganti tema",
     "switchLanguage": "Ganti bahasa",
@@ -51,6 +85,11 @@
   "table": {
     "actions": "Aksi",
     "noData": "Tidak ada data yang ditemukan."
+  },
+
+  "search": {
+    "placeholder": "Cari berdasarkan nama...",
+    "loading": "Mencari..."
   },
 
   "filter": {

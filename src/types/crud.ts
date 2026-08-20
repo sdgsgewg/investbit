@@ -170,4 +170,6 @@ export type CrudFormTablePageProps<
   toolbar?: CrudToolbarProps;
 
   sorting?: CrudSortingProps;
+
+  pagination?: CrudPaginationProps;
 };

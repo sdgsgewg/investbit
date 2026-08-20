@@ -26,10 +26,25 @@ export default function ItemsManagementPage() {
 
   const { getTitle } = useCrudPageTitle();
 
-  const { filters, debouncedFilters, setFilter, setFilters, syncUrl } =
-    useItemFilter();
+  const {
+    filters,
+    debouncedFilters,
+    setFilter,
+    setFilters,
+    goToPage,
+    syncUrl,
+  } = useItemFilter();
 
-  const { items, loading, retrying, loadError, retryLoad } = useItems({
+  const {
+    items,
+    limit,
+    totalPages,
+    total,
+    loading,
+    loadError,
+    retrying,
+    retryLoad,
+  } = useItems({
     ...debouncedFilters,
     search: debouncedFilters.search || undefined,
   });
@@ -56,14 +71,14 @@ export default function ItemsManagementPage() {
     {
       key: "name",
       label: tColumn("name"),
-      className: "min-w-[300px]",
       sortable: true,
     },
+
     {
       key: "category",
       label: tColumn("category"),
-      className: "min-w-[300px]",
-      sortable: true,
+
+      render: (item) => item.category.name,
     },
   ];
 
@@ -133,6 +148,14 @@ export default function ItemsManagementPage() {
         sortBy: filters.sortBy,
         sortOrder: filters.sortOrder,
         onSort: handleSort,
+      }}
+      pagination={{
+        page: filters.page,
+        limit,
+        totalPages,
+        totalItems: total,
+        loading,
+        onPageChange: goToPage,
       }}
     />
   );

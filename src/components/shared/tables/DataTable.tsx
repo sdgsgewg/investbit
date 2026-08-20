@@ -77,31 +77,41 @@ export const DataTable = <T extends DataRow>({
             <TableHeader>
               <TableRow>
                 {columns.map((column) => {
-                  const active =
-                    (column.sortKey ?? String(column.key)) === sortBy;
+                  const sortKey = column.sortKey ?? String(column.key);
+                  const active = column.sortable && sortKey === sortBy;
 
                   return (
                     <TableHead
                       key={String(column.key)}
                       className={cn(
-                        "sticky top-0 z-20 bg-muted px-6 py-4  tracking-wider",
+                        "sticky top-0 z-20 bg-muted px-6 py-4 tracking-wider",
                         column.headerClassName,
                       )}
                     >
-                      <button
-                        className="flex items-center font-semibold uppercase gap-1"
-                        onClick={() =>
-                          onSort?.(column.sortKey ?? String(column.key))
-                        }
-                      >
-                        <span>{column.label}</span>
-                        {active &&
-                          (sortOrder === "asc" ? (
-                            <ArrowDown size={16} />
-                          ) : (
-                            <ArrowUp size={16} />
-                          ))}
-                      </button>
+                      {column.sortable ? (
+                        <button
+                          type="button"
+                          className={cn(
+                            "flex items-center gap-1 font-semibold uppercase",
+                            "hover:text-foreground",
+                            active && "text-foreground",
+                          )}
+                          onClick={() => onSort?.(sortKey)}
+                        >
+                          <span>{column.label}</span>
+
+                          {active &&
+                            (sortOrder === "asc" ? (
+                              <ArrowDown size={16} />
+                            ) : (
+                              <ArrowUp size={16} />
+                            ))}
+                        </button>
+                      ) : (
+                        <span className="font-semibold uppercase">
+                          {column.label}
+                        </span>
+                      )}
                     </TableHead>
                   );
                 })}

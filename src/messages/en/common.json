@@ -1,4 +1,19 @@
 {
+  "pages": {
+    "list": {
+      "title": "Manage {entity}",
+      "subtitle": "Add, edit, or delete {entity}"
+    },
+    "create": {
+      "title": "Create {entity} {entityName}",
+      "subtitle": "Add new {entity}"
+    },
+    "edit": {
+      "title": "Edit {entity} {entityName}",
+      "subtitle": "Edit {entity}"
+    }
+  },
+
   "crud": {
     "success": {
       "create": "Successfully created {entity}",
@@ -42,6 +57,21 @@
     "loading": "Loading..."
   },
 
+  "pagination": {
+    "showing": "Showing {from}-{to} of {total} items",
+
+    "previous": "Previous",
+    "next": "Next",
+
+    "page": "Page",
+    "of": "of",
+
+    "first": "First",
+    "last": "Last",
+
+    "rowsPerPage": "Rows per page"
+  },
+
   "ui": {
     "toggleTheme": "Toggle theme",
     "switchLanguage": "Switch language",
@@ -51,6 +81,11 @@
   "table": {
     "actions": "Actions",
     "noData": "No records found."
+  },
+
+  "search": {
+    "placeholder": "Search by name...",
+    "loading": "Searching..."
   },
 
   "filter": {
