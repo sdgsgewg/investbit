@@ -12,7 +12,6 @@ export function useItemForm() {
   const [initialForm, setInitialForm] =
     useState<UpsertItemInput>(emptyItemForm);
 
-  // const isEditing = Boolean(form.id);
   const [isEditing, setIsEditing] = useState(false);
 
   const canSubmit = useMemo(() => {

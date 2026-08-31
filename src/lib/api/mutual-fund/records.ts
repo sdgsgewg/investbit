@@ -1,5 +1,4 @@
 import { apiClient } from "../client";
-import { upsertRecordSchema } from "@/lib/validations/mutual-fund/records.schema";
 import { ApiResponse } from "@/types/api";
 import { RecordListItem, RecordQuery } from "@/types/mutual-fund/records";
 

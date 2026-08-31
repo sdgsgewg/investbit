@@ -112,7 +112,7 @@ export default function ItemsManagementPage() {
             required: true,
           },
           {
-            name: "category",
+            name: "category_id",
             label: t("form.labels.category"),
             placeholder: t("form.placeholders.category"),
             type: "select",

@@ -14,7 +14,6 @@ export function useCategoryForm() {
   const [initialForm, setInitialForm] =
     useState<UpsertCategoryInput>(emptyCategoryForm);
 
-  // const isEditing = Boolean(form.id);
   const [isEditing, setIsEditing] = useState(false);
 
   const canSubmit = useMemo(() => {
