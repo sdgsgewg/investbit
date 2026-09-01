@@ -33,7 +33,7 @@ export function useItemSubmit() {
       return;
     }
 
-    createMutation.mutate(payload);
+    createMutation.mutate(payload, { onSuccess });
   };
 
   return {
