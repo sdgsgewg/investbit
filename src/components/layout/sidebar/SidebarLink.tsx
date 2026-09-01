@@ -10,9 +10,9 @@ interface Props {
 }
 
 const SidebarLink = ({ link, pathname }: Props) => {
-  const { name, path, icon: Icon } = link;
+  const { name, path, icon: Icon, exact } = link;
 
-  const active = isActivePath(pathname, path, link.exact);
+  const active = isActivePath(pathname, path, exact);
 
   return (
     <Link

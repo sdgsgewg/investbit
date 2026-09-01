@@ -12,11 +12,11 @@ import {
 import { useTranslations } from "next-intl";
 
 export function useSidebarLinks() {
-  const tNav = useTranslations("navigation");
+  const tNav = useTranslations("navigation.dashboard");
 
   const navLinks: NavLink[] = [
     {
-      name: tNav("dashboard.base"),
+      name: tNav("base"),
       path: ROUTES.DASHBOARD.HOME,
       icon: LayoutDashboard,
       exact: true,
@@ -25,17 +25,17 @@ export function useSidebarLinks() {
 
   const contentManageLinks: NavLink[] = [
     {
-      name: tNav("dashboard.mutualFund.categories"),
+      name: tNav("mutualFund.categories"),
       path: ENTITY_CONFIG["rdCategory"]["dashboardRoute"],
       icon: FolderTree,
     },
     {
-      name: tNav("dashboard.mutualFund.items"),
+      name: tNav("mutualFund.items"),
       path: ENTITY_CONFIG["rdItem"]["dashboardRoute"],
       icon: Boxes,
     },
     {
-      name: tNav("dashboard.mutualFund.records"),
+      name: tNav("mutualFund.records"),
       path: ENTITY_CONFIG["rdRecord"]["dashboardRoute"],
       icon: Database,
     },
@@ -43,12 +43,12 @@ export function useSidebarLinks() {
 
   const systemManageLinks: NavLink[] = [
     {
-      name: tNav("dashboard.system.users"),
+      name: tNav("system.users"),
       path: ROUTES.DASHBOARD.SYSTEM.USERS,
       icon: User,
     },
     {
-      name: tNav("dashboard.system.roles"),
+      name: tNav("system.roles"),
       path: ROUTES.DASHBOARD.SYSTEM.ROLES,
       icon: KeyRound,
     },

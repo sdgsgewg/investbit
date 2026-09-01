@@ -18,7 +18,7 @@ const NavbarMobileLink = ({ link, pathname, onClose }: Props) => {
       onClick={onClose}
       className={cn(
         "text-lg font-medium transition-colors p-2 rounded-md hover:bg-accent",
-        isActivePath(pathname, link.path)
+        isActivePath(pathname, link.path, link.exact)
           ? "text-primary bg-primary/5"
           : "text-muted-foreground",
       )}
