@@ -1,22 +1,24 @@
+"use client";
+
 import { Input } from "@/components/ui/input";
 import Label from "./Label";
+import ErrorMessage from "./ErrorMessage";
 
 interface TextFieldProps {
   label: string;
   name: string;
 
   value: string;
-
   onChange: (value: string) => void;
 
   placeholder?: string;
-  type?: React.HTMLInputTypeAttribute;
 
   required?: boolean;
   readOnly?: boolean;
   disabled?: boolean;
 
   className?: string;
+  error?: string;
 }
 
 export default function TextField({
@@ -25,19 +27,23 @@ export default function TextField({
   value,
   onChange,
   placeholder,
-  type = "text",
   required,
   readOnly,
   disabled,
   className,
+  error,
 }: TextFieldProps) {
+  const errorId = error ? `${name}-error` : undefined;
+
   return (
     <div className="flex flex-col gap-2">
       <Label label={label} required={required} readOnly={readOnly} />
 
       <Input
-        type={type}
+        type="text"
         name={name}
+        aria-invalid={!!error}
+        aria-describedby={errorId}
         value={value}
         placeholder={placeholder}
         readOnly={readOnly}
@@ -45,6 +51,8 @@ export default function TextField({
         className={className}
         onChange={(e) => onChange(e.target.value)}
       />
+
+      {error && <ErrorMessage id={errorId} message={error} />}
     </div>
   );
 }

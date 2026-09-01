@@ -1,22 +1,30 @@
+"use client";
+
 import { ArrowLeft, Database } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
+
+import PageHeader from "@/components/shared/PageHeader";
+import { Button } from "@/components/ui/button";
+import { Link } from "@/navigation";
 
 interface Props {
   title: string;
   showBackButton?: boolean;
   onBack?: () => void;
+  backHref?: string;
 }
 
-export const CrudPageHeader = ({
+export function CrudPageHeader({
   title,
   showBackButton = false,
   onBack,
-}: Props) => {
+  backHref,
+}: Props) {
   const router = useRouter();
   const tCommon = useTranslations("common.actions");
 
-  const hasBackButton = showBackButton || onBack;
+  const hasBackButton = showBackButton || !!onBack || !!backHref;
 
   const handleBack = () => {
     if (onBack) {
@@ -28,28 +36,34 @@ export const CrudPageHeader = ({
   };
 
   return (
-    <div className="flex items-center gap-4 pb-4 border-b border-border/40">
-      {hasBackButton && (
-        <button
-          className="bg-primary flex items-center gap-1 text-primary-foreground px-4 py-1 rounded-lg hover:bg-primary/80 cursor-pointer"
-          onClick={handleBack}
-        >
-          <ArrowLeft className="w-4 h-4" />
-          <span>{tCommon("back")}</span>
-        </button>
-      )}
-
-      {/* Icon and Title */}
-      <div className="flex items-center gap-3">
-        {!hasBackButton && (
-          <div className="p-2.5 bg-primary/10 rounded-xl">
-            <Database className="w-6 h-6 text-primary" />
-          </div>
-        )}
-        <h1 className="text-3xl font-extrabold tracking-tight bg-clip-text text-transparent bg-linear-to-r from-foreground to-foreground/80">
-          {title}
-        </h1>
-      </div>
-    </div>
+    <PageHeader
+      title={title}
+      icon={
+        !hasBackButton ? (
+          <Database className="w-6 h-6 text-primary" />
+        ) : undefined
+      }
+      leftAction={
+        hasBackButton ? (
+          <Button
+            className="flex items-center gap-1"
+            asChild={!!backHref}
+            onClick={backHref ? undefined : handleBack}
+          >
+            {backHref ? (
+              <Link href={backHref}>
+                <ArrowLeft className="w-4 h-4" />
+                <span>{tCommon("back")}</span>
+              </Link>
+            ) : (
+              <>
+                <ArrowLeft className="w-4 h-4" />
+                <span>{tCommon("back")}</span>
+              </>
+            )}
+          </Button>
+        ) : undefined
+      }
+    />
   );
-};
+}

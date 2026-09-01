@@ -5,13 +5,15 @@ import {
   deleteItemRepo,
   getGroupedItemsRepo,
   getItemDetailRepo,
+  getItemEditRepo,
+  getItemLookupRepo,
 } from "@/lib/repositories/mutual-fund/items.repo";
 import {
   createItemSchema,
   itemsQuerySchema,
   updateItemSchema,
 } from "@/lib/validations/mutual-fund/items.schema";
-import { idSchema } from "@/lib/validations/primitives.schema";
+import { idSchema, slugSchema } from "@/lib/validations/primitives.schema";
 import {
   GroupedItemListItem,
   ItemListResponse,
@@ -33,10 +35,22 @@ export async function getGroupedItemsService(
   return getGroupedItemsRepo(parsed);
 }
 
+export async function getItemEditService(id: string) {
+  const parsedId = idSchema.parse(id);
+
+  return getItemEditRepo(parsedId);
+}
+
 export async function getItemDetailService(id: string) {
   const parsedId = idSchema.parse(id);
 
   return getItemDetailRepo(parsedId);
+}
+
+export async function getItemLookupService(slug: string) {
+  const parsedSlug = slugSchema.parse(slug);
+
+  return getItemLookupRepo(parsedSlug);
 }
 
 export async function createItemService(input: unknown) {

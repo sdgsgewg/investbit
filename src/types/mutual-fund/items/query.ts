@@ -5,7 +5,7 @@ import { Item } from "./database";
 
 // Item List
 
-export type DbItemListRow = Pick<Item, "id" | "name"> & {
+export type DbItemListRow = Pick<Item, "id" | "name" | "slug" | "total_aum"> & {
   category: DbCategoryRow;
 };
 

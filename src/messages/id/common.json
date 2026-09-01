@@ -20,9 +20,9 @@
 
   "crud": {
     "success": {
-      "create": "Berhasil menambahkan {entity}.",
-      "update": "Berhasil memperbarui {entity}.",
-      "delete": "Berhasil menghapus {entity}."
+      "create": "Berhasil menambahkan {entity}",
+      "update": "Berhasil memperbarui {entity}",
+      "delete": "Berhasil menghapus {entity}"
     },
 
     "error": {
@@ -37,6 +37,23 @@
     }
   },
 
+  "unsavedChanges": {
+    "title": "Perubahan belum disimpan",
+    "description": "Anda memiliki perubahan yang belum disimpan. Yakin ingin meninggalkan halaman ini?",
+    "stay": "Tetap di halaman",
+    "leave": "Tinggalkan halaman"
+  },
+
+  "form": {
+    "fields": {
+      "image": {
+        "clickToUpload": "Klik untuk mengunggah",
+        "change": "Ubah Gambar",
+        "supportedFormats": "Format yang didukung: {formats}"
+      }
+    }
+  },
+
   "validation": {
     "required": "{field} is required."
   },
@@ -46,19 +63,31 @@
     "create": "Buat",
     "update": "Perbarui",
     "edit": "Edit",
+    "filter": "Filter",
     "delete": "Hapus",
     "cancel": "Batal",
     "apply": "Terapkan",
+    "reset": "Atur Ulang",
     "retry": "Coba Lagi",
-    "explore": "Jelajahi"
+    "explore": "Jelajahi",
+    "back": "Kembali"
   },
 
   "states": {
     "creating": "Membuat...",
     "updating": "Memperbarui...",
-    "emptyData": "No data available. Use the daily input tab to add records.",
+
+    "emptyData": "Data tidak tersedia. Gunakan tab input harian untuk menambahkan catatan.",
+
     "loadOlderData": "Muat Data Lama...",
-    "loading": "Memuat..."
+    "loading": "Memuat...",
+    "loadingEntity": "Memuat {entity}...",
+
+    "notFoundEntity": "{entity} Tidak Ditemukan",
+
+    "errorTitle": "Ada yang salah",
+    "errorDescription": "Terjadi kesalahan tak terduga saat memuat halaman ini.",
+    "retry": "Coba Lagi"
   },
 
   "pagination": {

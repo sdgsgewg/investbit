@@ -9,12 +9,15 @@ import {
   DbCategoryDetailRow,
   DbCategoryListRow,
 } from "@/types/mutual-fund/categories";
-import { ensureUniqueRecord } from "../helpers/uniqueness";
+import { ensureUniqueFieldsRepo } from "../helpers/uniqueness";
 import { requireEntity } from "../helpers/require-entity";
 import {
   mapCategoryDetailResponse,
   mapCategoryListItem,
 } from "@/lib/mutual-fund/categories/mapper";
+import { Option } from "@/types/option";
+import { mapEntityOption } from "@/lib/entities/mapper";
+import { slugify } from "@/lib/utils/slugify";
 
 async function getSupabase() {
   return createClient();
@@ -40,10 +43,7 @@ export async function getCategoriesRepo(
 ): Promise<CategoryListItem[]> {
   const supabase = await getSupabase();
 
-  let query = supabase
-    .from(getTable())
-    .select(getCategoriesBaseQuery())
-    .order("name");
+  let query = supabase.from(getTable()).select(getCategoriesBaseQuery());
 
   // Filter
 
@@ -64,6 +64,34 @@ export async function getCategoriesRepo(
   if (error) throw error;
 
   return data.map(mapCategoryListItem);
+}
+
+/**
+ *
+ * @returns Option[]
+ */
+export async function getCategoryOptionsRepo(): Promise<Option[]> {
+  const supabase = await getSupabase();
+
+  const { data, error } = await supabase
+    .from(getTable())
+    .select(
+      `
+      id,
+      name
+    `,
+    )
+    .order("name", {
+      ascending: true,
+    });
+
+  if (error) {
+    throw error;
+  }
+
+  if (!data || data.length === 0) return [];
+
+  return data.map((data) => mapEntityOption(data));
 }
 
 function getCategoryDetailBaseQuery() {
@@ -90,26 +118,55 @@ export async function getCategoryDetailRepo(
   return mapCategoryDetailResponse(data);
 }
 
+export async function ensureCategoryUniqueRepo({
+  name,
+  ignoreId,
+}: {
+  name: string;
+  ignoreId?: string;
+}): Promise<string> {
+  const slug = slugify(name);
+
+  await ensureUniqueFieldsRepo({
+    table: getTable(),
+    fields: [
+      {
+        field: "slug",
+        value: slug,
+        message: "Category name already exists",
+      },
+    ],
+    ignoreId,
+  });
+
+  return slug;
+}
+
 export async function createCategoryRepo(
   category: CategoryCreateInput,
 ): Promise<CategoryDetailResponse> {
   const supabase = await getSupabase();
 
-  await ensureUniqueRecord({
-    table: getTable(),
+  const slug = await ensureCategoryUniqueRepo({
     name: category.name,
   });
 
   // create
-  const { data, error } = await supabase
+  const { data: insertedCategory, error } = await supabase
     .from(getTable())
-    .insert({ ...category })
+    .insert({ ...category, slug })
     .select("*")
     .single();
 
   if (error) throw error;
 
-  return data;
+  const result = await getCategoryDetailRepo(insertedCategory.id);
+
+  if (!result) {
+    throw new Error("Failed to retrieve created category");
+  }
+
+  return result;
 }
 
 export async function updateCategoryRepo(
@@ -120,16 +177,16 @@ export async function updateCategoryRepo(
 
   await requireEntity(getCategoryDetailRepo, id, getLabel());
 
-  await ensureUniqueRecord({
-    table: getTable(),
+  const slug = await ensureCategoryUniqueRepo({
     name: category.name,
     ignoreId: id,
   });
 
-  const { data, error } = await supabase
+  const { error } = await supabase
     .from(getTable())
     .update({
       name: category.name,
+      slug,
       updated_at: new Date().toISOString(),
     })
     .eq("id", id)
@@ -138,7 +195,13 @@ export async function updateCategoryRepo(
 
   if (error) throw error;
 
-  return data;
+  const result = await getCategoryDetailRepo(id);
+
+  if (!result) {
+    throw new Error("Failed to retrieve updated category");
+  }
+
+  return result;
 }
 
 export async function deleteCategoryRepo(id: string) {

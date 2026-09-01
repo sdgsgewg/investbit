@@ -1,6 +1,6 @@
 import { updateCategory } from "@/lib/api/mutual-fund/categories";
 import { useCrudMutation } from "../../useCrudMutation";
-import { queryKeys } from "@/lib/react-query/queryKeys";
+import { categoryKeys } from "@/lib/react-query/keys";
 
 interface UpdateCategoryPayload {
   id: string;
@@ -11,7 +11,7 @@ export function useUpdateCategory(onSuccess?: () => void) {
   return useCrudMutation<UpdateCategoryPayload>({
     mutationFn: ({ id, data }) => updateCategory(id, data),
 
-    invalidateQueries: [{ queryKey: queryKeys.categories() }],
+    invalidateQueries: [{ queryKey: categoryKeys.lists() }],
 
     entityKey: "rdCategory",
 

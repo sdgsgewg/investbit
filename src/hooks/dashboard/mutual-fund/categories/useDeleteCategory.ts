@@ -1,6 +1,6 @@
 import { deleteCategory } from "@/lib/api/mutual-fund/categories";
 import { useCrudMutation } from "../../useCrudMutation";
-import { queryKeys } from "@/lib/react-query/queryKeys";
+import { categoryKeys } from "@/lib/react-query/keys";
 
 interface DeleteCategoryPayload {
   id: string;
@@ -11,7 +11,7 @@ export function useDeleteCategory() {
   return useCrudMutation<DeleteCategoryPayload>({
     mutationFn: ({ id }) => deleteCategory(id),
 
-    invalidateQueries: [{ queryKey: queryKeys.categories() }],
+    invalidateQueries: [{ queryKey: categoryKeys.lists() }],
 
     entityKey: "rdCategory",
 

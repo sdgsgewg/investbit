@@ -1,5 +1,10 @@
-import { useCrudFilters, useCrudPagination } from "@/hooks/crud";
+import { useFilters } from "@/hooks/filter";
+import { usePagination } from "@/hooks/pagination";
+import { hasFilterChanged, parseSearchParams } from "@/lib/utils/crud";
+import { itemsQuerySchema } from "@/lib/validations/mutual-fund/items.schema";
 import { ItemFilter } from "@/types/mutual-fund/items";
+import { useSearchParams } from "next/navigation";
+import { useMemo } from "react";
 
 const DEFAULT_FILTER: ItemFilter = {
   search: "",
@@ -14,15 +19,23 @@ const DEFAULT_FILTER: ItemFilter = {
 };
 
 export function useItemFilter() {
-  const crud = useCrudFilters(DEFAULT_FILTER);
+  const searchParams = useSearchParams();
 
-  const pagination = useCrudPagination(crud.filters, crud.setFilters, {
-    shouldResetPage: (previous, next) =>
-      previous.search !== next.search ||
-      previous.categoryId !== next.categoryId,
+  const initialFilter = useMemo(
+    () => parseSearchParams(searchParams, itemsQuerySchema),
+    [searchParams],
+  );
+
+  const crud = useFilters(DEFAULT_FILTER, {
+    initialFilter,
+    omitDefaultValuesFromUrl: true,
+    shouldResetPage: hasFilterChanged(["search", "sortBy", "sortOrder"]),
   });
 
+  const pagination = usePagination(crud.filters, crud.updateFiltersPartial);
+
   return {
+    defaultFilters: DEFAULT_FILTER,
     ...crud,
     ...pagination,
   };

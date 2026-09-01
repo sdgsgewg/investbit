@@ -13,23 +13,25 @@ import {
 } from "@/components/ui/select";
 import { Option } from "@/types/option";
 import Image from "next/image";
+import ErrorMessage from "./ErrorMessage";
+import { cn } from "@/lib/utils";
 
 interface SelectFieldProps {
   label?: string;
   name: string;
 
   value: string;
-
   options: Option[];
+  onChange: (value: string) => void;
 
   placeholder?: string;
+  allLabel?: string;
 
-  disabled?: boolean;
   required?: boolean;
+  disabled?: boolean;
 
   className?: string;
-
-  onChange: (value: string) => void;
+  error?: string;
 }
 
 const SelectField: React.FC<SelectFieldProps> = ({
@@ -37,33 +39,43 @@ const SelectField: React.FC<SelectFieldProps> = ({
   name,
 
   value,
-
   options,
+  onChange,
 
   placeholder = "Select option",
+  allLabel,
 
   disabled = false,
   required = false,
 
   className,
-
-  onChange,
+  error,
 }) => {
+  const errorId = error ? `${name}-error` : undefined;
+
   return (
-    <div className={`flex flex-col gap-2 ${className ?? ""}`}>
+    <div className={cn("flex flex-col gap-2", className)}>
       {label && <Label label={label} required={required} />}
 
       <Select
-        value={value || undefined}
-        onValueChange={onChange}
-        disabled={disabled}
         name={name}
+        aria-invalid={!!error}
+        aria-describedby={errorId}
+        value={value || undefined}
+        disabled={disabled}
+        onValueChange={onChange}
       >
         <SelectTrigger className="w-full rounded-xl">
           <SelectValue placeholder={placeholder} />
         </SelectTrigger>
 
-        <SelectContent>
+        <SelectContent
+          position="popper"
+          sideOffset={4}
+          className="w-(--radix-select-trigger-width) max-h-60"
+        >
+          {allLabel && <SelectItem value="">{allLabel}</SelectItem>}
+
           {options.map((option) => (
             <SelectItem key={option.value} value={option.value}>
               {option.imageUrl && (
@@ -72,7 +84,7 @@ const SelectField: React.FC<SelectFieldProps> = ({
                   alt={option.label}
                   width={20}
                   height={20}
-                  className="rounded-full object-cover shrink-0"
+                  className="size-5 shrink-0 rounded-full object-cover"
                 />
               )}
 
@@ -81,6 +93,8 @@ const SelectField: React.FC<SelectFieldProps> = ({
           ))}
         </SelectContent>
       </Select>
+
+      {error && <ErrorMessage id={errorId} message={error} />}
     </div>
   );
 };

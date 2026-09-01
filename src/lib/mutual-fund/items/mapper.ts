@@ -4,10 +4,12 @@ import {
   DbItemRow,
   GroupedItemListItem,
   ItemDetailResponse,
+  ItemEditResponse,
   ItemListItem,
   ItemResponse,
 } from "@/types/mutual-fund/items";
 import { mapCategoryResponse } from "../categories/mapper";
+import { formatTotalAum } from "./formatter";
 
 /**
  *
@@ -15,11 +17,11 @@ import { mapCategoryResponse } from "../categories/mapper";
  * @returns ItemListItem
  */
 export function mapItemListItem(item: DbItemListRow): ItemListItem {
-  const { id, name, category } = item;
+  const { total_aum, category } = item;
 
   return {
-    id,
-    name,
+    ...item,
+    totalAum: formatTotalAum(total_aum),
     category: mapCategoryResponse(category),
   };
 }
@@ -55,6 +57,22 @@ export function mapGroupedItems(items: DbItemListRow[]): GroupedItemListItem[] {
       items: [...group.items].sort((a, b) => a.name.localeCompare(b.name)),
     }))
     .sort((a, b) => a.category.name.localeCompare(b.category.name));
+}
+
+/**
+ *
+ * @param item
+ * @returns ItemEditResponse
+ */
+export function mapItemEditResponse(item: DbItemDetailRow): ItemEditResponse {
+  const { id, name, total_aum, category_id } = item;
+
+  return {
+    id,
+    name,
+    totalAum: total_aum,
+    categoryId: category_id,
+  };
 }
 
 export function mapItemDetailResponse(

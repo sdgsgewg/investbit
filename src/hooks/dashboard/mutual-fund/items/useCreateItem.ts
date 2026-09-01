@@ -2,7 +2,7 @@ import { createItem } from "@/lib/api/mutual-fund/items";
 import { useCrudMutation } from "../../useCrudMutation";
 import { itemKeys } from "@/lib/react-query/keys/itemKeys";
 
-export function useCreateItem(onSuccess?: () => void) {
+export function useCreateItem() {
   return useCrudMutation({
     mutationFn: createItem,
 
@@ -11,7 +11,5 @@ export function useCreateItem(onSuccess?: () => void) {
     entityKey: "rdItem",
 
     action: "create",
-
-    onSuccess,
   });
 }

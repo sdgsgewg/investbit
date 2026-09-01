@@ -3,7 +3,7 @@
 import { useLocale, useTranslations } from "next-intl";
 import { LEARN_DATA } from "@/lib/learn-data";
 import { Tabs, TabsContent } from "@/components/ui/tabs";
-import PageHeader from "@/components/templates/PageHeader";
+import PageHeader from "@/components/shared/PageHeader";
 import { LearnCard, LearnTabs } from "@/components/learn";
 
 export default function LearnPage() {

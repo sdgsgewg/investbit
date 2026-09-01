@@ -4,7 +4,7 @@ interface CrudFilter {
   search: string;
 }
 
-export function useCrudFilterSync<TFilter extends CrudFilter>(
+export function useFilterSync<TFilter extends CrudFilter>(
   filters: TFilter,
   syncUrl: (filters: TFilter) => void,
 ) {

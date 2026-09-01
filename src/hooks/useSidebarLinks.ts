@@ -1,3 +1,4 @@
+import { ENTITY_CONFIG } from "@/config/entities";
 import { ROUTES } from "@/constants/routes";
 import { NavLink } from "@/types/NavLink";
 import {
@@ -25,17 +26,17 @@ export function useSidebarLinks() {
   const contentManageLinks: NavLink[] = [
     {
       name: tNav("dashboard.mutualFund.categories"),
-      path: ROUTES.DASHBOARD.MUTUAL_FUND.CATEGORIES,
+      path: ENTITY_CONFIG["rdCategory"]["dashboardRoute"],
       icon: FolderTree,
     },
     {
       name: tNav("dashboard.mutualFund.items"),
-      path: ROUTES.DASHBOARD.MUTUAL_FUND.ITEMS,
+      path: ENTITY_CONFIG["rdItem"]["dashboardRoute"],
       icon: Boxes,
     },
     {
       name: tNav("dashboard.mutualFund.records"),
-      path: ROUTES.DASHBOARD.MUTUAL_FUND.RECORDS,
+      path: ENTITY_CONFIG["rdRecord"]["dashboardRoute"],
       icon: Database,
     },
   ];

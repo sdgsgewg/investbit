@@ -2,17 +2,20 @@
   "form": {
     "labels": {
       "name": "Name",
-      "category": "Category"
+      "category": "Category",
+      "totalAum": "Total AUM"
     },
 
     "placeholders": {
       "name": "Input name",
-      "category": "Select category"
+      "category": "Select category",
+      "totalAum": "Input total AUM"
     }
   },
 
   "columns": {
     "name": "Name",
-    "category": "Category"
+    "category": "Category",
+    "totalAum": "Total AUM"
   }
 }

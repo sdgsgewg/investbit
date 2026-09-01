@@ -7,19 +7,23 @@ import {
   ItemFilter,
   ItemUpdateInput,
 } from "@/types/mutual-fund/items";
-import { ensureUniqueRecord } from "../helpers/uniqueness";
+import { ensureUniqueFieldsRepo } from "../helpers/uniqueness";
 import { requireEntity } from "../helpers/require-entity";
 import { DbItemListRow, GroupedItemFilter } from "@/types/mutual-fund/items";
 import {
   GroupedItemListItem,
+  ItemEditResponse,
   ItemListResponse,
 } from "@/types/mutual-fund/items/responses";
 import { createPaginatedResponse } from "@/lib/pagination/response";
 import {
   mapGroupedItems,
   mapItemDetailResponse,
+  mapItemEditResponse,
   mapItemListItem,
 } from "@/lib/mutual-fund/items/mapper";
+import { ItemLookupResponse } from "@/types/mutual-fund/items/misc";
+import { slugify } from "@/lib/utils/slugify";
 
 async function getSupabase() {
   return createClient();
@@ -37,13 +41,20 @@ function getItemsBaseQuery() {
   return `
     id,
     name,
+    slug,
+    total_aum,
 
-    category:rd_categories (
+    category:rd_categories!inner (
       id,
       name
     )
   `;
 }
+
+const sortColumnMap = {
+  name: "name",
+  totalAum: "total_aum",
+} as const;
 
 /**
  *
@@ -71,7 +82,9 @@ export async function getItemsRepo(
 
   // Sort
 
-  query = query.order(params.sortBy, {
+  const sortColumn = sortColumnMap[params.sortBy];
+
+  query = query.order(sortColumn, {
     ascending: params.sortOrder === "asc",
   });
 
@@ -150,6 +163,29 @@ function getItemDetailBaseQuery() {
   `;
 }
 
+/**
+ *
+ * @param id
+ * @returns ItemEditResponse | null
+ */
+export async function getItemEditRepo(
+  id: string,
+): Promise<ItemEditResponse | null> {
+  const supabase = await getSupabase();
+
+  const { data, error } = await supabase
+    .from(getTable())
+    .select(getItemDetailBaseQuery())
+    .eq("id", id)
+    .maybeSingle()
+    .overrideTypes<DbItemDetailRow>();
+
+  if (error) throw error;
+  if (!data) return null;
+
+  return mapItemEditResponse(data);
+}
+
 export async function getItemDetailRepo(
   id: string,
 ): Promise<ItemDetailResponse | null> {
@@ -168,26 +204,77 @@ export async function getItemDetailRepo(
   return mapItemDetailResponse(data);
 }
 
+/**
+ *
+ * @param slug
+ * @returns ItemLookupResponse | null
+ */
+export async function getItemLookupRepo(
+  slug: string,
+): Promise<ItemLookupResponse | null> {
+  const supabase = await getSupabase();
+
+  const { data, error } = await supabase
+    .from(getTable())
+    .select(`id, slug`)
+    .eq("slug", slug)
+    .maybeSingle();
+
+  if (error) throw error;
+  if (!data) return null;
+
+  return data;
+}
+
+export async function ensureItemUniqueRepo({
+  name,
+  ignoreId,
+}: {
+  name: string;
+  ignoreId?: string;
+}): Promise<string> {
+  const slug = slugify(name);
+
+  await ensureUniqueFieldsRepo({
+    table: getTable(),
+    fields: [
+      {
+        field: "slug",
+        value: slug,
+        message: "Item name already exists",
+      },
+    ],
+    ignoreId,
+  });
+
+  return slug;
+}
+
 export async function createItemRepo(
   item: ItemCreateInput,
 ): Promise<ItemDetailResponse> {
   const supabase = await getSupabase();
 
-  await ensureUniqueRecord({
-    table: getTable(),
+  const slug = await ensureItemUniqueRepo({
     name: item.name,
   });
 
   // create
-  const { data, error } = await supabase
+  const { data: insertedItem, error } = await supabase
     .from(getTable())
-    .insert({ ...item })
+    .insert({ ...item, slug })
     .select("*")
     .single();
 
   if (error) throw error;
 
-  return data;
+  const result = await getItemDetailRepo(insertedItem.id);
+
+  if (!result) {
+    throw new Error("Failed to retrieve created item");
+  }
+
+  return result;
 }
 
 export async function updateItemRepo(
@@ -198,19 +285,17 @@ export async function updateItemRepo(
 
   await requireEntity(getItemDetailRepo, id, getLabel());
 
-  // cek apakah name sudah dipakai item lain
-  await ensureUniqueRecord({
-    table: getTable(),
+  const slug = await ensureItemUniqueRepo({
     name: item.name,
     ignoreId: id,
   });
 
   // update
-  const { data, error } = await supabase
+  const { error } = await supabase
     .from(getTable())
     .update({
-      name: item.name,
-      category_id: item.category_id,
+      ...item,
+      slug,
       updated_at: new Date().toISOString(),
     })
     .eq("id", id)
@@ -219,7 +304,13 @@ export async function updateItemRepo(
 
   if (error) throw error;
 
-  return data;
+  const result = await getItemDetailRepo(id);
+
+  if (!result) {
+    throw new Error("Failed to retrieve updated item");
+  }
+
+  return result;
 }
 
 export async function deleteItemRepo(id: string) {

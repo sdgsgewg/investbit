@@ -1,9 +1,24 @@
 import { SortOrder } from "@/types/sort";
+import { ReadonlyURLSearchParams } from "next/navigation";
+import z from "zod";
+
+export function parseSearchParams<T extends z.ZodType>(
+  searchParams: ReadonlyURLSearchParams,
+  schema: T,
+): z.infer<T> {
+  return schema.parse(Object.fromEntries(searchParams.entries()));
+}
+
+export function hasFilterChanged<T extends object>(keys: readonly (keyof T)[]) {
+  return (previous: T, next: T): boolean => {
+    return keys.some((key) => previous[key] !== next[key]);
+  };
+}
 
 interface CreateSortHandlerOptions<TSortBy extends string> {
   sortBy: TSortBy;
   sortOrder: SortOrder;
-  setFilters: (
+  updateFiltersPartial: (
     values: Partial<{
       sortBy: TSortBy;
       sortOrder: SortOrder;
@@ -14,15 +29,15 @@ interface CreateSortHandlerOptions<TSortBy extends string> {
 export function createSortHandler<TSortBy extends string>({
   sortBy,
   sortOrder,
-  setFilters,
+  updateFiltersPartial,
 }: CreateSortHandlerOptions<TSortBy>) {
   return (column: string) => {
     if (column === sortBy) {
-      setFilters({
+      updateFiltersPartial({
         sortOrder: sortOrder === "asc" ? "desc" : "asc",
       });
     } else {
-      setFilters({
+      updateFiltersPartial({
         sortBy: column as TSortBy,
         sortOrder: "asc",
       });

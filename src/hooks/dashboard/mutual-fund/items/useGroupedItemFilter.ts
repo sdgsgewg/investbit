@@ -1,4 +1,4 @@
-import { useCrudFilters } from "@/hooks/crud";
+import { useFilters } from "@/hooks/filter";
 import { GroupedItemFilter } from "@/types/mutual-fund/items";
 
 const DEFAULT_FILTER: GroupedItemFilter = {
@@ -11,7 +11,7 @@ const DEFAULT_FILTER: GroupedItemFilter = {
 };
 
 export default function useGroupedItemFilter() {
-  const crud = useCrudFilters(DEFAULT_FILTER);
+  const crud = useFilters(DEFAULT_FILTER);
 
   return {
     ...crud,

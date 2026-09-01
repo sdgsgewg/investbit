@@ -6,4 +6,6 @@ export const categoryKeys = {
   lists: () => [...categoryKeys.all, "list"] as const,
 
   list: (params?: CategoryQuery) => [...categoryKeys.lists(), params] as const,
+
+  options: () => [...categoryKeys.all, "options"] as const,
 };

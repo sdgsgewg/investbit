@@ -8,8 +8,9 @@ import {
 import { itemSortBySchema } from "../enums.schema";
 
 export const itemMutationSchema = z.object({
-  category_id: idSchema,
   name: z.string().min(1).max(255),
+  category_id: idSchema,
+  total_aum: z.number().positive().nullable(),
 });
 
 // CREATE

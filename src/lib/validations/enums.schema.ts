@@ -9,19 +9,11 @@ export const categorySortBySchema = z.enum(["name"]);
 
 // Item
 
-export const itemSortBySchema = z.enum(["name"]);
+export const itemSortBySchema = z.enum(["name", "totalAum"]);
 
 // Performance
 
-export const TimeFrameSchema = z
-  .enum([
-    TimeFrame.DAILY,
-    TimeFrame.WEEKLY,
-    TimeFrame.MONTHLY,
-    TimeFrame.YTD,
-    TimeFrame.YEARLY,
-  ])
-  .default(TimeFrame.WEEKLY);
+export const TimeFrameSchema = z.enum(TimeFrame).default(TimeFrame.WEEKLY);
 
 // Filter, Sort, Pagination
 export const sortOrderSchema = z.enum(["asc", "desc"]);

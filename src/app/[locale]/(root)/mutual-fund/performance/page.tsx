@@ -9,7 +9,7 @@ import PerformanceSectionWrapper from "@/components/mutual-fund/performance/Perf
 import TopPerformers from "@/components/mutual-fund/performance/top-performers/TopPerformers";
 import CategoryLeaderboard from "@/components/mutual-fund/performance/leaderboard/CategoryLeaderboard";
 import PerformanceAnalyticsSection from "@/components/mutual-fund/performance/analytics/PerformanceAnalyticsSection";
-import PageHeader from "@/components/templates/PageHeader";
+import PageHeader from "@/components/shared/PageHeader";
 import { useTranslations } from "next-intl";
 import { usePerformanceData } from "@/hooks/mutual-fund/performance";
 import { SortOrder } from "@/types/sort";

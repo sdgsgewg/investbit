@@ -4,6 +4,8 @@ import { InvalidateQueryFilters } from "@tanstack/react-query";
 import { Entity } from "@/config/entities";
 import { DataColumn, DataRow } from "./table";
 import { SortOrder } from "./sort";
+import { PaginationProps } from "./pagination";
+import { FormErrors } from "./form";
 
 type FieldType = "text" | "select";
 
@@ -75,13 +77,15 @@ export interface CrudPageFormProps<TForm extends CrudForm> {
 
 export type CrudAction = "create" | "edit" | "update" | "delete";
 
+export interface CrudMutationError {
+  error: unknown;
+  fieldErrors: FormErrors | null;
+}
+
 export interface CrudMutationOptions<TVariables> {
   mutationFn: (variables: TVariables) => Promise<unknown>;
 
   invalidateQueries?: InvalidateQueryFilters[];
-
-  allowRedirect?: boolean;
-  redirectTo?: string;
 
   entityKey: Entity;
   action: CrudAction;
@@ -89,6 +93,8 @@ export interface CrudMutationOptions<TVariables> {
   getPayload?: (variables: TVariables) => unknown;
 
   onSuccess?: (data: unknown, variables: TVariables) => void;
+
+  onError?: (error: CrudMutationError) => void;
 }
 
 // Pages
@@ -128,6 +134,16 @@ export interface CrudToolbarProps {
   onFilter?: () => void;
 }
 
+export interface CrudFilterProps {
+  content: React.ReactNode;
+
+  open: boolean;
+  onOpenChange: Dispatch<SetStateAction<boolean>>;
+
+  onApply: () => void;
+  onReset: () => void;
+}
+
 export interface CrudSortingProps {
   sortBy?: string;
   sortOrder?: SortOrder;
@@ -135,16 +151,11 @@ export interface CrudSortingProps {
   onSort?: (column: string) => void;
 }
 
-export interface CrudPaginationProps {
-  page: number;
+export interface CrudPaginationProps extends PaginationProps {
   limit: number;
-
-  totalPages: number;
   totalItems: number;
-
   loading?: boolean;
-
-  onPageChange: (page: number) => void;
+  onLimitChange: (limit: number) => void;
 }
 
 // Page Props
@@ -173,3 +184,25 @@ export type CrudFormTablePageProps<
 
   pagination?: CrudPaginationProps;
 };
+
+export interface CrudListPageProps<T extends DataRow> {
+  title: string;
+
+  headerContent?: ReactNode;
+
+  loading?: boolean;
+
+  data: T[];
+
+  columns: DataColumn<T>[];
+
+  actions: CrudActions<T>;
+
+  toolbar?: CrudToolbarProps;
+
+  filter?: CrudFilterProps;
+
+  sorting?: CrudSortingProps;
+
+  pagination?: CrudPaginationProps;
+}

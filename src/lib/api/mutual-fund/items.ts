@@ -1,6 +1,7 @@
 import {
   GroupedItemListItem,
   GroupedItemQuery,
+  ItemEditResponse,
   ItemListResponse,
   ItemQuery,
 } from "@/types/mutual-fund/items";
@@ -30,6 +31,14 @@ export const fetchGroupedItems = async (
     {
       params,
     },
+  );
+
+  return data.data;
+};
+
+export const fetchItemEdit = async (id: string): Promise<ItemEditResponse> => {
+  const { data } = await apiClient.get<ApiResponse<ItemEditResponse>>(
+    `${baseRoute}/${id}/edit`,
   );
 
   return data.data;

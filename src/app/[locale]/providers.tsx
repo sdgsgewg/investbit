@@ -1,10 +1,13 @@
 "use client";
 
-import { ThemeProvider } from "@/providers/theme-provider";
-import { QueryProvider } from "@/providers/query-provider";
 import { User } from "@supabase/supabase-js";
 import { Profile } from "@/types/profile";
-import { AuthProvider } from "@/providers/auth-provider";
+import {
+  AuthProvider,
+  QueryProvider,
+  ThemeProvider,
+  ToastProvider,
+} from "@/providers";
 
 interface ProvidersProps {
   children: React.ReactNode;
@@ -24,9 +27,11 @@ export default function Providers({
       enableSystem
       disableTransitionOnChange
     >
-      <AuthProvider initialUser={initialUser} initialProfile={initialProfile}>
-        <QueryProvider>{children}</QueryProvider>
-      </AuthProvider>
+      <ToastProvider>
+        <AuthProvider initialUser={initialUser} initialProfile={initialProfile}>
+          <QueryProvider>{children}</QueryProvider>
+        </AuthProvider>
+      </ToastProvider>
     </ThemeProvider>
   );
 }

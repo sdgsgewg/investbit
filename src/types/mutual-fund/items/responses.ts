@@ -6,7 +6,8 @@ import { Item } from "./database";
 
 // Mutual Fund Item List
 
-export interface ItemListItem extends Pick<Item, "id" | "name"> {
+export interface ItemListItem extends Pick<Item, "id" | "name" | "slug"> {
+  totalAum: string | null;
   category: CategoryResponse;
 }
 
@@ -18,6 +19,15 @@ export interface GroupedItemListItem {
 }
 
 // Mutual Fund Item Detail
+
+// Model for Edit
+
+export interface ItemEditResponse extends Pick<Item, "id" | "name"> {
+  totalAum: number | null;
+  categoryId: string;
+}
+
+// Model View Detail
 
 export type ItemDetailResponse = Pick<Item, "id" | "name"> & {
   category: CategoryResponse;

@@ -1,70 +1,57 @@
-import { ItemListItem, UpsertItemInput } from "@/types/mutual-fund/items";
-import { useMemo, useState } from "react";
+import { useEntityForm } from "@/hooks/crud";
+import { itemMutationSchema } from "@/lib/validations/mutual-fund/items.schema";
+import { ItemEditResponse, UpsertItemInput } from "@/types/mutual-fund/items";
+import { useMemo } from "react";
 
-const emptyItemForm: UpsertItemInput = {
+const createEmptyItemForm = (): UpsertItemInput => ({
   name: "",
   category_id: "",
-};
+  total_aum: null,
+});
 
-export function useItemForm() {
-  const [form, setForm] = useState<UpsertItemInput>(emptyItemForm);
+function mapItem(item: ItemEditResponse): UpsertItemInput {
+  const { id, name, categoryId, totalAum } = item;
 
-  const [initialForm, setInitialForm] =
-    useState<UpsertItemInput>(emptyItemForm);
-
-  const [isEditing, setIsEditing] = useState(false);
-
-  const canSubmit = useMemo(() => {
-    const isFilled =
-      form.name.trim().length > 0 && form.category_id.trim().length > 0;
-
-    if (!isFilled) {
-      return false;
-    }
-
-    // Create
-    if (!isEditing) {
-      return true;
-    }
-
-    // Edit
-    return (
-      form.name !== initialForm.name &&
-      form.category_id !== initialForm.category_id
-    );
-  }, [form, initialForm, isEditing]);
-
-  const handleEdit = (item: ItemListItem) => {
-    const mapped: UpsertItemInput = {
-      id: item.id,
-      name: item.name,
-      category_id: item.category.id,
-    };
-
-    setForm(mapped);
-    setInitialForm(mapped);
-    setIsEditing(true);
+  return {
+    id,
+    name,
+    category_id: categoryId,
+    total_aum: totalAum,
   };
+}
+
+export function useItemForm(item?: ItemEditResponse) {
+  const initialValue = useMemo(
+    () => (item ? mapItem(item) : createEmptyItemForm()),
+    [item],
+  );
+
+  const { form, updateField, errors, isDirty, canSubmit, validate } =
+    useEntityForm({
+      initialValue,
+      schema: itemMutationSchema,
+
+      dirtyFields: ["name", "category_id", "total_aum"],
+
+      requiredFields: ["name", "category_id", "total_aum"],
+    });
 
   const buildPayload = () => ({
     name: form.name,
     category_id: form.category_id,
+    total_aum: form.total_aum,
   });
 
-  const resetForm = () => {
-    setForm(emptyItemForm);
-    setInitialForm(emptyItemForm);
-    setIsEditing(false);
-  };
-
   return {
-    isEditing,
     form,
-    setForm,
-    initialForm,
+
+    isDirty,
+    errors,
+
+    updateField,
+
+    validate,
     canSubmit,
-    handleEdit,
     buildPayload,
-    resetForm,
   };
 }

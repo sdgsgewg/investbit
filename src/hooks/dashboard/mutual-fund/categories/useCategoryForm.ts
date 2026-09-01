@@ -1,36 +1,36 @@
+import { useEntityForm } from "@/hooks/crud";
+import { categoryMutationSchema } from "@/lib/validations/mutual-fund/categories.schema";
 import {
   CategoryListItem,
   UpsertCategoryInput,
 } from "@/types/mutual-fund/categories";
-import { useMemo, useState } from "react";
+import { useState } from "react";
 
-const emptyCategoryForm: UpsertCategoryInput = {
+const createEmptyCategoryForm = (): UpsertCategoryInput => ({
   name: "",
-};
+});
 
 export function useCategoryForm() {
-  const [form, setForm] = useState<UpsertCategoryInput>(emptyCategoryForm);
+  const {
+    form,
+    setForm,
+    initialForm,
+    updateField,
+    errors,
+    isDirty,
+    canSubmit,
+    validate,
+    resetForm,
+  } = useEntityForm({
+    initialValue: createEmptyCategoryForm(),
+    schema: categoryMutationSchema,
 
-  const [initialForm, setInitialForm] =
-    useState<UpsertCategoryInput>(emptyCategoryForm);
+    dirtyFields: ["name"],
+
+    requiredFields: ["name"],
+  });
 
   const [isEditing, setIsEditing] = useState(false);
-
-  const canSubmit = useMemo(() => {
-    const isFilled = form.name.trim().length > 0;
-
-    if (!isFilled) {
-      return false;
-    }
-
-    // Create
-    if (!isEditing) {
-      return true;
-    }
-
-    // Edit
-    return form.name !== initialForm.name;
-  }, [form, initialForm, isEditing]);
 
   const handleEdit = (category: CategoryListItem) => {
     const mapped: UpsertCategoryInput = {
@@ -38,29 +38,36 @@ export function useCategoryForm() {
       name: category.name,
     };
 
-    setForm(mapped);
-    setInitialForm(mapped);
+    resetForm(mapped);
+
     setIsEditing(true);
+  };
+
+  const handleResetForm = () => {
+    resetForm();
+    setIsEditing(false);
   };
 
   const buildPayload = () => ({
     name: form.name,
   });
 
-  const resetForm = () => {
-    setForm(emptyCategoryForm);
-    setInitialForm(emptyCategoryForm);
-    setIsEditing(false);
-  };
-
   return {
-    isEditing,
     form,
-    setForm,
     initialForm,
-    canSubmit,
+    setForm,
+
+    isDirty,
+    isEditing,
+    errors,
+
+    updateField,
     handleEdit,
+
+    validate,
+    canSubmit,
     buildPayload,
-    resetForm,
+
+    resetForm: handleResetForm,
   };
 }

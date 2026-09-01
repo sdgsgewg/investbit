@@ -33,6 +33,23 @@
     }
   },
 
+  "unsavedChanges": {
+    "title": "Unsaved changes",
+    "description": "You have unsaved changes. Are you sure you want to leave this page?",
+    "stay": "Stay on page",
+    "leave": "Leave page"
+  },
+
+  "form": {
+    "fields": {
+      "image": {
+        "clickToUpload": "Click to upload",
+        "change": "Change Image",
+        "supportedFormats": "Supported formats: {formats}"
+      }
+    }
+  },
+
   "validation": {
     "required": "{field} is required."
   },
@@ -42,19 +59,31 @@
     "create": "Create",
     "update": "Update",
     "edit": "Edit",
+    "filter": "Filter",
     "delete": "Delete",
     "cancel": "Cancel",
     "apply": "Apply",
+    "reset": "Reset",
     "retry": "Retry",
-    "explore": "Explore"
+    "explore": "Explore",
+    "back": "Back"
   },
 
   "states": {
     "creating": "Creating...",
     "updating": "Updating...",
+
     "emptyData": "No data available. Use the daily input tab to add records.",
+
     "loadOlderData": "Load Older Data...",
-    "loading": "Loading..."
+    "loading": "Loading...",
+    "loadingEntity": "Loading {entity}...",
+
+    "notFoundEntity": "{entity} Not Found",
+
+    "errorTitle": "Something went wrong",
+    "errorDescription": "An unexpected error occurred while loading this page.",
+    "retry": "Try Again"
   },
 
   "pagination": {

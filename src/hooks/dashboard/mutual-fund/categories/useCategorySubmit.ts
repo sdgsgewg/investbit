@@ -6,6 +6,7 @@ import { useUpdateCategory } from "./useUpdateCategory";
 interface SubmitOptions {
   id?: string;
   payload: UpsertCategoryInput;
+
   onSuccess?: () => void;
 }
 

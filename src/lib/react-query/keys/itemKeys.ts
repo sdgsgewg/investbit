@@ -11,4 +11,8 @@ export const itemKeys = {
 
   groupedList: (params?: GroupedItemQuery) =>
     [...itemKeys.groupedLists(), params] as const,
+
+  edits: () => [...itemKeys.all, "edit"] as const,
+
+  edit: (id: string) => [...itemKeys.edits(), id] as const,
 };

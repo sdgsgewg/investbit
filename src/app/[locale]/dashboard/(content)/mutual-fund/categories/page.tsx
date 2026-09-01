@@ -7,7 +7,6 @@ import { CrudFormTablePage } from "@/components/templates/crud/CrudFormTablePage
 import { useCrudPageTitle } from "@/hooks/crud/useCrudPageTitle";
 import { DataColumn } from "@/types/table";
 import { createSortHandler } from "@/lib/utils/crud";
-import { useCrudFilterSync } from "@/hooks/crud";
 import {
   useCategories,
   useCategoryActions,
@@ -16,6 +15,7 @@ import {
   useCategorySubmit,
 } from "@/hooks/dashboard/mutual-fund/categories";
 import { CategoryListItem } from "@/types/mutual-fund/categories";
+import { useFilterSync } from "@/hooks/filter";
 
 export default function Page() {
   const t = useTranslations("dashboard.mutualFund.categories");
@@ -24,8 +24,13 @@ export default function Page() {
 
   const { getTitle } = useCrudPageTitle();
 
-  const { filters, debouncedFilters, setFilter, setFilters, syncUrl } =
-    useCategoryFilter();
+  const {
+    filters,
+    debouncedFilters,
+    updateFilter,
+    updateFiltersPartial,
+    syncUrl,
+  } = useCategoryFilter();
 
   const { categories, loading, loadError, retrying, retryLoad } = useCategories(
     {
@@ -59,11 +64,11 @@ export default function Page() {
   const handleSort = createSortHandler({
     sortBy: filters.sortBy,
     sortOrder: filters.sortOrder,
-    setFilters,
+    updateFiltersPartial,
   });
 
   // Sync URL on filter
-  useCrudFilterSync(debouncedFilters, syncUrl);
+  useFilterSync(debouncedFilters, syncUrl);
 
   return (
     <CrudFormTablePage
@@ -108,7 +113,7 @@ export default function Page() {
       toolbar={{
         searchValue: filters.search,
         searchPlaceholder: tCommon("search.placeholder"),
-        onSearchChange: (value) => setFilter("search", value),
+        onSearchChange: (value) => updateFilter("search", value),
       }}
       sorting={{
         sortBy: filters.sortBy,

@@ -70,128 +70,124 @@ export const DataTable = <T extends DataRow>({
   }
 
   return (
-    <div className="lg:col-span-8">
-      <div className="bg-card border border-border/50 shadow-sm rounded-sm overflow-hidden">
-        <div className="max-h-[50vh] lg:max-h-[60vh] overflow-auto">
-          <Table>
-            <TableHeader>
-              <TableRow>
-                {columns.map((column) => {
-                  const sortKey = column.sortKey ?? String(column.key);
-                  const active = column.sortable && sortKey === sortBy;
+    <div className="bg-card border border-border/50 shadow-sm rounded-sm overflow-hidden">
+      <div className="max-h-[50vh] lg:max-h-[60vh] overflow-auto">
+        <Table>
+          <TableHeader>
+            <TableRow>
+              {columns.map((column) => {
+                const sortKey = column.sortKey ?? String(column.key);
+                const active = column.sortable && sortKey === sortBy;
 
-                  return (
-                    <TableHead
-                      key={String(column.key)}
-                      className={cn(
-                        "sticky top-0 z-20 bg-muted px-6 py-4 tracking-wider",
-                        column.headerClassName,
-                      )}
-                    >
-                      {column.sortable ? (
-                        <button
-                          type="button"
-                          className={cn(
-                            "flex items-center gap-1 font-semibold uppercase",
-                            "hover:text-foreground",
-                            active && "text-foreground",
-                          )}
-                          onClick={() => onSort?.(sortKey)}
-                        >
-                          <span>{column.label}</span>
-
-                          {active &&
-                            (sortOrder === "asc" ? (
-                              <ArrowDown size={16} />
-                            ) : (
-                              <ArrowUp size={16} />
-                            ))}
-                        </button>
-                      ) : (
-                        <span className="font-semibold uppercase">
-                          {column.label}
-                        </span>
-                      )}
-                    </TableHead>
-                  );
-                })}
-
-                {shouldShowActions && (
-                  <TableHead className="sticky top-0 z-20 bg-muted w-24 px-6 py-4 font-semibold uppercase tracking-wider">
-                    {tTable("actions")}
-                  </TableHead>
-                )}
-              </TableRow>
-            </TableHeader>
-
-            <TableBody className="divide-y divide-border/50">
-              {data.length === 0 ? (
-                <TableRow>
-                  <TableCell
-                    colSpan={columns.length + (shouldShowActions ? 1 : 0)}
-                    className="h-40 px-6 py-12 text-center text-muted-foreground"
-                  >
-                    <div className="flex flex-col items-center justify-center text-muted-foreground">
-                      <Database className="mb-3 h-10 w-10 opacity-30" />
-
-                      <p>{emptyMessage ?? tTable("noData")}</p>
-                    </div>
-                  </TableCell>
-                </TableRow>
-              ) : (
-                data.map((item) => (
-                  <TableRow
-                    key={item.id}
-                    className="hover:bg-muted/30 transition-colors group"
-                  >
-                    {columns.map((column, index) => {
-                      const value = column.render?.(item) ??
-                        getValue(item, String(column.key)) ?? (
-                          <span className="italic text-muted-foreground">
-                            -
-                          </span>
-                        );
-
-                      return (
-                        <TableCell
-                          key={String(column.key)}
-                          className={cn(
-                            `px-6 py-4 ${column.className}`,
-                            index === 0 && "font-medium text-foreground",
-                          )}
-                        >
-                          {value}
-                        </TableCell>
-                      );
-                    })}
-
-                    {shouldShowActions && (
-                      <TableCell className="px-6 py-4 text-right">
-                        <div className="hidden items-center justify-end gap-2 opacity-0 transition-opacity group-hover:opacity-100 md:flex">
-                          <ActionRow
-                            item={item}
-                            onView={onView}
-                            onEdit={onEdit}
-                            onDelete={onDelete}
-                          />
-                        </div>
-
-                        <div className="flex items-center justify-end gap-2 md:hidden">
-                          <ActionRow
-                            item={item}
-                            onView={onView}
-                            onEdit={onEdit}
-                            onDelete={onDelete}
-                          />
-                        </div>
-                      </TableCell>
+                return (
+                  <TableHead
+                    key={String(column.key)}
+                    className={cn(
+                      "sticky top-0 z-20 bg-muted px-6 py-4 tracking-wider",
+                      column.headerClassName,
                     )}
-                  </TableRow>
-                ))
+                  >
+                    {column.sortable ? (
+                      <button
+                        type="button"
+                        className={cn(
+                          "flex items-center gap-1 font-semibold uppercase",
+                          "hover:text-foreground",
+                          active && "text-foreground",
+                        )}
+                        onClick={() => onSort?.(sortKey)}
+                      >
+                        <span>{column.label}</span>
+
+                        {active &&
+                          (sortOrder === "asc" ? (
+                            <ArrowDown size={16} />
+                          ) : (
+                            <ArrowUp size={16} />
+                          ))}
+                      </button>
+                    ) : (
+                      <span className="font-semibold uppercase">
+                        {column.label}
+                      </span>
+                    )}
+                  </TableHead>
+                );
+              })}
+
+              {shouldShowActions && (
+                <TableHead className="sticky top-0 z-20 bg-muted w-24 px-6 py-4 font-semibold uppercase tracking-wider">
+                  {tTable("actions")}
+                </TableHead>
               )}
-            </TableBody>
-          </Table>
-        </div>
+            </TableRow>
+          </TableHeader>
+
+          <TableBody className="divide-y divide-border/50">
+            {data.length === 0 ? (
+              <TableRow>
+                <TableCell
+                  colSpan={columns.length + (shouldShowActions ? 1 : 0)}
+                  className="h-40 px-6 py-12 text-center text-muted-foreground"
+                >
+                  <div className="flex flex-col items-center justify-center text-muted-foreground">
+                    <Database className="mb-3 h-10 w-10 opacity-30" />
+
+                    <p>{emptyMessage ?? tTable("noData")}</p>
+                  </div>
+                </TableCell>
+              </TableRow>
+            ) : (
+              data.map((item) => (
+                <TableRow
+                  key={item.id}
+                  className="hover:bg-muted/30 transition-colors group"
+                >
+                  {columns.map((column, index) => {
+                    const value = column.render?.(item) ??
+                      getValue(item, String(column.key)) ?? (
+                        <span className="italic text-muted-foreground">-</span>
+                      );
+
+                    return (
+                      <TableCell
+                        key={String(column.key)}
+                        className={cn(
+                          `px-6 py-4 ${column.className}`,
+                          index === 0 && "font-medium text-foreground",
+                        )}
+                      >
+                        {value}
+                      </TableCell>
+                    );
+                  })}
+
+                  {shouldShowActions && (
+                    <TableCell className="px-6 py-4 text-right">
+                      <div className="hidden items-center justify-end gap-2 opacity-0 transition-opacity group-hover:opacity-100 md:flex">
+                        <ActionRow
+                          item={item}
+                          onView={onView}
+                          onEdit={onEdit}
+                          onDelete={onDelete}
+                        />
+                      </div>
+
+                      <div className="flex items-center justify-end gap-2 md:hidden">
+                        <ActionRow
+                          item={item}
+                          onView={onView}
+                          onEdit={onEdit}
+                          onDelete={onDelete}
+                        />
+                      </div>
+                    </TableCell>
+                  )}
+                </TableRow>
+              ))
+            )}
+          </TableBody>
+        </Table>
       </div>
     </div>
   );

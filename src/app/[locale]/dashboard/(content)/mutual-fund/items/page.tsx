@@ -3,24 +3,21 @@
 import ConnectionErrorAlert from "@/components/feedback/ConnectionErrorAlert";
 import { isLikelyConnectionError } from "@/lib/utils/connection-error";
 import { useTranslations } from "next-intl";
-import { useCategories } from "@/hooks/dashboard/mutual-fund/categories";
 import {
   useItemActions,
   useItemFilter,
-  useItemForm,
   useItems,
-  useItemSubmit,
 } from "@/hooks/dashboard/mutual-fund/items";
-import { getCategoryOptions } from "@/lib/mutual-fund/categories/options";
-import { CrudFormTablePage } from "@/components/templates/crud/CrudFormTablePage";
 import { useCrudPageTitle } from "@/hooks/crud/useCrudPageTitle";
 import { DataColumn } from "@/types/table";
-import { ItemListItem } from "@/types/mutual-fund/items";
+import { ItemFilter, ItemListItem } from "@/types/mutual-fund/items";
 import { createSortHandler } from "@/lib/utils/crud";
-import { useCrudFilterSync } from "@/hooks/crud";
+import { useCrudFilterDialog } from "@/hooks/crud";
+import { useFilterSync } from "@/hooks/filter";
+import { CrudListPage } from "@/components/templates/crud";
+import ItemFilterContent from "@/components/dashboard/mutual-fund/items/ItemFilterContent";
 
-export default function ItemsManagementPage() {
-  const t = useTranslations("dashboard.mutualFund.items");
+export default function Page() {
   const tColumn = useTranslations("dashboard.mutualFund.items.columns");
   const tCommon = useTranslations("common");
 
@@ -28,12 +25,28 @@ export default function ItemsManagementPage() {
 
   const {
     filters,
+    defaultFilters,
     debouncedFilters,
-    setFilter,
-    setFilters,
+    updateFilter,
+    updateFiltersPartial,
     goToPage,
+    changeLimit,
     syncUrl,
   } = useItemFilter();
+
+  const {
+    filterOpen,
+    setFilterOpen,
+    draftFilters,
+    updateDraftFilter,
+    openFilter,
+    applyFilter,
+    resetFilter,
+  } = useCrudFilterDialog<ItemFilter>(
+    filters,
+    updateFiltersPartial,
+    defaultFilters,
+  );
 
   const {
     items,
@@ -49,23 +62,7 @@ export default function ItemsManagementPage() {
     search: debouncedFilters.search || undefined,
   });
 
-  const {
-    form,
-    setForm,
-    isEditing,
-    canSubmit,
-    handleEdit,
-    buildPayload,
-    resetForm,
-  } = useItemForm();
-
-  const { handleDelete } = useItemActions();
-
-  const { isSubmitting, getButtonText, submit } = useItemSubmit();
-
-  const { categories } = useCategories();
-
-  const categoryOptions = getCategoryOptions({ categories });
+  const { handleCreate, handleEdit, handleDelete } = useItemActions();
 
   const columns: DataColumn<ItemListItem>[] = [
     {
@@ -80,19 +77,27 @@ export default function ItemsManagementPage() {
 
       render: (item) => item.category.name,
     },
+
+    {
+      key: "totalAum",
+      label: tColumn("totalAum"),
+      sortable: true,
+
+      render: (item) => item.totalAum,
+    },
   ];
 
   const handleSort = createSortHandler({
     sortBy: filters.sortBy,
     sortOrder: filters.sortOrder,
-    setFilters,
+    updateFiltersPartial,
   });
 
   // Sync URL on filter
-  useCrudFilterSync(debouncedFilters, syncUrl);
+  useFilterSync(debouncedFilters, syncUrl);
 
   return (
-    <CrudFormTablePage
+    <CrudListPage
       title={getTitle("list", "rdItem")}
       loading={loading}
       data={items}
@@ -102,47 +107,28 @@ export default function ItemsManagementPage() {
           <ConnectionErrorAlert retrying={retrying} onRetry={retryLoad} />
         ) : undefined
       }
-      form={{
-        formFields: [
-          {
-            name: "name",
-            label: t("form.labels.name"),
-            placeholder: t("form.placeholders.name"),
-            type: "text",
-            required: true,
-          },
-          {
-            name: "category_id",
-            label: t("form.labels.category"),
-            placeholder: t("form.placeholders.category"),
-            type: "select",
-            options: categoryOptions,
-            required: true,
-          },
-        ],
-        form,
-        setForm,
-        canSubmit,
-        onSubmit: () => {
-          submit({
-            id: isEditing ? form.id : undefined,
-            payload: buildPayload(),
-            onSuccess: resetForm,
-          });
-        },
-        isEditing,
-        isSubmitting,
-        buttonText: getButtonText(isEditing),
-        resetForm,
-      }}
       actions={{
+        onCreate: handleCreate,
         onEdit: handleEdit,
         onDelete: handleDelete,
       }}
       toolbar={{
         searchValue: filters.search,
         searchPlaceholder: tCommon("search.placeholder"),
-        onSearchChange: (value) => setFilter("search", value),
+        onSearchChange: (value) => updateFilter("search", value),
+        onFilter: openFilter,
+      }}
+      filter={{
+        content: (
+          <ItemFilterContent
+            filters={draftFilters}
+            updateFilter={updateDraftFilter}
+          />
+        ),
+        open: filterOpen,
+        onOpenChange: setFilterOpen,
+        onApply: applyFilter,
+        onReset: resetFilter,
       }}
       sorting={{
         sortBy: filters.sortBy,
@@ -156,6 +142,7 @@ export default function ItemsManagementPage() {
         totalItems: total,
         loading,
         onPageChange: goToPage,
+        onLimitChange: changeLimit,
       }}
     />
   );

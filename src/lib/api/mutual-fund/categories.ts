@@ -4,6 +4,7 @@ import {
 } from "@/types/mutual-fund/categories";
 import { apiClient } from "../client";
 import { ApiResponse } from "@/types/api";
+import { Option } from "@/types/option";
 
 const baseRoute = "/mutual-fund/categories";
 
@@ -13,6 +14,18 @@ export const fetchCategories = async (
   const { data } = await apiClient.get<ApiResponse<CategoryListItem[]>>(
     baseRoute,
     { params },
+  );
+
+  return data.data;
+};
+
+/**
+ *
+ * @returns Option[]
+ */
+export const fetchCategoryOptions = async (): Promise<Option[]> => {
+  const { data } = await apiClient.get<ApiResponse<Option[]>>(
+    `${baseRoute}/options`,
   );
 
   return data.data;

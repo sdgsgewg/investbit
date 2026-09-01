@@ -7,7 +7,7 @@ interface UpdateItemPayload {
   data: unknown;
 }
 
-export function useUpdateItem(onSuccess?: () => void) {
+export function useUpdateItem() {
   return useCrudMutation<UpdateItemPayload>({
     mutationFn: ({ id, data }) => updateItem(id, data),
 
@@ -18,7 +18,5 @@ export function useUpdateItem(onSuccess?: () => void) {
     action: "update",
 
     getPayload: ({ data }) => data,
-
-    onSuccess,
   });
 }

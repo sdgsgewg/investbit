@@ -2,21 +2,20 @@
   "form": {
     "labels": {
       "name": "Nama",
-      "category": "Kategori"
+      "category": "Kategori",
+      "totalAum": "Total AUM"
     },
 
     "placeholders": {
-      "name": "Input nama",
-      "category": "Pilih kategori"
+      "name": "Masukkan nama",
+      "category": "Pilih kategori",
+      "totalAum": "Masukkan total AUM"
     }
   },
 
   "columns": {
     "name": "Nama",
-    "category": "Kategori"
-  },
-
-  "actions": {
-    "addNew": "Tambah Item Baru"
+    "category": "Kategori",
+    "totalAum": "Total AUM"
   }
 }

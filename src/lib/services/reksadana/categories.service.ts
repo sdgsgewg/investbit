@@ -3,6 +3,7 @@ import {
   deleteCategoryRepo,
   getCategoriesRepo,
   getCategoryDetailRepo,
+  getCategoryOptionsRepo,
   updateCategoryRepo,
 } from "@/lib/repositories/mutual-fund/categories.repo";
 import {
@@ -16,6 +17,10 @@ export async function getCategoriesService(query: unknown) {
   const parsed = categoriesQuerySchema.parse(query);
 
   return getCategoriesRepo(parsed);
+}
+
+export async function getCategoryOptionsService() {
+  return getCategoryOptionsRepo();
 }
 
 export async function getCategoryDetailService(id: string) {
