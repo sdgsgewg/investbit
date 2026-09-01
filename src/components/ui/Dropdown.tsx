@@ -7,6 +7,7 @@ import { useClickOutside } from "@/hooks/uceClickOutside";
 import { Option } from "@/types/option";
 
 interface DropdownProps {
+  label?: string;
   value: string;
   onChange: (val: string) => void;
   options: Option[];
@@ -15,6 +16,7 @@ interface DropdownProps {
 }
 
 export default function Dropdown({
+  label,
   value,
   onChange,
   options,
@@ -30,6 +32,12 @@ export default function Dropdown({
 
   return (
     <div ref={ref} className={`relative w-full ${className}`}>
+      {label && (
+        <p className="mb-2 text-sm font-medium text-zinc-700 dark:text-zinc-300">
+          {label}
+        </p>
+      )}
+
       {/* Trigger */}
       <button
         onClick={() => setOpen((prev) => !prev)}
@@ -51,7 +59,7 @@ export default function Dropdown({
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -8, scale: 0.98 }}
             transition={{ duration: 0.15 }}
-            className="absolute z-50 mt-2 w-full rounded-2xl bg-white dark:bg-zinc-900 shadow-lg border border-zinc-200 dark:border-zinc-700 overflow-hidden"
+            className="absolute z-50 mt-2 w-full max-h-80 rounded-2xl bg-white dark:bg-zinc-900 shadow-lg border border-zinc-200 dark:border-zinc-700 overflow-y-auto"
           >
             {options.map((opt) => {
               const isActive = opt.value === value;

@@ -1,5 +1,5 @@
 import InputNumber from "@/components/ui/InputNumber";
-import TableWrapper from "@/components/ui/TableWrapper";
+import TableWrapper from "@/components/wrappers/TableWrapper";
 import { GroupedItemListItem } from "@/types/mutual-fund/items";
 import { YieldInputByItemId } from "@/types/mutual-fund/records/YieldInputByItemId";
 import { useTranslations } from "next-intl";

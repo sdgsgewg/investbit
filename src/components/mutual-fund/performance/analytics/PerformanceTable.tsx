@@ -1,6 +1,6 @@
 import React from "react";
 import { useTranslations } from "next-intl";
-import TableWrapper from "@/components/ui/TableWrapper";
+import TableWrapper from "@/components/wrappers/TableWrapper";
 import { PerformanceData } from "@/types/mutual-fund/performance";
 
 interface ColumnHeader {
