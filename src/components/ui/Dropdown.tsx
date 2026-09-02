@@ -5,13 +5,19 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Check, ChevronDown } from "lucide-react";
 import { useClickOutside } from "@/hooks/uceClickOutside";
 import { Option } from "@/types/option";
+import { Label } from "../forms/fields";
 
 interface DropdownProps {
   label?: string;
+
   value: string;
-  onChange: (val: string) => void;
   options: Option[];
+  onChange: (val: string) => void;
+
   placeholder?: string;
+
+  required?: boolean;
+
   className?: string;
 }
 
@@ -31,12 +37,8 @@ export default function Dropdown({
   const selected = options.find((o) => o.value === value);
 
   return (
-    <div ref={ref} className={`relative w-full ${className}`}>
-      {label && (
-        <p className="mb-2 text-sm font-medium text-zinc-700 dark:text-zinc-300">
-          {label}
-        </p>
-      )}
+    <div ref={ref} className={`relative flex flex-col gap-2 ${className}`}>
+      {label && <Label label={label} />}
 
       {/* Trigger */}
       <button

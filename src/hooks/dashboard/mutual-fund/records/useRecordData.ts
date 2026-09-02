@@ -18,9 +18,11 @@ interface UseRecordDataReturn {
 
   draftDate: string;
   selectedDate: string;
+  selectedCategory: string;
 
   setDraftDate: (date: string) => void;
   setSelectedDate: (date: string) => void;
+  setSelectedCategory: (category: string) => void;
 
   handleInputChange: (
     itemId: string,
@@ -55,6 +57,8 @@ export const useRecordData = (): UseRecordDataReturn => {
     safeFormatDate(initialDate, "yyyy-MM-dd"),
   );
 
+  const [selectedCategory, setSelectedCategory] = useState("");
+
   const [localInputs, setLocalInputs] = useState<YieldInputByItemId>({});
 
   // 1. Grouped by category items
@@ -63,7 +67,9 @@ export const useRecordData = (): UseRecordDataReturn => {
     isLoading: isLoadingGroupedItems,
     error: itemsError,
     refetch: refetchItems,
-  } = useGroupedItems();
+  } = useGroupedItems({
+    categoryId: selectedCategory,
+  });
 
   // 2. Records
   const {
@@ -244,6 +250,13 @@ export const useRecordData = (): UseRecordDataReturn => {
     handlePrefetchAdjacentDates(date);
   };
 
+  const handleSelectCategory = (category: string) => {
+    if (category !== selectedCategory) {
+      setLocalInputs({});
+    }
+    setSelectedCategory(category);
+  };
+
   const handleSave = () => {
     mutation.mutate();
   };
@@ -254,9 +267,11 @@ export const useRecordData = (): UseRecordDataReturn => {
 
     draftDate,
     selectedDate,
+    selectedCategory,
 
     setDraftDate,
     setSelectedDate: handleSelectDate,
+    setSelectedCategory: handleSelectCategory,
 
     handleInputChange,
     handleSave,

@@ -18,8 +18,10 @@ export default function RecordPage() {
     groupedItems,
     inputs,
     draftDate,
+    selectedCategory,
     setDraftDate,
     setSelectedDate,
+    setSelectedCategory,
     handleInputChange,
     handleSave,
     loading,
@@ -37,8 +39,10 @@ export default function RecordPage() {
       <div className="bg-white dark:bg-zinc-900 rounded-lg p-6 shadow-sm space-y-6">
         <InputHeader
           draftDate={draftDate}
+          selectedCategory={selectedCategory}
           onDraftDateChange={setDraftDate}
           onSelectedDateChange={setSelectedDate}
+          onSelectedCategoryChange={setSelectedCategory}
           onSave={handleSave}
           saving={saving}
           canSave={canSave}

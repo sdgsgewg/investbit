@@ -56,7 +56,7 @@ export async function getRecordsRepo(
   }
 
   if (params.categoryId) {
-    query = query.eq("rd_items.category_id", params.categoryId);
+    query = query.eq("item.category.id", params.categoryId);
   }
 
   const { data, error } = await query.overrideTypes<DbRecordListRow[]>();
