@@ -1,49 +1,29 @@
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useState } from "react";
 
 import { usePathname, useRouter } from "@/navigation";
 
-import { useDebounce } from "../useDebounce";
-
-interface FilterBase {
-  search: string;
-  page?: number;
-}
-
-interface UseFiltersOptions<TFilter> {
+interface UseGenericFiltersOptions<TFilter> {
   initialFilter?: TFilter;
   omitDefaultValuesFromUrl?: boolean;
-
-  shouldResetPage?: (previous: TFilter, next: TFilter) => boolean;
 }
 
-export function useFilters<TFilter extends FilterBase>(
+export function useGenericFilters<TFilter>(
   defaultFilter: TFilter,
   {
     initialFilter = defaultFilter,
     omitDefaultValuesFromUrl = false,
-    shouldResetPage,
-  }: UseFiltersOptions<TFilter> = {},
+  }: UseGenericFiltersOptions<TFilter> = {},
 ) {
   const router = useRouter();
   const pathname = usePathname();
 
   const [filters, setFilters] = useState(initialFilter);
 
-  const debouncedSearch = useDebounce(filters.search, 500);
-
-  const debouncedFilters = useMemo(
-    () => ({
-      ...filters,
-      search: debouncedSearch,
-    }),
-    [filters, debouncedSearch],
-  );
-
   const createQuery = useCallback(
     (filter: TFilter) => {
       const params = new URLSearchParams();
 
-      Object.entries(filter).forEach(([key, value]) => {
+      Object.entries(filter as object).forEach(([key, value]) => {
         const defaultValue = defaultFilter[key as keyof TFilter];
 
         const isDefaultValue = value === defaultValue;
@@ -87,10 +67,6 @@ export function useFilters<TFilter extends FilterBase>(
         [key]: value,
       };
 
-      if (shouldResetPage?.(previous, next)) {
-        next.page = 1;
-      }
-
       return next;
     });
   }
@@ -101,10 +77,6 @@ export function useFilters<TFilter extends FilterBase>(
         ...previous,
         ...values,
       };
-
-      if (shouldResetPage?.(previous, next)) {
-        next.page = 1;
-      }
 
       return next;
     });
@@ -117,7 +89,6 @@ export function useFilters<TFilter extends FilterBase>(
 
   return {
     filters,
-    debouncedFilters,
 
     updateFilter,
     updateFiltersPartial,

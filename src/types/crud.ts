@@ -75,7 +75,7 @@ export interface CrudPageFormProps<TForm extends CrudForm> {
 
 // Mutation
 
-export type CrudAction = "create" | "edit" | "update" | "delete";
+export type CrudAction = "create" | "edit" | "update" | "upsert" | "delete";
 
 export interface CrudMutationError {
   error: unknown;

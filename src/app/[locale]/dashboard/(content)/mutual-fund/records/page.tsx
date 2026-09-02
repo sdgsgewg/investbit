@@ -9,28 +9,56 @@ import ConnectionErrorAlert from "@/components/feedback/ConnectionErrorAlert";
 import { isLikelyConnectionError } from "@/lib/utils/connection-error";
 import { CrudPageHeader } from "@/components/templates/crud/CrudPageHeader";
 import { useTranslations } from "next-intl";
-import { useRecordData } from "@/hooks/dashboard/mutual-fund/records";
+import { useFilterSync } from "@/hooks/filter";
+import {
+  useRecordData,
+  useRecordFilter,
+  useRecordForm,
+  useRecordSubmit,
+} from "@/hooks/dashboard/mutual-fund/records";
 
 export default function RecordPage() {
   const t = useTranslations("dashboard.mutualFund.records");
 
+  // 1. Filter & URL Sync
+  const {
+    filters,
+    syncUrl,
+    handleDateChange,
+    handleCategoryChange,
+  } = useRecordFilter();
+
+  useFilterSync(filters, syncUrl);
+
+  // 2. Data Fetching
   const {
     groupedItems,
-    inputs,
-    draftDate,
-    selectedCategory,
-    setDraftDate,
-    setSelectedDate,
-    setSelectedCategory,
-    handleInputChange,
-    handleSave,
+    recordsData,
     loading,
     fetching,
-    saving,
-    canSave,
     loadError,
     retryLoad,
-  } = useRecordData();
+  } = useRecordData(filters);
+
+  // 3. Form Input Table State
+  const {
+    inputs,
+    handleInputChange,
+    canSave,
+    buildPayload,
+    resetForm,
+  } = useRecordForm(recordsData, filters);
+
+  // 4. Submit Orchestrator
+  const { isSubmitting, submit } = useRecordSubmit(filters.startDate);
+
+  const handleSave = () => {
+    const payload = buildPayload(filters.startDate);
+    submit({
+      payload,
+      onSuccess: resetForm,
+    });
+  };
 
   return (
     <>
@@ -38,13 +66,11 @@ export default function RecordPage() {
 
       <div className="bg-white dark:bg-zinc-900 rounded-lg p-6 shadow-sm space-y-6">
         <InputHeader
-          draftDate={draftDate}
-          selectedCategory={selectedCategory}
-          onDraftDateChange={setDraftDate}
-          onSelectedDateChange={setSelectedDate}
-          onSelectedCategoryChange={setSelectedCategory}
+          filters={filters}
+          onDateChange={handleDateChange}
+          onCategoryChange={handleCategoryChange}
           onSave={handleSave}
-          saving={saving}
+          saving={isSubmitting}
           canSave={canSave}
         />
 

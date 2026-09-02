@@ -1,10 +1,6 @@
 import { useEffect } from "react";
 
-interface CrudFilter {
-  search: string;
-}
-
-export function useFilterSync<TFilter extends CrudFilter>(
+export function useFilterSync<TFilter>(
   filters: TFilter,
   syncUrl: (filters: TFilter) => void,
 ) {

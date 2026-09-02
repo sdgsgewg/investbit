@@ -18,12 +18,14 @@
     "success": {
       "create": "Successfully created {entity}",
       "update": "Successfully updated {entity}",
+      "upsert": "Successfully saved {entity}",
       "delete": "Successfully deleted {entity}"
     },
 
     "error": {
       "create": "Failed to add {entity}.",
       "update": "Failed to update {entity}.",
+      "upsert": "Failed to save {entity}.",
       "delete": "Failed to delete {entity}.",
       "duplicate": "A {entity} with this name already exists."
     },

@@ -7,24 +7,21 @@ import { Button } from "@/components/ui/button";
 import { useCategories } from "@/hooks/dashboard/mutual-fund/categories";
 import { getCategoryOptions } from "@/lib/mutual-fund/categories/options";
 import Dropdown from "@/components/ui/Dropdown";
+import { RecordFilter } from "@/types/mutual-fund/records";
 
 interface InputHeaderProps {
-  draftDate: string;
-  selectedCategory: string;
-  onDraftDateChange: (date: string) => void;
-  onSelectedDateChange: (date: string) => void;
-  onSelectedCategoryChange: (category: string) => void;
-  onSave: () => void;
+  filters: RecordFilter;
+  onDateChange: (date: string) => void;
+  onCategoryChange: (categoryId?: string) => void;
   saving: boolean;
   canSave: boolean;
+  onSave: () => void;
 }
 
 const InputHeader = ({
-  draftDate,
-  selectedCategory,
-  onDraftDateChange,
-  onSelectedDateChange,
-  onSelectedCategoryChange,
+  filters,
+  onDateChange,
+  onCategoryChange,
   onSave,
   saving,
   canSave,
@@ -33,7 +30,9 @@ const InputHeader = ({
   const tLabels = useTranslations("dashboard.mutualFund.records.form.labels");
   const tCommonFilter = useTranslations("common.filter");
 
-  const selectedDate = draftDate ? new Date(draftDate) : undefined;
+  const selectedDate = filters.startDate
+    ? new Date(filters.startDate)
+    : undefined;
 
   const { categories } = useCategories();
 
@@ -53,13 +52,9 @@ const InputHeader = ({
           <DatePicker
             label={tLabels("date")}
             value={selectedDate}
-            onChange={(date) => {
-              if (!date) return;
-              onDraftDateChange(safeFormatDate(date, "yyyy-MM-dd"));
-            }}
             onSelectFinal={(date) => {
               const formatted = safeFormatDate(date, "yyyy-MM-dd");
-              onSelectedDateChange(formatted); // trigger fetch di sini
+              onDateChange(formatted);
             }}
             disabled={(date) => {
               const day = date.getDay();
@@ -67,12 +62,13 @@ const InputHeader = ({
             }}
           />
 
+          {/* Category Dropdown */}
           <div>
             <Dropdown
               label={tLabels("category")}
-              value={selectedCategory || ""}
+              value={filters.categoryId || ""}
               onChange={(category) => {
-                onSelectedCategoryChange(category);
+                onCategoryChange(category || undefined);
               }}
               options={categoryOptions}
               placeholder={tCommonFilter("allCategory")}
@@ -82,7 +78,7 @@ const InputHeader = ({
         </div>
       </div>
 
-      {/* Save */}
+      {/* Save Button */}
       <div className="flex items-start md:items-end">
         <Button
           variant="default"

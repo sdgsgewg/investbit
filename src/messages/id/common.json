@@ -22,12 +22,14 @@
     "success": {
       "create": "Berhasil menambahkan {entity}",
       "update": "Berhasil memperbarui {entity}",
+      "upsert": "Berhasil menyimpan {entity}",
       "delete": "Berhasil menghapus {entity}"
     },
 
     "error": {
       "create": "Gagal menambahkan {entity}.",
       "update": "Gagal memperbarui {entity}.",
+      "upsert": "Gagal menyimpan {entity}.",
       "delete": "Gagal menghapus {entity}.",
       "duplicate": "{entity} dengan nama ini sudah ada."
     },
