@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import TopProgressBar from "@/components/feedback/TopProgressBar";
 import ConnectionErrorAlert from "@/components/feedback/ConnectionErrorAlert";
 import { isLikelyConnectionError } from "@/lib/utils/connection-error";
-import FilterPerformanceSection from "@/components/mutual-fund/performance/filter/FilterPerformanceSection";
+import PerformanceFilterSection from "@/components/mutual-fund/performance/filter/PerformanceFilterSection";
 import PerformanceSectionWrapper from "@/components/mutual-fund/performance/PerformanceSectionWrapper";
 import TopPerformers from "@/components/mutual-fund/performance/top-performers/TopPerformers";
 import CategoryLeaderboard from "@/components/mutual-fund/performance/leaderboard/CategoryLeaderboard";
@@ -58,7 +58,7 @@ export default function PerformancePage() {
       <PageHeader title={t("title")} />
 
       {/* GLOBAL CONTROLS SECTION */}
-      <FilterPerformanceSection
+      <PerformanceFilterSection
         viewMode={viewMode}
         form={form}
         onChangeViewMode={handleChangeViewMode}

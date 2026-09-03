@@ -7,19 +7,19 @@ import { PerformanceFilter } from "@/types/mutual-fund/performance";
 import { getCategoryOptions } from "@/lib/mutual-fund/categories/options";
 import { getTimeFrameOptions } from "@/lib/mutual-fund/performance/options";
 
-interface FilterPerformanceSectionProps {
+interface PerformanceFilterSectionProps {
   viewMode: TimeFrame;
   form: PerformanceFilter;
   onChangeViewMode: (viewMode: TimeFrame) => void;
   setForm: React.Dispatch<React.SetStateAction<PerformanceFilter>>;
 }
 
-const FilterPerformanceSection = ({
+const PerformanceFilterSection = ({
   viewMode,
   form,
   onChangeViewMode,
   setForm,
-}: FilterPerformanceSectionProps) => {
+}: PerformanceFilterSectionProps) => {
   const tCommonFilter = useTranslations("common.filter");
   const tTimeFrame = useTranslations("public.mutualFund.performance.timeframe");
 
@@ -63,7 +63,7 @@ const FilterPerformanceSection = ({
             value={form.timeFrame || TimeFrame.WEEKLY}
             onChange={handleTimeFrameChange}
             options={timeFrameOptions}
-            className="sm:w-48"
+            className="w-full sm:w-48"
           />
         </div>
 
@@ -72,11 +72,11 @@ const FilterPerformanceSection = ({
           onChange={handleCategoryChange}
           options={categoryOptions}
           placeholder={tCommonFilter("allCategory")}
-          className="sm:w-48"
+          className="w-full sm:w-48"
         />
       </div>
     </div>
   );
 };
 
-export default FilterPerformanceSection;
+export default PerformanceFilterSection;
