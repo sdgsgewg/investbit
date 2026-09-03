@@ -22,8 +22,8 @@ export function Navbar() {
 
   return (
     <>
-      <nav className="border-b bg-background/95 backdrop-blur supports-backdrop-filter:bg-background/60 sticky top-0 z-50">
-        <div className="flex h-16 items-center px-4 container mx-auto justify-between">
+      <nav className="border-b bg-background/95 backdrop-blur supports-backdrop-filter:bg-background/60 sticky top-0 z-50 h-16">
+        <div className="flex h-full items-center justify-between px-4 lg:container lg:mx-auto">
           <div className="flex items-center">
             {/* Logo and Website Name */}
             <NavbarLogo />
