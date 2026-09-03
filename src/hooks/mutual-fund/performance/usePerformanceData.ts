@@ -1,14 +1,9 @@
 import { useState } from "react";
-import { useQuery } from "@tanstack/react-query";
-import { queryKeys } from "@/lib/react-query/queryKeys";
-import { fetchPerformance } from "@/lib/api/mutual-fund/performance";
-import { queryConfig } from "@/lib/react-query/config/queryConfig";
 import {
-  CategoryStats,
-  PerformanceData,
-  PerformanceFilter,
-  PerformanceResponse,
-} from "@/types/mutual-fund/performance";
+  usePerformanceAnalytics,
+  UsePerformanceAnalyticsReturn,
+} from "./usePerformanceAnalytics";
+import { PerformanceFilter } from "@/types/mutual-fund/performance";
 import { TimeFrame } from "@/enums/TimeFrame";
 
 interface UsePerformanceDataProps {
@@ -16,137 +11,28 @@ interface UsePerformanceDataProps {
   initialForm?: PerformanceFilter;
 }
 
-interface UsePerformanceDataReturn {
-  data: PerformanceData;
-  timePeriods: string[];
-  availablePeriods: string[];
-  loading: boolean;
-  fetching: boolean;
-  retrying: boolean;
+export interface UsePerformanceDataReturn extends UsePerformanceAnalyticsReturn {
   form: PerformanceFilter;
   setForm: React.Dispatch<React.SetStateAction<PerformanceFilter>>;
-  categoryStats: CategoryStats;
-  getCellColor: (
-    val: number | undefined,
-    catName: string,
-    timeKey: string,
-  ) => string;
-  periodLimit: number;
-  hasMoreOlder: boolean;
-  hasLoadedOlder: boolean;
-  isRangeMode: boolean;
-  selectedStartPeriod: string;
-  selectedEndPeriod: string;
-  loadMorePeriods: () => void;
-  resetToLatestPeriods: () => void;
-  setStartPeriod: (period: string) => void;
-  setEndPeriod: (period: string) => void;
-  loadError: unknown | null;
-  retryLoad: () => void;
 }
 
-const DEFAULT_PERIOD_LIMIT = 10;
-
+/**
+ * Backward compatibility hook combining filter state with analytics data.
+ */
 export const usePerformanceData = ({
   timeFrame,
   initialForm = { categoryId: "" },
 }: UsePerformanceDataProps): UsePerformanceDataReturn => {
-  const [form, setRawForm] = useState<PerformanceFilter>(initialForm);
-  const [periodLimit, setPeriodLimit] = useState(DEFAULT_PERIOD_LIMIT);
-  const [selectedStartPeriod, setSelectedStartPeriod] = useState("");
-  const [selectedEndPeriod, setSelectedEndPeriod] = useState("");
+  const [form, setForm] = useState<PerformanceFilter>(initialForm);
 
-  const isRangeMode = Boolean(selectedStartPeriod || selectedEndPeriod);
-
-  const { data, isLoading, isFetching, isRefetching, error, refetch } =
-    useQuery<PerformanceResponse>({
-      queryKey: queryKeys.performance({
-        timeFrame,
-        categoryId: form.categoryId,
-        periodLimit: isRangeMode ? undefined : periodLimit,
-        startPeriod: isRangeMode ? selectedStartPeriod || undefined : undefined,
-        endPeriod: isRangeMode ? selectedEndPeriod || undefined : undefined,
-      }),
-      queryFn: () =>
-        fetchPerformance({
-          timeFrame,
-          categoryId: form.categoryId,
-          periodLimit: isRangeMode ? undefined : periodLimit,
-          startPeriod: isRangeMode
-            ? selectedStartPeriod || undefined
-            : undefined,
-          endPeriod: isRangeMode ? selectedEndPeriod || undefined : undefined,
-        }),
-      placeholderData: (prev) => prev ?? undefined,
-      ...queryConfig,
-    });
-
-  const getCellColor = (
-    val: number | undefined,
-    catName: string,
-    timeKey: string,
-  ) => {
-    if (val === undefined || isNaN(val)) return "";
-
-    const stat = data?.categoryStats?.[catName]?.[timeKey];
-    if (!stat || stat.min === stat.max) return "";
-
-    const normalized = (val - stat.min) / (stat.max - stat.min);
-
-    if (normalized < 0.5) {
-      const intensity = 1 - normalized / 0.5;
-      return `rgba(239, 68, 68, ${Math.max(intensity * 0.8, 0.05)})`;
-    } else {
-      const intensity = (normalized - 0.5) / 0.5;
-      return `rgba(34, 197, 94, ${Math.max(intensity * 0.8, 0.05)})`;
-    }
-  };
-
-  const resetToLatestPeriods = () => {
-    setPeriodLimit(DEFAULT_PERIOD_LIMIT);
-    setSelectedStartPeriod("");
-    setSelectedEndPeriod("");
-  };
-
-  const setForm: React.Dispatch<React.SetStateAction<PerformanceFilter>> = (
-    value,
-  ) => {
-    resetToLatestPeriods();
-    setRawForm(value);
-  };
+  const analytics = usePerformanceAnalytics({
+    timeFrame,
+    categoryId: form.categoryId,
+  });
 
   return {
-    data: data?.data ?? [],
-    timePeriods: data?.timePeriods ?? [],
-    availablePeriods: data?.availablePeriods ?? [],
-    categoryStats: data?.categoryStats ?? {},
-    loading: isLoading,
-    fetching: isFetching,
-    retrying: isRefetching,
+    ...analytics,
     form,
     setForm,
-    getCellColor,
-    periodLimit,
-    hasMoreOlder: data?.hasMoreOlder ?? false,
-    hasLoadedOlder: !isRangeMode && periodLimit > DEFAULT_PERIOD_LIMIT,
-    isRangeMode,
-    selectedStartPeriod,
-    selectedEndPeriod,
-    loadMorePeriods: () => {
-      if (!isFetching && !isRangeMode) {
-        setPeriodLimit((prev) => prev + 10);
-      }
-    },
-    resetToLatestPeriods,
-    setStartPeriod: (period: string) => {
-      setSelectedStartPeriod(period);
-    },
-    setEndPeriod: (period: string) => {
-      setSelectedEndPeriod(period);
-    },
-    loadError: error ?? null,
-    retryLoad: () => {
-      void refetch();
-    },
   };
 };

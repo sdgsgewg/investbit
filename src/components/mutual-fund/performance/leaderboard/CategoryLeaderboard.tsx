@@ -5,25 +5,22 @@ import { useNumberFormatter } from "@/hooks/useNumberFormatter";
 
 import CategoryLeaderboardSkeleton from "./CategoryLeaderboardSkeleton";
 import { TimeFrame } from "@/enums/TimeFrame";
-import { useMemo } from "react";
-import { getCategoryLeaderboard } from "@/lib/mutual-fund/performance/selector";
 import { formatPerformancePeriod } from "@/lib/mutual-fund/performance/period";
-import { PerformanceData } from "@/types/mutual-fund/performance";
+import {
+  getLeaderboardYieldClassName,
+  getRankBadgeClassName,
+  getRankRowClassName,
+} from "@/lib/mutual-fund/performance/colors";
+import { useCategoryLeaderboard } from "@/hooks/mutual-fund/performance/useCategoryLeaderboard";
 
 interface CategoryLeaderboardProps {
-  data: PerformanceData;
-  timePeriods: string[];
-  loading: boolean;
-  fetching: boolean;
   viewMode: TimeFrame;
+  categoryId?: string;
 }
 
 const CategoryLeaderboard = ({
-  data,
-  timePeriods,
-  loading,
-  fetching,
   viewMode,
+  categoryId,
 }: CategoryLeaderboardProps) => {
   const tLeaderboard = useTranslations(
     "public.mutualFund.performance.leaderboard",
@@ -34,12 +31,11 @@ const CategoryLeaderboard = ({
 
   const { formatPercent } = useNumberFormatter();
 
-  const latestPeriod = timePeriods[timePeriods.length - 1];
-
-  const rankedCategories = useMemo(
-    () => getCategoryLeaderboard(data, timePeriods),
-    [data, timePeriods],
-  );
+  const { rankedCategories, latestPeriod, loading, fetching } =
+    useCategoryLeaderboard({
+      timeFrame: viewMode,
+      categoryId,
+    });
 
   const periodDisplay = latestPeriod
     ? formatPerformancePeriod({
@@ -48,43 +44,6 @@ const CategoryLeaderboard = ({
         weekLabel: tWeekly("week"),
       })
     : "";
-
-  const getYieldClassName = (yieldVal: number, rank: number) => {
-    const tone =
-      yieldVal >= 0
-        ? "text-emerald-700 bg-emerald-50 dark:text-emerald-300 dark:bg-emerald-900/20"
-        : "text-rose-700 bg-rose-50 dark:text-rose-300 dark:bg-rose-900/20";
-
-    if (rank === 1) return `${tone} ring-1 ring-amber-300 dark:ring-amber-700`;
-    if (rank === 2) return `${tone} ring-1 ring-slate-300 dark:ring-slate-600`;
-    if (rank === 3)
-      return `${tone} ring-1 ring-orange-300 dark:ring-orange-700`;
-    return tone;
-  };
-
-  const getRankBadgeClassName = (rank: number) => {
-    if (rank === 1) {
-      return "bg-amber-100 text-amber-700 border-amber-300 dark:bg-amber-900/30 dark:text-amber-300 dark:border-amber-700";
-    }
-
-    if (rank === 2) {
-      return "bg-slate-100 text-slate-700 border-slate-300 dark:bg-slate-800 dark:text-slate-200 dark:border-slate-600";
-    }
-
-    if (rank === 3) {
-      return "bg-orange-100 text-orange-700 border-orange-300 dark:bg-orange-900/30 dark:text-orange-300 dark:border-orange-700";
-    }
-
-    return "bg-zinc-100 text-zinc-700 border-zinc-300 dark:bg-zinc-800 dark:text-zinc-200 dark:border-zinc-700";
-  };
-
-  const getRowClassName = (rank: number) => {
-    if (rank <= 3) {
-      return "border-zinc-200 bg-white shadow-sm dark:border-zinc-700 dark:bg-zinc-950";
-    }
-
-    return "border-zinc-100 bg-white/80 dark:border-zinc-800 dark:bg-zinc-950/70";
-  };
 
   const renderRankIcon = (rank: number) => {
     if (rank === 1) return <Trophy className="h-4 w-4" />;
@@ -144,7 +103,7 @@ const CategoryLeaderboard = ({
               {category.rankedItems.map((item) => (
                 <div
                   key={item.itemId}
-                  className={`flex items-center justify-between gap-3 rounded-xl border px-4 py-3 transition-colors ${getRowClassName(item.rank)}`}
+                  className={`flex items-center justify-between gap-3 rounded-xl border px-4 py-3 transition-colors ${getRankRowClassName(item.rank)}`}
                 >
                   <div className="flex items-center gap-3 min-w-0">
                     <div
@@ -164,7 +123,7 @@ const CategoryLeaderboard = ({
                   </div>
 
                   <span
-                    className={`shrink-0 rounded-full px-3 py-1 text-sm font-bold ${getYieldClassName(item.yieldValue, item.rank)}`}
+                    className={`shrink-0 rounded-full px-3 py-1 text-sm font-bold ${getLeaderboardYieldClassName(item.yieldValue, item.rank)}`}
                   >
                     {formatPercent(item.yieldValue)}
                   </span>

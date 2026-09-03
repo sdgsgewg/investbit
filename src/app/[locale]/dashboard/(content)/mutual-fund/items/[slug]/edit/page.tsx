@@ -1,5 +1,5 @@
 import EditItemPage from "@/components/dashboard/mutual-fund/items/EditItemPage";
-import { getItemLookupService } from "@/lib/services/reksadana/items.service";
+import { getItemLookupService } from "@/lib/services/mutual-fund/items.service";
 import { notFound } from "next/navigation";
 
 export default async function Page({

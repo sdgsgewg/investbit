@@ -1,6 +1,6 @@
 import { errorResponse, successResponse } from "@/lib/api/response";
 import { NotFoundError } from "@/lib/errors/http-error";
-import { getItemEditService } from "@/lib/services/reksadana/items.service";
+import { getItemEditService } from "@/lib/services/mutual-fund/items.service";
 
 type PositionRouteContext = {
   params: Promise<{ id: string }>;

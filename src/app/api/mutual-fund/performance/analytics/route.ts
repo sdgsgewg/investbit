@@ -1,5 +1,5 @@
 import { errorResponse, successResponse } from "@/lib/api/response";
-import { getPerformanceService } from "@/lib/services/mutual-fund/performance.service";
+import { getPerformanceAnalyticsService } from "@/lib/services/mutual-fund/analytics.service";
 
 export async function GET(request: Request) {
   try {
@@ -13,7 +13,7 @@ export async function GET(request: Request) {
       periodLimit: searchParams.get("periodLimit") || undefined,
     };
 
-    const data = await getPerformanceService(query);
+    const data = await getPerformanceAnalyticsService(query);
 
     return successResponse(data);
   } catch (error: unknown) {

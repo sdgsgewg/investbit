@@ -1,8 +1,133 @@
+import { format, startOfMonth } from "date-fns";
 import { safeFormatDate } from "@/lib/utils/date";
 import { TimeFrame } from "@/enums/TimeFrame";
 import { SortOrder } from "@/types/sort";
 
-// Usage: Top Performers & Category Leaderboard
+// --- Date & Week Computation Helpers ---
+
+export const isWeekend = (date: Date): boolean => {
+  const day = date.getDay();
+  return day === 0 || day === 6;
+};
+
+export const getMonthWeeks = (
+  year: number,
+  month: number,
+): Record<number, { start: Date; end: Date }> => {
+  const current = new Date(year, month, 1);
+  const lastDay = new Date(year, month + 1, 0);
+
+  let week = 1;
+  let currentWeekStart: Date | null = null;
+  let currentWeekEnd: Date | null = null;
+
+  const weeks: Record<number, { start: Date; end: Date }> = {};
+
+  while (current <= lastDay) {
+    if (!isWeekend(current)) {
+      const day = current.getDay();
+
+      if (day === 1 && current.getDate() !== 1) {
+        if (!currentWeekStart) {
+          currentWeekStart = new Date(current);
+        } else {
+          week++;
+          currentWeekStart = new Date(current);
+        }
+      } else if (!currentWeekStart) {
+        currentWeekStart = new Date(current);
+      }
+
+      currentWeekEnd = new Date(current);
+      weeks[week] = { start: currentWeekStart, end: currentWeekEnd };
+    }
+
+    current.setDate(current.getDate() + 1);
+  }
+
+  return weeks;
+};
+
+export const getWeekInfo = (dateStr: string) => {
+  const d = new Date(dateStr);
+  const year = d.getFullYear();
+  const month = d.getMonth();
+  const weeks = getMonthWeeks(year, month);
+
+  const current = new Date(year, month, 1);
+  let targetWeek = 1;
+  let seenValidDay = false;
+
+  while (current <= d) {
+    if (!isWeekend(current)) {
+      const day = current.getDay();
+      if (day === 1 && current.getDate() !== 1 && seenValidDay) {
+        targetWeek++;
+      }
+      seenValidDay = true;
+    }
+    current.setDate(current.getDate() + 1);
+  }
+
+  return {
+    week: targetWeek,
+    start: weeks[targetWeek]?.start,
+    end: weeks[targetWeek]?.end,
+  };
+};
+
+export const getWeekKey = (dateStr: string): string => {
+  const d = new Date(dateStr);
+  const month = format(d, "yyyy-MM");
+
+  const { week, start, end } = getWeekInfo(dateStr);
+
+  if (!start || !end) return "";
+
+  const range = `${format(start, "d")}-${format(end, "d MMM")}`;
+
+  return `${month}-W${week}|${range}`;
+};
+
+export const getPerformancePeriodKey = (
+  dateStr: string,
+  timeFrame: TimeFrame,
+): string => {
+  switch (timeFrame) {
+    case TimeFrame.DAILY:
+      return dateStr;
+    case TimeFrame.WEEKLY:
+      return getWeekKey(dateStr);
+    case TimeFrame.MONTHLY:
+      return format(startOfMonth(new Date(dateStr)), "yyyy-MM-dd");
+    case TimeFrame.YTD:
+    case TimeFrame.YEARLY:
+      return dateStr.substring(0, 4);
+    default:
+      return dateStr;
+  }
+};
+
+export function getPeriodTimestamp(
+  period: string,
+  timeFrame: TimeFrame,
+): number {
+  if (timeFrame === TimeFrame.WEEKLY) {
+    const [yearMonth, weekPart] = period.split("-W");
+    if (!weekPart) return new Date(period).getTime();
+    const [weekString] = weekPart.split("|");
+
+    return new Date(`${yearMonth}-01`).getTime() + Number(weekString) * 1000;
+  }
+
+  if (timeFrame === TimeFrame.YTD || timeFrame === TimeFrame.YEARLY) {
+    return new Date(Number(period), 0, 1).getTime();
+  }
+
+  return new Date(period).getTime();
+}
+
+// --- Usage: Top Performers & Category Leaderboard ---
 
 interface FormatPerformancePeriodOptions {
   period: string;
@@ -25,13 +150,10 @@ export function formatPerformancePeriod({
 
   if (timeFrame === TimeFrame.WEEKLY && period.includes("-W")) {
     const [yearMonth, weekPart] = period.split("-W");
-
     const [week, range] = weekPart.split("|");
-
     const [year, month] = yearMonth.split("-");
 
     const date = new Date(Number(year), Number(month) - 1);
-
     const monthName = safeFormatDate(date, "MMM");
 
     return `${weekLabel} ${week} ${monthName} (${range}), ${year}`;
@@ -48,9 +170,9 @@ export function formatPerformancePeriod({
   return period;
 }
 
-// Usage: Performance Analytics
+// --- Usage: Performance Analytics Table & Filter Options ---
 
-interface PeriodTranslations {
+export interface PeriodTranslations {
   week: string;
 }
 
@@ -65,21 +187,6 @@ export interface PerformancePeriodColumn {
   subLabel?: string;
 }
 
-function getPeriodTimestamp(period: string, timeFrame: TimeFrame): number {
-  if (timeFrame === TimeFrame.WEEKLY) {
-    const [yearMonth, weekPart] = period.split("-W");
-    const [weekString] = weekPart.split("|");
-
-    return new Date(`${yearMonth}-01`).getTime() + Number(weekString) * 1000;
-  }
-
-  if (timeFrame === TimeFrame.YTD || timeFrame === TimeFrame.YEARLY) {
-    return new Date(Number(period), 0, 1).getTime();
-  }
-
-  return new Date(period).getTime();
-}
-
 export function getPeriodOptionLabel(
   period: string,
   timeFrame: TimeFrame,
@@ -87,11 +194,11 @@ export function getPeriodOptionLabel(
 ): string {
   if (timeFrame === TimeFrame.WEEKLY) {
     const [yearMonth, weekPart] = period.split("-W");
+    if (!weekPart) return period;
     const [weekString, range] = weekPart.split("|");
     const [year, month] = yearMonth.split("-");
 
     const date = new Date(Number(year), Number(month) - 1);
-
     const monthName = safeFormatDate(date, "MMM");
 
     return `${translations.week} ${weekString} ${monthName} (${range})`;
@@ -175,7 +282,6 @@ export function getPeriodRangeOptions(
   translations: PeriodTranslations,
 ) {
   const effectiveStartPeriod = startPeriod || availablePeriods[0] || "";
-
   const effectiveEndPeriod =
     endPeriod || availablePeriods[availablePeriods.length - 1] || "";
 

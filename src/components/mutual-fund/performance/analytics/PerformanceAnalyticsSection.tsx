@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import { useTranslations } from "next-intl";
 import PerformanceTable from "./PerformanceTable";
 import PerformanceInformationSection from "../PerformanceInformationSection";
@@ -10,54 +11,18 @@ import {
   getPerformancePeriodColumns,
   getPeriodRangeOptions,
 } from "@/lib/mutual-fund/performance/period";
-import { PerformanceData } from "@/types/mutual-fund/performance";
+import { usePerformanceAnalytics } from "@/hooks/mutual-fund/performance/usePerformanceAnalytics";
 import { Button } from "@/components/ui/button";
 import { LoaderCircle, SortAsc, SortDesc } from "lucide-react";
 
 interface PerformanceAnalyticsSectionProps {
-  data: PerformanceData;
-  timePeriods: string[];
-  availablePeriods: string[];
-  loading: boolean;
-  fetching: boolean;
   viewMode: TimeFrame;
-  sortOrder: SortOrder;
-  onChangeSortOrder: (sortOrder: SortOrder) => void;
-  getCellColor: (
-    val: number | undefined,
-    catName: string,
-    timeKey: string,
-  ) => string;
-  hasMoreOlder: boolean;
-  hasLoadedOlder: boolean;
-  isRangeMode: boolean;
-  selectedStartPeriod: string;
-  selectedEndPeriod: string;
-  loadMorePeriods: () => void;
-  resetToLatestPeriods: () => void;
-  setStartPeriod: (period: string) => void;
-  setEndPeriod: (period: string) => void;
+  categoryId?: string;
 }
 
 const PerformanceAnalyticsSection = ({
-  data,
-  timePeriods,
-  availablePeriods,
-  loading,
-  fetching,
   viewMode,
-  sortOrder,
-  onChangeSortOrder,
-  getCellColor,
-  hasMoreOlder,
-  hasLoadedOlder,
-  isRangeMode,
-  selectedStartPeriod,
-  selectedEndPeriod,
-  loadMorePeriods,
-  resetToLatestPeriods,
-  setStartPeriod,
-  setEndPeriod,
+  categoryId,
 }: PerformanceAnalyticsSectionProps) => {
   const tPerformance = useTranslations("public.mutualFund.performance");
   const tPerformanceAnalytics = useTranslations(
@@ -67,6 +32,29 @@ const PerformanceAnalyticsSection = ({
     "public.mutualFund.performance.timeframe.weekly",
   );
   const tCommon = useTranslations("common");
+
+  const [sortOrder, setSortOrder] = useState<SortOrder>("desc");
+
+  const {
+    data,
+    timePeriods,
+    availablePeriods,
+    categoryStats,
+    loading,
+    fetching,
+    hasMoreOlder,
+    hasLoadedOlder,
+    isRangeMode,
+    selectedStartPeriod,
+    selectedEndPeriod,
+    loadMorePeriods,
+    resetToLatestPeriods,
+    setStartPeriod,
+    setEndPeriod,
+  } = usePerformanceAnalytics({
+    timeFrame: viewMode,
+    categoryId,
+  });
 
   const periodTranslations = {
     week: tPerformanceTfWeekly("week"),
@@ -98,7 +86,7 @@ const PerformanceAnalyticsSection = ({
           <Button
             variant="outline"
             onClick={() =>
-              onChangeSortOrder(sortOrder === "asc" ? "desc" : "asc")
+              setSortOrder((prev) => (prev === "asc" ? "desc" : "asc"))
             }
             className="inline-flex items-center justify-start gap-2 px-4 py-2 text-sm font-medium"
             title="Toggle Sort Order"
@@ -174,7 +162,7 @@ const PerformanceAnalyticsSection = ({
             <PerformanceTable
               data={data}
               columns={columns}
-              getCellColor={getCellColor}
+              categoryStats={categoryStats}
               noDataMessage={tPerformance("noData")}
             />
           </div>

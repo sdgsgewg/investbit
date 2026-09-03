@@ -9,7 +9,7 @@ import {
   deleteItemService,
   getItemDetailService,
   updateItemService,
-} from "@/lib/services/reksadana/items.service";
+} from "@/lib/services/mutual-fund/items.service";
 
 type ItemRouteContext = {
   params: Promise<{ id: string }>;

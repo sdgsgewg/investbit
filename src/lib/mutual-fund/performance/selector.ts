@@ -1,33 +1,175 @@
-import { PerformanceData } from "@/types/mutual-fund/performance";
+import {
+  CategoryLeaderboardResponse,
+  PerformanceData,
+  PerformanceWinner,
+  RankedPerformanceCategory,
+  RankedPerformanceItem,
+  TopPerformersResponse,
+} from "@/types/mutual-fund/performance";
+import { RecordListItem } from "@/types/mutual-fund/records";
+import { TimeFrame } from "@/enums/TimeFrame";
+import { getPerformancePeriodKey } from "./period";
 
-export interface PerformanceWinner {
-  name: string;
-  category: string;
-  yieldValue: number;
+// Re-export response interfaces for backward compatibility
+export type { PerformanceWinner, RankedPerformanceItem, RankedPerformanceCategory };
+export type TopPerformersResult = TopPerformersResponse;
+
+/**
+ * Computes top performers directly from lightweight raw records in the latest period.
+ */
+export function computeTopPerformersFromRecords(
+  records: RecordListItem[],
+  timeFrame: TimeFrame = TimeFrame.WEEKLY,
+  latestDate: string | null,
+): TopPerformersResponse {
+  if (!latestDate || records.length === 0) {
+    return {
+      latestPeriod: "",
+      overallBest: null,
+      categoryBests: [],
+    };
+  }
+
+  const latestPeriod = getPerformancePeriodKey(latestDate, timeFrame);
+
+  const categoryMap: Record<
+    string,
+    Record<string, { itemName: string; yieldValue: number }>
+  > = {};
+
+  records.forEach((record) => {
+    const item = record.item;
+    if (!item || !item.category) return;
+    const catName = item.category.name;
+    if (!categoryMap[catName]) {
+      categoryMap[catName] = {};
+    }
+    const val =
+      timeFrame === TimeFrame.YTD
+        ? (record.yieldYtd ?? 0)
+        : (record.yield1d ?? 0);
+
+    if (!categoryMap[catName][item.id]) {
+      categoryMap[catName][item.id] = {
+        itemName: item.name,
+        yieldValue: val,
+      };
+    } else if (timeFrame !== TimeFrame.YTD) {
+      categoryMap[catName][item.id].yieldValue += val;
+    }
+  });
+
+  let overallBest: PerformanceWinner | null = null;
+  const categoryBests: PerformanceWinner[] = [];
+
+  Object.entries(categoryMap).forEach(([catName, items]) => {
+    let bestInCat: PerformanceWinner | null = null;
+    Object.values(items).forEach(({ itemName, yieldValue }) => {
+      const winner: PerformanceWinner = {
+        name: itemName,
+        category: catName,
+        yieldValue,
+      };
+      if (!bestInCat || yieldValue > bestInCat.yieldValue) {
+        bestInCat = winner;
+      }
+      if (!overallBest || yieldValue > overallBest.yieldValue) {
+        overallBest = winner;
+      }
+    });
+    if (bestInCat) {
+      categoryBests.push(bestInCat);
+    }
+  });
+
+  return {
+    latestPeriod,
+    overallBest,
+    categoryBests,
+  };
 }
 
-export interface TopPerformersResult {
-  latestPeriod: string;
-  overallBest: PerformanceWinner | null;
-  categoryBests: PerformanceWinner[];
+/**
+ * Computes leaderboard directly from lightweight raw records in the latest period.
+ */
+export function computeCategoryLeaderboardFromRecords(
+  records: RecordListItem[],
+  timeFrame: TimeFrame = TimeFrame.WEEKLY,
+  latestDate: string | null,
+): CategoryLeaderboardResponse {
+  if (!latestDate || records.length === 0) {
+    return {
+      latestPeriod: "",
+      rankedCategories: [],
+    };
+  }
+
+  const latestPeriod = getPerformancePeriodKey(latestDate, timeFrame);
+
+  const categoryMap: Record<
+    string,
+    Record<string, { itemName: string; yieldValue: number }>
+  > = {};
+
+  records.forEach((record) => {
+    const item = record.item;
+    if (!item || !item.category) return;
+    const catName = item.category.name;
+    if (!categoryMap[catName]) {
+      categoryMap[catName] = {};
+    }
+    const val =
+      timeFrame === TimeFrame.YTD
+        ? (record.yieldYtd ?? 0)
+        : (record.yield1d ?? 0);
+
+    if (!categoryMap[catName][item.id]) {
+      categoryMap[catName][item.id] = {
+        itemName: item.name,
+        yieldValue: val,
+      };
+    } else if (timeFrame !== TimeFrame.YTD) {
+      categoryMap[catName][item.id].yieldValue += val;
+    }
+  });
+
+  const rankedCategories: RankedPerformanceCategory[] = Object.entries(
+    categoryMap,
+  )
+    .sort(([a], [b]) => a.localeCompare(b))
+    .map(([catName, items]) => {
+      const rankedItems = Object.entries(items)
+        .map(([itemId, { itemName, yieldValue }]) => ({
+          itemId,
+          itemName,
+          yieldValue,
+        }))
+        .sort((a, b) => b.yieldValue - a.yieldValue)
+        .map((item, idx) => ({
+          ...item,
+          rank: idx + 1,
+        }));
+
+      return {
+        categoryName: catName,
+        rankedItems,
+      };
+    })
+    .filter((c) => c.rankedItems.length > 0);
+
+  return {
+    latestPeriod,
+    rankedCategories,
+  };
 }
 
-export interface RankedPerformanceItem {
-  itemId: string;
-  itemName: string;
-  yieldValue: number;
-  rank: number;
-}
-
-export interface RankedPerformanceCategory {
-  categoryName: string;
-  rankedItems: RankedPerformanceItem[];
-}
-
+/**
+ * Legacy matrix selector for Top Performers (from PerformanceData)
+ */
 export function getTopPerformers(
   data: PerformanceData,
   timePeriods: string[],
-): TopPerformersResult | null {
+): TopPerformersResponse | null {
   const latestPeriod = timePeriods.at(-1);
 
   if (!latestPeriod || data.length === 0) {
@@ -35,7 +177,6 @@ export function getTopPerformers(
   }
 
   let overallBest: PerformanceWinner | null = null;
-
   const categoryBests: PerformanceWinner[] = [];
 
   for (const category of data) {
@@ -75,6 +216,9 @@ export function getTopPerformers(
   };
 }
 
+/**
+ * Legacy matrix selector for Category Leaderboard (from PerformanceData)
+ */
 export function getCategoryLeaderboard(
   data: PerformanceData,
   timePeriods: string[],

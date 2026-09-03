@@ -8,7 +8,7 @@ import { authorizeManageContent } from "@/lib/auth/api-authorization";
 import {
   createItemService,
   getItemsService,
-} from "@/lib/services/reksadana/items.service";
+} from "@/lib/services/mutual-fund/items.service";
 import { ItemFilter } from "@/types/mutual-fund/items";
 
 export async function GET(request: Request) {

@@ -1,5 +1,5 @@
 import { errorResponse, successResponse } from "@/lib/api/response";
-import { getPerformanceService } from "@/lib/services/mutual-fund/performance.service";
+import { getCategoryLeaderboardService } from "@/lib/services/mutual-fund/leaderboard.service";
 
 export async function GET(request: Request) {
   try {
@@ -8,12 +8,9 @@ export async function GET(request: Request) {
     const query = {
       timeFrame: searchParams.get("timeFrame") || "weekly",
       categoryId: searchParams.get("categoryId") || undefined,
-      startPeriod: searchParams.get("startPeriod") || undefined,
-      endPeriod: searchParams.get("endPeriod") || undefined,
-      periodLimit: searchParams.get("periodLimit") || undefined,
     };
 
-    const data = await getPerformanceService(query);
+    const data = await getCategoryLeaderboardService(query);
 
     return successResponse(data);
   } catch (error: unknown) {

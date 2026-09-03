@@ -9,7 +9,7 @@ import {
   deleteCategoryService,
   getCategoryDetailService,
   updateCategoryService,
-} from "@/lib/services/reksadana/categories.service";
+} from "@/lib/services/mutual-fund/categories.service";
 type CategoryRouteContext = {
   params: Promise<{ id: string }>;
 };

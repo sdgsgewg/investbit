@@ -1,7 +1,11 @@
 import React from "react";
 import { useTranslations } from "next-intl";
 import TableWrapper from "@/components/wrappers/TableWrapper";
-import { PerformanceData } from "@/types/mutual-fund/performance";
+import {
+  CategoryStats,
+  PerformanceData,
+} from "@/types/mutual-fund/performance";
+import { getPerformanceCellColor } from "@/lib/mutual-fund/performance/colors";
 
 interface ColumnHeader {
   key: string;
@@ -12,18 +16,14 @@ interface ColumnHeader {
 interface PerformanceTableProps {
   data: PerformanceData;
   columns: ColumnHeader[];
-  getCellColor: (
-    val: number | undefined,
-    catName: string,
-    timeKey: string,
-  ) => string;
+  categoryStats?: CategoryStats;
   noDataMessage?: string;
 }
 
 const PerformanceTable: React.FC<PerformanceTableProps> = ({
   data,
   columns,
-  getCellColor,
+  categoryStats,
   noDataMessage,
 }) => {
   const tPerformance = useTranslations("public.mutualFund.performance");
@@ -87,10 +87,11 @@ const PerformanceTable: React.FC<PerformanceTableProps> = ({
                   </td>
                   {columns.map((col) => {
                     const yieldVal = item.yields[col.key];
-                    const bgColor = getCellColor(
+                    const bgColor = getPerformanceCellColor(
                       yieldVal,
                       category.categoryName,
                       col.key,
+                      categoryStats,
                     );
 
                     return (

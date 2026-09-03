@@ -1,7 +1,7 @@
 import {
   upsertRecordsService,
   getRecordsService,
-} from "@/lib/services/reksadana/records.service";
+} from "@/lib/services/mutual-fund/records.service";
 import {
   createdResponse,
   errorResponse,

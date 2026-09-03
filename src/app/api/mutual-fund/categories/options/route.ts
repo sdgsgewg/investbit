@@ -1,5 +1,5 @@
 import { errorResponse, successResponse } from "@/lib/api/response";
-import { getCategoryOptionsService } from "@/lib/services/reksadana/categories.service";
+import { getCategoryOptionsService } from "@/lib/services/mutual-fund/categories.service";
 
 export async function GET() {
   try {

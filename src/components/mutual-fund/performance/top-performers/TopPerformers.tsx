@@ -1,27 +1,24 @@
-import React, { useMemo } from "react";
+import React from "react";
 import { Trophy, Award, TrendingUp } from "lucide-react";
 import { motion } from "framer-motion";
 import { useTranslations } from "next-intl";
 import TopPerformersSkeleton from "./TopPerformersSkeleton";
 import { TimeFrame } from "@/enums/TimeFrame";
-import { getTopPerformers } from "@/lib/mutual-fund/performance/selector";
 import { formatPerformancePeriod } from "@/lib/mutual-fund/performance/period";
-import { PerformanceData } from "@/types/mutual-fund/performance";
+import {
+  formatSignedYield,
+  getTopPerformerYieldClassName,
+} from "@/lib/mutual-fund/performance/colors";
+import { useTopPerformers } from "@/hooks/mutual-fund/performance/useTopPerformers";
 
 interface TopPerformersProps {
-  data: PerformanceData;
-  timePeriods: string[];
-  loading: boolean;
-  fetching: boolean;
   viewMode: TimeFrame;
+  categoryId?: string;
 }
 
 const TopPerformers: React.FC<TopPerformersProps> = ({
-  data,
-  timePeriods,
-  loading,
-  fetching,
   viewMode,
+  categoryId,
 }) => {
   const tTopPerformers = useTranslations(
     "public.mutualFund.performance.topPerformers",
@@ -30,32 +27,30 @@ const TopPerformers: React.FC<TopPerformersProps> = ({
     "public.mutualFund.performance.timeframe.weekly",
   );
 
-  // Compute winners
-  const winners = useMemo(
-    () => getTopPerformers(data, timePeriods),
-    [data, timePeriods],
-  );
+  const { overallBest, categoryBests, latestPeriod, loading, fetching } =
+    useTopPerformers({
+      timeFrame: viewMode,
+      categoryId,
+    });
 
   // 1. First load → full skeleton
   if (loading) {
     return <TopPerformersSkeleton />;
   }
 
-  // 2. While refetching → tetap tampil skeleton (lebih clean)
+  // 2. While refetching → tetap tampil skeleton
   if (fetching) {
     return <TopPerformersSkeleton />;
   }
 
-  // 3. No data beneran
-  if (!winners || !winners.overallBest) {
+  // 3. No data
+  if (!overallBest) {
     return (
       <div className="text-center py-10 text-muted-foreground">
         {tTopPerformers("noData")}
       </div>
     );
   }
-
-  const { overallBest, categoryBests, latestPeriod } = winners;
 
   const periodDisplay = formatPerformancePeriod({
     period: latestPeriod,
@@ -69,20 +64,6 @@ const TopPerformers: React.FC<TopPerformersProps> = ({
     if (viewMode === TimeFrame.MONTHLY) return tTopPerformers("labels.monthly");
     if (viewMode === TimeFrame.YTD) return tTopPerformers("labels.ytd");
     return tTopPerformers("labels.yearly");
-  };
-
-  const getBestYieldClassName = (num: number | string): string => {
-    const modifiedNumber = Number(num);
-    return modifiedNumber >= 0
-      ? "text-green-600 dark:text-green-400 bg-green-50 dark:bg-green-900/20"
-      : "text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-900/20";
-  };
-
-  const getModifiedBestYield = (num: number | string): string => {
-    const modifiedNumber = Number(num);
-    return modifiedNumber >= 0
-      ? `+${modifiedNumber.toFixed(2)}`
-      : `${modifiedNumber.toFixed(2)}`;
   };
 
   return (
@@ -130,7 +111,7 @@ const TopPerformers: React.FC<TopPerformersProps> = ({
 
             <div className="mt-6 flex items-baseline gap-1">
               <span className="text-2xl sm:text-3xl font-black text-green-600 dark:text-green-400">
-                {getModifiedBestYield(overallBest.yieldValue.toFixed(2))}
+                {formatSignedYield(overallBest.yieldValue.toFixed(2))}
               </span>
               <span className="text-green-600 dark:text-green-500 font-semibold">
                 %
@@ -163,9 +144,9 @@ const TopPerformers: React.FC<TopPerformersProps> = ({
 
               <div className="mt-3 flex justify-end">
                 <span
-                  className={`font-bold ${getBestYieldClassName(catBest.yieldValue.toFixed(2))} px-2 py-1 rounded-md text-sm`}
+                  className={`font-bold ${getTopPerformerYieldClassName(catBest.yieldValue.toFixed(2))} px-2 py-1 rounded-md text-sm`}
                 >
-                  {getModifiedBestYield(catBest.yieldValue.toFixed(2))}%
+                  {formatSignedYield(catBest.yieldValue.toFixed(2))}%
                 </span>
               </div>
             </motion.div>
