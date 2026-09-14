@@ -45,10 +45,10 @@ const InputTable = ({
             return (
               <React.Fragment key={category.id}>
                 {/* Category Header */}
-                <tr className="bg-zinc-50 dark:bg-zinc-950 border-t border-b border-zinc-200 dark:border-zinc-800">
+                <tr className="sticky top-11.5 z-10 bg-zinc-50  dark:bg-zinc-950 border-t border-b border-zinc-200 dark:border-zinc-800">
                   <td
                     colSpan={3}
-                    className="py-2 px-4 text-sm sm:text-base font-bold"
+                    className="py-2 px-4 text-xs sm:text-sm md:text-base font-bold"
                   >
                     {category.name}
                   </td>
@@ -61,10 +61,10 @@ const InputTable = ({
                       key={item.id}
                       className="border-b border-zinc-100 dark:border-zinc-800 last:border-0 hover:bg-zinc-50 dark:hover:bg-zinc-800/50"
                     >
-                      <td className="py-3 px-4 text-sm sm:text-base">
+                      <td className="py-3 px-4 text-xs sm:text-sm md:text-base">
                         {item.name}
                       </td>
-                      <td className="py-2 px-2 text-sm sm:text-base">
+                      <td className="py-2 px-2 text-xs sm:text-sm md:text-base">
                         <InputNumber
                           value={inputs[item.id]?.yield_1d}
                           onChange={(val) =>
@@ -72,7 +72,7 @@ const InputTable = ({
                           }
                         />
                       </td>
-                      <td className="py-2 px-2 text-sm sm:text-base">
+                      <td className="py-2 px-2 text-xs sm:text-sm md:text-base">
                         <InputNumber
                           value={inputs[item.id]?.yield_ytd}
                           onChange={(val) =>

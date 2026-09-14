@@ -12,7 +12,7 @@ const TableWrapper = ({ headerChildren, bodyChildren }: TableWrapperProps) => {
         <thead className="sticky top-0 z-20 bg-zinc-100 dark:bg-zinc-800 border-b border-zinc-200 dark:border-zinc-700 shadow-sm">
           <tr>{headerChildren}</tr>
         </thead>
-        <tbody>{bodyChildren}</tbody>
+        <tbody className="relative">{bodyChildren}</tbody>
       </table>
     </div>
   );
