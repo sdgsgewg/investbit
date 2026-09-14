@@ -50,11 +50,11 @@ export const DatePicker: React.FC<DatePickerProps> = ({
           <Button
             variant="outline"
             className={cn(
-              "w-40 justify-start text-left font-normal",
+              "w-34 flex items-center justify-start text-left text-sm font-normal",
               !value && "text-muted-foreground",
             )}
           >
-            <CalendarIcon className="mr-1 h-4 w-4" />
+            <CalendarIcon />
             {value ? format(value, formatStr) : placeholder}
           </Button>
         </PopoverTrigger>

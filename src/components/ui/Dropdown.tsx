@@ -1,11 +1,11 @@
 "use client";
 
-import * as React from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Check, ChevronDown } from "lucide-react";
 import { useClickOutside } from "@/hooks/uceClickOutside";
 import { Option } from "@/types/option";
 import { Label } from "../forms/fields";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 interface DropdownProps {
   label?: string;
@@ -29,8 +29,40 @@ export default function Dropdown({
   placeholder = "Select...",
   className = "",
 }: DropdownProps) {
-  const [open, setOpen] = React.useState(false);
-  const ref = React.useRef<HTMLDivElement>(null);
+  const [open, setOpen] = useState(false);
+  const [placement, setPlacement] = useState<"top" | "bottom">("bottom");
+
+  const ref = useRef<HTMLDivElement>(null);
+
+  const updatePlacement = useCallback(() => {
+    if (!ref.current) return;
+
+    const rect = ref.current.getBoundingClientRect();
+
+    const dropdownHeight = Math.min(options.length * 40, 320);
+    const spaceBelow = window.innerHeight - rect.bottom;
+    const spaceAbove = rect.top;
+
+    if (spaceBelow < dropdownHeight && spaceAbove > spaceBelow) {
+      setPlacement("top");
+    } else {
+      setPlacement("bottom");
+    }
+  }, [options.length]);
+
+  useEffect(() => {
+    if (!open) return;
+
+    updatePlacement();
+
+    window.addEventListener("resize", updatePlacement);
+    window.addEventListener("scroll", updatePlacement, true);
+
+    return () => {
+      window.removeEventListener("resize", updatePlacement);
+      window.removeEventListener("scroll", updatePlacement, true);
+    };
+  }, [open, updatePlacement]);
 
   useClickOutside(ref, () => setOpen(false));
 
@@ -57,11 +89,25 @@ export default function Dropdown({
       <AnimatePresence>
         {open && (
           <motion.div
-            initial={{ opacity: 0, y: -8, scale: 0.98 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: -8, scale: 0.98 }}
+            initial={{
+              opacity: 0,
+              y: placement === "bottom" ? -8 : 8,
+              scale: 0.98,
+            }}
+            animate={{
+              opacity: 1,
+              y: 0,
+              scale: 1,
+            }}
+            exit={{
+              opacity: 0,
+              y: placement === "bottom" ? -8 : 8,
+              scale: 0.98,
+            }}
             transition={{ duration: 0.15 }}
-            className="absolute z-50 mt-2 w-full max-h-80 rounded-2xl bg-white dark:bg-zinc-900 shadow-lg border border-zinc-200 dark:border-zinc-700 overflow-y-auto"
+            className={`absolute z-50 w-full max-h-80 rounded-2xl bg-white dark:bg-zinc-900 shadow-lg border border-zinc-200 dark:border-zinc-700 overflow-y-auto ${
+              placement === "bottom" ? "top-full mt-2" : "bottom-full mb-2"
+            }`}
           >
             {options.map((opt) => {
               const isActive = opt.value === value;

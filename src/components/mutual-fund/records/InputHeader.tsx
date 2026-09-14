@@ -82,8 +82,9 @@ const InputHeader = ({
       <div className="flex items-start md:items-end">
         <Button
           variant="default"
-          size="lg"
+          size="default"
           onClick={onSave}
+          className="text-sm md:text-base"
           disabled={saving || !canSave}
         >
           {saving ? tRecords("form.saving") : tRecords("form.save")}

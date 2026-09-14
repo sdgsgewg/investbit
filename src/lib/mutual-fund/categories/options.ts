@@ -26,7 +26,7 @@ export function getCategoryOptions({
   }));
 
   if (showAllCategoryOption && tCommonFilter) {
-    options.push({
+    options.unshift({
       label: tCommonFilter("allCategory"),
       value: "",
     });
