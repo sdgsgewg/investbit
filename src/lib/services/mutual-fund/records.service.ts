@@ -6,26 +6,28 @@ import {
   recordsQuerySchema,
   upsertRecordSchema,
 } from "../../validations/mutual-fund/records.schema";
+import { getTodayInTimezone } from "@/lib/utils/date";
 
 export async function getRecordsService(query: unknown) {
   // Validate query params
   const parsed = recordsQuerySchema.parse(query);
 
-  return getRecordsRepo(parsed);
+  return await getRecordsRepo(parsed);
 }
 
-export async function upsertRecordsService(input: unknown) {
+export async function upsertRecordsService(input: unknown, timezone: string) {
   // Validate
   const parsed = upsertRecordSchema.parse(input);
 
   // Business rule example (optional)
   // e.g. prevent future date
-  const today = new Date().toISOString().split("T")[0];
+  const today = getTodayInTimezone(timezone);
+
   parsed.forEach((r) => {
     if (r.date > today) {
       throw new Error(`Date ${r.date} cannot be in the future`);
     }
   });
 
-  return upsertRecordsRepo(parsed);
+  return await upsertRecordsRepo(parsed);
 }

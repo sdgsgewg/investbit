@@ -32,7 +32,10 @@ export async function POST(request: Request) {
     await authorizeManageContent();
 
     const body = await request.json();
-    const data = await upsertRecordsService(body);
+
+    const timezone = request.headers.get("x-timezone") ?? "UTC";
+
+    const data = await upsertRecordsService(body, timezone);
 
     return createdResponse(data);
   } catch (error: unknown) {

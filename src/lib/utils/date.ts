@@ -33,3 +33,15 @@ export const getLastWorkingDay = (date = new Date()) => {
 
   return d;
 };
+
+export function getTodayInTimezone(timezone: string): string {
+  try {
+    return new Intl.DateTimeFormat("en-CA", {
+      timeZone: timezone,
+    }).format(new Date());
+  } catch {
+    return new Intl.DateTimeFormat("en-CA", {
+      timeZone: "UTC",
+    }).format(new Date());
+  }
+}
