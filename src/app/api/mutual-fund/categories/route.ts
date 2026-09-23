@@ -1,4 +1,4 @@
-import { getCrudQuery } from "@/lib/api/query";
+import { getQuery } from "@/lib/api/query";
 import {
   createdResponse,
   errorResponse,
@@ -13,7 +13,7 @@ import { CategoryFilter } from "@/types/mutual-fund/categories";
 
 export async function GET(request: Request) {
   try {
-    const query = getCrudQuery<CategoryFilter>(request);
+    const query = getQuery<CategoryFilter>(request);
 
     const data = await getCategoriesService(query);
 

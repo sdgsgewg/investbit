@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { queryKeys } from "@/lib/react-query/queryKeys";
-import { fetchTopPerformers } from "@/lib/api/mutual-fund/top-performers";
+import { fetchTopPerformers } from "@/lib/api/mutual-fund/performance/top-performers";
 import { queryConfig } from "@/lib/react-query/config/queryConfig";
 import {
   PerformanceWinner,

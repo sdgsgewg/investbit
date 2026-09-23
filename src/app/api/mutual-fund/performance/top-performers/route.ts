@@ -1,14 +1,14 @@
+import { getQuery } from "@/lib/api/query";
 import { errorResponse, successResponse } from "@/lib/api/response";
 import { getTopPerformersService } from "@/lib/services/mutual-fund/top-performers.service";
+import { TopPerformersFilter } from "@/types/mutual-fund/performance";
 
 export async function GET(request: Request) {
   try {
-    const { searchParams } = new URL(request.url);
-
-    const query = {
-      timeFrame: searchParams.get("timeFrame") || "weekly",
-      categoryId: searchParams.get("categoryId") || undefined,
-    };
+    const query = getQuery<TopPerformersFilter>(request, [
+      "timeFrame",
+      "categoryId",
+    ]);
 
     const data = await getTopPerformersService(query);
 

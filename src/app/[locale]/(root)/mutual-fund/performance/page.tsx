@@ -1,15 +1,18 @@
 "use client";
 
 import React, { useState } from "react";
-import PerformanceFilterSection from "@/components/mutual-fund/performance/filter/PerformanceFilterSection";
-import PerformanceSectionWrapper from "@/components/mutual-fund/performance/PerformanceSectionWrapper";
-import TopPerformers from "@/components/mutual-fund/performance/top-performers/TopPerformers";
-import CategoryLeaderboard from "@/components/mutual-fund/performance/leaderboard/CategoryLeaderboard";
-import PerformanceAnalyticsSection from "@/components/mutual-fund/performance/analytics/PerformanceAnalyticsSection";
+
 import PageHeader from "@/components/shared/PageHeader";
 import { useTranslations } from "next-intl";
 import { TimeFrame } from "@/enums/TimeFrame";
 import { PerformanceFilter } from "@/types/mutual-fund/performance";
+import {
+  CategoryLeaderboard,
+  PerformanceAnalyticsSection,
+  PerformanceFilterSection,
+  PerformanceSectionWrapper,
+  TopPerformers,
+} from "@/components/mutual-fund/performance";
 
 export default function PerformancePage() {
   const t = useTranslations("public.mutualFund.performance");
@@ -40,10 +43,7 @@ export default function PerformancePage() {
 
       {/* CATEGORY LEADERBOARD SECTION */}
       <PerformanceSectionWrapper>
-        <CategoryLeaderboard
-          viewMode={viewMode}
-          categoryId={form.categoryId}
-        />
+        <CategoryLeaderboard viewMode={viewMode} categoryId={form.categoryId} />
       </PerformanceSectionWrapper>
 
       {/* DETAILED ANALYTICS SECTION */}

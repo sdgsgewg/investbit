@@ -5,7 +5,7 @@ import { CategoryLeaderboardResponse } from "@/types/mutual-fund/performance";
 
 /**
  * Service for fetching and computing Category Leaderboard.
- * Ultra-lightweight: only queries records for the latest period.
+ * Only queries records for the latest period.
  */
 export async function getCategoryLeaderboardService(
   query: unknown,

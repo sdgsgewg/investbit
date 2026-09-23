@@ -5,7 +5,7 @@ import { TopPerformersResponse } from "@/types/mutual-fund/performance";
 
 /**
  * Service for fetching and computing Top Performers.
- * Ultra-lightweight: only queries records for the latest period.
+ * Queries records for the latest period.
  */
 export async function getTopPerformersService(
   query: unknown,

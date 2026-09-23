@@ -86,9 +86,10 @@ const CategoryLeaderboard = ({
             key={category.categoryName}
             className="rounded-2xl border border-zinc-200 bg-zinc-50/80 p-5 dark:border-zinc-800 dark:bg-zinc-900/60"
           >
+            {/* Category */}
             <div className="mb-4 flex items-center justify-between gap-3">
               <div>
-                <h4 className="text-lg font-bold text-zinc-900 dark:text-zinc-100">
+                <h4 className="text-base md:text-lg font-bold text-zinc-900 dark:text-zinc-100">
                   {category.categoryName}
                 </h4>
                 <p className="text-sm text-zinc-500 dark:text-zinc-400">
@@ -99,6 +100,7 @@ const CategoryLeaderboard = ({
               </div>
             </div>
 
+            {/* Items */}
             <div className="max-h-60 overflow-y-auto space-y-2 sm:space-y-3">
               {category.rankedItems.map((item) => (
                 <div
@@ -113,7 +115,7 @@ const CategoryLeaderboard = ({
                     </div>
 
                     <div className="min-w-0">
-                      <p className="text-sm sm:text-base font-semibold text-zinc-900 dark:text-zinc-100">
+                      <p className="text-xs sm:text-sm font-semibold text-zinc-900 dark:text-zinc-100">
                         {item.itemName}
                       </p>
                       <p className="text-xs uppercase tracking-wide text-zinc-500 dark:text-zinc-400">
@@ -123,7 +125,7 @@ const CategoryLeaderboard = ({
                   </div>
 
                   <span
-                    className={`shrink-0 rounded-full px-3 py-1 text-sm font-bold ${getLeaderboardYieldClassName(item.yieldValue, item.rank)}`}
+                    className={`shrink-0 rounded-full px-3 py-1 text-xs sm:text-sm font-bold ${getLeaderboardYieldClassName(item.yieldValue, item.rank)}`}
                   >
                     {formatPercent(item.yieldValue)}
                   </span>

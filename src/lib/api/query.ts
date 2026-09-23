@@ -9,7 +9,7 @@ export function getQueryParams<T extends object>(
   ) as Partial<Record<keyof T, string | undefined>>;
 }
 
-export function getCrudQuery<T extends object>(
+export function getQuery<T extends object>(
   request: Request,
   extraKeys: readonly (keyof T)[] = [],
 ): Partial<Record<keyof T, string | undefined>> {

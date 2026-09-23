@@ -23,7 +23,7 @@ const TopPerformers: React.FC<TopPerformersProps> = ({
   const tTopPerformers = useTranslations(
     "public.mutualFund.performance.topPerformers",
   );
-  const tRecapPerformanceTfWeekly = useTranslations(
+  const tPerformanceTfWeekly = useTranslations(
     "public.mutualFund.performance.timeframe.weekly",
   );
 
@@ -55,7 +55,7 @@ const TopPerformers: React.FC<TopPerformersProps> = ({
   const periodDisplay = formatPerformancePeriod({
     period: latestPeriod,
     timeFrame: viewMode,
-    weekLabel: tRecapPerformanceTfWeekly("week"),
+    weekLabel: tPerformanceTfWeekly("week"),
   });
 
   const getLabel = () => {

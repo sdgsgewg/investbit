@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { queryKeys } from "@/lib/react-query/queryKeys";
-import { fetchCategoryLeaderboard } from "@/lib/api/mutual-fund/leaderboard";
+import { fetchCategoryLeaderboard } from "@/lib/api/mutual-fund/performance/leaderboard";
 import { queryConfig } from "@/lib/react-query/config/queryConfig";
 import {
   CategoryLeaderboardResponse,

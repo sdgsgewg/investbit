@@ -1,20 +1,20 @@
 import { z } from "zod";
-import { TimeFrameSchema } from "../enums.schema";
+import { timeFrameSchema } from "../enums.schema";
 
 const uuid = z.string().uuid();
 
 export const topPerformersQuerySchema = z.object({
-  timeFrame: TimeFrameSchema.optional(),
+  timeFrame: timeFrameSchema.optional(),
   categoryId: uuid.optional(),
 });
 
 export const categoryLeaderboardQuerySchema = z.object({
-  timeFrame: TimeFrameSchema.optional(),
+  timeFrame: timeFrameSchema.optional(),
   categoryId: uuid.optional(),
 });
 
 export const performanceAnalyticsQuerySchema = z.object({
-  timeFrame: TimeFrameSchema.optional(),
+  timeFrame: timeFrameSchema.optional(),
   categoryId: uuid.optional(),
   startPeriod: z.string().min(1).optional(),
   endPeriod: z.string().min(1).optional(),

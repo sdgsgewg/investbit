@@ -2,7 +2,7 @@ import {
   PerformanceAnalyticsQuery,
   PerformanceAnalyticsResponse,
 } from "@/types/mutual-fund/performance";
-import { apiClient } from "../client";
+import { apiClient } from "../../client";
 import { ApiResponse } from "@/types/api";
 
 const baseRoute = "/mutual-fund/performance/analytics";

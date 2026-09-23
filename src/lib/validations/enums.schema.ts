@@ -13,7 +13,7 @@ export const itemSortBySchema = z.enum(["name", "totalAum"]);
 
 // Performance
 
-export const TimeFrameSchema = z.enum(TimeFrame).default(TimeFrame.WEEKLY);
+export const timeFrameSchema = z.enum(TimeFrame).default(TimeFrame.WEEKLY);
 
 // Filter, Sort, Pagination
 export const sortOrderSchema = z.enum(["asc", "desc"]);

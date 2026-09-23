@@ -1,14 +1,14 @@
+import { getQuery } from "@/lib/api/query";
 import { errorResponse, successResponse } from "@/lib/api/response";
 import { getCategoryLeaderboardService } from "@/lib/services/mutual-fund/leaderboard.service";
+import { CategoryLeaderboardFilter } from "@/types/mutual-fund/performance";
 
 export async function GET(request: Request) {
   try {
-    const { searchParams } = new URL(request.url);
-
-    const query = {
-      timeFrame: searchParams.get("timeFrame") || "weekly",
-      categoryId: searchParams.get("categoryId") || undefined,
-    };
+    const query = getQuery<CategoryLeaderboardFilter>(request, [
+      "timeFrame",
+      "categoryId",
+    ]);
 
     const data = await getCategoryLeaderboardService(query);
 

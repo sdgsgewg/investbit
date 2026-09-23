@@ -41,13 +41,13 @@ const PerformanceTable: React.FC<PerformanceTableProps> = ({
           {columns.map((col) => (
             <th
               key={col.key}
-              className="py-3 px-4 text-sm sm:text-base font-semibold text-center whitespace-nowrap min-w-32"
+              className="py-3 px-4 text-sm sm:text-sm md:text-base font-semibold text-center whitespace-nowrap min-w-32"
             >
               {col.label}
               {col.subLabel && (
                 <>
                   <br />
-                  <span className="text-sm font-normal text-zinc-600 dark:text-zinc-400">
+                  <span className="text-xs md:text-sm font-normal text-zinc-600 dark:text-zinc-400">
                     {col.subLabel}
                   </span>
                 </>
@@ -61,9 +61,9 @@ const PerformanceTable: React.FC<PerformanceTableProps> = ({
           {data.map((category) => (
             <React.Fragment key={category.categoryName}>
               {/* Category Header */}
-              <tr className="bg-zinc-50 dark:bg-zinc-950 border-y border-zinc-200 dark:border-zinc-800">
+              <tr className="sticky top-15.5 md:top-17.5 z-50 bg-zinc-50 dark:bg-zinc-950 border-y border-zinc-200 dark:border-zinc-800">
                 {/* Sticky left cell */}
-                <td className="py-2 px-4 text-sm sm:text-base font-bold sticky left-0 z-10 bg-zinc-50 dark:bg-zinc-950 border-r border-zinc-200 dark:border-zinc-700">
+                <td className="py-2 px-4 text-sm md:text-base font-bold sticky left-0 bg-zinc-50 dark:bg-zinc-950 border-r border-zinc-200 dark:border-zinc-700">
                   {category.categoryName}
                 </td>
 
@@ -82,7 +82,7 @@ const PerformanceTable: React.FC<PerformanceTableProps> = ({
                   key={item.itemId}
                   className="border-b border-zinc-100 dark:border-zinc-800 hover:bg-zinc-50 dark:hover:bg-zinc-800/50 group h-16"
                 >
-                  <td className="py-3 px-4 text-sm sm:text-base font-medium sticky left-0 z-10 bg-white dark:bg-zinc-900 group-hover:bg-zinc-50 dark:group-hover:bg-zinc-800 border-r border-zinc-200 dark:border-zinc-700">
+                  <td className="py-3 px-4 text-sm font-medium sticky left-0 z-10 bg-white dark:bg-zinc-900 group-hover:bg-zinc-50 dark:group-hover:bg-zinc-800 border-r border-zinc-200 dark:border-zinc-700">
                     {item.itemName}
                   </td>
                   {columns.map((col) => {
@@ -97,7 +97,7 @@ const PerformanceTable: React.FC<PerformanceTableProps> = ({
                     return (
                       <td
                         key={col.key}
-                        className="py-2 px-4 text-center text-sm sm:text-base font-medium border-x border-zinc-100 dark:border-zinc-800/50"
+                        className="py-2 px-4 text-center text-sm md:text-base font-medium border-x border-zinc-100 dark:border-zinc-800/50"
                         style={{ backgroundColor: bgColor }}
                       >
                         {yieldVal !== undefined ? yieldVal.toFixed(2) : "-"}

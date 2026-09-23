@@ -2,8 +2,8 @@ import {
   CategoryLeaderboardQuery,
   CategoryLeaderboardResponse,
 } from "@/types/mutual-fund/performance";
-import { apiClient } from "../client";
 import { ApiResponse } from "@/types/api";
+import { apiClient } from "../../client";
 
 const baseRoute = "/mutual-fund/performance/leaderboard";
 
