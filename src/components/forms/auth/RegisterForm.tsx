@@ -11,10 +11,11 @@ import { toast } from "sonner";
 import { RegisterInput } from "@/types/auth/register";
 
 interface RegisterFormProps {
-  next?: string;
+  locale: string;
+  next: string;
 }
 
-export default function RegisterForm({ next = "/" }: RegisterFormProps) {
+export default function RegisterForm({ locale, next }: RegisterFormProps) {
   const t = useTranslations("auth");
 
   const tCommonLabels = useTranslations("common.form.labels");
@@ -40,6 +41,7 @@ export default function RegisterForm({ next = "/" }: RegisterFormProps) {
   const handleSubmit = (payload: RegisterInput) => {
     registerMutation.mutate({
       ...payload,
+      locale,
       next,
     });
   };

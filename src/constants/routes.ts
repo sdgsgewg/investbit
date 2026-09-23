@@ -19,7 +19,7 @@ export const ROUTES = {
   },
 
   DASHBOARD: {
-    HOME: "/dashboard",
+    BASE: "/dashboard",
 
     MUTUAL_FUND: {
       CATEGORIES: "/dashboard/mutual-fund/categories",

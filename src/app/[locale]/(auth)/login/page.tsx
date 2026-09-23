@@ -8,7 +8,7 @@ import { AuthCard, LoginForm } from "@/components/forms/auth";
 export default function LoginPage() {
   const t = useTranslations("auth");
   const searchParams = useSearchParams();
-  const next = searchParams.get("next") ?? ROUTES.DASHBOARD.HOME;
+  const next = searchParams.get("next") ?? ROUTES.DASHBOARD.BASE;
   const callbackError = searchParams.get("error");
 
   return (

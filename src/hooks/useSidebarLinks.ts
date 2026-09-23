@@ -17,7 +17,7 @@ export function useSidebarLinks() {
   const navLinks: NavLink[] = [
     {
       name: tNav("base"),
-      path: ROUTES.DASHBOARD.HOME,
+      path: ROUTES.DASHBOARD.BASE,
       icon: LayoutDashboard,
       exact: true,
     },

@@ -5,8 +5,11 @@ export async function POST(request: Request) {
   try {
     const body = await request.json();
     const origin = request.headers.get("origin") || new URL(request.url).origin;
+
+    const locale = typeof body.locale === "string" ? body.locale : "en";
     const next = typeof body.next === "string" ? body.next : "/";
-    const emailRedirectTo = `${origin}/auth/callback?next=${encodeURIComponent(next)}`;
+
+    const emailRedirectTo = `${origin}/auth/callback?locale=${encodeURIComponent(locale)}&next=${encodeURIComponent(next)}`;
 
     const data = await registerService(body, emailRedirectTo);
 

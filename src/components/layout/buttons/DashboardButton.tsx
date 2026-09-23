@@ -14,7 +14,7 @@ const DashboardButton = ({ onClose }: Props) => {
   const router = useRouter();
 
   const handleNavigateToDashboard = () => {
-    router.push(ROUTES.DASHBOARD.HOME);
+    router.push(ROUTES.DASHBOARD.BASE);
   };
 
   return (

@@ -3,7 +3,8 @@ import { ApiResponse } from "@/types/api";
 import { RegisterInput, RegisterResponse } from "@/types/auth/register";
 
 export interface RegisterPayload extends RegisterInput {
-  next?: string;
+  locale: string;
+  next: string;
 }
 
 export const registerUser = async (

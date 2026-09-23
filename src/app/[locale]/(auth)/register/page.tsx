@@ -1,14 +1,17 @@
 "use client";
 
 import { useSearchParams } from "next/navigation";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { ROUTES } from "@/constants/routes";
 import { AuthCard, RegisterForm } from "@/components/forms/auth";
 
 export default function RegisterPage() {
   const t = useTranslations("auth");
   const searchParams = useSearchParams();
-  const next = searchParams.get("next") ?? ROUTES.DASHBOARD.HOME;
+
+  const locale = useLocale();
+
+  const next = searchParams.get("next") ?? ROUTES.DASHBOARD.BASE;
 
   return (
     <AuthCard
@@ -20,7 +23,7 @@ export default function RegisterPage() {
         label: t("login"),
       }}
     >
-      <RegisterForm next={next} />
+      <RegisterForm locale={locale} next={next} />
     </AuthCard>
   );
 }

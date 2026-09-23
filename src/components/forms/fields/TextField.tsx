@@ -47,23 +47,22 @@ export default function TextField({
           </span>
         )}
 
-      <Input
-        id={field.name}
-        name={field.name}
-        type="text"
-        value={field.state.value}
-        placeholder={placeholder}
-        readOnly={readOnly}
-        disabled={disabled}
-        className={inputClassName}
-        aria-invalid={isInvalid}
-        onBlur={field.handleBlur}
-        onChange={(event) => {
-          field.handleChange(event.target.value);
-        }}
-      />
+        <Input
+          id={field.name}
+          name={field.name}
+          type="text"
+          value={field.state.value}
+          placeholder={placeholder}
+          readOnly={readOnly}
+          disabled={disabled}
+          className={inputClassName}
+          aria-invalid={isInvalid}
+          onBlur={field.handleBlur}
+          onChange={(event) => {
+            field.handleChange(event.target.value);
+          }}
+        />
       </div>
-
 
       {isInvalid && <FieldError errors={field.state.meta.errors} />}
     </Field>
