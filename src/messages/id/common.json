@@ -53,6 +53,16 @@
         "change": "Ubah Gambar",
         "supportedFormats": "Format yang didukung: {formats}"
       }
+    },
+
+    "labels": {
+      "name": "Nama",
+      "description": "Deskripsi"
+    },
+
+    "placeholders": {
+      "name": "Masukkan nama",
+      "description": "Masukkan deskripsi"
     }
   },
 

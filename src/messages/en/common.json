@@ -49,6 +49,16 @@
         "change": "Change Image",
         "supportedFormats": "Supported formats: {formats}"
       }
+    },
+
+    "labels": {
+      "name": "Name",
+      "description": "Description"
+    },
+
+    "placeholders": {
+      "name": "Name",
+      "description": "Enter description"
     }
   },
 

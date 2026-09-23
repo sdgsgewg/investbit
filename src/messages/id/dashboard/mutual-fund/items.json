@@ -1,13 +1,11 @@
 {
   "form": {
     "labels": {
-      "name": "Nama",
       "category": "Kategori",
       "totalAum": "Total AUM"
     },
 
     "placeholders": {
-      "name": "Masukkan nama",
       "category": "Pilih kategori",
       "totalAum": "Masukkan total AUM"
     }

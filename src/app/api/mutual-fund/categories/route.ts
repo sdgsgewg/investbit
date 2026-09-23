@@ -32,6 +32,7 @@ export async function POST(request: Request) {
 
     return createdResponse(data);
   } catch (error: unknown) {
+    console.error(error);
     return errorResponse(error);
   }
 }

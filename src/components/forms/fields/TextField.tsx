@@ -1,16 +1,13 @@
 "use client";
 
 import { Input } from "@/components/ui/input";
-import Label from "./Label";
-import ErrorMessage from "./ErrorMessage";
+import type { AnyFieldApi } from "@tanstack/react-form";
+import { Field, FieldError, FieldLabel } from "@/components/ui/field";
 
 interface TextFieldProps {
+  field: AnyFieldApi;
+
   label: string;
-  name: string;
-
-  value: string;
-  onChange: (value: string) => void;
-
   placeholder?: string;
 
   required?: boolean;
@@ -18,41 +15,43 @@ interface TextFieldProps {
   disabled?: boolean;
 
   className?: string;
-  error?: string;
 }
 
 export default function TextField({
+  field,
   label,
-  name,
-  value,
-  onChange,
   placeholder,
   required,
   readOnly,
   disabled,
   className,
-  error,
 }: TextFieldProps) {
-  const errorId = error ? `${name}-error` : undefined;
+  const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid;
 
   return (
-    <div className="flex flex-col gap-2">
-      <Label label={label} required={required} readOnly={readOnly} />
+    <Field data-invalid={isInvalid}>
+      <FieldLabel htmlFor={field.name}>
+        {label}
+        {required && <span className="text-destructive">*</span>}
+      </FieldLabel>
 
       <Input
+        id={field.name}
+        name={field.name}
         type="text"
-        name={name}
-        aria-invalid={!!error}
-        aria-describedby={errorId}
-        value={value}
+        value={field.state.value}
         placeholder={placeholder}
         readOnly={readOnly}
         disabled={disabled}
         className={className}
-        onChange={(e) => onChange(e.target.value)}
+        aria-invalid={isInvalid}
+        onBlur={field.handleBlur}
+        onChange={(event) => {
+          field.handleChange(event.target.value);
+        }}
       />
 
-      {error && <ErrorMessage id={errorId} message={error} />}
-    </div>
+      {isInvalid && <FieldError errors={field.state.meta.errors} />}
+    </Field>
   );
 }

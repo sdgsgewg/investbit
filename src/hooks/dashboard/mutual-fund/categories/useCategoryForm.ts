@@ -1,4 +1,5 @@
-import { useEntityForm } from "@/hooks/crud";
+import { useForm } from "@tanstack/react-form";
+
 import { categoryMutationSchema } from "@/lib/validations/mutual-fund/categories.schema";
 import {
   CategoryListItem,
@@ -7,67 +8,53 @@ import {
 import { useState } from "react";
 
 const createEmptyCategoryForm = (): UpsertCategoryInput => ({
+  id: "",
   name: "",
 });
 
-export function useCategoryForm() {
-  const {
-    form,
-    setForm,
-    initialForm,
-    updateField,
-    errors,
-    isDirty,
-    canSubmit,
-    validate,
-    resetForm,
-  } = useEntityForm({
-    initialValue: createEmptyCategoryForm(),
-    schema: categoryMutationSchema,
+interface UseCategoryFormOptions {
+  onSubmit: (payload: UpsertCategoryInput) => void;
+}
 
-    dirtyFields: ["name"],
+export function useCategoryForm({ onSubmit }: UseCategoryFormOptions) {
+  const form = useForm({
+    defaultValues: createEmptyCategoryForm(),
 
-    requiredFields: ["name"],
+    validators: {
+      onMount: categoryMutationSchema,
+      onChange: categoryMutationSchema,
+      onSubmit: categoryMutationSchema,
+    },
+
+    onSubmit: async ({ value }) => {
+      const payload: UpsertCategoryInput = {
+        id: value.id,
+        name: value.name,
+      };
+
+      onSubmit(payload);
+    },
   });
 
   const [isEditing, setIsEditing] = useState(false);
 
   const handleEdit = (category: CategoryListItem) => {
-    const mapped: UpsertCategoryInput = {
-      id: category.id,
-      name: category.name,
-    };
-
-    resetForm(mapped);
-
     setIsEditing(true);
+    form.setFieldValue("id", category.id);
+    form.setFieldValue("name", category.name);
   };
 
-  const handleResetForm = () => {
-    resetForm();
+  const resetForm = () => {
     setIsEditing(false);
+    form.reset();
   };
-
-  const buildPayload = () => ({
-    name: form.name,
-  });
 
   return {
     form,
-    initialForm,
-    setForm,
-
-    isDirty,
     isEditing,
-    errors,
-
-    updateField,
     handleEdit,
-
-    validate,
-    canSubmit,
-    buildPayload,
-
-    resetForm: handleResetForm,
+    resetForm,
   };
 }
+
+export type CategoryForm = ReturnType<typeof useCategoryForm>;

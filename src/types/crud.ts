@@ -7,7 +7,7 @@ import { SortOrder } from "./sort";
 import { PaginationProps } from "./pagination";
 import { FormErrors } from "./form";
 
-type FieldType = "text" | "select";
+type FieldType = "text" | "select" | "number";
 
 export type CrudFormField = {
   name: string;
@@ -18,47 +18,16 @@ export type CrudFormField = {
   required?: boolean;
 };
 
-export type CrudColumn = {
-  key: string; // support nested: "category.name"
-  label: string;
-};
-
-export type CrudRow = {
-  id: string;
-};
-
 export type CrudForm = {
   [key: string]: unknown;
 };
 
-export type CrudPageProps<TData extends CrudRow, TForm extends CrudForm> = {
-  title: string;
-  formFields: CrudFormField[];
-  columns: CrudColumn[];
-  data: TData[];
-  form: TForm;
-  setForm: Dispatch<SetStateAction<TForm>>;
-  canSubmit: () => boolean;
-  onSubmit: () => void;
-  onView?: (item: TData) => void;
-  onEdit: (item: TData) => void;
-  onDelete: (item: TData) => void;
-  isEditing: boolean;
-  isSubmitting: boolean;
-  buttonText: string;
-  resetForm: () => void;
-  loading?: boolean;
-  headerContent?: ReactNode;
-};
-
 // Form
 
-export interface CrudPageFormProps<TForm extends CrudForm> {
-  formFields: CrudFormField[];
+export interface CrudListPageFormProps {
+  children: React.ReactNode;
 
-  form: TForm;
-
-  setForm: Dispatch<SetStateAction<TForm>>;
+  isDirty: boolean;
 
   isEditing: boolean;
 
@@ -160,10 +129,7 @@ export interface CrudPaginationProps extends PaginationProps {
 
 // Page Props
 
-export type CrudFormTablePageProps<
-  TData extends DataRow,
-  TForm extends CrudForm,
-> = {
+export type CrudFormTablePageProps<TData extends DataRow> = {
   title: string;
 
   headerContent?: ReactNode;
@@ -176,13 +142,11 @@ export type CrudFormTablePageProps<
 
   actions: CrudActions<TData>;
 
-  form: CrudFormProps<TForm>;
+  form: ReactNode;
 
   toolbar?: CrudToolbarProps;
 
   sorting?: CrudSortingProps;
-
-  pagination?: CrudPaginationProps;
 };
 
 export interface CrudListPageProps<T extends DataRow> {

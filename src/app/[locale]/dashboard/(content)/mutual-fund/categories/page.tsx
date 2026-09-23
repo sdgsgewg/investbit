@@ -3,10 +3,15 @@
 import ConnectionErrorAlert from "@/components/feedback/ConnectionErrorAlert";
 import { isLikelyConnectionError } from "@/lib/utils/connection-error";
 import { useTranslations } from "next-intl";
-import { CrudFormTablePage } from "@/components/templates/crud/CrudFormTablePage";
-import { useCrudPageTitle } from "@/hooks/crud/useCrudPageTitle";
+
+import { CrudFormTablePage } from "@/components/templates/crud";
+
 import { DataColumn } from "@/types/table";
+import { CategoryListItem } from "@/types/mutual-fund/categories";
+
 import { createSortHandler } from "@/lib/utils/crud";
+import { useFilterSync } from "@/hooks/filter";
+
 import {
   useCategories,
   useCategoryActions,
@@ -14,11 +19,12 @@ import {
   useCategoryForm,
   useCategorySubmit,
 } from "@/hooks/dashboard/mutual-fund/categories";
-import { CategoryListItem } from "@/types/mutual-fund/categories";
-import { useFilterSync } from "@/hooks/filter";
+
+import { useCrudPageTitle } from "@/hooks/crud";
+
+import CategoryForm from "@/components/forms/mutual-fund/categories/CategoryForm";
 
 export default function Page() {
-  const t = useTranslations("dashboard.mutualFund.categories");
   const tColumn = useTranslations("dashboard.mutualFund.categories.columns");
   const tCommon = useTranslations("common");
 
@@ -39,19 +45,19 @@ export default function Page() {
     },
   );
 
-  const {
-    form,
-    setForm,
-    isEditing,
-    canSubmit,
-    handleEdit,
-    buildPayload,
-    resetForm,
-  } = useCategoryForm();
-
   const { handleDelete } = useCategoryActions();
 
   const { isSubmitting, getButtonText, submit } = useCategorySubmit();
+
+  const { form, isEditing, handleEdit, resetForm } = useCategoryForm({
+    onSubmit: (payload) => {
+      submit({
+        id: form.getFieldValue("id"),
+        payload,
+        onSuccess: resetForm,
+      });
+    },
+  });
 
   const columns: DataColumn<CategoryListItem>[] = [
     {
@@ -81,31 +87,15 @@ export default function Page() {
           <ConnectionErrorAlert retrying={retrying} onRetry={retryLoad} />
         ) : undefined
       }
-      form={{
-        formFields: [
-          {
-            name: "name",
-            label: t("form.labels.name"),
-            placeholder: t("form.placeholders.name"),
-            type: "text",
-            required: true,
-          },
-        ],
-        form,
-        setForm,
-        canSubmit,
-        onSubmit: () => {
-          submit({
-            id: isEditing ? form.id : undefined,
-            payload: buildPayload(),
-            onSuccess: resetForm,
-          });
-        },
-        isEditing,
-        isSubmitting,
-        buttonText: getButtonText(isEditing),
-        resetForm,
-      }}
+      form={
+        <CategoryForm
+          form={form}
+          loading={isSubmitting}
+          isEditing={isEditing}
+          buttonText={getButtonText(isEditing)}
+          resetForm={resetForm}
+        />
+      }
       actions={{
         onEdit: handleEdit,
         onDelete: handleDelete,

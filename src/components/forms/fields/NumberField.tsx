@@ -2,68 +2,67 @@
 
 import { NumericFormat } from "react-number-format";
 import { Input } from "@/components/ui/input";
-import Label from "./Label";
-import ErrorMessage from "./ErrorMessage";
+import { AnyFieldApi } from "@tanstack/react-form";
+import { Field, FieldError, FieldLabel } from "@/components/ui/field";
 
 interface NumberFieldProps {
+  field: AnyFieldApi;
+
   label: string;
-  name: string;
-
-  value: number | null | undefined;
-  onChange: (value: number | null) => void;
-
   placeholder?: string;
 
   required?: boolean;
   readOnly?: boolean;
+  disabled?: boolean;
 
   thousandSeparator?: string | boolean;
   decimalScale?: number;
   allowNegative?: boolean;
 
   className?: string;
-  error?: string;
 }
 
 export default function NumberField({
+  field,
   label,
-  name,
-  value,
-  onChange,
   placeholder,
   required,
   readOnly,
+  disabled,
   thousandSeparator = ",",
   decimalScale,
   allowNegative = false,
   className,
-  error,
 }: NumberFieldProps) {
-  const errorId = error ? `${name}-error` : undefined;
+  const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid;
 
   return (
-    <div className="flex flex-col gap-2">
-      <Label label={label} required={required} readOnly={readOnly} />
+    <Field data-invalid={isInvalid}>
+      <FieldLabel htmlFor={field.name}>
+        {label}
+        {required && <span className="text-destructive">*</span>}
+      </FieldLabel>
 
       <NumericFormat
+        id={field.name}
+        name={field.name}
         customInput={Input}
-        name={name}
-        aria-invalid={!!error}
-        aria-describedby={errorId}
-        value={value ?? ""}
+        aria-invalid={isInvalid}
+        value={field.state.value}
         placeholder={placeholder}
         readOnly={readOnly}
+        disabled={disabled}
         thousandSeparator={thousandSeparator}
         decimalScale={decimalScale}
         allowNegative={allowNegative}
         allowLeadingZeros={false}
         className={className}
         onValueChange={({ floatValue }) => {
-          onChange(floatValue ?? null);
+          field.handleChange(floatValue ?? null);
         }}
       />
 
-      {error && <ErrorMessage id={errorId} message={error} />}
-    </div>
+      {isInvalid && <FieldError errors={field.state.meta.errors} />}
+    </Field>
   );
 }

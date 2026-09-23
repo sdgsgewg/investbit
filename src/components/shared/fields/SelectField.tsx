@@ -1,9 +1,5 @@
 "use client";
 
-import { Loader2 } from "lucide-react";
-import { useTranslations } from "next-intl";
-import type { AnyFieldApi } from "@tanstack/react-form";
-import { Field, FieldError, FieldLabel } from "@/components/ui/field";
 import {
   Select,
   SelectContent,
@@ -13,61 +9,57 @@ import {
 } from "@/components/ui/select";
 import { Option } from "@/types/option";
 import { cn } from "@/lib/utils";
+import { Field, FieldLabel } from "@/components/ui/field";
+import { Loader2 } from "lucide-react";
+import { useTranslations } from "next-intl";
+import Image from "next/image";
 
 interface SelectFieldProps {
-  field: AnyFieldApi;
-
   label?: string;
+  name: string;
+
+  value?: string;
+  onValueChange: (value: string) => void;
   options: Option[];
 
   placeholder?: string;
   allLabel?: string;
 
-  required?: boolean;
   loading?: boolean;
   disabled?: boolean;
 
   className?: string;
 }
 
-const SelectField: React.FC<SelectFieldProps> = ({
-  field,
+const SelectField = ({
   label,
+  name,
+
+  value,
+  onValueChange,
   options,
+
   placeholder = "Select option",
   allLabel,
-  required = false,
-  loading = false,
+
   disabled = false,
+  loading = false,
+
   className,
-}) => {
+}: SelectFieldProps) => {
   const tCommonStates = useTranslations("common.states");
 
-  const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid;
-
   return (
-    <Field data-invalid={isInvalid} className={cn(className)}>
-      {label && (
-        <FieldLabel htmlFor={field.name}>
-          {label}
-          {required && <span className="text-destructive">*</span>}
-        </FieldLabel>
-      )}
+    <Field className={cn(className)}>
+      {label && <FieldLabel htmlFor={name}>{label}</FieldLabel>}
 
       <Select
-        name={field.name}
-        value={field.state.value || undefined}
+        name={name}
+        value={value || undefined}
         disabled={disabled || loading}
-        onValueChange={(value) => {
-          field.handleChange(value);
-        }}
-        onOpenChange={(open) => {
-          if (!open) {
-            field.handleBlur();
-          }
-        }}
+        onValueChange={onValueChange}
       >
-        <SelectTrigger className="w-full rounded-xl">
+        <SelectTrigger id={name} className="w-full rounded-xl">
           {loading ? (
             <div className="flex items-center gap-2">
               <Loader2 className="size-4 shrink-0 animate-spin opacity-50" />
@@ -84,19 +76,27 @@ const SelectField: React.FC<SelectFieldProps> = ({
         <SelectContent
           position="popper"
           sideOffset={4}
-          className="w-(--radix-select-trigger-width) max-h-60"
+          className={cn("w-(--radix-select-trigger-width) max-h-60")}
         >
           {allLabel && <SelectItem value="">{allLabel}</SelectItem>}
 
           {options.map((option) => (
             <SelectItem key={option.value} value={option.value}>
+              {option.imageUrl && (
+                <Image
+                  src={option.imageUrl}
+                  alt={option.label}
+                  width={20}
+                  height={20}
+                  className="size-5 shrink-0 rounded-full object-cover"
+                />
+              )}
+
               <span className="truncate">{option.label}</span>
             </SelectItem>
           ))}
         </SelectContent>
       </Select>
-
-      {isInvalid && <FieldError errors={field.state.meta.errors} />}
     </Field>
   );
 };

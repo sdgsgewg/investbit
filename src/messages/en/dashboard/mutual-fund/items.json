@@ -1,13 +1,11 @@
 {
   "form": {
     "labels": {
-      "name": "Name",
       "category": "Category",
       "totalAum": "Total AUM"
     },
 
     "placeholders": {
-      "name": "Input name",
       "category": "Select category",
       "totalAum": "Input total AUM"
     }

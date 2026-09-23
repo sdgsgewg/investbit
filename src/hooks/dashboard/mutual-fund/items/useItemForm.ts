@@ -1,7 +1,12 @@
-import { useEntityForm } from "@/hooks/crud";
 import { itemMutationSchema } from "@/lib/validations/mutual-fund/items.schema";
 import { ItemEditResponse, UpsertItemInput } from "@/types/mutual-fund/items";
+import { useForm } from "@tanstack/react-form";
 import { useMemo } from "react";
+
+interface UseItemFormOptions {
+  item?: ItemEditResponse;
+  onSubmit: (payload: UpsertItemInput) => void;
+}
 
 const createEmptyItemForm = (): UpsertItemInput => ({
   name: "",
@@ -20,38 +25,31 @@ function mapItem(item: ItemEditResponse): UpsertItemInput {
   };
 }
 
-export function useItemForm(item?: ItemEditResponse) {
-  const initialValue = useMemo(
+export function useItemForm({ item, onSubmit }: UseItemFormOptions) {
+  const defaultValues = useMemo(
     () => (item ? mapItem(item) : createEmptyItemForm()),
     [item],
   );
 
-  const { form, updateField, errors, isDirty, canSubmit, validate } =
-    useEntityForm({
-      initialValue,
-      schema: itemMutationSchema,
+  const form = useForm({
+    defaultValues,
 
-      dirtyFields: ["name", "category_id", "total_aum"],
+    validators: {
+      onMount: itemMutationSchema,
+      onChange: itemMutationSchema,
+      onSubmit: itemMutationSchema,
+    },
 
-      requiredFields: ["name", "category_id", "total_aum"],
-    });
+    onSubmit: async ({ value }) => {
+      const payload = {
+        name: value.name,
+        category_id: value.category_id,
+        total_aum: value.total_aum,
+      };
 
-  const buildPayload = () => ({
-    name: form.name,
-    category_id: form.category_id,
-    total_aum: form.total_aum,
+      onSubmit(payload);
+    },
   });
 
-  return {
-    form,
-
-    isDirty,
-    errors,
-
-    updateField,
-
-    validate,
-    canSubmit,
-    buildPayload,
-  };
+  return form;
 }

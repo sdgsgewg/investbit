@@ -1,15 +1,12 @@
-import type { Dispatch, SetStateAction } from "react";
-import { CrudForm, CrudFormTablePageProps } from "@/types/crud";
+import { CrudFormTablePageProps } from "@/types/crud";
 import { CrudPageHeader } from "./CrudPageHeader";
-import { CrudPageForm } from "./CrudPageForm";
 import { DataRow } from "@/types/table";
 import { DataTable } from "@/components/shared/tables/DataTable";
 import CrudToolbar from "./CrudToolbar";
 
-export function CrudFormTablePage<
-  TData extends DataRow,
-  TForm extends CrudForm,
->(props: CrudFormTablePageProps<TData, TForm>) {
+export function CrudFormTablePage<TData extends DataRow>(
+  props: CrudFormTablePageProps<TData>,
+) {
   const {
     title,
     loading,
@@ -17,21 +14,7 @@ export function CrudFormTablePage<
     columns,
     headerContent,
 
-    form: {
-      formFields,
-
-      form,
-      setForm,
-
-      canSubmit,
-      onSubmit,
-
-      isEditing,
-      isSubmitting,
-      buttonText,
-
-      resetForm,
-    },
+    form,
 
     actions: { onView, onEdit, onDelete },
 
@@ -45,24 +28,12 @@ export function CrudFormTablePage<
       <CrudPageHeader title={title} />
       {headerContent}
 
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
         {/* FORM SECTION */}
-        <div className="lg:col-span-4 space-y-6">
-          <CrudPageForm
-            formFields={formFields}
-            form={form as CrudForm}
-            setForm={setForm as Dispatch<SetStateAction<CrudForm>>}
-            isEditing={isEditing}
-            isSubmitting={isSubmitting}
-            buttonText={buttonText}
-            resetForm={resetForm}
-            canSubmit={canSubmit}
-            onSubmit={onSubmit}
-          />
-        </div>
+        <div className="lg:col-span-4">{form}</div>
 
         {/* TABLE SECTION */}
-        <div className="lg:col-span-8">
+        <div className="lg:col-span-8 space-y-4">
           <CrudToolbar
             loading={loading}
             searchValue={searchValue}

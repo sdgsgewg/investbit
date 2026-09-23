@@ -3,9 +3,9 @@
 import { useCategoryOptions } from "@/hooks/dashboard/mutual-fund/categories";
 import { useItemForm } from "@/hooks/dashboard/mutual-fund/items";
 import { ItemEditResponse, UpsertItemInput } from "@/types/mutual-fund/items";
-import { useTranslations } from "next-intl";
 import { FormContentWrapper, FormHeader, FormWrapper } from "../../base";
 import { NumberField, SelectField, TextField } from "../../fields";
+import { useCrudFormState, useCrudFormTranslations } from "@/hooks/crud";
 
 interface Props {
   mode: "create" | "edit";
@@ -17,77 +17,65 @@ interface Props {
 }
 
 const ItemForm = ({ mode, item, loading = false, onSubmit }: Props) => {
-  const tLabels = useTranslations("dashboard.mutualFund.items.form.labels");
-  const tPlaceholders = useTranslations(
-    "dashboard.mutualFund.items.form.placeholders",
-  );
+  const { tLabels, tPlaceholders, tCommonLabels, tCommonPlaceholders } =
+    useCrudFormTranslations("mutualFund.item");
 
-  const {
-    form,
-    isDirty,
-    errors,
-    updateField,
-    validate,
-    canSubmit,
-    buildPayload,
-  } = useItemForm(item);
+  const form = useItemForm({ item, onSubmit });
 
-  const isCreate = mode === "create";
+  const { isDirty, canSubmit } = useCrudFormState({ form });
 
-  const { categoryOptions } = useCategoryOptions();
-
-  const handleSubmit = () => {
-    if (!validate()) {
-      return;
-    }
-
-    onSubmit(buildPayload());
-  };
+  const { categoryOptions, loading: isCategoryLoading } = useCategoryOptions();
 
   return (
     <FormWrapper isDirty={isDirty}>
-      <FormHeader
-        loading={loading}
-        isCreate={isCreate}
-        canSubmit={canSubmit}
-        onSubmit={handleSubmit}
-      />
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          form.handleSubmit();
+        }}
+      >
+        <FormHeader loading={loading} mode={mode} canSubmit={canSubmit} />
 
-      <FormContentWrapper className="space-y-5">
-        {/* Name */}
-        <TextField
-          label={tLabels("name")}
-          name="name"
-          placeholder={tPlaceholders("name") || ""}
-          value={(form.name as string) ?? ""}
-          onChange={(value) => updateField("name", value)}
-          error={errors.name}
-          required
-        />
+        <FormContentWrapper className="space-y-5">
+          {/* Name */}
+          <form.Field name="name">
+            {(field) => (
+              <TextField
+                field={field}
+                label={tCommonLabels("name")}
+                placeholder={tCommonPlaceholders("name")}
+                required
+              />
+            )}
+          </form.Field>
 
-        {/* Category */}
-        <SelectField
-          label={tLabels("category")}
-          name={`category_id`}
-          placeholder={tPlaceholders("category") || ""}
-          options={categoryOptions}
-          value={form.category_id || ""}
-          onChange={(value) => updateField("category_id", value)}
-          error={errors.category_id}
-          required
-        />
+          {/* Category */}
+          <form.Field name="category_id">
+            {(field) => (
+              <SelectField
+                field={field}
+                label={tLabels("category")}
+                placeholder={tPlaceholders("category")}
+                options={categoryOptions}
+                loading={isCategoryLoading}
+                required
+              />
+            )}
+          </form.Field>
 
-        {/* Total AUM */}
-        <NumberField
-          label={tLabels("totalAum")}
-          name="total_aum"
-          placeholder={tPlaceholders("totalAum")}
-          value={form.total_aum}
-          onChange={(value) => updateField("total_aum", value)}
-          error={errors.total_aum}
-          required
-        />
-      </FormContentWrapper>
+          {/* Total AUM */}
+          <form.Field name="total_aum">
+            {(field) => (
+              <NumberField
+                field={field}
+                label={tLabels("totalAum")}
+                placeholder={tPlaceholders("totalAum")}
+                required
+              />
+            )}
+          </form.Field>
+        </FormContentWrapper>
+      </form>
     </FormWrapper>
   );
 };

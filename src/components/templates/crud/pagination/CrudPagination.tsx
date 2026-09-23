@@ -2,12 +2,13 @@
 
 import { useTranslations } from "next-intl";
 
-import { SelectField } from "@/components/forms/fields";
 import Pagination from "@/components/shared/pagination/Pagination";
+import CrudPaginationWrapper from "./CrudPaginationWrapper";
 
 import { CRUD_PAGE_LIMIT_OPTIONS } from "@/constants/crud";
 import { CrudPaginationProps } from "@/types/crud";
-import CrudPaginationWrapper from "./CrudPaginationWrapper";
+
+import { SelectField } from "@/components/shared/fields";
 
 export default function CrudPagination({
   page,
@@ -44,8 +45,7 @@ export default function CrudPagination({
             name="limit"
             value={String(limit)}
             options={CRUD_PAGE_LIMIT_OPTIONS}
-            onChange={(value) => onLimitChange(Number(value))}
-            className="w-fit"
+            onValueChange={(value) => onLimitChange(Number(value))}
           />
         </div>
       </div>
