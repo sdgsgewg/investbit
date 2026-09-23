@@ -49,8 +49,10 @@ export function AuthProvider({
 
   const signOut = async () => {
     try {
-      await supabase.auth.signOut();
+      // sign out from the current session only
+      await supabase.auth.signOut({ scope: "local" });
     } finally {
+      // refresh route yang sedang dibuka
       router.refresh();
     }
   };

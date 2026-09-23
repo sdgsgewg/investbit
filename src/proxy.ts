@@ -8,7 +8,7 @@ const intlMiddleware = createMiddleware({
   defaultLocale: "id",
 });
 
-export default async function middleware(request: NextRequest) {
+export default async function proxy(request: NextRequest) {
   const response = intlMiddleware(request);
 
   const supabase = createServerClient(
@@ -68,7 +68,7 @@ export default async function middleware(request: NextRequest) {
   if (!user) {
     const loginUrl = new URL(`/${locale}/login`, request.url);
 
-    loginUrl.searchParams.set("next", pathname);
+    loginUrl.searchParams.set("next", normalizedPath);
 
     return NextResponse.redirect(loginUrl);
   }
