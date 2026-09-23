@@ -38,6 +38,11 @@ export async function GET(request: Request) {
     }
   }
 
+  const localeMatch = next.match(/^\/(en|id)/);
+  const localePrefix = localeMatch ? localeMatch[0] : "";
+
   // return the user to an error page with instructions
-  return NextResponse.redirect(`${origin}/login?error=auth-callback-failed`);
+  return NextResponse.redirect(
+    `${origin}${localePrefix}/login?error=auth-callback-failed`,
+  );
 }
