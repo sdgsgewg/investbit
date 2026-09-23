@@ -1,37 +1,31 @@
-// import { RegisterInput } from "@/types/auth/register";
-// import { createClient } from "@/utils/supabase/server";
+import { HttpError } from "@/lib/errors/http-error";
+import { RegisterInput, RegisterResponse } from "@/types/auth/register";
+import { createClient } from "@/utils/supabase/server";
 
-// export async function registerRepo(payload: RegisterInput) {
-//   try {
-//     const supabase = createClient();
-//     const emailRedirectTo = `${window.location.origin}/auth/callback?next=${encodeURIComponent(next)}`;
+export async function registerRepo(
+  payload: RegisterInput,
+  emailRedirectTo?: string,
+): Promise<RegisterResponse> {
+  const supabase = await createClient();
 
-//     const { error, data } = await supabase.auth.signUp({
-//       email,
-//       password,
-//       options: {
-//         emailRedirectTo,
-//       },
-//     });
+  const { data, error } = await supabase.auth.signUp({
+    email: payload.email,
+    password: payload.password,
+    options: {
+      emailRedirectTo,
+      data: {
+        name: payload.name,
+      },
+    },
+  });
 
-//     if (error) {
-//       setErrorMsg(error.message);
-//     } else {
-//       // If Supabase is configured to auto-confirm users (or not), data.user will exist.
-//       // If email confirmation is required, we tell the user.
-//       if (data.session) {
-//         setSuccessMsg(t("loginSuccess"));
-//         window.location.href = next;
-//       } else {
-//         setSuccessMsg(t("registerSuccess"));
-//         setEmail("");
-//         setPassword("");
-//         setConfirmPassword("");
-//       }
-//     }
-//   } catch {
-//     setErrorMsg(t("errorOccurred"));
-//   } finally {
-//     setLoading(false);
-//   }
-// }
+  if (error) {
+    throw new HttpError(error.message, 400);
+  }
+
+  return {
+    hasSession: Boolean(data.session),
+    userId: data.user?.id,
+    email: data.user?.email,
+  };
+}
