@@ -1,6 +1,6 @@
 {
   "title": "Manage Records",
-  "subtitle": "Add or edit daily and YTD yields",
+  "subtitle": "Add or edit records",
   "loading": "Loading mutual funds list...",
 
   "form": {
@@ -22,6 +22,7 @@
 
   "table": {
     "mutualFund": "Mutual Fund",
+    "nav1d": "NAV 1 Day",
     "yield1d": "1 Day (%)",
     "yieldYtd": "YTD (%)"
   }

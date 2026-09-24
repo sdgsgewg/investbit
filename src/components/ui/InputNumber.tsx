@@ -2,6 +2,7 @@
 
 import React from "react";
 import { useNumberFormatter } from "@/hooks/useNumberFormatter";
+import { cn } from "@/lib/utils";
 
 interface InputNumberProps {
   value?: string;
@@ -61,13 +62,15 @@ const InputNumber: React.FC<InputNumberProps> = ({
 
         onChange(formatDecimal(parsed, fractionDigits));
       }}
-      className={`
-        w-full text-center border p-1 rounded 
-        focus:outline-blue-500 
-        dark:bg-zinc-800 dark:border-zinc-700
-        ${showColor && isNegative ? "text-red-600 dark:text-red-400 font-medium" : ""}
-        ${className}
-      `}
+      className={cn(
+        "w-full text-center border p-1 rounded",
+        "focus:outline-blue-500 ",
+        "dark:bg-zinc-800 dark:border-zinc-700",
+        showColor && isNegative
+          ? "text-red-600 dark:text-red-400 font-medium"
+          : "",
+        className,
+      )}
     />
   );
 };

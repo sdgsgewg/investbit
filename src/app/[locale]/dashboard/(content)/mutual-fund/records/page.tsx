@@ -1,7 +1,6 @@
 "use client";
 
-import TopProgressBar from "@/components/feedback/TopProgressBar";
-import TableOverlay from "@/components/feedback/TableOverlay";
+import { TopProgressBar, TableOverlay } from "@/components/feedback";
 import InputHeader from "@/components/mutual-fund/records/InputHeader";
 import SkeletonTable from "@/components/mutual-fund/records/SkeletonTable";
 import InputTable from "@/components/mutual-fund/records/InputTable";
@@ -21,33 +20,18 @@ export default function RecordPage() {
   const t = useTranslations("dashboard.mutualFund.records");
 
   // 1. Filter & URL Sync
-  const {
-    filters,
-    syncUrl,
-    handleDateChange,
-    handleCategoryChange,
-  } = useRecordFilter();
+  const { filters, syncUrl, handleDateChange, handleCategoryChange } =
+    useRecordFilter();
 
   useFilterSync(filters, syncUrl);
 
   // 2. Data Fetching
-  const {
-    groupedItems,
-    recordsData,
-    loading,
-    fetching,
-    loadError,
-    retryLoad,
-  } = useRecordData(filters);
+  const { groupedItems, recordsData, loading, fetching, loadError, retryLoad } =
+    useRecordData(filters);
 
   // 3. Form Input Table State
-  const {
-    inputs,
-    handleInputChange,
-    canSave,
-    buildPayload,
-    resetForm,
-  } = useRecordForm(recordsData, filters);
+  const { inputs, handleInputChange, canSave, buildPayload, resetForm } =
+    useRecordForm(recordsData, filters);
 
   // 4. Submit Orchestrator
   const { isSubmitting, submit } = useRecordSubmit(filters.startDate);

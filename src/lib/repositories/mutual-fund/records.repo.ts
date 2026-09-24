@@ -20,6 +20,7 @@ export function getRecordsBaseQuery() {
   return `
     id,
     date,
+    nav_1d,
     yield_1d,
     yield_ytd,
 

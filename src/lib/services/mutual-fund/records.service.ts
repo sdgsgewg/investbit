@@ -9,7 +9,6 @@ import {
 import { getTodayInTimezone } from "@/lib/utils/date";
 
 export async function getRecordsService(query: unknown) {
-  // Validate query params
   const parsed = recordsQuerySchema.parse(query);
 
   return await getRecordsRepo(parsed);

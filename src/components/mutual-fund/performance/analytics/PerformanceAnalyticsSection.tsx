@@ -3,7 +3,7 @@ import { useTranslations } from "next-intl";
 import PerformanceTable from "./PerformanceTable";
 import PerformanceInformationSection from "../PerformanceInformationSection";
 import PerformanceTableSkeleton from "./PerformanceTableSkeleton";
-import TableOverlay from "@/components/feedback/TableOverlay";
+import { TableOverlay } from "@/components/feedback";
 import Dropdown from "@/components/ui/Dropdown";
 import { SortOrder } from "@/types/sort";
 import { TimeFrame } from "@/enums/TimeFrame";

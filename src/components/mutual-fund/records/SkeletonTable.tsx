@@ -3,15 +3,18 @@ import React from "react";
 const SkeletonTable = () => {
   return (
     <div className="animate-pulse">
+      <div className="h-7 w-full bg-zinc-200 dark:bg-zinc-700 rounded mb-3" />
+
       {[...Array(4)].map((_, i) => (
         <div key={i} className="mb-6">
           {/* category */}
-          <div className="h-5 w-1/3 bg-zinc-200 dark:bg-zinc-700 rounded mb-3" />
+          <div className="h-5 w-full bg-zinc-200 dark:bg-zinc-700 rounded mb-3" />
 
           {/* rows */}
           {[...Array(3)].map((_, j) => (
-            <div key={j} className="grid grid-cols-3 gap-4 mb-2">
+            <div key={j} className="grid grid-cols-4 gap-4 mb-2">
               <div className="h-4 bg-zinc-200 dark:bg-zinc-700 rounded" />
+              <div className="h-8 bg-zinc-200 dark:bg-zinc-700 rounded" />
               <div className="h-8 bg-zinc-200 dark:bg-zinc-700 rounded" />
               <div className="h-8 bg-zinc-200 dark:bg-zinc-700 rounded" />
             </div>

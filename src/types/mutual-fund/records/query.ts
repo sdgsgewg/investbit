@@ -5,7 +5,7 @@ import { Record } from "../records";
 
 export type DbRecordListRow = Pick<
   Record,
-  "id" | "date" | "yield_1d" | "yield_ytd"
+  "id" | "date" | "nav_1d" | "yield_1d" | "yield_ytd"
 > & {
   item: DbItemRow;
 };

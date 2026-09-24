@@ -8,16 +8,16 @@ import {
   successResponse,
 } from "@/lib/api/response";
 import { authorizeManageContent } from "@/lib/auth/api-authorization";
+import { getQuery } from "@/lib/api/query";
+import { RecordFilter } from "@/types/mutual-fund/records";
 
 export async function GET(request: Request) {
   try {
-    const { searchParams } = new URL(request.url);
-
-    const query = {
-      startDate: searchParams.get("startDate") || undefined,
-      endDate: searchParams.get("endDate") || undefined,
-      categoryId: searchParams.get("categoryId") || undefined,
-    };
+    const query = getQuery<RecordFilter>(request, [
+      "startDate",
+      "endDate",
+      "categoryId",
+    ]);
 
     const data = await getRecordsService(query);
 

@@ -17,3 +17,6 @@ export type RecordFilter = z.infer<typeof recordsQuerySchema>;
 // Mutation
 
 export type UpsertRecordsInput = z.infer<typeof upsertRecordSchema>;
+
+// Input Table Inputs
+export type FieldInput = "nav_1d" | "yield_1d" | "yield_ytd";
