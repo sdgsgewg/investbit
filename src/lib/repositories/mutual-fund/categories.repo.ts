@@ -4,7 +4,7 @@ import {
   CategoryCreateInput,
   CategoryDetailResponse,
   CategoryFilter,
-  CategoryListItem,
+  CategoryListResponse,
   CategoryUpdateInput,
   DbCategoryDetailRow,
   DbCategoryListRow,
@@ -13,7 +13,7 @@ import { ensureUniqueFieldsRepo } from "../helpers/uniqueness";
 import { requireEntity } from "../helpers/require-entity";
 import {
   mapCategoryDetailResponse,
-  mapCategoryListItem,
+  mapCategoryListResponse,
 } from "@/lib/mutual-fund/categories/mapper";
 import { Option } from "@/types/option";
 import { mapEntityOption } from "@/lib/entities/mapper";
@@ -40,7 +40,7 @@ function getCategoriesBaseQuery() {
 
 export async function getCategoriesRepo(
   params: CategoryFilter,
-): Promise<CategoryListItem[]> {
+): Promise<CategoryListResponse[]> {
   const supabase = await getSupabase();
 
   let query = supabase.from(getTable()).select(getCategoriesBaseQuery());
@@ -63,7 +63,7 @@ export async function getCategoriesRepo(
 
   if (error) throw error;
 
-  return data.map(mapCategoryListItem);
+  return data.map(mapCategoryListResponse);
 }
 
 /**

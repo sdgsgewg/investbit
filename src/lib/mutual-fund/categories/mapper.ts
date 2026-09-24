@@ -1,6 +1,6 @@
 import {
   CategoryDetailResponse,
-  CategoryListItem,
+  CategoryListResponse,
   CategoryResponse,
   DbCategoryDetailRow,
   DbCategoryListRow,
@@ -12,9 +12,9 @@ import {
  * @param category
  * @returns categoryListcategory
  */
-export function mapCategoryListItem(
+export function mapCategoryListResponse(
   category: DbCategoryListRow,
-): CategoryListItem {
+): CategoryListResponse {
   const { id, name } = category;
 
   return {

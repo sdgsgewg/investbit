@@ -1,12 +1,12 @@
 import InputNumber from "@/components/ui/InputNumber";
 import TableWrapper from "@/components/wrappers/TableWrapper";
-import { GroupedItemListItem } from "@/types/mutual-fund/items";
+import { GroupedItemListResponse } from "@/types/mutual-fund/items";
 import { YieldInputByItemId } from "@/types/mutual-fund/records/YieldInputByItemId";
 import { useTranslations } from "next-intl";
 import React from "react";
 
 interface InputTableProps {
-  groupedItems: GroupedItemListItem[];
+  groupedItems: GroupedItemListResponse[];
   inputs: YieldInputByItemId;
   onInputChange: (
     itemId: string,

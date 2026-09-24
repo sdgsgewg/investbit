@@ -6,16 +6,16 @@ import { Item } from "./database";
 
 // Mutual Fund Item List
 
-export interface ItemListItem extends Pick<Item, "id" | "name" | "slug"> {
+export interface ItemListResponse extends Pick<Item, "id" | "name" | "slug"> {
   totalAum: string | null;
   category: CategoryResponse;
 }
 
-export type ItemListResponse = PaginatedResponse<ItemListItem>;
+export type ItemListPaginatedResponse = PaginatedResponse<ItemListResponse>;
 
-export interface GroupedItemListItem {
+export interface GroupedItemListResponse {
   category: CategoryResponse;
-  items: ItemListItem[];
+  items: ItemListResponse[];
 }
 
 // Mutual Fund Item Detail

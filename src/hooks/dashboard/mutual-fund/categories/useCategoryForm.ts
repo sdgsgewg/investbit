@@ -2,7 +2,7 @@ import { useForm } from "@tanstack/react-form";
 
 import { categoryMutationSchema } from "@/lib/validations/mutual-fund/categories.schema";
 import {
-  CategoryListItem,
+  CategoryListResponse,
   UpsertCategoryInput,
 } from "@/types/mutual-fund/categories";
 import { useState } from "react";
@@ -38,7 +38,7 @@ export function useCategoryForm({ onSubmit }: UseCategoryFormOptions) {
 
   const [isEditing, setIsEditing] = useState(false);
 
-  const handleEdit = (category: CategoryListItem) => {
+  const handleEdit = (category: CategoryListResponse) => {
     setIsEditing(true);
     form.setFieldValue("id", category.id);
     form.setFieldValue("name", category.name);

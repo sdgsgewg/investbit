@@ -105,6 +105,7 @@ export async function getPerformanceRecordsRepo(
   const records: RecordListItem[] = [];
   let hasMore = true;
   let offset = 0;
+  // Fetch records in batches of 1,000 rows per request.
   const PAGE_SIZE = 1000;
 
   while (hasMore) {

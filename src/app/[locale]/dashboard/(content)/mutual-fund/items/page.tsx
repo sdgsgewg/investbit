@@ -10,7 +10,7 @@ import {
 } from "@/hooks/dashboard/mutual-fund/items";
 import { useCrudPageTitle } from "@/hooks/crud/useCrudPageTitle";
 import { DataColumn } from "@/types/table";
-import { ItemFilter, ItemListItem } from "@/types/mutual-fund/items";
+import { ItemFilter, ItemListResponse } from "@/types/mutual-fund/items";
 import { createSortHandler } from "@/lib/utils/crud";
 import { useCrudFilterDialog } from "@/hooks/crud";
 import { useFilterSync } from "@/hooks/filter";
@@ -64,7 +64,7 @@ export default function Page() {
 
   const { handleCreate, handleEdit, handleDelete } = useItemActions();
 
-  const columns: DataColumn<ItemListItem>[] = [
+  const columns: DataColumn<ItemListResponse>[] = [
     {
       key: "name",
       label: tColumn("name"),

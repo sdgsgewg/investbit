@@ -7,7 +7,7 @@ import { useTranslations } from "next-intl";
 import { CrudFormTablePage } from "@/components/templates/crud";
 
 import { DataColumn } from "@/types/table";
-import { CategoryListItem } from "@/types/mutual-fund/categories";
+import { CategoryListResponse } from "@/types/mutual-fund/categories";
 
 import { createSortHandler } from "@/lib/utils/crud";
 import { useFilterSync } from "@/hooks/filter";
@@ -59,7 +59,7 @@ export default function Page() {
     },
   });
 
-  const columns: DataColumn<CategoryListItem>[] = [
+  const columns: DataColumn<CategoryListResponse>[] = [
     {
       key: "name",
       label: tColumn("name"),

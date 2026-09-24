@@ -2,10 +2,10 @@ import {
   DbItemDetailRow,
   DbItemListRow,
   DbItemRow,
-  GroupedItemListItem,
+  GroupedItemListResponse,
   ItemDetailResponse,
   ItemEditResponse,
-  ItemListItem,
+  ItemListResponse,
   ItemResponse,
 } from "@/types/mutual-fund/items";
 import { mapCategoryResponse } from "../categories/mapper";
@@ -14,9 +14,9 @@ import { formatTotalAum } from "./formatter";
 /**
  *
  * @param item
- * @returns ItemListItem
+ * @returns ItemListResponse
  */
-export function mapItemListItem(item: DbItemListRow): ItemListItem {
+export function mapItemListResponse(item: DbItemListRow): ItemListResponse {
   const { total_aum, category } = item;
 
   return {
@@ -29,11 +29,13 @@ export function mapItemListItem(item: DbItemListRow): ItemListItem {
 /**
  * Group items by their category.
  */
-export function mapGroupedItems(items: DbItemListRow[]): GroupedItemListItem[] {
-  const grouped = new Map<string, GroupedItemListItem>();
+export function mapGroupedItems(
+  items: DbItemListRow[],
+): GroupedItemListResponse[] {
+  const grouped = new Map<string, GroupedItemListResponse>();
 
   for (const item of items) {
-    const mappedItem = mapItemListItem(item);
+    const mappedItem = mapItemListResponse(item);
 
     const category = mappedItem.category;
 

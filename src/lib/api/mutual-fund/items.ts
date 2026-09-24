@@ -1,8 +1,8 @@
 import {
-  GroupedItemListItem,
+  GroupedItemListResponse,
   GroupedItemQuery,
   ItemEditResponse,
-  ItemListResponse,
+  ItemListPaginatedResponse,
   ItemQuery,
 } from "@/types/mutual-fund/items";
 import { apiClient } from "../client";
@@ -12,8 +12,8 @@ const baseRoute = "/mutual-fund/items";
 
 export const fetchItems = async (
   params?: ItemQuery,
-): Promise<ItemListResponse> => {
-  const { data } = await apiClient.get<ApiResponse<ItemListResponse>>(
+): Promise<ItemListPaginatedResponse> => {
+  const { data } = await apiClient.get<ApiResponse<ItemListPaginatedResponse>>(
     baseRoute,
     {
       params,
@@ -25,8 +25,8 @@ export const fetchItems = async (
 
 export const fetchGroupedItems = async (
   params?: GroupedItemQuery,
-): Promise<GroupedItemListItem[]> => {
-  const { data } = await apiClient.get<ApiResponse<GroupedItemListItem[]>>(
+): Promise<GroupedItemListResponse[]> => {
+  const { data } = await apiClient.get<ApiResponse<GroupedItemListResponse[]>>(
     `${baseRoute}/grouped`,
     {
       params,

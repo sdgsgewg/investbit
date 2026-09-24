@@ -11,16 +11,16 @@ import { ensureUniqueFieldsRepo } from "../helpers/uniqueness";
 import { requireEntity } from "../helpers/require-entity";
 import { DbItemListRow, GroupedItemFilter } from "@/types/mutual-fund/items";
 import {
-  GroupedItemListItem,
+  GroupedItemListResponse,
   ItemEditResponse,
-  ItemListResponse,
+  ItemListPaginatedResponse,
 } from "@/types/mutual-fund/items/responses";
 import { createPaginatedResponse } from "@/lib/pagination/response";
 import {
   mapGroupedItems,
   mapItemDetailResponse,
   mapItemEditResponse,
-  mapItemListItem,
+  mapItemListResponse,
 } from "@/lib/mutual-fund/items/mapper";
 import { ItemLookupResponse } from "@/types/mutual-fund/items/misc";
 import { slugify } from "@/lib/utils/slugify";
@@ -59,11 +59,11 @@ const sortColumnMap = {
 /**
  *
  * @param params
- * @returns ItemListResponse
+ * @returns ItemListPaginatedResponse
  */
 export async function getItemsRepo(
   params: ItemFilter,
-): Promise<ItemListResponse> {
+): Promise<ItemListPaginatedResponse> {
   const supabase = await getSupabase();
 
   let query = supabase.from(getTable()).select(getItemsBaseQuery(), {
@@ -102,7 +102,7 @@ export async function getItemsRepo(
   if (error) throw error;
 
   return createPaginatedResponse({
-    items: (data ?? []).map(mapItemListItem),
+    items: (data ?? []).map(mapItemListResponse),
     count,
     page: params.page,
     limit: params.limit,
@@ -112,11 +112,11 @@ export async function getItemsRepo(
 /**
  *
  * @param params
- * @returns GroupedItemListItem[]
+ * @returns GroupedItemListResponse[]
  */
 export async function getGroupedItemsRepo(
   params: GroupedItemFilter,
-): Promise<GroupedItemListItem[]> {
+): Promise<GroupedItemListResponse[]> {
   const supabase = await getSupabase();
 
   // Base Query

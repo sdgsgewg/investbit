@@ -1,9 +1,9 @@
-import { CategoryListItem } from "@/types/mutual-fund/categories";
+import { CategoryListResponse } from "@/types/mutual-fund/categories";
 import { Option } from "@/types/option";
 import { Translate } from "@/types/translate";
 
 interface GetCategoryOptionsParams {
-  categories: CategoryListItem[];
+  categories: CategoryListResponse[];
   showAllCategoryOption?: boolean;
   tCommonFilter?: Translate;
 }

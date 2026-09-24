@@ -1,5 +1,5 @@
 import {
-  CategoryListItem,
+  CategoryListResponse,
   CategoryQuery,
 } from "@/types/mutual-fund/categories";
 import { apiClient } from "../client";
@@ -10,8 +10,8 @@ const baseRoute = "/mutual-fund/categories";
 
 export const fetchCategories = async (
   params?: CategoryQuery,
-): Promise<CategoryListItem[]> => {
-  const { data } = await apiClient.get<ApiResponse<CategoryListItem[]>>(
+): Promise<CategoryListResponse[]> => {
+  const { data } = await apiClient.get<ApiResponse<CategoryListResponse[]>>(
     baseRoute,
     { params },
   );

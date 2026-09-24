@@ -4,7 +4,7 @@ import { Category } from "./database";
 
 // Mutual Fund Category List
 
-export type CategoryListItem = Pick<Category, "id" | "name">;
+export type CategoryListResponse = Pick<Category, "id" | "name">;
 
 // Mutual Fund Category Detail
 

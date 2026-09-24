@@ -1,6 +1,6 @@
 import { useDeleteAction } from "@/hooks/crud";
 import { useDeleteCategory } from "./useDeleteCategory";
-import { CategoryListItem } from "@/types/mutual-fund/categories";
+import { CategoryListResponse } from "@/types/mutual-fund/categories";
 
 export function useCategoryActions() {
   const deleteMutation = useDeleteCategory();
@@ -8,7 +8,7 @@ export function useCategoryActions() {
   const handleDelete = useDeleteAction({
     deleteMutation,
     entity: "rdCategory",
-    getVariables: (category: CategoryListItem) => ({
+    getVariables: (category: CategoryListResponse) => ({
       id: category.id,
       data: category,
     }),

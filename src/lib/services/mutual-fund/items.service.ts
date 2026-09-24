@@ -15,13 +15,13 @@ import {
 } from "@/lib/validations/mutual-fund/items.schema";
 import { idSchema, slugSchema } from "@/lib/validations/primitives.schema";
 import {
-  GroupedItemListItem,
-  ItemListResponse,
+  GroupedItemListResponse,
+  ItemListPaginatedResponse,
 } from "@/types/mutual-fund/items";
 
 export async function getItemsService(
   query: unknown,
-): Promise<ItemListResponse> {
+): Promise<ItemListPaginatedResponse> {
   const parsed = itemsQuerySchema.parse(query);
 
   return getItemsRepo(parsed);
@@ -29,7 +29,7 @@ export async function getItemsService(
 
 export async function getGroupedItemsService(
   query: unknown,
-): Promise<GroupedItemListItem[]> {
+): Promise<GroupedItemListResponse[]> {
   const parsed = itemsQuerySchema.parse(query);
 
   return getGroupedItemsRepo(parsed);
