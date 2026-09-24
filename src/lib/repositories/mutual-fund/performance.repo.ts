@@ -88,17 +88,20 @@ export async function getLatestPeriodRecordsRepo(
 }
 
 /**
- * Fetches all mutual fund records matching the filter for historical analytics table calculation.
- * Paginated Supabase querying.
+ * Fetches all mutual fund performance records matching the provided filters.
  *
- * @param params
- * @returns
+ * Supabase queries are executed in pages because the analytics calculation
+ * may require more records than can safely be retrieved in a single request.
+ *
+ * @param params Optional filters used to limit the records returned.
+ * @returns All matching performance records mapped into RecordListItem objects.
  */
 export async function getPerformanceRecordsRepo(
   params?: PerformanceRepoFilter,
 ): Promise<RecordListItem[]> {
   const supabase = await getSupabase();
 
+  // Accumulate records from all pages into a single collection.
   const records: RecordListItem[] = [];
   let hasMore = true;
   let offset = 0;
@@ -108,6 +111,7 @@ export async function getPerformanceRecordsRepo(
     let query = supabase
       .from(getRecordTable())
       .select(getRecordsBaseQuery())
+      // Sort by date so aggregation can process records chronologically.
       .order("date")
       .range(offset, offset + PAGE_SIZE - 1);
 
@@ -121,14 +125,20 @@ export async function getPerformanceRecordsRepo(
     if (error) throw error;
 
     if (queryData && queryData.length > 0) {
+      // Map database rows into the application-level record structure.
       const mappedQueryData = queryData.map(mapRecordListItem);
       records.push(...(mappedQueryData as unknown as RecordListItem[]));
+
+      // A page smaller than PAGE_SIZE indicates that there are no more
+      // records to retrieve.
       if (queryData.length < PAGE_SIZE) {
         hasMore = false;
       } else {
+        // Move to the next page when the current page is full.
         offset += PAGE_SIZE;
       }
     } else {
+      // Stop when the query returns no records.
       hasMore = false;
     }
   }

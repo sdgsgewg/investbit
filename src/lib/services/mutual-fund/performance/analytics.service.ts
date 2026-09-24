@@ -4,14 +4,20 @@ import { performanceAnalyticsQuerySchema } from "@/lib/validations/mutual-fund/p
 import { PerformanceAnalyticsResponse } from "@/types/mutual-fund/performance";
 
 /**
- * Service orchestrating input validation, data access, and domain aggregation
- * for historical performance analytics table.
+ * Orchestrates the performance analytics flow by:
+ * 1. Validating and parsing the input query.
+ * 2. Fetching the required performance records from the repository.
+ * 3. Aggregating the records into the response format used by the analytics table.
+ *
+ * The service keeps validation, data access, and aggregation responsibilities
+ * separated into their respective layers.
  */
 export async function getPerformanceAnalyticsService(
   query: unknown,
 ): Promise<PerformanceAnalyticsResponse> {
   const parsed = performanceAnalyticsQuerySchema.parse(query);
 
+  // Fetch the raw performance records required for aggregation.
   const records = await getPerformanceRecordsRepo({
     categoryId: parsed.categoryId,
   });

@@ -1,6 +1,6 @@
 import { getQuery } from "@/lib/api/query";
 import { errorResponse, successResponse } from "@/lib/api/response";
-import { getCategoryLeaderboardService } from "@/lib/services/mutual-fund/leaderboard.service";
+import { getCategoryLeaderboardService } from "@/lib/services/mutual-fund/performance/leaderboard.service";
 import { CategoryLeaderboardFilter } from "@/types/mutual-fund/performance";
 
 export async function GET(request: Request) {

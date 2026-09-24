@@ -1,27 +1,32 @@
 import {
   CategoryLeaderboardResponse,
-  PerformanceData,
   PerformanceWinner,
   RankedPerformanceCategory,
-  RankedPerformanceItem,
   TopPerformersResponse,
 } from "@/types/mutual-fund/performance";
 import { RecordListItem } from "@/types/mutual-fund/records";
 import { TimeFrame } from "@/enums/TimeFrame";
 import { getPerformancePeriodKey } from "./period";
-
-// Re-export response interfaces for backward compatibility
-export type { PerformanceWinner, RankedPerformanceItem, RankedPerformanceCategory };
-export type TopPerformersResult = TopPerformersResponse;
+import { aggregatePerformanceRecordsByItem } from "./aggregator";
 
 /**
- * Computes top performers directly from lightweight raw records in the latest period.
+ * Computes the top-performing mutual funds from raw performance records
+ * belonging to the latest available period.
+ *
+ * Records are grouped by category and mutual fund item before determining
+ * the best performer for each category and the overall best performer.
+ *
+ * @param records Raw performance records used for the calculation.
+ * @param timeFrame Timeframe used to calculate the performance.
+ * @param latestDate Latest available record date.
+ * @returns Overall and category-level top performers.
  */
 export function computeTopPerformersFromRecords(
   records: RecordListItem[],
   timeFrame: TimeFrame = TimeFrame.WEEKLY,
   latestDate: string | null,
 ): TopPerformersResponse {
+  // Return an empty response when there is no valid period to calculate.
   if (!latestDate || records.length === 0) {
     return {
       latestPeriod: "",
@@ -30,55 +35,37 @@ export function computeTopPerformersFromRecords(
     };
   }
 
+  // Convert the latest record date into the period key used by the analytics.
   const latestPeriod = getPerformancePeriodKey(latestDate, timeFrame);
 
-  const categoryMap: Record<
-    string,
-    Record<string, { itemName: string; yieldValue: number }>
-  > = {};
-
-  records.forEach((record) => {
-    const item = record.item;
-    if (!item || !item.category) return;
-    const catName = item.category.name;
-    if (!categoryMap[catName]) {
-      categoryMap[catName] = {};
-    }
-    const val =
-      timeFrame === TimeFrame.YTD
-        ? (record.yieldYtd ?? 0)
-        : (record.yield1d ?? 0);
-
-    if (!categoryMap[catName][item.id]) {
-      categoryMap[catName][item.id] = {
-        itemName: item.name,
-        yieldValue: val,
-      };
-    } else if (timeFrame !== TimeFrame.YTD) {
-      categoryMap[catName][item.id].yieldValue += val;
-    }
-  });
+  const categoryMap = aggregatePerformanceRecordsByItem(records, timeFrame);
 
   let overallBest: PerformanceWinner | null = null;
   const categoryBests: PerformanceWinner[] = [];
 
-  Object.entries(categoryMap).forEach(([catName, items]) => {
-    let bestInCat: PerformanceWinner | null = null;
+  Object.entries(categoryMap).forEach(([categoryName, items]) => {
+    let bestInCategory: PerformanceWinner | null = null;
+
     Object.values(items).forEach(({ itemName, yieldValue }) => {
       const winner: PerformanceWinner = {
         name: itemName,
-        category: catName,
+        category: categoryName,
         yieldValue,
       };
-      if (!bestInCat || yieldValue > bestInCat.yieldValue) {
-        bestInCat = winner;
+
+      // Keep the highest-performing item within the current category.
+      if (!bestInCategory || yieldValue > bestInCategory.yieldValue) {
+        bestInCategory = winner;
       }
+
+      // Keep the highest-performing item across all categories.
       if (!overallBest || yieldValue > overallBest.yieldValue) {
         overallBest = winner;
       }
     });
-    if (bestInCat) {
-      categoryBests.push(bestInCat);
+
+    if (bestInCategory) {
+      categoryBests.push(bestInCategory);
     }
   });
 
@@ -90,13 +77,23 @@ export function computeTopPerformersFromRecords(
 }
 
 /**
- * Computes leaderboard directly from lightweight raw records in the latest period.
+ * Computes a leaderboard of mutual fund items grouped by category
+ * using raw performance records from the latest available period.
+ *
+ * Each category is sorted alphabetically, while items within each category
+ * are ranked by their calculated performance in descending order.
+ *
+ * @param records Raw performance records used for the leaderboard.
+ * @param timeFrame Timeframe used to calculate the performance.
+ * @param latestDate Latest available record date.
+ * @returns Ranked mutual fund items grouped by category.
  */
 export function computeCategoryLeaderboardFromRecords(
   records: RecordListItem[],
   timeFrame: TimeFrame = TimeFrame.WEEKLY,
   latestDate: string | null,
 ): CategoryLeaderboardResponse {
+  // Return an empty leaderboard when there is no valid period to calculate.
   if (!latestDate || records.length === 0) {
     return {
       latestPeriod: "",
@@ -104,150 +101,24 @@ export function computeCategoryLeaderboardFromRecords(
     };
   }
 
+  // Convert the latest record date into the period key used by the leaderboard.
   const latestPeriod = getPerformancePeriodKey(latestDate, timeFrame);
 
-  const categoryMap: Record<
-    string,
-    Record<string, { itemName: string; yieldValue: number }>
-  > = {};
-
-  records.forEach((record) => {
-    const item = record.item;
-    if (!item || !item.category) return;
-    const catName = item.category.name;
-    if (!categoryMap[catName]) {
-      categoryMap[catName] = {};
-    }
-    const val =
-      timeFrame === TimeFrame.YTD
-        ? (record.yieldYtd ?? 0)
-        : (record.yield1d ?? 0);
-
-    if (!categoryMap[catName][item.id]) {
-      categoryMap[catName][item.id] = {
-        itemName: item.name,
-        yieldValue: val,
-      };
-    } else if (timeFrame !== TimeFrame.YTD) {
-      categoryMap[catName][item.id].yieldValue += val;
-    }
-  });
+  const categoryMap = aggregatePerformanceRecordsByItem(records, timeFrame);
 
   const rankedCategories: RankedPerformanceCategory[] = Object.entries(
     categoryMap,
   )
+    // Keep category ordering deterministic for the UI.
     .sort(([a], [b]) => a.localeCompare(b))
-    .map(([catName, items]) => {
+    .map(([categoryName, items]) => {
       const rankedItems = Object.entries(items)
         .map(([itemId, { itemName, yieldValue }]) => ({
           itemId,
           itemName,
           yieldValue,
         }))
-        .sort((a, b) => b.yieldValue - a.yieldValue)
-        .map((item, idx) => ({
-          ...item,
-          rank: idx + 1,
-        }));
-
-      return {
-        categoryName: catName,
-        rankedItems,
-      };
-    })
-    .filter((c) => c.rankedItems.length > 0);
-
-  return {
-    latestPeriod,
-    rankedCategories,
-  };
-}
-
-/**
- * Legacy matrix selector for Top Performers (from PerformanceData)
- */
-export function getTopPerformers(
-  data: PerformanceData,
-  timePeriods: string[],
-): TopPerformersResponse | null {
-  const latestPeriod = timePeriods.at(-1);
-
-  if (!latestPeriod || data.length === 0) {
-    return null;
-  }
-
-  let overallBest: PerformanceWinner | null = null;
-  const categoryBests: PerformanceWinner[] = [];
-
-  for (const category of data) {
-    let bestInCategory: PerformanceWinner | null = null;
-
-    for (const item of category.items) {
-      const yieldValue = item.yields[latestPeriod];
-
-      if (yieldValue === undefined || Number.isNaN(yieldValue)) {
-        continue;
-      }
-
-      const currentItem: PerformanceWinner = {
-        name: item.itemName,
-        category: category.categoryName,
-        yieldValue,
-      };
-
-      if (!bestInCategory || yieldValue > bestInCategory.yieldValue) {
-        bestInCategory = currentItem;
-      }
-
-      if (!overallBest || yieldValue > overallBest.yieldValue) {
-        overallBest = currentItem;
-      }
-    }
-
-    if (bestInCategory) {
-      categoryBests.push(bestInCategory);
-    }
-  }
-
-  return {
-    latestPeriod,
-    overallBest,
-    categoryBests,
-  };
-}
-
-/**
- * Legacy matrix selector for Category Leaderboard (from PerformanceData)
- */
-export function getCategoryLeaderboard(
-  data: PerformanceData,
-  timePeriods: string[],
-): RankedPerformanceCategory[] {
-  const latestPeriod = timePeriods.at(-1);
-
-  if (!latestPeriod || data.length === 0) {
-    return [];
-  }
-
-  return data
-    .map((category) => {
-      const rankedItems = category.items
-        .map((item) => {
-          const yieldValue = item.yields[latestPeriod];
-
-          if (yieldValue === undefined || Number.isNaN(yieldValue)) {
-            return null;
-          }
-
-          return {
-            itemId: item.itemId,
-            itemName: item.itemName,
-            yieldValue,
-          };
-        })
-        .filter(
-          (item): item is Omit<RankedPerformanceItem, "rank"> => item !== null,
-        )
+        // Highest-performing items receive the smallest rank number.
         .sort((a, b) => b.yieldValue - a.yieldValue)
         .map((item, index) => ({
           ...item,
@@ -255,9 +126,15 @@ export function getCategoryLeaderboard(
         }));
 
       return {
-        categoryName: category.categoryName,
+        categoryName,
         rankedItems,
       };
     })
+    // Exclude categories that ended up without any valid ranked items.
     .filter((category) => category.rankedItems.length > 0);
+
+  return {
+    latestPeriod,
+    rankedCategories,
+  };
 }

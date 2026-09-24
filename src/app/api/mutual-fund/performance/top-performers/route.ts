@@ -1,6 +1,6 @@
 import { getQuery } from "@/lib/api/query";
 import { errorResponse, successResponse } from "@/lib/api/response";
-import { getTopPerformersService } from "@/lib/services/mutual-fund/top-performers.service";
+import { getTopPerformersService } from "@/lib/services/mutual-fund/performance/top-performers.service";
 import { TopPerformersFilter } from "@/types/mutual-fund/performance";
 
 export async function GET(request: Request) {

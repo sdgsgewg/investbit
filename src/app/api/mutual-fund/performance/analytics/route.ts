@@ -1,6 +1,6 @@
 import { getQuery } from "@/lib/api/query";
 import { errorResponse, successResponse } from "@/lib/api/response";
-import { getPerformanceAnalyticsService } from "@/lib/services/mutual-fund/analytics.service";
+import { getPerformanceAnalyticsService } from "@/lib/services/mutual-fund/performance/analytics.service";
 import { PerformanceAnalyticsFilter } from "@/types/mutual-fund/performance";
 
 export async function GET(request: Request) {

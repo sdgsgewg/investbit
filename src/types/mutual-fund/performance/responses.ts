@@ -14,7 +14,7 @@ export interface TopPerformersResponse {
 
 // --- Category Leaderboard Types ---
 
-export interface RankedPerformanceItem {
+interface RankedPerformanceItem {
   itemId: string;
   itemName: string;
   yieldValue: number;
@@ -36,6 +36,8 @@ export interface CategoryLeaderboardResponse {
 export interface PerformanceItem {
   itemId: string;
   itemName: string;
+
+  // Maps each period key (e.g. date/week/year) to the calculated yield.
   yields: Record<string, number>;
 }
 
@@ -46,18 +48,25 @@ export interface PerformanceAggregatedData {
 
 export type PerformanceData = PerformanceAggregatedData[];
 
+// Stores the minimum and maximum yield for each category and period.
 export type CategoryStats = Record<
   string,
   Record<string, { min: number; max: number }>
 >;
 
 export interface PerformanceAnalyticsResponse {
+  // Aggregated performance data grouped by category and mutual fund item.
   data: PerformanceData;
+
+  // Periods currently displayed after applying range/limit filters.
   timePeriods: string[];
+
+  // All periods available before applying range/limit filters.
   availablePeriods: string[];
+
+  // Minimum and maximum values used by the analytics table for styling/statistics.
   categoryStats: CategoryStats;
+
+  // Indicates whether older periods exist outside the current period limit.
   hasMoreOlder: boolean;
 }
-
-// Backward compatibility alias
-export type PerformanceResponse = PerformanceAnalyticsResponse;

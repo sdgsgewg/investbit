@@ -15,7 +15,7 @@ export async function getTopPerformersService(
   const { records, latestDate } = await getLatestPeriodRecordsRepo(
     parsed.timeFrame,
     parsed.categoryId,
-  );
+);
 
   return computeTopPerformersFromRecords(records, parsed.timeFrame, latestDate);
 }
