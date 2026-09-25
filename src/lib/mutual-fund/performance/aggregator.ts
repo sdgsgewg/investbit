@@ -75,12 +75,11 @@ export function aggregatePerformanceRecordsByItem(
       const periodKey = getPerformancePeriodKey(record.date, timeFrame);
       if (latestPeriod && periodKey !== latestPeriod) return;
 
-      // With no earlier valid NAV in the available history, this row has no
-      // measurable change; treat the first observation as a 0% contribution.
-      const yieldValue =
-        previousNav && previousNav > 0
-          ? ((nav - previousNav) / previousNav) * 100
-          : 0;
+      // Without an earlier valid NAV there is no return to calculate. Do not
+      // add this item to the leaderboard as a fabricated 0% performer.
+      if (previousNav === undefined || previousNav <= 0) return;
+
+      const yieldValue = ((nav - previousNav) / previousNav) * 100;
 
       const existingItem = categoryMap[categoryName][item.id];
 
@@ -179,7 +178,7 @@ export function aggregatePerformanceRecords(
     // This is the NAV growth factor for this record (for example, 1.01 means +1%).
     const dailyReturn = nav / previousNav;
     const existingValue = yields[periodKey];
-    
+
     // Keep the first daily change as the period return. For later records,
     // apply the new change to the return already stored for this period.
     // Example: +1% followed by -0.5% gives +0.495% for the period.
