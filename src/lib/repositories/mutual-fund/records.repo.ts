@@ -21,8 +21,6 @@ export function getRecordsBaseQuery() {
     id,
     date,
     nav_1d,
-    yield_1d,
-    yield_ytd,
 
     item:rd_items!rd_records_item_id_fkey!inner (
       id,

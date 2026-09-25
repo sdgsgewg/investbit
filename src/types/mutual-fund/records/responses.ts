@@ -5,7 +5,5 @@ import { Record } from "./database";
 
 export type RecordListItem = Pick<Record, "id" | "date"> & {
   nav1d: number | null;
-  yield1d: number | null;
-  yieldYtd: number | null;
   item: ItemResponse;
 };

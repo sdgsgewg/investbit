@@ -38,7 +38,11 @@ export function computeTopPerformersFromRecords(
   // Convert the latest record date into the period key used by the analytics.
   const latestPeriod = getPerformancePeriodKey(latestDate, timeFrame);
 
-  const categoryMap = aggregatePerformanceRecordsByItem(records, timeFrame);
+  const categoryMap = aggregatePerformanceRecordsByItem(
+    records,
+    timeFrame,
+    latestDate,
+  );
 
   let overallBest: PerformanceWinner | null = null;
   const categoryBests: PerformanceWinner[] = [];
@@ -104,7 +108,11 @@ export function computeCategoryLeaderboardFromRecords(
   // Convert the latest record date into the period key used by the leaderboard.
   const latestPeriod = getPerformancePeriodKey(latestDate, timeFrame);
 
-  const categoryMap = aggregatePerformanceRecordsByItem(records, timeFrame);
+  const categoryMap = aggregatePerformanceRecordsByItem(
+    records,
+    timeFrame,
+    latestDate,
+  );
 
   const rankedCategories: RankedPerformanceCategory[] = Object.entries(
     categoryMap,

@@ -22,55 +22,82 @@ type PerformanceCategoryMap = Record<
 >;
 
 /**
- * Aggregates raw performance records by category and mutual fund item.
+ * Builds the Top Performers / Leaderboard values for the latest period.
  *
- * YTD records already contain an accumulated year-to-date value, so only
- * the first value is kept. Other timeframes accumulate daily yields for
- * the same mutual fund item.
+ * We scan the complete NAV history in date order so the first NAV inside the
+ * latest period can be compared with the last NAV before that period. Only
+ * rows in `latestPeriod` contribute to the output; older rows only establish
+ * each fund's previous NAV.
+ *
+ * Example (latest period is the week containing Jan 6 and Jan 7):
+ *   Jan 3 NAV 100  -> baseline only
+ *   Jan 6 NAV 101  -> (101 - 100) / 100 * 100 = +1%
+ *   Jan 7 NAV 100.5 -> (100.5 - 101) / 101 * 100 ~= -0.49505%
+ *   weekly output  -> (1.01 * 100.5 / 101 - 1) * 100 = +0.5%
+ *
+ * `previousNavByItem` keeps each fund's last valid NAV independently. Missing,
+ * zero, negative, or non-finite NAVs are ignored and do not replace the
+ * previous valid NAV. Daily changes are compounded so the period result is
+ * equivalent to (last NAV / NAV before period - 1) * 100.
  */
 export function aggregatePerformanceRecordsByItem(
   records: RecordListItem[],
   timeFrame: TimeFrame,
+  latestDate?: string | null,
 ): PerformanceCategoryMap {
-  // Group records by category and then by mutual fund item.
-  // Each item stores its accumulated performance value for the period.
   const categoryMap: PerformanceCategoryMap = {};
+  const latestPeriod = latestDate
+    ? getPerformancePeriodKey(latestDate, timeFrame)
+    : null;
+  const previousNavByItem = new Map<string, number>();
 
-  records.forEach((record) => {
-    const item = record.item;
+  [...records]
+    .sort((a, b) => a.date.localeCompare(b.date))
+    .forEach((record) => {
+      const item = record.item;
 
-    // Ignore records that cannot be associated with a category or item.
-    if (!item || !item.category) return;
+      // Ignore records that cannot be associated with a category or item.
+      if (!item || !item.category) return;
 
-    const categoryName = item.category.name;
+      const categoryName = item.category.name;
 
-    if (!categoryMap[categoryName]) {
-      categoryMap[categoryName] = {};
-    }
+      if (!categoryMap[categoryName]) {
+        categoryMap[categoryName] = {};
+      }
 
-    // YTD already represents the accumulated year-to-date value,
-    // while other timeframes use the daily yield as the value to aggregate.
-    const yieldValue =
-      timeFrame === TimeFrame.YTD
-        ? (record.yieldYtd ?? 0)
-        : (record.yield1d ?? 0);
+      const nav = record.nav1d;
+      if (nav === null || !Number.isFinite(nav) || nav <= 0) return;
+      const previousNav = previousNavByItem.get(item.id);
+      // Update the baseline even for older periods, before filtering, so the
+      // first latest-period row has the correct NAV to compare against.
+      previousNavByItem.set(item.id, nav);
 
-    const existingItem = categoryMap[categoryName][item.id];
+      const periodKey = getPerformancePeriodKey(record.date, timeFrame);
+      if (latestPeriod && periodKey !== latestPeriod) return;
 
-    if (!existingItem) {
-      categoryMap[categoryName][item.id] = {
-        itemName: item.name,
-        yieldValue,
-      };
-      return;
-    }
+      // With no earlier valid NAV in the available history, this row has no
+      // measurable change; treat the first observation as a 0% contribution.
+      const yieldValue =
+        previousNav && previousNav > 0
+          ? ((nav - previousNav) / previousNav) * 100
+          : 0;
 
-    if (timeFrame !== TimeFrame.YTD) {
-      // For non-YTD timeframes, accumulate daily yields belonging
-      // to the same item and period.
-      existingItem.yieldValue += yieldValue;
-    }
-  });
+      const existingItem = categoryMap[categoryName][item.id];
+
+      if (!existingItem) {
+        categoryMap[categoryName][item.id] = {
+          itemName: item.name,
+          yieldValue,
+        };
+        return;
+      }
+
+      // Multiply growth factors instead of adding percentages. For example,
+      // +10% followed by -10% produces -1%, not 0%.
+      existingItem.yieldValue =
+        ((1 + existingItem.yieldValue / 100) * (1 + yieldValue / 100) - 1) *
+        100;
+    });
 
   return categoryMap;
 }
@@ -83,11 +110,14 @@ type GroupedCategory = {
 };
 
 /**
- * Aggregates raw performance records for analytics table
+ * Converts the NAV history into a per-fund return for each selected period.
+ * Records must be ordered by date (the repository returns them that way).
+ * The first observed NAV for each fund establishes its baseline and therefore
+ * has no return. Each later NAV contributes `(current / previous - 1) * 100`.
+ * Contributions are compounded within their timeframe bucket.
  *
- * @param records
- * @param params
- * @returns
+ * Example: NAV 100, 101, 100.5 within one week yields daily changes of +1%
+ * and about -0.49505%; the weekly bucket becomes +0.5%.
  */
 export function aggregatePerformanceRecords(
   records: RecordListItem[],
@@ -100,6 +130,7 @@ export function aggregatePerformanceRecords(
 
   // Tracks every period that exists in the source records.
   const timeSet = new Set<string>();
+  const previousNavByItem = new Map<string, number>();
 
   records.forEach((record) => {
     const item = record.item;
@@ -135,20 +166,27 @@ export function aggregatePerformanceRecords(
 
     const yields = grouped[categoryName].items[item.id].yields;
 
-    if (timeFrame === TimeFrame.YTD) {
-      // Records are processed in ascending date order, so assigning the
-      // value repeatedly leaves the latest available YTD value for the year.
-      yields[periodKey] = record.yieldYtd ?? 0;
-      return;
-    }
+    const nav = record.nav1d;
+    // Invalid NAV data cannot produce a meaningful return and must not become
+    // the baseline for the next observation.
+    if (nav === null || !Number.isFinite(nav) || nav <= 0) return;
+    const itemKey = item.id;
+    const previousNav = previousNavByItem.get(itemKey);
+    previousNavByItem.set(itemKey, nav);
+    // The first valid observation only initializes the item's baseline.
+    if (previousNav === undefined || previousNav <= 0) return;
 
-    // Daily uses the record's daily yield directly, while other timeframes
-    // accumulate daily yields belonging to the same period.
-    const value = record.yield1d ?? 0;
-    const existingValue = yields[periodKey] ?? 0;
-
+    // This is the NAV growth factor for this record (for example, 1.01 means +1%).
+    const dailyReturn = nav / previousNav;
+    const existingValue = yields[periodKey];
+    
+    // Keep the first daily change as the period return. For later records,
+    // apply the new change to the return already stored for this period.
+    // Example: +1% followed by -0.5% gives +0.495% for the period.
     yields[periodKey] =
-      timeFrame === TimeFrame.DAILY ? value : existingValue + value;
+      existingValue === undefined
+        ? (dailyReturn - 1) * 100
+        : ((1 + existingValue / 100) * dailyReturn - 1) * 100;
   });
 
   // Convert the Set into a chronologically sorted list of available periods.

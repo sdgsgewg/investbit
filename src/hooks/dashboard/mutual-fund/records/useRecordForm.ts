@@ -35,9 +35,6 @@ export function useRecordForm(
     recordsData.forEach((record) => {
       result[record.item.id] = {
         nav_1d: record.nav1d !== null ? formatDecimal(record.nav1d, 4) : "",
-        yield_1d: record.yield1d !== null ? formatDecimal(record.yield1d) : "",
-        yield_ytd:
-          record.yieldYtd !== null ? formatDecimal(record.yieldYtd) : "",
       };
     });
 
@@ -71,26 +68,13 @@ export function useRecordForm(
       const original = mappedInputs[itemId];
 
       const currentNav1d = val.nav_1d ?? "";
-      const currentYield1d = val.yield_1d ?? "";
-      const currentYieldYtd = val.yield_ytd ?? "";
-
       const originalNav1d = original?.nav_1d ?? "";
-      const originalYield1d = original?.yield_1d ?? "";
-      const originalYieldYtd = original?.yield_ytd ?? "";
 
-      if (
-        currentNav1d !== "" ||
-        currentYield1d !== "" ||
-        currentYieldYtd !== ""
-      ) {
+      if (currentNav1d !== "") {
         hasAnyValue = true;
       }
 
-      if (
-        currentNav1d !== originalNav1d ||
-        currentYield1d !== originalYield1d ||
-        currentYieldYtd !== originalYieldYtd
-      ) {
+      if (currentNav1d !== originalNav1d) {
         hasChanges = true;
       }
 
@@ -109,11 +93,7 @@ export function useRecordForm(
     setLocalInputs((prev) => ({
       ...prev,
       [itemId]: {
-        nav_1d: prev[itemId]?.nav_1d ?? mappedInputs[itemId]?.nav_1d ?? "",
-        yield_1d:
-          prev[itemId]?.yield_1d ?? mappedInputs[itemId]?.yield_1d ?? "",
-        yield_ytd:
-          prev[itemId]?.yield_ytd ?? mappedInputs[itemId]?.yield_ytd ?? "",
+        // nav_1d: prev[itemId]?.nav_1d ?? mappedInputs[itemId]?.nav_1d ?? "",
         [field]: value,
       },
     }));
@@ -126,23 +106,14 @@ export function useRecordForm(
     return Object.entries(inputs)
       .map(([itemId, values]) => {
         const parsedNav1d = parseNumber(values.nav_1d);
-        const parsedYield1d = parseNumber(values.yield_1d);
-        const parsedYieldYtd = parseNumber(values.yield_ytd);
 
         return {
           item_id: itemId,
           date: selectedDate,
           nav_1d: parsedNav1d,
-          yield_1d: parsedYield1d,
-          yield_ytd: parsedYieldYtd,
         };
       })
-      .filter(
-        (doc) =>
-          doc.nav_1d !== null ||
-          doc.yield_1d !== null ||
-          doc.yield_ytd !== null,
-      );
+      .filter((doc) => doc.nav_1d !== null);
   };
 
   // Clear all local edits and restore the form to the current server values.

@@ -1,14 +1,8 @@
 import { createClient } from "@/utils/supabase/server";
 import { DbRecordListRow, RecordListItem } from "@/types/mutual-fund/records";
-import {
-  getRecordsBaseQuery,
-  getRecordTable,
-  getRecordsRepo,
-} from "./records.repo";
+import { getRecordsBaseQuery, getRecordTable } from "./records.repo";
 import { mapRecordListItem } from "@/lib/mutual-fund/records/mapper";
 import { TimeFrame } from "@/enums/TimeFrame";
-import { getWeekInfo } from "@/lib/mutual-fund/performance/period";
-import { format, startOfMonth } from "date-fns";
 
 async function getSupabase() {
   return createClient();
@@ -39,15 +33,15 @@ async function getLatestRecordDateRepo(): Promise<string | null> {
 }
 
 /**
- * Fetches ONLY records within the latest period (e.g. latest week/month/day).
- * Used by Top Performers and Category Leaderboard.
+ * Fetches historical NAV records needed to calculate the latest period's
+ * return against the last available NAV before that period.
  *
  * @param timeFrame
  * @param categoryId
  * @returns { records: RecordListItem[]; latestDate: string | null }
  */
 export async function getLatestPeriodRecordsRepo(
-  timeFrame?: TimeFrame,
+  _timeFrame?: TimeFrame,
   categoryId?: string,
 ): Promise<{ records: RecordListItem[]; latestDate: string | null }> {
   const latestDate = await getLatestRecordDateRepo();
@@ -55,34 +49,9 @@ export async function getLatestPeriodRecordsRepo(
     return { records: [], latestDate: null };
   }
 
-  let startDate = latestDate;
-  let endDate = latestDate;
-
-  switch (timeFrame) {
-    case TimeFrame.WEEKLY:
-      const weekInfo = getWeekInfo(latestDate);
-      if (weekInfo.start && weekInfo.end) {
-        startDate = format(weekInfo.start, "yyyy-MM-dd");
-        endDate = format(weekInfo.end, "yyyy-MM-dd");
-      }
-      break;
-    case TimeFrame.MONTHLY:
-      startDate = format(startOfMonth(new Date(latestDate)), "yyyy-MM-dd");
-      endDate = latestDate;
-      break;
-    case TimeFrame.YEARLY:
-      startDate = `${latestDate.substring(0, 4)}-01-01`;
-      endDate = latestDate;
-      break;
-    default:
-      break;
-  }
-
-  const records = await getRecordsRepo({
-    startDate,
-    endDate,
-    categoryId,
-  });
+  // NAV returns require a baseline before the selected window. Fetching the
+  // full series also handles holidays and gaps in an item's NAV history.
+  const records = await getPerformanceRecordsRepo({ categoryId });
 
   return { records, latestDate };
 }
@@ -127,8 +96,7 @@ export async function getPerformanceRecordsRepo(
 
     if (queryData && queryData.length > 0) {
       // Map database rows into the application-level record structure.
-      const mappedQueryData = queryData.map(mapRecordListItem);
-      records.push(...(mappedQueryData as unknown as RecordListItem[]));
+      records.push(...queryData.map(mapRecordListItem));
 
       // A page smaller than PAGE_SIZE indicates that there are no more
       // records to retrieve.

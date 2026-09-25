@@ -8,8 +8,6 @@ export const recordMutationSchema = z.object({
   item_id: uuidSchema,
   date: z.string(),
   nav_1d: z.number().nullable().optional(),
-  yield_1d: z.number().nullable().optional(),
-  yield_ytd: z.number().nullable().optional(),
 });
 
 export const recordsMutationSchema = z.array(recordMutationSchema).min(1);

@@ -32,12 +32,6 @@ const InputTable = ({
           <th className="py-3 px-4 text-sm md:text-base font-semibold w-40 text-center">
             {tRecords("table.nav1d")}
           </th>
-          <th className="py-3 px-4 text-sm md:text-base font-semibold w-40 text-center">
-            {tRecords("table.yield1d")}
-          </th>
-          <th className="py-3 px-4 text-sm md:text-base font-semibold w-40 text-center">
-            {tRecords("table.yieldYtd")}
-          </th>
         </>
       }
       bodyChildren={
@@ -50,7 +44,7 @@ const InputTable = ({
                 {/* Category Header */}
                 <tr className="sticky top-10.5 md:top-11.5 z-10 bg-zinc-50  dark:bg-zinc-950 border-t border-b border-zinc-200 dark:border-zinc-800">
                   <td
-                    colSpan={4}
+                    colSpan={2}
                     className="py-2 px-4 text-xs sm:text-sm md:text-base font-bold"
                   >
                     {category.name}
@@ -77,26 +71,6 @@ const InputTable = ({
                           fractionDigits={4}
                           onChange={(val) =>
                             onInputChange(item.id, "nav_1d", val)
-                          }
-                        />
-                      </td>
-
-                      {/* Yield 1 Day */}
-                      <td className="py-2 px-2 text-xs sm:text-sm md:text-base">
-                        <InputNumber
-                          value={inputs[item.id]?.yield_1d}
-                          onChange={(val) =>
-                            onInputChange(item.id, "yield_1d", val)
-                          }
-                        />
-                      </td>
-
-                      {/* Yield YTD */}
-                      <td className="py-2 px-2 text-xs sm:text-sm md:text-base">
-                        <InputNumber
-                          value={inputs[item.id]?.yield_ytd}
-                          onChange={(val) =>
-                            onInputChange(item.id, "yield_ytd", val)
                           }
                         />
                       </td>

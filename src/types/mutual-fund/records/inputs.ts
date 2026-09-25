@@ -19,4 +19,4 @@ export type RecordFilter = z.infer<typeof recordsQuerySchema>;
 export type UpsertRecordsInput = z.infer<typeof upsertRecordSchema>;
 
 // Input Table Inputs
-export type FieldInput = "nav_1d" | "yield_1d" | "yield_ytd";
+export type FieldInput = "nav_1d";

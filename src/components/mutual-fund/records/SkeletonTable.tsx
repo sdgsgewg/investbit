@@ -12,10 +12,8 @@ const SkeletonTable = () => {
 
           {/* rows */}
           {[...Array(3)].map((_, j) => (
-            <div key={j} className="grid grid-cols-4 gap-4 mb-2">
+            <div key={j} className="grid grid-cols-2 gap-4 mb-2">
               <div className="h-4 bg-zinc-200 dark:bg-zinc-700 rounded" />
-              <div className="h-8 bg-zinc-200 dark:bg-zinc-700 rounded" />
-              <div className="h-8 bg-zinc-200 dark:bg-zinc-700 rounded" />
               <div className="h-8 bg-zinc-200 dark:bg-zinc-700 rounded" />
             </div>
           ))}
