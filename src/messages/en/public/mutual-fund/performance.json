@@ -33,7 +33,7 @@
 
   "topPerformers": {
     "title": "Top Performers Overview",
-    "noData": "No performance data available",
+    "noData": "Top performers data is not available",
     "labels": {
       "daily": "Mutual Fund of the Day",
       "weekly": "Mutual Fund of the Week",
@@ -46,7 +46,7 @@
   "leaderboard": {
     "title": "Leaderboards",
     "subtitle": "Ranked by the latest available period: {period}",
-    "noData": "No leaderboard data is available yet",
+    "noData": "Leaderboard data is not available",
     "labels": {
       "funds": "{count} mutual funds"
     }

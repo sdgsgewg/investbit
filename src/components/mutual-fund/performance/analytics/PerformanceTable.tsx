@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 import TableWrapper from "@/components/wrappers/TableWrapper";
 import {
@@ -31,8 +31,30 @@ const PerformanceTable: React.FC<PerformanceTableProps> = ({
     "public.mutualFund.performance.analytics",
   );
 
+  const [headerHeight, setHeaderHeight] = useState(0);
+  const headerRef = useRef<HTMLTableSectionElement>(null);
+
+  // Update header height logic
+  useEffect(() => {
+    const header = headerRef.current;
+
+    if (!header) return;
+
+    const updateHeaderHeight = () => {
+      setHeaderHeight(header.getBoundingClientRect().height);
+    };
+
+    updateHeaderHeight();
+
+    const observer = new ResizeObserver(updateHeaderHeight);
+    observer.observe(header);
+
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <TableWrapper
+      headerRef={headerRef}
       headerChildren={
         <>
           <th className="py-3 px-4 text-sm sm:text-base font-semibold min-w-40 lg:min-w-72 sticky left-0 z-30 bg-zinc-100 dark:bg-zinc-800 border-r border-zinc-200 dark:border-zinc-700">
@@ -61,7 +83,10 @@ const PerformanceTable: React.FC<PerformanceTableProps> = ({
           {data.map((category) => (
             <React.Fragment key={category.categoryName}>
               {/* Category Header */}
-              <tr className="sticky top-15.5 md:top-17.5 z-50 bg-zinc-50 dark:bg-zinc-950 border-y border-zinc-200 dark:border-zinc-800">
+              <tr
+                className="sticky z-50 bg-zinc-50 dark:bg-zinc-950 border-y border-zinc-200 dark:border-zinc-800"
+                style={{ top: headerHeight - 1 }}
+              >
                 {/* Sticky left cell */}
                 <td className="py-2 px-4 text-sm md:text-base font-bold sticky left-0 bg-zinc-50 dark:bg-zinc-950 border-r border-zinc-200 dark:border-zinc-700">
                   {category.categoryName}

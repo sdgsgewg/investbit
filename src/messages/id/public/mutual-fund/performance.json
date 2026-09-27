@@ -33,7 +33,7 @@
 
   "topPerformers": {
     "title": "Ikhtisar Kinerja Terbaik",
-    "noData": "Data performa tidak tersedia",
+    "noData": "Data top performa tidak tersedia",
     "labels": {
       "daily": "Reksa Dana Terbaik Hari Ini",
       "weekly": "Reksa Dana Terbaik Minggu Ini",
@@ -46,7 +46,7 @@
   "leaderboard": {
     "title": "Papan Peringkat",
     "subtitle": "Peringkat berdasarkan periode terbaru: {period}",
-    "noData": "Belum ada data peringkat yang bisa ditampilkan",
+    "noData": "Data peringkat tidak tersedia",
     "labels": {
       "funds": "{count} reksa dana"
     }
