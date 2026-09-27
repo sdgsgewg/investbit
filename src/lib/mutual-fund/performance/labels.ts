@@ -12,8 +12,6 @@ export const getTimeFrameLabel = (
       return tTimeFrame("weekly.label");
     case TimeFrame.MONTHLY:
       return tTimeFrame("monthly.label");
-    case TimeFrame.YTD:
-      return tTimeFrame("ytd.label");
     case TimeFrame.YEARLY:
       return tTimeFrame("yearly.label");
   }

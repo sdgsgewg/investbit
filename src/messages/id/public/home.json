@@ -23,7 +23,7 @@
       },
       "performance": {
         "title": "Performa Reksa Dana",
-        "description": "Lihat dan bandingkan return reksa dana dalam periode 1 hari, 1 bulan, 3 bulan, YTD, dan 1 tahun."
+        "description": "Lihat dan bandingkan return reksa dana dalam periode 1 hari, 1 minggu, 1 bulan, dan 1 tahun."
       }
     }
   }

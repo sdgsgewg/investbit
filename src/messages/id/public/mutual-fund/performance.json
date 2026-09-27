@@ -24,12 +24,6 @@
       "loading": "Memuat data performa bulanan..."
     },
 
-    "ytd": {
-      "label": "YTD",
-      "title": "Performa Tahun Berjalan (YTD)",
-      "loading": "Memuat data performa YTD..."
-    },
-
     "yearly": {
       "label": "Tahunan",
       "title": "Performa Tahunan",
@@ -44,7 +38,6 @@
       "daily": "Reksa Dana Terbaik Hari Ini",
       "weekly": "Reksa Dana Terbaik Minggu Ini",
       "monthly": "Reksa Dana Terbaik Bulan Ini",
-      "ytd": "Reksa Dana Terbaik YTD",
       "yearly": "Reksa Dana Terbaik Tahun Ini",
       "topIn": "Teratas Di"
     }

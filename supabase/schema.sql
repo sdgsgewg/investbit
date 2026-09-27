@@ -22,8 +22,6 @@ CREATE TABLE IF NOT EXISTS public.rd_records (
   item_id UUID REFERENCES public.rd_items(id) ON DELETE CASCADE,
   date DATE NOT NULL,
   nav_1d NUMERIC(10,4),
-  yield_1d NUMERIC(10,4),
-  yield_ytd NUMERIC(10,4),
   created_at TIMESTAMPTZ DEFAULT NOW(),
   UNIQUE(item_id, date)
 );

@@ -62,7 +62,6 @@ const TopPerformers: React.FC<TopPerformersProps> = ({
     if (viewMode === TimeFrame.DAILY) return tTopPerformers("labels.daily");
     if (viewMode === TimeFrame.WEEKLY) return tTopPerformers("labels.weekly");
     if (viewMode === TimeFrame.MONTHLY) return tTopPerformers("labels.monthly");
-    if (viewMode === TimeFrame.YTD) return tTopPerformers("labels.ytd");
     return tTopPerformers("labels.yearly");
   };
 

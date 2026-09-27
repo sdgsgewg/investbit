@@ -24,12 +24,6 @@
       "loading": "Loading monthly performance data..."
     },
 
-    "ytd": {
-      "label": "YTD",
-      "title": "Year-To-Date Performance",
-      "loading": "Loading YTD performance data..."
-    },
-
     "yearly": {
       "label": "Yearly",
       "title": "Yearly Performance",
@@ -44,7 +38,6 @@
       "daily": "Mutual Fund of the Day",
       "weekly": "Mutual Fund of the Week",
       "monthly": "Mutual Fund of the Month",
-      "ytd": "Mutual Fund of YTD",
       "yearly": "Mutual Fund of the Year",
       "topIn": "Top In"
     }

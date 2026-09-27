@@ -22,8 +22,6 @@
 
   "table": {
     "mutualFund": "Mutual Fund",
-    "nav1d": "NAV 1 Day",
-    "yield1d": "1 Day (%)",
-    "yieldYtd": "YTD (%)"
+    "nav1d": "NAV 1 Day"
   }
 }

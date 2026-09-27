@@ -31,7 +31,7 @@ export const HOME_FEATURES: HomeData = {
       key: "performance",
       title: "Mutual Fund Performance",
       description:
-        "Compare mutual fund returns across 1 day, 1 month, 3 months, YTD, and 1 year.",
+        "Compare mutual fund returns across 1 day, 1 week, 1 month, and 1 year.",
       href: ROUTES.MUTUAL_FUND.PERFORMANCE,
     },
   ],
@@ -55,7 +55,7 @@ export const HOME_FEATURES: HomeData = {
       key: "performance",
       title: "Performa Reksa Dana",
       description:
-        "Lihat dan bandingkan return reksa dana dalam periode 1 hari, 1 bulan, 3 bulan, YTD, dan 1 tahun.",
+        "Lihat dan bandingkan return reksa dana dalam periode 1 hari, 1 minggu, 1 bulan, dan 1 tahun.",
       href: ROUTES.MUTUAL_FUND.PERFORMANCE,
     },
   ],

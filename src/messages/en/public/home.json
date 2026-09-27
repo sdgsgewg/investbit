@@ -23,7 +23,7 @@
       },
       "performance": {
         "title": "Mutual Fund Performance",
-        "description": "Compare mutual fund returns across 1 day, 1 month, 3 months, YTD, and 1 year."
+        "description": "Compare mutual fund returns across 1 day, 1 week, 1 month, and 1 year."
       }
     }
   }

@@ -1,8 +1,14 @@
 import { createClient } from "@/utils/supabase/server";
 import { DbRecordListRow, RecordListItem } from "@/types/mutual-fund/records";
-import { getRecordsBaseQuery, getRecordTable } from "./records.repo";
+import {
+  getRecordsBaseQuery,
+  getRecordsRepo,
+  getRecordTable,
+} from "./records.repo";
 import { mapRecordListItem } from "@/lib/mutual-fund/records/mapper";
 import { TimeFrame } from "@/enums/TimeFrame";
+import { getWeekInfo } from "@/lib/mutual-fund/performance/period";
+import { format, startOfMonth } from "date-fns";
 
 async function getSupabase() {
   return createClient();
@@ -41,7 +47,7 @@ async function getLatestRecordDateRepo(): Promise<string | null> {
  * @returns { records: RecordListItem[]; latestDate: string | null }
  */
 export async function getLatestPeriodRecordsRepo(
-  _timeFrame?: TimeFrame,
+  timeFrame?: TimeFrame,
   categoryId?: string,
 ): Promise<{ records: RecordListItem[]; latestDate: string | null }> {
   const latestDate = await getLatestRecordDateRepo();
@@ -49,9 +55,34 @@ export async function getLatestPeriodRecordsRepo(
     return { records: [], latestDate: null };
   }
 
-  // NAV returns require a baseline before the selected window. Fetching the
-  // full series also handles holidays and gaps in an item's NAV history.
-  const records = await getPerformanceRecordsRepo({ categoryId });
+  let startDate = latestDate;
+  let endDate = latestDate;
+
+  switch (timeFrame) {
+    case TimeFrame.WEEKLY:
+      const weekInfo = getWeekInfo(latestDate);
+      if (weekInfo.start && weekInfo.end) {
+        startDate = format(weekInfo.start, "yyyy-MM-dd");
+        endDate = format(weekInfo.end, "yyyy-MM-dd");
+      }
+      break;
+    case TimeFrame.MONTHLY:
+      startDate = format(startOfMonth(new Date(latestDate)), "yyyy-MM-dd");
+      endDate = latestDate;
+      break;
+    case TimeFrame.YEARLY:
+      startDate = `${latestDate.substring(0, 4)}-01-01`;
+      endDate = latestDate;
+      break;
+    default:
+      break;
+  }
+
+  const records = await getRecordsRepo({
+    startDate,
+    endDate,
+    categoryId,
+  });
 
   return { records, latestDate };
 }

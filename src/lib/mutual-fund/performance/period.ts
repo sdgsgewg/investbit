@@ -309,9 +309,8 @@ export const getPerformancePeriodKey = (
       // Contoh: "2026-09-01" untuk tanggal berapa pun di September 2026.
       return format(startOfMonth(new Date(dateStr)), "yyyy-MM-dd");
 
-    case TimeFrame.YTD:
     case TimeFrame.YEARLY:
-      // YTD dan Yearly menggunakan tahun saja.
+      // Yearly menggunakan tahun saja.
       // Contoh: "2026"
       return dateStr.substring(0, 4);
 
@@ -343,7 +342,7 @@ export function getPeriodTimestamp(
     );
   }
 
-  if (timeFrame === TimeFrame.YTD || timeFrame === TimeFrame.YEARLY) {
+  if (timeFrame === TimeFrame.YEARLY) {
     return new Date(Number(period), 0, 1).getTime();
   }
 
@@ -371,9 +370,6 @@ export function formatPerformancePeriod({
     case TimeFrame.MONTHLY:
       return safeFormatDate(period, "MMMM yyyy");
 
-    case TimeFrame.YTD:
-      return `YTD ${period}`;
-
     case TimeFrame.YEARLY:
     default:
       return period;
@@ -396,9 +392,6 @@ export function getPeriodOptionLabel(
 
     case TimeFrame.MONTHLY:
       return safeFormatDate(period, "MMMM yyyy");
-
-    case TimeFrame.YTD:
-      return `YTD ${period}`;
 
     case TimeFrame.YEARLY:
     default:
@@ -460,14 +453,6 @@ const getPerformancePeriodColumn = (
       return {
         key: period,
         label: safeFormatDate(period, "MMMM yyyy"),
-      };
-
-    // YTD:
-    // Contoh: "2026" -> "YTD 2026"
-    case TimeFrame.YTD:
-      return {
-        key: period,
-        label: `YTD ${period}`,
       };
 
     // YEARLY atau fallback:

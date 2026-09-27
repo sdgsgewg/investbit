@@ -22,8 +22,6 @@
 
   "table": {
     "mutualFund": "Reksa Dana",
-    "nav1d": "NAV 1 Hari",
-    "yield1d": "1 Hari (%)",
-    "yieldYtd": "YTD (%)"
+    "nav1d": "NAV 1 Hari"
   }
 }
