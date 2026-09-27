@@ -3,15 +3,10 @@ import { queryKeys } from "@/lib/react-query/queryKeys";
 import { fetchTopPerformers } from "@/lib/api/mutual-fund/performance/top-performers";
 import { queryConfig } from "@/lib/react-query/config/queryConfig";
 import {
+  PerformanceFilter,
   PerformanceWinner,
   TopPerformersResponse,
 } from "@/types/mutual-fund/performance";
-import { TimeFrame } from "@/enums/TimeFrame";
-
-interface UseTopPerformersProps {
-  timeFrame: TimeFrame;
-  categoryId?: string;
-}
 
 export interface UseTopPerformersReturn {
   overallBest: PerformanceWinner | null;
@@ -27,7 +22,7 @@ export interface UseTopPerformersReturn {
 export const useTopPerformers = ({
   timeFrame,
   categoryId,
-}: UseTopPerformersProps): UseTopPerformersReturn => {
+}: PerformanceFilter): UseTopPerformersReturn => {
   const { data, isLoading, isFetching, isRefetching, error, refetch } =
     useQuery<TopPerformersResponse>({
       queryKey: queryKeys.topPerformers({

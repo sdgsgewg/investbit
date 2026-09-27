@@ -4,14 +4,9 @@ import { fetchCategoryLeaderboard } from "@/lib/api/mutual-fund/performance/lead
 import { queryConfig } from "@/lib/react-query/config/queryConfig";
 import {
   CategoryLeaderboardResponse,
+  PerformanceFilter,
   RankedPerformanceCategory,
 } from "@/types/mutual-fund/performance";
-import { TimeFrame } from "@/enums/TimeFrame";
-
-interface UseCategoryLeaderboardProps {
-  timeFrame: TimeFrame;
-  categoryId?: string;
-}
 
 export interface UseCategoryLeaderboardReturn {
   rankedCategories: RankedPerformanceCategory[];
@@ -26,7 +21,7 @@ export interface UseCategoryLeaderboardReturn {
 export const useCategoryLeaderboard = ({
   timeFrame,
   categoryId,
-}: UseCategoryLeaderboardProps): UseCategoryLeaderboardReturn => {
+}: PerformanceFilter): UseCategoryLeaderboardReturn => {
   const { data, isLoading, isFetching, isRefetching, error, refetch } =
     useQuery<CategoryLeaderboardResponse>({
       queryKey: queryKeys.categoryLeaderboard({

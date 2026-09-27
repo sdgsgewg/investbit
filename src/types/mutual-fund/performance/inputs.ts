@@ -1,24 +1,8 @@
 import {
-  categoryLeaderboardQuerySchema,
   performanceAnalyticsQuerySchema,
   performanceQuerySchema,
-  topPerformersQuerySchema,
 } from "@/lib/validations/mutual-fund/performance.schema";
 import z from "zod";
-
-// --- Top Performers Inputs ---
-export type TopPerformersQuery = Partial<
-  z.input<typeof topPerformersQuerySchema>
->;
-export type TopPerformersFilter = z.infer<typeof topPerformersQuerySchema>;
-
-// --- Category Leaderboard Inputs ---
-export type CategoryLeaderboardQuery = Partial<
-  z.input<typeof categoryLeaderboardQuerySchema>
->;
-export type CategoryLeaderboardFilter = z.infer<
-  typeof categoryLeaderboardQuerySchema
->;
 
 // --- Performance Analytics Inputs ---
 export type PerformanceAnalyticsQuery = Partial<

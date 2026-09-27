@@ -12,7 +12,6 @@ import { cn } from "@/lib/utils";
 import { Field, FieldLabel } from "@/components/ui/field";
 import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
-import Image from "next/image";
 
 interface SelectFieldProps {
   label?: string;
@@ -30,6 +29,8 @@ interface SelectFieldProps {
 
   className?: string;
 }
+
+const ALL_VALUE = "__all__";
 
 const SelectField = ({
   label,
@@ -49,15 +50,21 @@ const SelectField = ({
 }: SelectFieldProps) => {
   const tCommonStates = useTranslations("common.states");
 
+  const selectValue = value || (allLabel ? ALL_VALUE : undefined);
+
+  const handleValueChange = (selectedValue: string) => {
+    onValueChange(selectedValue === ALL_VALUE ? "" : selectedValue);
+  };
+
   return (
     <Field className={cn(className)}>
       {label && <FieldLabel htmlFor={name}>{label}</FieldLabel>}
 
       <Select
         name={name}
-        value={value || undefined}
+        value={selectValue}
         disabled={disabled || loading}
-        onValueChange={onValueChange}
+        onValueChange={handleValueChange}
       >
         <SelectTrigger id={name} className="w-full rounded-xl">
           {loading ? (
@@ -78,20 +85,10 @@ const SelectField = ({
           sideOffset={4}
           className={cn("w-(--radix-select-trigger-width) max-h-60")}
         >
-          {allLabel && <SelectItem value="">{allLabel}</SelectItem>}
+          {allLabel && <SelectItem value={ALL_VALUE}>{allLabel}</SelectItem>}
 
           {options.map((option) => (
             <SelectItem key={option.value} value={option.value}>
-              {option.imageUrl && (
-                <Image
-                  src={option.imageUrl}
-                  alt={option.label}
-                  width={20}
-                  height={20}
-                  className="size-5 shrink-0 rounded-full object-cover"
-                />
-              )}
-
               <span className="truncate">{option.label}</span>
             </SelectItem>
           ))}

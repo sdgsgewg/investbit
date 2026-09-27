@@ -4,7 +4,6 @@ import { useTranslations } from "next-intl";
 import { useNumberFormatter } from "@/hooks/useNumberFormatter";
 
 import CategoryLeaderboardSkeleton from "./CategoryLeaderboardSkeleton";
-import { TimeFrame } from "@/enums/TimeFrame";
 import { formatPerformancePeriod } from "@/lib/mutual-fund/performance/period";
 import {
   getLeaderboardYieldClassName,
@@ -12,16 +11,13 @@ import {
   getRankRowClassName,
 } from "@/lib/mutual-fund/performance/colors";
 import { useCategoryLeaderboard } from "@/hooks/mutual-fund/performance/useCategoryLeaderboard";
+import { PerformanceFilter } from "@/types/mutual-fund/performance";
 
 interface CategoryLeaderboardProps {
-  viewMode: TimeFrame;
-  categoryId?: string;
+  filters: PerformanceFilter;
 }
 
-const CategoryLeaderboard = ({
-  viewMode,
-  categoryId,
-}: CategoryLeaderboardProps) => {
+const CategoryLeaderboard = ({ filters }: CategoryLeaderboardProps) => {
   const tLeaderboard = useTranslations(
     "public.mutualFund.performance.leaderboard",
   );
@@ -32,15 +28,12 @@ const CategoryLeaderboard = ({
   const { formatPercent } = useNumberFormatter();
 
   const { rankedCategories, latestPeriod, loading, fetching } =
-    useCategoryLeaderboard({
-      timeFrame: viewMode,
-      categoryId,
-    });
+    useCategoryLeaderboard(filters);
 
   const periodDisplay = latestPeriod
     ? formatPerformancePeriod({
         period: latestPeriod,
-        timeFrame: viewMode,
+        timeFrame: filters.timeFrame,
         weekLabel: tWeekly("week"),
       })
     : "";

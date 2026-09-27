@@ -6,7 +6,6 @@ import PerformanceTableSkeleton from "./PerformanceTableSkeleton";
 import { TableOverlay } from "@/components/feedback";
 import Dropdown from "@/components/ui/Dropdown";
 import { SortOrder } from "@/types/sort";
-import { TimeFrame } from "@/enums/TimeFrame";
 import {
   getPerformancePeriodColumns,
   getPeriodRangeOptions,
@@ -14,15 +13,14 @@ import {
 import { usePerformanceAnalytics } from "@/hooks/mutual-fund/performance/usePerformanceAnalytics";
 import { Button } from "@/components/ui/button";
 import { LoaderCircle, SortAsc, SortDesc } from "lucide-react";
+import { PerformanceFilter } from "@/types/mutual-fund/performance";
 
 interface PerformanceAnalyticsSectionProps {
-  viewMode: TimeFrame;
-  categoryId?: string;
+  filters: PerformanceFilter;
 }
 
 const PerformanceAnalyticsSection = ({
-  viewMode,
-  categoryId,
+  filters,
 }: PerformanceAnalyticsSectionProps) => {
   const tPerformance = useTranslations("public.mutualFund.performance");
   const tPerformanceAnalytics = useTranslations(
@@ -51,10 +49,7 @@ const PerformanceAnalyticsSection = ({
     resetToLatestPeriods,
     setStartPeriod,
     setEndPeriod,
-  } = usePerformanceAnalytics({
-    timeFrame: viewMode,
-    categoryId,
-  });
+  } = usePerformanceAnalytics(filters);
 
   const periodTranslations = {
     week: tPerformanceTfWeekly("week"),
@@ -62,7 +57,7 @@ const PerformanceAnalyticsSection = ({
 
   const { startOptions, endOptions } = getPeriodRangeOptions(
     availablePeriods,
-    viewMode,
+    filters.timeFrame,
     selectedStartPeriod,
     selectedEndPeriod,
     periodTranslations,
@@ -70,7 +65,7 @@ const PerformanceAnalyticsSection = ({
 
   const columns = getPerformancePeriodColumns(
     timePeriods,
-    viewMode,
+    filters.timeFrame,
     sortOrder,
     periodTranslations,
   );

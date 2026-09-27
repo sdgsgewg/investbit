@@ -35,7 +35,7 @@ export interface PerformancePeriodRangeOptions {
 
 interface FormatPerformancePeriodOptions {
   period: string;
-  timeFrame: TimeFrame;
+  timeFrame?: TimeFrame;
   weekLabel: string;
 }
 
@@ -468,7 +468,7 @@ const getPerformancePeriodColumn = (
 
 export function getPerformancePeriodColumns(
   periods: string[],
-  timeFrame: TimeFrame,
+  timeFrame: TimeFrame = TimeFrame.WEEKLY,
   sortOrder: SortOrder,
   translations: PeriodTranslations,
 ): PerformancePeriodColumn[] {
@@ -483,7 +483,7 @@ export function getPerformancePeriodColumns(
 
 export function getPeriodRangeOptions(
   availablePeriods: string[],
-  timeFrame: TimeFrame,
+  timeFrame: TimeFrame = TimeFrame.WEEKLY,
   startPeriod: string,
   endPeriod: string,
   translations: PeriodTranslations,

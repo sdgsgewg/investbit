@@ -1,6 +1,6 @@
 import { computeCategoryLeaderboardFromRecords } from "@/lib/mutual-fund/performance/selector";
 import { getLatestPeriodRecordsRepo } from "@/lib/repositories/mutual-fund/performance.repo";
-import { categoryLeaderboardQuerySchema } from "@/lib/validations/mutual-fund/performance.schema";
+import { performanceQuerySchema } from "@/lib/validations/mutual-fund/performance.schema";
 import { CategoryLeaderboardResponse } from "@/types/mutual-fund/performance";
 
 /**
@@ -10,7 +10,7 @@ import { CategoryLeaderboardResponse } from "@/types/mutual-fund/performance";
 export async function getCategoryLeaderboardService(
   query: unknown,
 ): Promise<CategoryLeaderboardResponse> {
-  const parsed = categoryLeaderboardQuerySchema.parse(query);
+  const parsed = performanceQuerySchema.parse(query);
 
   const { records, latestDate } = await getLatestPeriodRecordsRepo(
     parsed.timeFrame,

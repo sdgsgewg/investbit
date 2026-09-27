@@ -1,56 +1,39 @@
 import { useTranslations } from "next-intl";
-import React from "react";
-import Dropdown from "@/components/ui/Dropdown";
-import { useCategories } from "@/hooks/dashboard/mutual-fund/categories";
+import { useCategoryOptions } from "@/hooks/dashboard/mutual-fund/categories";
 import { TimeFrame } from "@/enums/TimeFrame";
 import { PerformanceFilter } from "@/types/mutual-fund/performance";
-import { getCategoryOptions } from "@/lib/mutual-fund/categories/options";
 import { getTimeFrameOptions } from "@/lib/mutual-fund/performance/options";
+import { SelectField } from "@/components/shared/fields";
 
 interface PerformanceFilterSectionProps {
-  viewMode: TimeFrame;
-  form: PerformanceFilter;
-  onChangeViewMode: (viewMode: TimeFrame) => void;
-  setForm: React.Dispatch<React.SetStateAction<PerformanceFilter>>;
+  filters: PerformanceFilter;
+  updateFilter: <K extends keyof PerformanceFilter>(
+    key: K,
+    value: PerformanceFilter[K],
+  ) => void;
 }
 
 const PerformanceFilterSection = ({
-  viewMode,
-  form,
-  onChangeViewMode,
-  setForm,
+  filters,
+  updateFilter,
 }: PerformanceFilterSectionProps) => {
   const tCommonFilter = useTranslations("common.filter");
   const tTimeFrame = useTranslations("public.mutualFund.performance.timeframe");
 
-  const { categories } = useCategories();
-
   const timeFrameOptions = getTimeFrameOptions(tTimeFrame);
 
-  const categoryOptions = getCategoryOptions({
-    categories,
-    showAllCategoryOption: true,
-    tCommonFilter,
-  });
+  const { categoryOptions, loading: isCategoryLoading } = useCategoryOptions();
 
-  const title = tTimeFrame(`${viewMode}.title`);
+  const timeFrame = filters.timeFrame ?? TimeFrame.WEEKLY;
+
+  const title = tTimeFrame(`${timeFrame}.title`);
 
   const handleTimeFrameChange = (value: string) => {
-    const timeFrame = value as TimeFrame;
-
-    setForm((currentForm) => ({
-      ...currentForm,
-      timeFrame,
-    }));
-
-    onChangeViewMode(timeFrame);
+    updateFilter("timeFrame", value as TimeFrame);
   };
 
   const handleCategoryChange = (categoryId: string) => {
-    setForm((currentForm) => ({
-      ...currentForm,
-      categoryId: categoryId,
-    }));
+    updateFilter("categoryId", categoryId || undefined);
   };
 
   return (
@@ -59,19 +42,24 @@ const PerformanceFilterSection = ({
         <div className="w-full flex flex-col sm:flex-row justify-between items-start gap-4">
           <h2 className="text-xl font-semibold">{title}</h2>
 
-          <Dropdown
-            value={form.timeFrame || TimeFrame.WEEKLY}
-            onChange={handleTimeFrameChange}
+          <SelectField
+            name="timeframe"
+            value={timeFrame}
+            onValueChange={handleTimeFrameChange}
             options={timeFrameOptions}
+            loading={isCategoryLoading}
             className="w-full sm:w-48"
           />
         </div>
 
-        <Dropdown
-          value={form.categoryId || ""}
-          onChange={handleCategoryChange}
+        <SelectField
+          name="category_id"
+          value={filters.categoryId || ""}
+          onValueChange={handleCategoryChange}
           options={categoryOptions}
           placeholder={tCommonFilter("allCategory")}
+          allLabel={tCommonFilter("allCategory")}
+          loading={isCategoryLoading}
           className="w-full sm:w-48"
         />
       </div>

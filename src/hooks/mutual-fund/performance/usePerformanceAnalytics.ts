@@ -7,13 +7,8 @@ import {
   CategoryStats,
   PerformanceAnalyticsResponse,
   PerformanceData,
+  PerformanceFilter,
 } from "@/types/mutual-fund/performance";
-import { TimeFrame } from "@/enums/TimeFrame";
-
-interface UsePerformanceAnalyticsProps {
-  timeFrame: TimeFrame;
-  categoryId?: string;
-}
 
 export interface UsePerformanceAnalyticsReturn {
   data: PerformanceData;
@@ -42,7 +37,7 @@ const DEFAULT_PERIOD_LIMIT = 10;
 export const usePerformanceAnalytics = ({
   timeFrame,
   categoryId,
-}: UsePerformanceAnalyticsProps): UsePerformanceAnalyticsReturn => {
+}: PerformanceFilter): UsePerformanceAnalyticsReturn => {
   const [periodLimit, setPeriodLimit] = useState(DEFAULT_PERIOD_LIMIT);
   const [selectedStartPeriod, setSelectedStartPeriod] = useState("");
   const [selectedEndPeriod, setSelectedEndPeriod] = useState("");

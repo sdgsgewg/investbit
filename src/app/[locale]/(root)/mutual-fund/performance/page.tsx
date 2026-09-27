@@ -1,11 +1,7 @@
 "use client";
 
-import React, { useState } from "react";
-
 import PageHeader from "@/components/shared/PageHeader";
 import { useTranslations } from "next-intl";
-import { TimeFrame } from "@/enums/TimeFrame";
-import { PerformanceFilter } from "@/types/mutual-fund/performance";
 import {
   CategoryLeaderboard,
   PerformanceAnalyticsSection,
@@ -13,45 +9,38 @@ import {
   PerformanceSectionWrapper,
   TopPerformers,
 } from "@/components/mutual-fund/performance";
+import { usePerformanceFilter } from "@/hooks/mutual-fund/performance";
+import { useFilterSync } from "@/hooks/filter";
 
 export default function PerformancePage() {
   const t = useTranslations("public.mutualFund.performance");
 
-  const [viewMode, setViewMode] = useState<TimeFrame>(TimeFrame.WEEKLY);
-  const [form, setForm] = useState<PerformanceFilter>({ categoryId: "" });
+  const { filters, updateFilter, syncUrl } = usePerformanceFilter();
 
-  const handleChangeViewMode = (newViewMode: TimeFrame) => {
-    setViewMode(newViewMode);
-  };
+  useFilterSync(filters, syncUrl);
 
   return (
     <>
       <PageHeader title={t("title")} />
 
       {/* GLOBAL CONTROLS SECTION */}
-      <PerformanceFilterSection
-        viewMode={viewMode}
-        form={form}
-        onChangeViewMode={handleChangeViewMode}
-        setForm={setForm}
-      />
+      <PerformanceFilterSection filters={filters} updateFilter={updateFilter} />
 
       {/* TOP PERFORMERS SECTION */}
       <PerformanceSectionWrapper>
-        <TopPerformers viewMode={viewMode} categoryId={form.categoryId} />
+        <TopPerformers filters={filters} />
       </PerformanceSectionWrapper>
 
       {/* CATEGORY LEADERBOARD SECTION */}
       <PerformanceSectionWrapper>
-        <CategoryLeaderboard viewMode={viewMode} categoryId={form.categoryId} />
+        <CategoryLeaderboard filters={filters} />
       </PerformanceSectionWrapper>
 
       {/* DETAILED ANALYTICS SECTION */}
       <PerformanceSectionWrapper>
         <PerformanceAnalyticsSection
-          key={`${viewMode}-${form.categoryId}`}
-          viewMode={viewMode}
-          categoryId={form.categoryId}
+          key={`${filters.timeFrame}-${filters.categoryId}`}
+          filters={filters}
         />
       </PerformanceSectionWrapper>
     </>

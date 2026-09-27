@@ -10,16 +10,13 @@ import {
   getTopPerformerYieldClassName,
 } from "@/lib/mutual-fund/performance/colors";
 import { useTopPerformers } from "@/hooks/mutual-fund/performance/useTopPerformers";
+import { PerformanceFilter } from "@/types/mutual-fund/performance";
 
-interface TopPerformersProps {
-  viewMode: TimeFrame;
-  categoryId?: string;
+interface Props {
+  filters: PerformanceFilter;
 }
 
-const TopPerformers: React.FC<TopPerformersProps> = ({
-  viewMode,
-  categoryId,
-}) => {
+const TopPerformers = ({ filters }: Props) => {
   const tTopPerformers = useTranslations(
     "public.mutualFund.performance.topPerformers",
   );
@@ -28,10 +25,7 @@ const TopPerformers: React.FC<TopPerformersProps> = ({
   );
 
   const { overallBest, categoryBests, latestPeriod, loading, fetching } =
-    useTopPerformers({
-      timeFrame: viewMode,
-      categoryId,
-    });
+    useTopPerformers(filters);
 
   // 1. First load → full skeleton
   if (loading) {
@@ -54,14 +48,17 @@ const TopPerformers: React.FC<TopPerformersProps> = ({
 
   const periodDisplay = formatPerformancePeriod({
     period: latestPeriod,
-    timeFrame: viewMode,
+    timeFrame: filters.timeFrame,
     weekLabel: tPerformanceTfWeekly("week"),
   });
 
   const getLabel = () => {
-    if (viewMode === TimeFrame.DAILY) return tTopPerformers("labels.daily");
-    if (viewMode === TimeFrame.WEEKLY) return tTopPerformers("labels.weekly");
-    if (viewMode === TimeFrame.MONTHLY) return tTopPerformers("labels.monthly");
+    const timeFrame = filters.timeFrame;
+
+    if (timeFrame === TimeFrame.DAILY) return tTopPerformers("labels.daily");
+    if (timeFrame === TimeFrame.WEEKLY) return tTopPerformers("labels.weekly");
+    if (timeFrame === TimeFrame.MONTHLY)
+      return tTopPerformers("labels.monthly");
     return tTopPerformers("labels.yearly");
   };
 

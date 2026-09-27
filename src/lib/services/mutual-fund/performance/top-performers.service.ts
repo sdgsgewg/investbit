@@ -1,6 +1,6 @@
 import { computeTopPerformersFromRecords } from "@/lib/mutual-fund/performance/selector";
 import { getLatestPeriodRecordsRepo } from "@/lib/repositories/mutual-fund/performance.repo";
-import { topPerformersQuerySchema } from "@/lib/validations/mutual-fund/performance.schema";
+import { performanceQuerySchema } from "@/lib/validations/mutual-fund/performance.schema";
 import { TopPerformersResponse } from "@/types/mutual-fund/performance";
 
 /**
@@ -10,7 +10,7 @@ import { TopPerformersResponse } from "@/types/mutual-fund/performance";
 export async function getTopPerformersService(
   query: unknown,
 ): Promise<TopPerformersResponse> {
-  const parsed = topPerformersQuerySchema.parse(query);
+  const parsed = performanceQuerySchema.parse(query);
 
   const { records, latestDate } = await getLatestPeriodRecordsRepo(
     parsed.timeFrame,
