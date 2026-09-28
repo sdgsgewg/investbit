@@ -2,9 +2,9 @@ import { TimeFrame } from "@/enums/TimeFrame";
 import {
   CategoryStats,
   PerformanceData,
-  PerformanceFilter,
   PerformanceItem,
   PerformanceAnalyticsResponse,
+  PerformanceAnalyticsFilter,
 } from "@/types/mutual-fund/performance";
 import { RecordListItem } from "@/types/mutual-fund/records";
 import { getPerformancePeriodKey, getPeriodTimestamp } from "./period";
@@ -23,6 +23,8 @@ type PerformanceCategoryMap = Record<
 
 /**
  * Builds the Top Performers / Leaderboard values for the latest period.
+ *
+ * Records must be sorted chronologically by date.
  *
  * We scan the complete NAV history in date order so the first NAV inside the
  * latest period can be compared with the last NAV before that period. Only
@@ -51,52 +53,51 @@ export function aggregatePerformanceRecordsByItem(
     : null;
   const previousNavByItem = new Map<string, number>();
 
-  [...records]
-    .sort((a, b) => a.date.localeCompare(b.date))
-    .forEach((record) => {
-      const item = record.item;
+  records.forEach((record) => {
+    const item = record.item;
 
-      // Ignore records that cannot be associated with a category or item.
-      if (!item || !item.category) return;
+    // Ignore records that cannot be associated with a category or item.
+    if (!item || !item.category) return;
 
-      const categoryName = item.category.name;
+    const nav = record.nav1d;
 
-      if (!categoryMap[categoryName]) {
-        categoryMap[categoryName] = {};
-      }
+    if (nav === null || !Number.isFinite(nav) || nav <= 0) return;
 
-      const nav = record.nav1d;
-      if (nav === null || !Number.isFinite(nav) || nav <= 0) return;
-      const previousNav = previousNavByItem.get(item.id);
-      // Update the baseline even for older periods, before filtering, so the
-      // first latest-period row has the correct NAV to compare against.
-      previousNavByItem.set(item.id, nav);
+    const categoryName = item.category.name;
 
-      const periodKey = getPerformancePeriodKey(record.date, timeFrame);
-      if (latestPeriod && periodKey !== latestPeriod) return;
+    if (!categoryMap[categoryName]) {
+      categoryMap[categoryName] = {};
+    }
 
-      // Without an earlier valid NAV there is no return to calculate. Do not
-      // add this item to the leaderboard as a fabricated 0% performer.
-      if (previousNav === undefined || previousNav <= 0) return;
+    const previousNav = previousNavByItem.get(item.id);
+    // Update the baseline even for older periods, before filtering, so the
+    // first latest-period row has the correct NAV to compare against.
+    previousNavByItem.set(item.id, nav);
 
-      const yieldValue = ((nav - previousNav) / previousNav) * 100;
+    const periodKey = getPerformancePeriodKey(record.date, timeFrame);
+    if (latestPeriod && periodKey !== latestPeriod) return;
 
-      const existingItem = categoryMap[categoryName][item.id];
+    // Without an earlier valid NAV there is no return to calculate. Do not
+    // add this item to the leaderboard as a fabricated 0% performer.
+    if (previousNav === undefined || previousNav <= 0) return;
 
-      if (!existingItem) {
-        categoryMap[categoryName][item.id] = {
-          itemName: item.name,
-          yieldValue,
-        };
-        return;
-      }
+    const yieldValue = ((nav - previousNav) / previousNav) * 100;
 
-      // Multiply growth factors instead of adding percentages. For example,
-      // +10% followed by -10% produces -1%, not 0%.
-      existingItem.yieldValue =
-        ((1 + existingItem.yieldValue / 100) * (1 + yieldValue / 100) - 1) *
-        100;
-    });
+    const existingItem = categoryMap[categoryName][item.id];
+
+    if (!existingItem) {
+      categoryMap[categoryName][item.id] = {
+        itemName: item.name,
+        yieldValue,
+      };
+      return;
+    }
+
+    // Multiply growth factors instead of adding percentages. For example,
+    // +10% followed by -10% produces -1%, not 0%.
+    existingItem.yieldValue =
+      ((1 + existingItem.yieldValue / 100) * (1 + yieldValue / 100) - 1) * 100;
+  });
 
   return categoryMap;
 }
@@ -120,7 +121,7 @@ type GroupedCategory = {
  */
 export function aggregatePerformanceRecords(
   records: RecordListItem[],
-  params: PerformanceFilter,
+  params: PerformanceAnalyticsFilter,
 ): PerformanceAnalyticsResponse {
   const timeFrame = params.timeFrame ?? TimeFrame.WEEKLY;
 
@@ -137,6 +138,12 @@ export function aggregatePerformanceRecords(
     // Ignore incomplete records that cannot be associated with a category,
     // item, or valid date.
     if (!item || !item.category || !record.date) return;
+
+    const nav = record.nav1d;
+
+    if (nav === null || !Number.isFinite(nav) || nav <= 0) {
+      return;
+    }
 
     const categoryName = item.category.name;
 
@@ -165,7 +172,6 @@ export function aggregatePerformanceRecords(
 
     const yields = grouped[categoryName].items[item.id].yields;
 
-    const nav = record.nav1d;
     // Invalid NAV data cannot produce a meaningful return and must not become
     // the baseline for the next observation.
     if (nav === null || !Number.isFinite(nav) || nav <= 0) return;
