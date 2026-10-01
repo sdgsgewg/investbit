@@ -1,11 +1,11 @@
 import { getQuery } from "@/lib/api/query";
 import { errorResponse, successResponse } from "@/lib/api/response";
 import { getCategoryLeaderboardService } from "@/lib/services/mutual-fund/performance/leaderboard.service";
-import { CategoryLeaderboardFilter } from "@/types/mutual-fund/performance";
+import { PerformanceFilter } from "@/types/mutual-fund/performance";
 
 export async function GET(request: Request) {
   try {
-    const query = getQuery<CategoryLeaderboardFilter>(request, [
+    const query = getQuery<PerformanceFilter>(request, [
       "timeFrame",
       "categoryId",
     ]);

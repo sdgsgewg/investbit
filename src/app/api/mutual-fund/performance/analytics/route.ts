@@ -17,6 +17,7 @@ export async function GET(request: Request) {
 
     return successResponse(data);
   } catch (error: unknown) {
+    console.error(error);
     return errorResponse(error);
   }
 }

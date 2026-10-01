@@ -4,7 +4,6 @@ import PerformanceTable from "./PerformanceTable";
 import PerformanceInformationSection from "../PerformanceInformationSection";
 import PerformanceTableSkeleton from "./PerformanceTableSkeleton";
 import { TableOverlay } from "@/components/feedback";
-import Dropdown from "@/components/ui/Dropdown";
 import { SortOrder } from "@/types/sort";
 import {
   getPerformancePeriodColumns,
@@ -14,6 +13,7 @@ import { usePerformanceAnalytics } from "@/hooks/mutual-fund/performance/usePerf
 import { Button } from "@/components/ui/button";
 import { LoaderCircle, SortAsc, SortDesc } from "lucide-react";
 import { PerformanceFilter } from "@/types/mutual-fund/performance";
+import { SelectField } from "@/components/shared/fields";
 
 interface PerformanceAnalyticsSectionProps {
   filters: PerformanceFilter;
@@ -110,10 +110,11 @@ const PerformanceAnalyticsSection = ({
           <div className="rounded-2xl border border-zinc-200 bg-zinc-50/80 p-4 dark:border-zinc-800 dark:bg-zinc-900/70">
             <div className="flex flex-col gap-4 md:flex-row md:items-end">
               <div className="flex-1">
-                <Dropdown
+                <SelectField
                   label={tPerformanceAnalytics("filters.startPeriod")}
+                  name="start_period"
                   value={selectedStartPeriod}
-                  onChange={setStartPeriod}
+                  onValueChange={setStartPeriod}
                   options={startOptions}
                   placeholder={tPerformanceAnalytics(
                     "filters.startPlaceholder",
@@ -123,10 +124,11 @@ const PerformanceAnalyticsSection = ({
               </div>
 
               <div className="flex-1">
-                <Dropdown
+                <SelectField
                   label={tPerformanceAnalytics("filters.endPeriod")}
+                  name="end_period"
                   value={selectedEndPeriod}
-                  onChange={setEndPeriod}
+                  onValueChange={setEndPeriod}
                   options={endOptions}
                   placeholder={tPerformanceAnalytics("filters.endPlaceholder")}
                   className="w-full"

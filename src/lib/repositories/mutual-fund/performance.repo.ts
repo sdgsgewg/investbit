@@ -46,9 +46,13 @@ async function getLatestRecordDateRepo(
 ): Promise<string | null> {
   const supabase = await getSupabase();
 
+  const selectQuery = categoryId
+    ? "date, item:rd_items!rd_records_item_id_fkey!inner(category:rd_categories!rd_items_category_id_fkey!inner(id))"
+    : "date";
+
   let query = supabase
     .from(getRecordTable())
-    .select("date")
+    .select(selectQuery)
     .order("date", { ascending: false })
     .limit(1);
 
@@ -60,7 +64,7 @@ async function getLatestRecordDateRepo(
 
   if (error) throw error;
 
-  return data?.date ?? null;
+  return (data as { date: string } | null)?.date ?? null;
 }
 
 /**
@@ -400,7 +404,6 @@ export async function getPerformanceRecordsRepo(
       .from(getRecordTable())
       .select(getRecordsBaseQuery())
       .order("date", { ascending: true })
-      .order("item_id", { ascending: true })
       .order("id", { ascending: true })
       .range(offset, offset + PAGE_SIZE - 1);
 

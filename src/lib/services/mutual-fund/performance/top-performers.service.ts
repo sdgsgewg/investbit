@@ -12,10 +12,7 @@ export async function getTopPerformersService(
 ): Promise<TopPerformersResponse> {
   const parsed = performanceQuerySchema.parse(query);
 
-  const { records, latestDate } = await getLatestPeriodRecordsRepo(
-    parsed.timeFrame,
-    parsed.categoryId,
-  );
+  const { records, latestDate } = await getLatestPeriodRecordsRepo(parsed);
 
   return computeTopPerformersFromRecords(records, parsed.timeFrame, latestDate);
 }

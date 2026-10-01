@@ -6,8 +6,8 @@ import { safeFormatDate } from "@/lib/utils/date";
 import { Button } from "@/components/ui/button";
 import { useCategories } from "@/hooks/dashboard/mutual-fund/categories";
 import { getCategoryOptions } from "@/lib/mutual-fund/categories/options";
-import Dropdown from "@/components/ui/Dropdown";
 import { RecordFilter } from "@/types/mutual-fund/records";
+import { SelectField } from "@/components/shared/fields";
 
 interface InputHeaderProps {
   filters: RecordFilter;
@@ -64,10 +64,11 @@ const InputHeader = ({
 
           {/* Category Dropdown */}
           <div>
-            <Dropdown
+            <SelectField
               label={tLabels("category")}
+              name="category_id"
               value={filters.categoryId || ""}
-              onChange={(category) => {
+              onValueChange={(category) => {
                 onCategoryChange(category || undefined);
               }}
               options={categoryOptions}

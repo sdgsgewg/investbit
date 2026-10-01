@@ -12,10 +12,7 @@ export async function getCategoryLeaderboardService(
 ): Promise<CategoryLeaderboardResponse> {
   const parsed = performanceQuerySchema.parse(query);
 
-  const { records, latestDate } = await getLatestPeriodRecordsRepo(
-    parsed.timeFrame,
-    parsed.categoryId,
-  );
+  const { records, latestDate } = await getLatestPeriodRecordsRepo(parsed);
 
   return computeCategoryLeaderboardFromRecords(
     records,
