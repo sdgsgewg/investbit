@@ -92,6 +92,11 @@ export function computeTopPerformersFromRecords(
  * @param latestDate Latest available record date.
  * @returns Ranked mutual fund items grouped by category.
  */
+
+const getRankValue = (value: number) => {
+  return Number(value.toFixed(2));
+};
+
 export function computeCategoryLeaderboardFromRecords(
   records: RecordListItem[],
   timeFrame: TimeFrame = TimeFrame.WEEKLY,
@@ -127,7 +132,12 @@ export function computeCategoryLeaderboardFromRecords(
           yieldValue,
         }))
         // Highest-performing items receive the smallest rank number.
-        .sort((a, b) => b.yieldValue - a.yieldValue)
+        // If the yield value is same, sort by name alphabetically.
+        .sort(
+          (a, b) =>
+            getRankValue(b.yieldValue) - getRankValue(a.yieldValue) ||
+            a.itemName.localeCompare(b.itemName),
+        )
         .map((item, index) => ({
           ...item,
           rank: index + 1,
