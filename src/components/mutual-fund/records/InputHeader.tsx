@@ -42,6 +42,11 @@ const InputHeader = ({
     tCommonFilter,
   });
 
+  const isDisabledDate = (date: Date) => {
+    const day = date.getDay();
+    return day === 0 || day === 6 || date > new Date();
+  };
+
   return (
     <div className="flex flex-col md:flex-row justify-between gap-4">
       <div className="flex flex-col gap-4">
@@ -56,10 +61,9 @@ const InputHeader = ({
               const formatted = safeFormatDate(date, "yyyy-MM-dd");
               onDateChange(formatted);
             }}
-            disabled={(date) => {
-              const day = date.getDay();
-              return day === 0 || day === 6 || date > new Date();
-            }}
+            maxDate={new Date()}
+            endMonth={new Date()}
+            disabled={(date) => isDisabledDate(date)}
           />
 
           {/* Category Dropdown */}

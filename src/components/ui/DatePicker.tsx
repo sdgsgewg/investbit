@@ -23,6 +23,12 @@ interface DatePickerProps {
 
   placeholder?: string;
 
+  startMonth?: Date;
+  endMonth?: Date;
+
+  minDate?: Date;
+  maxDate?: Date;
+
   disabled?: (date: Date) => boolean; // custom disable logic
   formatStr?: string; // default: yyyy-MM-dd
 
@@ -35,6 +41,10 @@ export const DatePicker: React.FC<DatePickerProps> = ({
   onChange,
   onSelectFinal,
   placeholder = "Pick a date",
+  startMonth,
+  endMonth,
+  minDate,
+  maxDate,
   disabled,
   formatStr = "yyyy-MM-dd",
   className,
@@ -45,7 +55,13 @@ export const DatePicker: React.FC<DatePickerProps> = ({
     <div className={cn("flex flex-col gap-2", className)}>
       {label && <Label label={label} />}
 
-      <Popover open={open} onOpenChange={setOpen}>
+      <Popover
+        open={open}
+        onOpenChange={(nextOpen) => {
+          // if (disabled) return;
+          setOpen(nextOpen);
+        }}
+      >
         <PopoverTrigger asChild>
           <Button
             variant="outline"
@@ -64,6 +80,9 @@ export const DatePicker: React.FC<DatePickerProps> = ({
             mode="single"
             selected={value}
             defaultMonth={value ?? new Date()}
+            captionLayout="dropdown"
+            startMonth={startMonth}
+            endMonth={endMonth}
             onSelect={(date) => {
               onChange?.(date);
 
@@ -72,7 +91,18 @@ export const DatePicker: React.FC<DatePickerProps> = ({
                 setOpen(false); // close popover setelah memilih tanggal
               }
             }}
-            disabled={disabled}
+            disabled={(calendarDate) => {
+              if (minDate && calendarDate < minDate) {
+                return true;
+              }
+              if (maxDate && calendarDate > maxDate) {
+                return true;
+              }
+              if (disabled) {
+                return disabled(calendarDate);
+              }
+              return false;
+            }}
             required
           />
         </PopoverContent>
