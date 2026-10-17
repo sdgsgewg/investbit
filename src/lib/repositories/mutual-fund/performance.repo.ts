@@ -1,7 +1,6 @@
 import { createClient } from "@/utils/supabase/server";
-import { DbRecordListRow, RecordListItem } from "@/types/mutual-fund/records";
-import { getRecordsBaseQuery, getRecordTable } from "./records.repo";
-import { mapRecordListItem } from "@/lib/mutual-fund/records/mapper";
+import { RecordListItem } from "@/types/mutual-fund/records";
+import { getRecordTable } from "./records.repo";
 import { TimeFrame } from "@/enums/TimeFrame";
 import { getWeekInfo } from "@/lib/mutual-fund/performance/period";
 import {
@@ -15,22 +14,11 @@ import {
 } from "date-fns";
 import {
   PerformanceAnalyticsFilter,
-  PerformanceFilter,
+  PerformanceLeaderboardItem,
 } from "@/types/mutual-fund/performance";
 
 async function getSupabase() {
   return createClient();
-}
-
-interface PerformanceRepoFilter {
-  startDate?: string;
-  endDate?: string;
-  categoryId?: string;
-}
-
-interface PerformanceBaselineRow {
-  id: string;
-  item_id: string;
 }
 
 /**
@@ -41,7 +29,7 @@ interface PerformanceBaselineRow {
  *
  * @returns string | null
  */
-async function getLatestRecordDateRepo(
+export async function getLatestRecordDateRepo(
   categoryId?: string,
 ): Promise<string | null> {
   const supabase = await getSupabase();
@@ -74,7 +62,7 @@ async function getLatestRecordDateRepo(
  * @param timeFrame
  * @returns
  */
-function getLatestPeriodRange(latestDate: string, timeFrame: TimeFrame) {
+export function getLatestPeriodRange(latestDate: string, timeFrame: TimeFrame) {
   let startDate = latestDate;
 
   switch (timeFrame) {
@@ -94,100 +82,54 @@ function getLatestPeriodRange(latestDate: string, timeFrame: TimeFrame) {
   return { startDate, endDate: latestDate };
 }
 
-/**
- * Gets the latest valid NAV baseline for each item.
- *
- * The baseline is the latest valid record before startDate.
- * The lookup is performed inside PostgreSQL using DISTINCT ON,
- * avoiding client-side pagination through potentially large history.
- *
- * @param startDate
- * @param itemIds
- * @param categoryId
- * @returns
- */
-async function getBaselineRecordsRepo(
-  startDate: string,
-  itemIds: string[],
-): Promise<RecordListItem[]> {
-  if (itemIds.length === 0) {
-    return [];
-  }
+interface PerformanceLeaderboardRpcRow {
+  item_id: string;
+  item_name: string;
+  category_id: string;
+  category_name: string;
+  baseline_date: string;
+  baseline_nav: number;
+  end_date: string;
+  end_nav: number;
+  yield_value: number;
+}
 
+/**
+ * Fetches computed period performance leaderboard directly from PostgreSQL RPC.
+ *
+ * Computes period performance yields between baseline and end of period in SQL.
+ */
+export async function getPerformanceLeaderboardRepo(params: {
+  startDate: string;
+  endDate: string;
+  categoryId?: string;
+}): Promise<PerformanceLeaderboardItem[]> {
   const supabase = await getSupabase();
 
-  const { data, error } = await supabase.rpc("get_latest_valid_nav_baselines", {
-    p_start_date: startDate,
-    p_item_ids: itemIds,
+  const { data, error } = await supabase.rpc("get_performance_leaderboard", {
+    p_start_date: params.startDate,
+    p_end_date: params.endDate,
+    p_category_id: params.categoryId ?? null,
   });
 
   if (error) throw error;
 
-  const baselineRows = (data ?? []) as PerformanceBaselineRow[];
+  const rows = (data ?? []) as PerformanceLeaderboardRpcRow[];
 
-  if (baselineRows.length === 0) {
-    return [];
-  }
-
-  const baselineIds = baselineRows.map((row) => row.id);
-
-  const { data: recordRows, error: recordError } = await supabase
-    .from(getRecordTable())
-    .select(getRecordsBaseQuery())
-    .in("id", baselineIds)
-    .overrideTypes<DbRecordListRow[]>();
-
-  if (recordError) throw recordError;
-
-  return (recordRows ?? []).map(mapRecordListItem);
+  return rows.map((row) => ({
+    itemId: row.item_id,
+    itemName: row.item_name,
+    categoryId: row.category_id,
+    categoryName: row.category_name,
+    baselineDate: row.baseline_date,
+    baselineNav: Number(row.baseline_nav),
+    endDate: row.end_date,
+    endNav: Number(row.end_nav),
+    yieldValue: Number(row.yield_value),
+  }));
 }
 
-function isValidNav(nav: number | null): nav is number {
-  return nav !== null && Number.isFinite(nav) && nav > 0;
-}
-
-// --- Performance Top Performers and Category Leaderboard Related Functions ---
-
-/**
- * Fetches records for a specific period and includes the latest valid
- * baseline before the period for every represented item.
- *
- * @param params
- * @returns { records: RecordListItem[]; latestDate: string | null }
- */
-export async function getLatestPeriodRecordsRepo(
-  params: PerformanceFilter,
-): Promise<{ records: RecordListItem[]; latestDate: string | null }> {
-  const { timeFrame = TimeFrame.WEEKLY, categoryId } = params;
-
-  const latestDate = await getLatestRecordDateRepo();
-
-  if (!latestDate) {
-    return { records: [], latestDate: null };
-  }
-
-  const { startDate, endDate } = getLatestPeriodRange(latestDate, timeFrame);
-
-  const periodRecords = await getPerformanceRecordsRepo({
-    startDate,
-    endDate,
-    categoryId,
-  });
-
-  const itemIds = Array.from(
-    new Set(
-      periodRecords
-        .filter((record) => isValidNav(record.nav1d))
-        .map((record) => record.item.id),
-    ),
-  );
-
-  const baselineRecords = await getBaselineRecordsRepo(startDate, itemIds);
-
-  return { records: [...baselineRecords, ...periodRecords], latestDate };
-}
-
-// --- Performance Analytics Related Functions ---
+// --- Performance Detailed Analytics Related Functions ---
 
 /**
  *
@@ -341,7 +283,19 @@ function getAnalyticsDateRange(
   };
 }
 
+interface PerformanceAnalyticsMatrixRpcRow {
+  item_id: string;
+  item_name: string;
+  category_id: string;
+  category_name: string;
+  date: string;
+  nav_1d: number;
+}
+
 /**
+ * Fetches mutual fund performance records for analytics using a single SQL RPC.
+ *
+ * Automatically includes the baseline record prior to startDate for each item.
  *
  * @param params
  * @returns
@@ -357,83 +311,34 @@ export async function getPerformanceAnalyticsRecordsRepo(
 
   const { startDate, endDate } = getAnalyticsDateRange(latestDate, params);
 
-  const periodRecords = await getPerformanceRecordsRepo({
-    startDate,
-    endDate,
-    categoryId,
-  });
-
-  const itemIds = Array.from(
-    new Set(
-      periodRecords
-        .filter((record) => isValidNav(record.nav1d))
-        .map((record) => record.item.id),
-    ),
-  );
-
-  const baselineRecords = await getBaselineRecordsRepo(startDate, itemIds);
-
-  return [...baselineRecords, ...periodRecords];
-}
-
-/**
- * Fetches all mutual fund performance records matching the provided filters.
- *
- * Supabase queries are executed in pages because the analytics calculation
- * may require more records than can safely be retrieved in a single request.
- *
- * @param params Optional filters used to limit the records returned.
- * @returns All matching performance records mapped into RecordListItem objects.
- */
-export async function getPerformanceRecordsRepo(
-  params?: PerformanceRepoFilter,
-): Promise<RecordListItem[]> {
   const supabase = await getSupabase();
 
-  // Accumulate records from all pages into a single collection.
-  const records: RecordListItem[] = [];
+  const { data, error } = await supabase.rpc(
+    "get_performance_analytics_matrix",
+    {
+      p_start_date: startDate,
+      p_end_date: endDate,
+      p_category_id: categoryId ?? null,
+    },
+  );
 
-  let hasMore = true;
-  let offset = 0;
+  if (error) throw error;
 
-  // Fetch records in batches of 1,000 rows per request.
-  const PAGE_SIZE = 1000;
+  const rows = (
+    Array.isArray(data) ? data : []
+  ) as PerformanceAnalyticsMatrixRpcRow[];
 
-  while (hasMore) {
-    let query = supabase
-      .from(getRecordTable())
-      .select(getRecordsBaseQuery())
-      .order("date", { ascending: true })
-      .order("id", { ascending: true })
-      .range(offset, offset + PAGE_SIZE - 1);
-
-    if (params?.startDate) {
-      query = query.gte("date", params.startDate);
-    }
-
-    if (params?.endDate) {
-      query = query.lte("date", params.endDate);
-    }
-
-    if (params?.categoryId) {
-      query = query.eq("item.category.id", params.categoryId);
-    }
-
-    const { data, error } = await query.overrideTypes<DbRecordListRow[]>();
-
-    if (error) throw error;
-
-    const rows = data ?? [];
-
-    if (rows.length === 0) {
-      break;
-    }
-
-    records.push(...rows.map(mapRecordListItem));
-
-    hasMore = rows.length === PAGE_SIZE;
-    offset += PAGE_SIZE;
-  }
-
-  return records;
+  return rows.map((row) => ({
+    id: `${row.item_id}-${row.date}`,
+    date: row.date,
+    nav1d: Number(row.nav_1d),
+    item: {
+      id: row.item_id,
+      name: row.item_name,
+      category: {
+        id: row.category_id,
+        name: row.category_name,
+      },
+    },
+  }));
 }

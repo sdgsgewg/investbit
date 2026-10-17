@@ -8,101 +8,7 @@ import {
 } from "@/types/mutual-fund/performance";
 import { RecordListItem } from "@/types/mutual-fund/records";
 import { getPerformancePeriodKey, getPeriodTimestamp } from "./period";
-
-// --- Performance Aggregator for Top Performer and Category Leaderboard ---
-
-type AggregatedPerformanceItem = {
-  itemName: string;
-  yieldValue: number;
-};
-
-type PerformanceCategoryMap = Record<
-  string,
-  Record<string, AggregatedPerformanceItem>
->;
-
-/**
- * Builds the Top Performers / Leaderboard values for the latest period.
- *
- * Records must be sorted chronologically by date.
- *
- * We scan the complete NAV history in date order so the first NAV inside the
- * latest period can be compared with the last NAV before that period. Only
- * rows in `latestPeriod` contribute to the output; older rows only establish
- * each fund's previous NAV.
- *
- * Example (latest period is the week containing Jan 6 and Jan 7):
- *   Jan 3 NAV 100  -> baseline only
- *   Jan 6 NAV 101  -> (101 - 100) / 100 * 100 = +1%
- *   Jan 7 NAV 100.5 -> (100.5 - 101) / 101 * 100 ~= -0.49505%
- *   weekly output  -> (1.01 * 100.5 / 101 - 1) * 100 = +0.5%
- *
- * `previousNavByItem` keeps each fund's last valid NAV independently. Missing,
- * zero, negative, or non-finite NAVs are ignored and do not replace the
- * previous valid NAV. Daily changes are compounded so the period result is
- * equivalent to (last NAV / NAV before period - 1) * 100.
- */
-export function aggregatePerformanceRecordsByItem(
-  records: RecordListItem[],
-  timeFrame: TimeFrame,
-  latestDate?: string | null,
-): PerformanceCategoryMap {
-  const categoryMap: PerformanceCategoryMap = {};
-  const latestPeriod = latestDate
-    ? getPerformancePeriodKey(latestDate, timeFrame)
-    : null;
-  const previousNavByItem = new Map<string, number>();
-
-  records.forEach((record) => {
-    const item = record.item;
-
-    // Ignore records that cannot be associated with a category or item.
-    if (!item || !item.category) return;
-
-    const nav = record.nav1d;
-
-    if (nav === null || !Number.isFinite(nav) || nav <= 0) return;
-
-    const categoryName = item.category.name;
-
-    if (!categoryMap[categoryName]) {
-      categoryMap[categoryName] = {};
-    }
-
-    const previousNav = previousNavByItem.get(item.id);
-    // Update the baseline even for older periods, before filtering, so the
-    // first latest-period row has the correct NAV to compare against.
-    previousNavByItem.set(item.id, nav);
-
-    const periodKey = getPerformancePeriodKey(record.date, timeFrame);
-    if (latestPeriod && periodKey !== latestPeriod) return;
-
-    // Without an earlier valid NAV there is no return to calculate. Do not
-    // add this item to the leaderboard as a fabricated 0% performer.
-    if (previousNav === undefined || previousNav <= 0) return;
-
-    const yieldValue = ((nav - previousNav) / previousNav) * 100;
-
-    const existingItem = categoryMap[categoryName][item.id];
-
-    if (!existingItem) {
-      categoryMap[categoryName][item.id] = {
-        itemName: item.name,
-        yieldValue,
-      };
-      return;
-    }
-
-    // Multiply growth factors instead of adding percentages. For example,
-    // +10% followed by -10% produces -1%, not 0%.
-    existingItem.yieldValue =
-      ((1 + existingItem.yieldValue / 100) * (1 + yieldValue / 100) - 1) * 100;
-  });
-
-  return categoryMap;
-}
-
-// --- Performance Analytics Table Aggregator ---
+import { isValidNav } from "../utils/nav.utils";
 
 type GroupedCategory = {
   categoryName: string;
@@ -119,7 +25,7 @@ type GroupedCategory = {
  * Example: NAV 100, 101, 100.5 within one week yields daily changes of +1%
  * and about -0.49505%; the weekly bucket becomes +0.5%.
  */
-export function aggregatePerformanceRecords(
+export function aggregatePerformanceAnalyticsRecords(
   records: RecordListItem[],
   params: PerformanceAnalyticsFilter,
 ): PerformanceAnalyticsResponse {
@@ -141,7 +47,7 @@ export function aggregatePerformanceRecords(
 
     const nav = record.nav1d;
 
-    if (nav === null || !Number.isFinite(nav) || nav <= 0) {
+    if (!isValidNav(nav)) {
       return;
     }
 
@@ -174,7 +80,7 @@ export function aggregatePerformanceRecords(
 
     // Invalid NAV data cannot produce a meaningful return and must not become
     // the baseline for the next observation.
-    if (nav === null || !Number.isFinite(nav) || nav <= 0) return;
+    if (!isValidNav(nav)) return;
     const itemKey = item.id;
     const previousNav = previousNavByItem.get(itemKey);
     previousNavByItem.set(itemKey, nav);

@@ -12,6 +12,18 @@ export interface TopPerformersResponse {
   categoryBests: PerformanceWinner[];
 }
 
+export interface PerformanceLeaderboardItem {
+  itemId: string;
+  itemName: string;
+  categoryId: string;
+  categoryName: string;
+  baselineDate: string;
+  baselineNav: number;
+  endDate: string;
+  endNav: number;
+  yieldValue: number;
+}
+
 // --- Category Leaderboard Types ---
 
 interface RankedPerformanceItem {

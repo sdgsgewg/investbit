@@ -1,4 +1,4 @@
-import { aggregatePerformanceRecords } from "@/lib/mutual-fund/performance/aggregator";
+import { aggregatePerformanceAnalyticsRecords } from "@/lib/mutual-fund/performance/aggregator";
 import { getPerformanceAnalyticsRecordsRepo } from "@/lib/repositories/mutual-fund/performance.repo";
 import { performanceAnalyticsQuerySchema } from "@/lib/validations/mutual-fund/performance.schema";
 import { PerformanceAnalyticsResponse } from "@/types/mutual-fund/performance";
@@ -20,5 +20,5 @@ export async function getPerformanceAnalyticsService(
   // Fetch the raw performance records required for aggregation.
   const records = await getPerformanceAnalyticsRecordsRepo(parsed);
 
-  return aggregatePerformanceRecords(records, parsed);
+  return aggregatePerformanceAnalyticsRecords(records, parsed);
 }
