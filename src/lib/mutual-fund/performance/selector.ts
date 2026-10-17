@@ -6,10 +6,6 @@ import {
   TopPerformersResponse,
 } from "@/types/mutual-fund/performance";
 
-const getRankValue = (value: number) => {
-  return Number(value.toFixed(2));
-};
-
 /**
  * Computes top performers from precomputed SQL leaderboard items.
  *
@@ -78,6 +74,7 @@ export function computeCategoryLeaderboard(
   }
 
   const categoryMap = new Map<string, PerformanceLeaderboardItem[]>();
+
   for (const item of items) {
     let group = categoryMap.get(item.categoryName);
     if (!group) {
@@ -90,21 +87,13 @@ export function computeCategoryLeaderboard(
   const rankedCategories: RankedPerformanceCategory[] = Array.from(
     categoryMap.entries(),
   )
-    .sort(([a], [b]) => a.localeCompare(b))
     .map(([categoryName, groupItems]) => {
-      const rankedItems = groupItems
-        .slice()
-        .sort(
-          (a, b) =>
-            getRankValue(b.yieldValue) - getRankValue(a.yieldValue) ||
-            a.itemName.localeCompare(b.itemName),
-        )
-        .map((item, index) => ({
-          itemId: item.itemId,
-          itemName: item.itemName,
-          yieldValue: item.yieldValue,
-          rank: index + 1,
-        }));
+      const rankedItems = groupItems.slice().map((item, index) => ({
+        itemId: item.itemId,
+        itemName: item.itemName,
+        yieldValue: item.yieldValue,
+        rank: index + 1,
+      }));
 
       return {
         categoryName,
