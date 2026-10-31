@@ -6,13 +6,13 @@ import { CategoryStats } from "@/types/mutual-fund/performance";
  */
 export const getPerformanceCellColor = (
   val: number | undefined,
-  catName: string,
+  catId: string,
   timeKey: string,
   categoryStats?: CategoryStats,
 ): string => {
   if (val === undefined || isNaN(val)) return "";
 
-  const stat = categoryStats?.[catName]?.[timeKey];
+  const stat = categoryStats?.[catId]?.[timeKey];
   if (!stat || stat.min === stat.max) return "";
 
   const normalized = (val - stat.min) / (stat.max - stat.min);
@@ -29,9 +29,7 @@ export const getPerformanceCellColor = (
 /**
  * Returns badge styling for top performer card yields
  */
-export const getTopPerformerYieldClassName = (
-  num: number | string,
-): string => {
+export const getTopPerformerYieldClassName = (num: number | string): string => {
   const modifiedNumber = Number(num);
   return modifiedNumber >= 0
     ? "text-green-600 dark:text-green-400 bg-green-50 dark:bg-green-900/20"

@@ -11,8 +11,10 @@ import { SelectField } from "@/components/shared/fields";
 
 interface InputHeaderProps {
   filters: RecordFilter;
-  onDateChange: (date: string) => void;
-  onCategoryChange: (categoryId?: string) => void;
+  updateFilter: <K extends keyof RecordFilter>(
+    key: K,
+    value: RecordFilter[K],
+  ) => void;
   saving: boolean;
   canSave: boolean;
   onSave: () => void;
@@ -20,8 +22,7 @@ interface InputHeaderProps {
 
 const InputHeader = ({
   filters,
-  onDateChange,
-  onCategoryChange,
+  updateFilter,
   onSave,
   saving,
   canSave,
@@ -47,6 +48,15 @@ const InputHeader = ({
     return day === 0 || day === 6 || date > new Date();
   };
 
+  const handleDateChange = (date: string) => {
+    updateFilter("startDate", date);
+    updateFilter("endDate", date);
+  };
+
+  const handleCategoryChange = (categoryId: string) => {
+    updateFilter("categoryId", categoryId || undefined);
+  };
+
   return (
     <div className="flex flex-col md:flex-row justify-between gap-4">
       <div className="flex flex-col gap-4">
@@ -59,7 +69,7 @@ const InputHeader = ({
             value={selectedDate}
             onSelectFinal={(date) => {
               const formatted = safeFormatDate(date, "yyyy-MM-dd");
-              onDateChange(formatted);
+              handleDateChange(formatted);
             }}
             maxDate={new Date()}
             endMonth={new Date()}
@@ -72,9 +82,7 @@ const InputHeader = ({
               label={tLabels("category")}
               name="category_id"
               value={filters.categoryId || ""}
-              onValueChange={(category) => {
-                onCategoryChange(category || undefined);
-              }}
+              onValueChange={handleCategoryChange}
               options={categoryOptions}
               placeholder={tCommonFilter("allCategory")}
               className="sm:w-48"

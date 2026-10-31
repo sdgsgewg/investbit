@@ -1,10 +1,13 @@
 -- Migration: Add get_performance_leaderboard RPC and performance index
--- Description: Efficiently computes period performance (yield) for mutual funds by comparing end date NAV and baseline NAV directly in PostgreSQL.
+-- Description: Efficiently computes period performance (yield) for mutual funds by comparing end date NAV and baseline NAV strictly from the previous exchange trading day.
 
--- 1. Index optimization for fast distinct-on lookups on rd_records
+-- 1. Index optimization for fast lookups on rd_records
 CREATE INDEX IF NOT EXISTS idx_rd_records_item_date_nav 
 ON public.rd_records (item_id, date DESC) 
 WHERE nav_1d IS NOT NULL AND nav_1d > 0;
+
+CREATE INDEX IF NOT EXISTS idx_exchange_holidays_date
+ON public.exchange_holidays (holiday_date);
 
 -- 2. Drop previous version if exists
 DROP FUNCTION IF EXISTS public.get_performance_leaderboard(date, date, uuid);
@@ -39,6 +42,15 @@ WITH target_items AS (
   JOIN public.rd_categories c ON c.id = i.category_id
   WHERE (p_category_id IS NULL OR c.id = p_category_id)
 ),
+prev_trading_day AS (
+  -- Cari hari bursa aktif terakhir sebelum p_start_date
+  SELECT d::date AS baseline_date
+  FROM generate_series(p_start_date - interval '20 days', p_start_date - interval '1 day', interval '1 day') AS d
+  WHERE EXTRACT(DOW FROM d) NOT IN (0, 6)
+    AND d::date NOT IN (SELECT holiday_date FROM public.exchange_holidays)
+  ORDER BY d DESC
+  LIMIT 1
+),
 end_records AS (
   SELECT DISTINCT ON (r.item_id)
     r.item_id,
@@ -53,16 +65,16 @@ end_records AS (
   ORDER BY r.item_id, r.date DESC
 ),
 baseline_records AS (
-  SELECT DISTINCT ON (r.item_id)
+  -- Hanya ambil baseline jika record persis ada pada hari bursa aktif sebelum p_start_date
+  SELECT
     r.item_id,
     r.date AS baseline_date,
     r.nav_1d AS baseline_nav
-  FROM public.rd_records r
+  FROM prev_trading_day ptd
+  JOIN public.rd_records r ON r.date = ptd.baseline_date
   JOIN target_items ti ON ti.item_id = r.item_id
-  WHERE r.date < p_start_date
-    AND r.nav_1d IS NOT NULL 
+  WHERE r.nav_1d IS NOT NULL 
     AND r.nav_1d > 0
-  ORDER BY r.item_id, r.date DESC
 )
 SELECT
   ti.item_id,
@@ -80,4 +92,4 @@ JOIN baseline_records b ON b.item_id = ti.item_id
 ORDER BY ti.category_name ASC, yield_value DESC, ti.item_name ASC;
 $$;
 
-COMMENT ON FUNCTION public.get_performance_leaderboard IS 'Computes mutual fund performance yields between baseline and end of period directly in SQL.';
+COMMENT ON FUNCTION public.get_performance_leaderboard IS 'Computes mutual fund performance yields between strictly validated baseline and end of period in SQL.';

@@ -43,12 +43,14 @@ const PerformanceAnalyticsSection = ({
     hasMoreOlder,
     hasLoadedOlder,
     isRangeMode,
-    selectedStartPeriod,
-    selectedEndPeriod,
+    draftStartPeriod,
+    draftEndPeriod,
+    canApply,
     loadMorePeriods,
     resetToLatestPeriods,
-    setStartPeriod,
-    setEndPeriod,
+    setDraftStartPeriod,
+    setDraftEndPeriod,
+    applyFilter,
   } = usePerformanceAnalytics(filters);
 
   const periodTranslations = {
@@ -58,8 +60,8 @@ const PerformanceAnalyticsSection = ({
   const { startOptions, endOptions } = getPeriodRangeOptions(
     availablePeriods,
     filters.timeFrame,
-    selectedStartPeriod,
-    selectedEndPeriod,
+    draftStartPeriod,
+    draftEndPeriod,
     periodTranslations,
   );
 
@@ -113,8 +115,8 @@ const PerformanceAnalyticsSection = ({
                 <SelectField
                   label={tPerformanceAnalytics("filters.startPeriod")}
                   name="start_period"
-                  value={selectedStartPeriod}
-                  onValueChange={setStartPeriod}
+                  value={draftStartPeriod}
+                  onValueChange={setDraftStartPeriod}
                   options={startOptions}
                   placeholder={tPerformanceAnalytics(
                     "filters.startPlaceholder",
@@ -127,23 +129,40 @@ const PerformanceAnalyticsSection = ({
                 <SelectField
                   label={tPerformanceAnalytics("filters.endPeriod")}
                   name="end_period"
-                  value={selectedEndPeriod}
-                  onValueChange={setEndPeriod}
+                  value={draftEndPeriod}
+                  onValueChange={setDraftEndPeriod}
                   options={endOptions}
                   placeholder={tPerformanceAnalytics("filters.endPlaceholder")}
                   className="w-full"
                 />
               </div>
 
-              {(isRangeMode || hasLoadedOlder) && (
+              <div className="flex items-center gap-2">
                 <Button
-                  variant="outline"
-                  onClick={resetToLatestPeriods}
-                  className="rounded-full text-sm font-medium"
+                  variant="default"
+                  onClick={applyFilter}
+                  disabled={!canApply || fetching}
+                  className="rounded-full text-sm font-medium px-5"
                 >
-                  {tPerformanceAnalytics("actions.showLatestTen")}
+                  {tPerformanceAnalytics("actions.applyFilter")}
                 </Button>
-              )}
+
+                {(isRangeMode ||
+                  draftStartPeriod ||
+                  draftEndPeriod ||
+                  hasLoadedOlder) && (
+                  <Button
+                    variant="outline"
+                    onClick={resetToLatestPeriods}
+                    disabled={fetching}
+                    className="rounded-full text-sm font-medium"
+                  >
+                    {isRangeMode || draftStartPeriod || draftEndPeriod
+                      ? tPerformanceAnalytics("actions.resetRange")
+                      : tPerformanceAnalytics("actions.showLatestTen")}
+                  </Button>
+                )}
+              </div>
             </div>
           </div>
         )}

@@ -281,6 +281,38 @@ export const getWeekKey = (dateStr: string): string => {
   return `${month}-W${week}|${range}`;
 };
 
+/**
+ * Resolves the start and end Date boundaries of a weekly period string.
+ * Supports weekly period keys like "2026-09-W1|1-4 Sep" as well as standard ISO dates.
+ *
+ * @param period
+ * @returns { start: Date; end: Date } | null
+ */
+export const getWeeklyPeriodDateRange = (
+  period: string,
+): { start: Date; end: Date } | null => {
+  const parsed = parseWeeklyPeriod(period);
+
+  if (parsed) {
+    const weeks = getMonthWeeks(parsed.year, parsed.month - 1);
+    const weekNum = Number(parsed.week);
+    if (weeks[weekNum]) {
+      return weeks[weekNum];
+    }
+  }
+
+  // Fallback if period is a regular date string (e.g. "2026-09-01")
+  const date = parseDate(period);
+  if (!isNaN(date.getTime())) {
+    const info = getWeekInfo(period);
+    if (info.start && info.end) {
+      return { start: info.start, end: info.end };
+    }
+  }
+
+  return null;
+};
+
 // --- Performance Period Helpers ---
 
 /**
@@ -295,9 +327,9 @@ export const getPerformancePeriodKey = (
 ): string => {
   switch (timeFrame) {
     case TimeFrame.DAILY:
-      // Daily menggunakan tanggal secara langsung.
+      // Daily menggunakan tanggal (YYYY-MM-DD) secara langsung.
       // Contoh: "2026-09-24"
-      return dateStr;
+      return dateStr.split("T")[0];
 
     case TimeFrame.WEEKLY:
       // Weekly menggunakan key yang dibuat oleh getWeekKey().

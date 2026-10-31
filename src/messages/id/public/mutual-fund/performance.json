@@ -3,34 +3,29 @@
   "subtitle": "Lihat performa reksa dana",
   "loading": "Memuat data performa...",
   "noData": "Data tidak tersedia. Gunakan tab input harian untuk menambahkan data.",
-
   "timeframe": {
     "daily": {
       "label": "Harian",
       "title": "Performa Harian",
       "loading": "Memuat data performa harian..."
     },
-
     "weekly": {
       "label": "Mingguan",
       "title": "Performa Mingguan",
       "loading": "Memuat data performa mingguan...",
       "week": "Minggu"
     },
-
     "monthly": {
       "label": "Bulanan",
       "title": "Performa Bulanan",
       "loading": "Memuat data performa bulanan..."
     },
-
     "yearly": {
       "label": "Tahunan",
       "title": "Performa Tahunan",
       "loading": "Memuat data performa tahunan..."
     }
   },
-
   "topPerformers": {
     "title": "Ikhtisar Kinerja Terbaik",
     "noData": "Data top performa tidak tersedia",
@@ -42,7 +37,6 @@
       "topIn": "Teratas Di"
     }
   },
-
   "leaderboard": {
     "title": "Papan Peringkat",
     "subtitle": "Peringkat berdasarkan periode terbaru: {period}",
@@ -51,7 +45,6 @@
       "funds": "{count} reksa dana"
     }
   },
-
   "analytics": {
     "title": "Analisis Terperinci",
     "sort": {
@@ -59,6 +52,8 @@
       "latestToOldest": "Terbaru hingga Terlama"
     },
     "actions": {
+      "applyFilter": "Terapkan",
+      "resetFilter": "Reset Filter",
       "showLatestTen": "Tampilkan 10 Terbaru",
       "resetRange": "Reset Rentang"
     },

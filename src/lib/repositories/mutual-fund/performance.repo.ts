@@ -1,8 +1,10 @@
 import { createClient } from "@/utils/supabase/server";
-import { RecordListItem } from "@/types/mutual-fund/records";
 import { getRecordTable } from "./records.repo";
 import { TimeFrame } from "@/enums/TimeFrame";
-import { getWeekInfo } from "@/lib/mutual-fund/performance/period";
+import {
+  getWeekInfo,
+  getWeeklyPeriodDateRange,
+} from "@/lib/mutual-fund/performance/period";
 import {
   endOfMonth,
   format,
@@ -14,6 +16,7 @@ import {
 } from "date-fns";
 import {
   PerformanceAnalyticsFilter,
+  PerformanceAnalyticsMatrixRow,
   PerformanceLeaderboardItem,
 } from "@/types/mutual-fund/performance";
 
@@ -35,7 +38,14 @@ export async function getLatestRecordDateRepo(
   const supabase = await getSupabase();
 
   const selectQuery = categoryId
-    ? "date, item:rd_items!rd_records_item_id_fkey!inner(category:rd_categories!rd_items_category_id_fkey!inner(id))"
+    ? `
+        date, 
+        item:rd_items!rd_records_item_id_fkey!inner(
+          category:rd_categories!rd_items_category_id_fkey!inner(
+            id
+          )
+        )
+      `
     : "date";
 
   let query = supabase
@@ -149,34 +159,39 @@ function getExplicitDateRange(
   switch (timeFrame) {
     case TimeFrame.DAILY:
       return {
-        startDate: startPeriod,
-        endDate: endPeriod,
-      };
-
-    case TimeFrame.MONTHLY:
-      return {
-        startDate: format(startOfMonth(parseISO(startPeriod)), "yyyy-MM-dd"),
-        endDate: format(endOfMonth(parseISO(endPeriod)), "yyyy-MM-dd"),
-      };
-
-    case TimeFrame.YEARLY:
-      return {
-        startDate: `${startPeriod}-01-01`,
-        endDate: `${endPeriod}-12-31`,
+        startDate: startPeriod.split("T")[0],
+        endDate: endPeriod.split("T")[0],
       };
 
     case TimeFrame.WEEKLY: {
-      const startWeek = getWeekInfo(startPeriod);
-      const endWeek = getWeekInfo(endPeriod);
+      const startRange = getWeeklyPeriodDateRange(startPeriod);
+      const endRange = getWeeklyPeriodDateRange(endPeriod);
 
       return {
-        startDate: format(
-          startWeek.start ?? parseISO(startPeriod),
-          "yyyy-MM-dd",
-        ),
-        endDate: format(endWeek.end ?? parseISO(endPeriod), "yyyy-MM-dd"),
+        startDate: startRange?.start
+          ? format(startRange.start, "yyyy-MM-dd")
+          : startPeriod.split("T")[0],
+        endDate: endRange?.end
+          ? format(endRange.end, "yyyy-MM-dd")
+          : endPeriod.split("T")[0],
       };
     }
+
+    case TimeFrame.MONTHLY: {
+      const safeStart =
+        startPeriod.length === 7 ? `${startPeriod}-01` : startPeriod;
+      const safeEnd = endPeriod.length === 7 ? `${endPeriod}-01` : endPeriod;
+      return {
+        startDate: format(startOfMonth(parseISO(safeStart)), "yyyy-MM-dd"),
+        endDate: format(endOfMonth(parseISO(safeEnd)), "yyyy-MM-dd"),
+      };
+    }
+
+    case TimeFrame.YEARLY:
+      return {
+        startDate: `${startPeriod.substring(0, 4)}-01-01`,
+        endDate: `${endPeriod.substring(0, 4)}-12-31`,
+      };
 
     default:
       return {
@@ -208,7 +223,10 @@ function getLatestLimitedDateRange(
   switch (timeFrame) {
     case TimeFrame.DAILY:
       return {
-        startDate: format(subDays(latest, limit - 1), "yyyy-MM-dd"),
+        startDate: format(
+          subDays(latest, Math.ceil((limit * 7) / 5) + 7),
+          "yyyy-MM-dd",
+        ),
         endDate: latestDate,
       };
 
@@ -262,8 +280,8 @@ function getAnalyticsDateRange(
   } = params;
 
   if (startPeriod || endPeriod) {
-    const modifiedStartPeriod = startPeriod ?? endPeriod!;
-    const modifiedEndPeriod = endPeriod ?? startPeriod!;
+    const modifiedStartPeriod = startPeriod ?? endPeriod ?? latestDate;
+    const modifiedEndPeriod = endPeriod ?? startPeriod ?? latestDate;
 
     return getExplicitDateRange(
       modifiedStartPeriod,
@@ -276,7 +294,6 @@ function getAnalyticsDateRange(
     return getLatestLimitedDateRange(latestDate, timeFrame, periodLimit);
   }
 
-  // No range and no period limit means all available history.
   return {
     startDate: "1900-01-01",
     endDate: latestDate,
@@ -288,21 +305,22 @@ interface PerformanceAnalyticsMatrixRpcRow {
   item_name: string;
   category_id: string;
   category_name: string;
-  date: string;
-  nav_1d: number;
+  period: string;
+  baseline_date: string;
+  baseline_nav: number | null;
+  end_date: string;
+  end_nav: number | null;
 }
 
 /**
- * Fetches mutual fund performance records for analytics using a single SQL RPC.
+ * Fetches period-based mutual fund performance data from PostgreSQL.
  *
- * Automatically includes the baseline record prior to startDate for each item.
- *
- * @param params
- * @returns
+ * Each row contains an exact baseline and end NAV for one item and period.
+ * Missing NAV records remain null and are never replaced with older records.
  */
 export async function getPerformanceAnalyticsRecordsRepo(
   params: PerformanceAnalyticsFilter,
-): Promise<RecordListItem[]> {
+): Promise<PerformanceAnalyticsMatrixRow[]> {
   const { categoryId } = params;
 
   const latestDate = await getLatestRecordDateRepo(categoryId);
@@ -319,6 +337,7 @@ export async function getPerformanceAnalyticsRecordsRepo(
       p_start_date: startDate,
       p_end_date: endDate,
       p_category_id: categoryId ?? null,
+      p_time_frame: params.timeFrame ?? TimeFrame.WEEKLY,
     },
   );
 
@@ -329,16 +348,14 @@ export async function getPerformanceAnalyticsRecordsRepo(
   ) as PerformanceAnalyticsMatrixRpcRow[];
 
   return rows.map((row) => ({
-    id: `${row.item_id}-${row.date}`,
-    date: row.date,
-    nav1d: Number(row.nav_1d),
-    item: {
-      id: row.item_id,
-      name: row.item_name,
-      category: {
-        id: row.category_id,
-        name: row.category_name,
-      },
-    },
+    itemId: row.item_id,
+    itemName: row.item_name,
+    categoryId: row.category_id,
+    categoryName: row.category_name,
+    period: row.period,
+    baselineDate: row.baseline_date,
+    baselineNav: row.baseline_nav === null ? null : Number(row.baseline_nav),
+    endDate: row.end_date,
+    endNav: row.end_nav === null ? null : Number(row.end_nav),
   }));
 }

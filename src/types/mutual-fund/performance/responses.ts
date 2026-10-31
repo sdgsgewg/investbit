@@ -49,18 +49,25 @@ export interface PerformanceItem {
   itemId: string;
   itemName: string;
 
-  // Maps each period key (e.g. date/week/year) to the calculated yield.
+  /**
+   * Maps each period key to its calculated yield.
+   * Periods without a valid baseline or end NAV are omitted.
+   */
   yields: Record<string, number>;
 }
 
 export interface PerformanceAggregatedData {
+  categoryId: string;
   categoryName: string;
   items: PerformanceItem[];
 }
 
 export type PerformanceData = PerformanceAggregatedData[];
 
-// Stores the minimum and maximum yield for each category and period.
+/**
+ * Minimum and maximum yield for each category and period.
+ * The first key is categoryId, not categoryName.
+ */
 export type CategoryStats = Record<
   string,
   Record<string, { min: number; max: number }>
@@ -81,4 +88,25 @@ export interface PerformanceAnalyticsResponse {
 
   // Indicates whether older periods exist outside the current period limit.
   hasMoreOlder: boolean;
+}
+
+// --- Performance Analytics RPC Types ---
+
+/**
+ * Satu baris untuk satu mutual fund pada satu periode.
+ * NAV dapat null apabila record pada tanggal yang diharapkan tidak tersedia.
+ */
+export interface PerformanceAnalyticsMatrixRow {
+  itemId: string;
+  itemName: string;
+  categoryId: string;
+  categoryName: string;
+
+  period: string;
+
+  baselineDate: string;
+  baselineNav: number | null;
+
+  endDate: string;
+  endNav: number | null;
 }

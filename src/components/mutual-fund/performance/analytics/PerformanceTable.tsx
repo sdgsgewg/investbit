@@ -114,7 +114,7 @@ const PerformanceTable: React.FC<PerformanceTableProps> = ({
                     const yieldVal = item.yields[col.key];
                     const bgColor = getPerformanceCellColor(
                       yieldVal,
-                      category.categoryName,
+                      category.categoryId,
                       col.key,
                       categoryStats,
                     );

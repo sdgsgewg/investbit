@@ -5,141 +5,125 @@ import {
   PerformanceItem,
   PerformanceAnalyticsResponse,
   PerformanceAnalyticsFilter,
+  PerformanceAnalyticsMatrixRow,
 } from "@/types/mutual-fund/performance";
-import { RecordListItem } from "@/types/mutual-fund/records";
-import { getPerformancePeriodKey, getPeriodTimestamp } from "./period";
+import { getPeriodTimestamp } from "./period";
 import { isValidNav } from "../utils/nav.utils";
 
 type GroupedCategory = {
+  categoryId: string;
   categoryName: string;
   items: Record<string, PerformanceItem>;
 };
 
 /**
- * Converts the NAV history into a per-fund return for each selected period.
- * Records must be ordered by date (the repository returns them that way).
- * The first observed NAV for each fund establishes its baseline and therefore
- * has no return. Each later NAV contributes `(current / previous - 1) * 100`.
- * Contributions are compounded within their timeframe bucket.
+ * Calculates the return between an exact baseline NAV and end NAV.
  *
- * Example: NAV 100, 101, 100.5 within one week yields daily changes of +1%
- * and about -0.49505%; the weekly bucket becomes +0.5%.
+ * Returns undefined when either NAV is missing or invalid.
+ */
+function calculatePeriodReturn(
+  baselineNav: number | null,
+  endNav: number | null,
+): number | undefined {
+  if (
+    baselineNav === null ||
+    endNav === null ||
+    !isValidNav(baselineNav) ||
+    !isValidNav(endNav)
+  ) {
+    return undefined;
+  }
+
+  return (endNav / baselineNav - 1) * 100;
+}
+
+/**
+ * Aggregates period-based NAV records into the analytics response.
+ *
+ * Every period is calculated independently using its exact baseline
+ * and end NAV. No previous NAV is carried over between periods.
  */
 export function aggregatePerformanceAnalyticsRecords(
-  records: RecordListItem[],
+  records: PerformanceAnalyticsMatrixRow[],
   params: PerformanceAnalyticsFilter,
 ): PerformanceAnalyticsResponse {
   const timeFrame = params.timeFrame ?? TimeFrame.WEEKLY;
 
-  // Group records by category and then by mutual fund item.
   const grouped: Record<string, GroupedCategory> = {};
-
-  // Tracks every period that exists in the source records.
   const timeSet = new Set<string>();
-  const previousNavByItem = new Map<string, number>();
 
   records.forEach((record) => {
-    const item = record.item;
+    const {
+      itemId,
+      itemName,
+      categoryId,
+      categoryName,
+      period,
+      baselineNav,
+      endNav,
+    } = record;
 
-    // Ignore incomplete records that cannot be associated with a category,
-    // item, or valid date.
-    if (!item || !item.category || !record.date) return;
+    if (!itemId || !categoryId || !period) return;
 
-    const nav = record.nav1d;
+    // A period is available when it exists in the SQL result,
+    // even if a particular item's NAV is missing.
+    timeSet.add(period);
 
-    if (!isValidNav(nav)) {
-      return;
+    if (!grouped[categoryId]) {
+      grouped[categoryId] = {
+        categoryId,
+        categoryName,
+        items: {},
+      };
     }
 
-    const categoryName = item.category.name;
-
-    // Create the category group when it does not exist yet.
-    if (!grouped[categoryName]) {
-      grouped[categoryName] = { categoryName, items: {} };
-    }
-
-    // Create the item entry inside its category when needed.
-    if (!grouped[categoryName].items[item.id]) {
-      grouped[categoryName].items[item.id] = {
-        itemId: item.id,
-        itemName: item.name,
+    if (!grouped[categoryId].items[itemId]) {
+      grouped[categoryId].items[itemId] = {
+        itemId,
+        itemName,
         yields: {},
       };
     }
 
-    // Convert the record date into the appropriate analytics period,
-    // such as a day, week, or year depending on the selected timeframe.
-    const periodKey = getPerformancePeriodKey(record.date, timeFrame);
+    const periodReturn = calculatePeriodReturn(baselineNav, endNav);
 
-    if (!periodKey || periodKey === "Invalid Date") return;
+    // Missing or invalid NAV means no yield for this item and period.
+    if (periodReturn === undefined) return;
 
-    // Keep track of every period found in the source data.
-    timeSet.add(periodKey);
-
-    const yields = grouped[categoryName].items[item.id].yields;
-
-    // Invalid NAV data cannot produce a meaningful return and must not become
-    // the baseline for the next observation.
-    if (!isValidNav(nav)) return;
-    const itemKey = item.id;
-    const previousNav = previousNavByItem.get(itemKey);
-    previousNavByItem.set(itemKey, nav);
-    // The first valid observation only initializes the item's baseline.
-    if (previousNav === undefined || previousNav <= 0) return;
-
-    // This is the NAV growth factor for this record (for example, 1.01 means +1%).
-    const dailyReturn = nav / previousNav;
-    const existingValue = yields[periodKey];
-
-    // Keep the first daily change as the period return. For later records,
-    // apply the new change to the return already stored for this period.
-    // Example: +1% followed by -0.5% gives +0.495% for the period.
-    yields[periodKey] =
-      existingValue === undefined
-        ? (dailyReturn - 1) * 100
-        : ((1 + existingValue / 100) * dailyReturn - 1) * 100;
+    grouped[categoryId].items[itemId].yields[period] = periodReturn;
   });
 
-  // Convert the Set into a chronologically sorted list of available periods.
   const availablePeriods = Array.from(timeSet).sort(
     (a, b) =>
       getPeriodTimestamp(a, timeFrame) - getPeriodTimestamp(b, timeFrame),
   );
 
-  // Range mode is enabled when either boundary is explicitly provided.
   const isRangeMode = Boolean(params.startPeriod || params.endPeriod);
 
-  // If a boundary is not provided, use the earliest/latest available period
-  // as the effective boundary.
-  const effectiveStartPeriod = params.startPeriod || availablePeriods[0] || "";
+  const effectiveStartPeriod = params.startPeriod ?? availablePeriods[0] ?? "";
 
   const effectiveEndPeriod =
-    params.endPeriod || availablePeriods[availablePeriods.length - 1] || "";
+    params.endPeriod ?? availablePeriods[availablePeriods.length - 1] ?? "";
 
   let timePeriods = availablePeriods;
 
   if (isRangeMode && effectiveStartPeriod && effectiveEndPeriod) {
     const startTimestamp = getPeriodTimestamp(effectiveStartPeriod, timeFrame);
+
     const endTimestamp = getPeriodTimestamp(effectiveEndPeriod, timeFrame);
 
-    // Normalize the boundaries so the range works even when the user
-    // provides the end period before the start period.
     const rangeStart = Math.min(startTimestamp, endTimestamp);
     const rangeEnd = Math.max(startTimestamp, endTimestamp);
 
-    // Keep only periods that fall within the requested range.
     timePeriods = availablePeriods.filter((period) => {
       const timestamp = getPeriodTimestamp(period, timeFrame);
+
       return timestamp >= rangeStart && timestamp <= rangeEnd;
     });
   } else if (params.periodLimit && params.periodLimit > 0) {
-    // When no explicit range is requested, limit the result to the
-    // most recent N periods.
     timePeriods = availablePeriods.slice(-params.periodLimit);
   }
 
-  // Indicates whether older periods exist beyond the currently displayed
-  // period limit. This is used by the UI for loading older data.
   const hasMoreOlder =
     !isRangeMode &&
     availablePeriods.length > 0 &&
@@ -154,18 +138,15 @@ export function aggregatePerformanceAnalyticsRecords(
         a.itemName.localeCompare(b.itemName),
       );
 
-      categoryStats[category.categoryName] = {};
+      categoryStats[category.categoryId] = {};
 
       timePeriods.forEach((period) => {
-        // Collect only items that have a yield for the current period.
         const values = items
           .map((item) => item.yields[period])
           .filter((value): value is number => value !== undefined);
 
         if (values.length > 0) {
-          // Calculate the minimum and maximum yield within the category
-          // for the current period.
-          categoryStats[category.categoryName][period] = {
+          categoryStats[category.categoryId][period] = {
             min: Math.min(...values),
             max: Math.max(...values),
           };
@@ -175,7 +156,6 @@ export function aggregatePerformanceAnalyticsRecords(
       const cleanedItems = items.map((item) => {
         const filteredYields: Record<string, number> = {};
 
-        // Return only yields belonging to the periods currently requested.
         timePeriods.forEach((period) => {
           const value = item.yields[period];
 
@@ -192,6 +172,7 @@ export function aggregatePerformanceAnalyticsRecords(
       });
 
       return {
+        categoryId: category.categoryId,
         categoryName: category.categoryName,
         items: cleanedItems,
       };

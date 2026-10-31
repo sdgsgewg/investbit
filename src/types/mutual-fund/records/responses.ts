@@ -6,4 +6,5 @@ import { Record } from "./database";
 export type RecordListItem = Pick<Record, "id" | "date"> & {
   nav1d: number | null;
   item: ItemResponse;
+  isBaseline?: boolean;
 };

@@ -34,21 +34,8 @@ export function useRecordFilter() {
     omitDefaultValuesFromUrl: true,
   });
 
-  const handleDateChange = (date: string) => {
-    crud.updateFiltersPartial({
-      startDate: date,
-      endDate: date,
-    });
-  };
-
-  const handleCategoryChange = (categoryId?: string) => {
-    crud.updateFilter("categoryId", categoryId || undefined);
-  };
-
   return {
     defaultFilters: defaultFilter,
     ...crud,
-    handleDateChange,
-    handleCategoryChange,
   };
 }

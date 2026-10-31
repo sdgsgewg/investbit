@@ -20,8 +20,11 @@ export default function RecordPage() {
   const t = useTranslations("dashboard.mutualFund.records");
 
   // 1. Filter & URL Sync
-  const { filters, syncUrl, handleDateChange, handleCategoryChange } =
-    useRecordFilter();
+  const {
+    filters,
+    updateFilter,
+    syncUrl,
+  } = useRecordFilter();
 
   useFilterSync(filters, syncUrl);
 
@@ -51,8 +54,7 @@ export default function RecordPage() {
       <div className="bg-white dark:bg-zinc-900 rounded-lg p-6 shadow-sm space-y-6">
         <InputHeader
           filters={filters}
-          onDateChange={handleDateChange}
-          onCategoryChange={handleCategoryChange}
+          updateFilter={updateFilter}
           onSave={handleSave}
           saving={isSubmitting}
           canSave={canSave}

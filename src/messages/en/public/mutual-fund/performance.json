@@ -3,34 +3,29 @@
   "subtitle": "View mutual fund performance",
   "loading": "Loading performance data...",
   "noData": "No data available. Use the daily input tab to add records.",
-
   "timeframe": {
     "daily": {
       "label": "Daily",
       "title": "Daily Performance",
       "loading": "Loading daily performance data..."
     },
-
     "weekly": {
       "label": "Weekly",
       "title": "Weekly Performance",
       "loading": "Loading weekly performance data...",
       "week": "Week"
     },
-
     "monthly": {
       "label": "Monthly",
       "title": "Monthly Performance",
       "loading": "Loading monthly performance data..."
     },
-
     "yearly": {
       "label": "Yearly",
       "title": "Yearly Performance",
       "loading": "Loading yearly performance data..."
     }
   },
-
   "topPerformers": {
     "title": "Top Performers Overview",
     "noData": "Top performers data is not available",
@@ -42,7 +37,6 @@
       "topIn": "Top In"
     }
   },
-
   "leaderboard": {
     "title": "Leaderboards",
     "subtitle": "Ranked by the latest available period: {period}",
@@ -51,7 +45,6 @@
       "funds": "{count} mutual funds"
     }
   },
-
   "analytics": {
     "title": "Detailed Analytics",
     "sort": {
@@ -59,6 +52,8 @@
       "latestToOldest": "Latest to Oldest"
     },
     "actions": {
+      "applyFilter": "Apply",
+      "resetFilter": "Reset Filter",
       "showLatestTen": "Show Latest 10",
       "resetRange": "Reset Range"
     },

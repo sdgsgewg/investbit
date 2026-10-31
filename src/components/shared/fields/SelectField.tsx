@@ -30,7 +30,9 @@ interface SelectFieldProps {
   className?: string;
 }
 
-const ALL_VALUE = "__all__";
+// Radix Select reserves the empty string for its placeholder state, so empty
+// option values need a stable internal value while they are selected.
+const EMPTY_VALUE = "__select_empty_value__";
 
 const SelectField = ({
   label,
@@ -49,11 +51,10 @@ const SelectField = ({
   className,
 }: SelectFieldProps) => {
   const tCommonStates = useTranslations("common.states");
-
-  const selectValue = value || (allLabel ? ALL_VALUE : undefined);
+  const selectValue = value === "" ? EMPTY_VALUE : (value ?? "");
 
   const handleValueChange = (selectedValue: string) => {
-    onValueChange(selectedValue === ALL_VALUE ? "" : selectedValue);
+    onValueChange(selectedValue === EMPTY_VALUE ? "" : selectedValue);
   };
 
   return (
@@ -85,10 +86,13 @@ const SelectField = ({
           sideOffset={4}
           className={cn("w-(--radix-select-trigger-width) max-h-60")}
         >
-          {allLabel && <SelectItem value={ALL_VALUE}>{allLabel}</SelectItem>}
+          {allLabel && <SelectItem value={EMPTY_VALUE}>{allLabel}</SelectItem>}
 
           {options.map((option) => (
-            <SelectItem key={option.value} value={option.value}>
+            <SelectItem
+              key={option.value || EMPTY_VALUE}
+              value={option.value === "" ? EMPTY_VALUE : option.value}
+            >
               <span className="truncate">{option.label}</span>
             </SelectItem>
           ))}

@@ -22,12 +22,17 @@ export interface UsePerformanceAnalyticsReturn {
   hasMoreOlder: boolean;
   hasLoadedOlder: boolean;
   isRangeMode: boolean;
-  selectedStartPeriod: string;
-  selectedEndPeriod: string;
+  draftStartPeriod: string;
+  draftEndPeriod: string;
+  appliedStartPeriod: string;
+  appliedEndPeriod: string;
+  hasDraftChanges: boolean;
+  canApply: boolean;
   loadMorePeriods: () => void;
   resetToLatestPeriods: () => void;
-  setStartPeriod: (period: string) => void;
-  setEndPeriod: (period: string) => void;
+  setDraftStartPeriod: (period: string) => void;
+  setDraftEndPeriod: (period: string) => void;
+  applyFilter: () => void;
   loadError: unknown | null;
   retryLoad: () => void;
 }
@@ -38,11 +43,70 @@ export const usePerformanceAnalytics = ({
   timeFrame,
   categoryId,
 }: PerformanceFilter): UsePerformanceAnalyticsReturn => {
-  const [periodLimit, setPeriodLimit] = useState(DEFAULT_PERIOD_LIMIT);
-  const [selectedStartPeriod, setSelectedStartPeriod] = useState("");
-  const [selectedEndPeriod, setSelectedEndPeriod] = useState("");
+  const filterKey = `${timeFrame}:${categoryId ?? ""}`;
+  const [selection, setSelection] = useState({
+    filterKey,
+    periodLimit: DEFAULT_PERIOD_LIMIT,
+    draftStartPeriod: "",
+    draftEndPeriod: "",
+    appliedStartPeriod: "",
+    appliedEndPeriod: "",
+  });
 
-  const isRangeMode = Boolean(selectedStartPeriod || selectedEndPeriod);
+  // Derive the reset values during render when filters change. This avoids an
+  // effect that first renders stale selections and then synchronously resets them.
+  const currentSelection =
+    selection.filterKey === filterKey
+      ? selection
+      : {
+          filterKey,
+          periodLimit: DEFAULT_PERIOD_LIMIT,
+          draftStartPeriod: "",
+          draftEndPeriod: "",
+          appliedStartPeriod: "",
+          appliedEndPeriod: "",
+        };
+        
+  const {
+    periodLimit,
+    draftStartPeriod,
+    draftEndPeriod,
+    appliedStartPeriod,
+    appliedEndPeriod,
+  } = currentSelection;
+
+  const updateSelection = (
+    update: (current: typeof currentSelection) => typeof currentSelection,
+  ) => {
+    setSelection((previous) => {
+      const current =
+        previous.filterKey === filterKey
+          ? previous
+          : {
+              filterKey,
+              periodLimit: DEFAULT_PERIOD_LIMIT,
+              draftStartPeriod: "",
+              draftEndPeriod: "",
+              appliedStartPeriod: "",
+              appliedEndPeriod: "",
+            };
+      return update(current);
+    });
+  };
+
+  const setDraftStartPeriod = (period: string) =>
+    updateSelection((current) => ({ ...current, draftStartPeriod: period }));
+  const setDraftEndPeriod = (period: string) =>
+    updateSelection((current) => ({ ...current, draftEndPeriod: period }));
+
+  const isRangeMode = Boolean(appliedStartPeriod || appliedEndPeriod);
+
+  const hasDraftChanges =
+    draftStartPeriod !== appliedStartPeriod ||
+    draftEndPeriod !== appliedEndPeriod;
+
+  const canApply =
+    hasDraftChanges && Boolean(draftStartPeriod || draftEndPeriod);
 
   const { data, isLoading, isFetching, isRefetching, error, refetch } =
     useQuery<PerformanceAnalyticsResponse>({
@@ -50,8 +114,8 @@ export const usePerformanceAnalytics = ({
         timeFrame,
         categoryId: categoryId || undefined,
         periodLimit: isRangeMode ? undefined : periodLimit,
-        startPeriod: isRangeMode ? selectedStartPeriod || undefined : undefined,
-        endPeriod: isRangeMode ? selectedEndPeriod || undefined : undefined,
+        startPeriod: isRangeMode ? appliedStartPeriod || undefined : undefined,
+        endPeriod: isRangeMode ? appliedEndPeriod || undefined : undefined,
       }),
       queryFn: () =>
         fetchPerformanceAnalytics({
@@ -59,18 +123,32 @@ export const usePerformanceAnalytics = ({
           categoryId: categoryId || undefined,
           periodLimit: isRangeMode ? undefined : periodLimit,
           startPeriod: isRangeMode
-            ? selectedStartPeriod || undefined
+            ? appliedStartPeriod || undefined
             : undefined,
-          endPeriod: isRangeMode ? selectedEndPeriod || undefined : undefined,
+          endPeriod: isRangeMode ? appliedEndPeriod || undefined : undefined,
         }),
       placeholderData: (prev) => prev ?? undefined,
       ...queryConfig,
     });
 
+  const applyFilter = () => {
+    if (!canApply) return;
+    updateSelection((current) => ({
+      ...current,
+      appliedStartPeriod: current.draftStartPeriod,
+      appliedEndPeriod: current.draftEndPeriod,
+    }));
+  };
+
   const resetToLatestPeriods = () => {
-    setPeriodLimit(DEFAULT_PERIOD_LIMIT);
-    setSelectedStartPeriod("");
-    setSelectedEndPeriod("");
+    updateSelection((current) => ({
+      ...current,
+      periodLimit: DEFAULT_PERIOD_LIMIT,
+      draftStartPeriod: "",
+      draftEndPeriod: "",
+      appliedStartPeriod: "",
+      appliedEndPeriod: "",
+    }));
   };
 
   return {
@@ -85,20 +163,24 @@ export const usePerformanceAnalytics = ({
     hasMoreOlder: data?.hasMoreOlder ?? false,
     hasLoadedOlder: !isRangeMode && periodLimit > DEFAULT_PERIOD_LIMIT,
     isRangeMode,
-    selectedStartPeriod,
-    selectedEndPeriod,
+    draftStartPeriod,
+    draftEndPeriod,
+    appliedStartPeriod,
+    appliedEndPeriod,
+    hasDraftChanges,
+    canApply,
     loadMorePeriods: () => {
       if (!isFetching && !isRangeMode) {
-        setPeriodLimit((prev) => prev + 10);
+        updateSelection((current) => ({
+          ...current,
+          periodLimit: current.periodLimit + 10,
+        }));
       }
     },
     resetToLatestPeriods,
-    setStartPeriod: (period: string) => {
-      setSelectedStartPeriod(period);
-    },
-    setEndPeriod: (period: string) => {
-      setSelectedEndPeriod(period);
-    },
+    setDraftStartPeriod,
+    setDraftEndPeriod,
+    applyFilter,
     loadError: error ?? null,
     retryLoad: () => {
       void refetch();
